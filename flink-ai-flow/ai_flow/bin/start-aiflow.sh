@@ -59,7 +59,14 @@ mkdir ${AIRFLOW_DEPLOY_PATH} >/dev/null 2>&1 || true
 # start notification service
 start_notification_service.py > ${AIRFLOW_HOME}/notification_service.log 2>&1 &
 echo $! > ${AIRFLOW_HOME}/notification_service.pid
-
+# create a default Admin use
+airflow users create \
+    --username admin \
+    --password admin \
+    --firstname admin \
+    --lastname admin \
+    --role Admin \
+    --email admin@example.org
 # start airflow scheduler and web server
 airflow event_scheduler --subdir=${AIRFLOW_DEPLOY_PATH} > ${AIRFLOW_HOME}/scheduler.log 2>&1 &
 echo $! > ${AIRFLOW_HOME}/scheduler.pid
