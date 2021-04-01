@@ -1,12 +1,14 @@
 # Quickstart
 
-The Quickstart will show you how to install AI Flow and help you get started with an example in AI Flow.
+The Quickstart will help you get started with an example in AI Flow. 
+To begin with, we provide 2 ways for users to use AI Flow: 1) Install AI Flow on the local machine; 2) Run a docker image.
 
-## Prerequisites
+## Install on Local Machine
+### Prerequisites
 1. python3.7
 2. pip
 
-## Installing AI Flow
+### Install AI Flow
 
 If you are installing AI Flow from source, you can install AI Flow by running the following command:
 
@@ -30,9 +32,9 @@ If you are installing AI Flow from the release package, just run:
 python3 -m pip install ai_flow-xxx-none-any.whl
 ```
 
-If you meet any problems during the installation, please refer to the [Troubleshooting](troubleshooting) section to see if it can help.
+If you meet any problems during the installation, please refer to the [Troubleshooting](#troubleshooting) section to see if it can help.
 
-## Python AI Flow Example
+### Run a Python AI Flow Example
 
 Here is a simple AI Flow example, and a line-by-line explanation follows right below. 
 
@@ -48,7 +50,7 @@ import ai_flow
 from python_ai_flow import Executor
 
 
-def create_sever_config(root_dir_path):
+def create_server_config(root_dir_path):
     content = textwrap.dedent(f"""\
         # Config of master server
         
@@ -164,7 +166,7 @@ if __name__ == '__main__':
     root_dir = tempfile.mkdtemp()
 
     # create the master server config
-    master_yaml = create_sever_config(root_dir)
+    master_yaml = create_server_config(root_dir)
     # create the project config
     project_yaml = create_project_config(root_dir)
     # create the workflow config
@@ -187,9 +189,9 @@ if __name__ == '__main__':
 
 ```
 
-You can run it with following command:
+You can run it with following command in your terminal.:
 ```shell
-python examples/simple_examples/python_codes/hello_world_example.py` in your terminal.
+python examples/simple_examples/python_codes/hello_world_example.py
 ```
 
 The output in the logs directory should be:
@@ -207,11 +209,11 @@ hello world! job_2
 ```
 
 
-## Work with Airflow
+### Work with Airflow
 
-We have added an event-based scheduler named event_scheduler to Airflow, so Flink AI Flow can also work with Airflow's event_scheduler, which is more powerful and has a Web UI to monitor the execution.
+We have added an event-based scheduler named `event_scheduler` to Airflow, so Flink AI Flow can also work with Airflow's event_scheduler, which is more powerful and has a Web UI to monitor the execution.
 
-### Prerequisites
+#### Prerequisites
 
 1. MySQL
 
@@ -221,7 +223,7 @@ CREATE DATABASE airflow CHARACTER SET UTF8mb3 COLLATE utf8_general_ci;
 ```
 Currently the AI Flow bundles a modified Airflow so users do not need to install the Apache Airflow manually.
 
-### Start notification server, Airflow Server and AI Flow Server
+#### Start notification server, Airflow Server and AI Flow Server
 Run following command to start Notification service, AI Flow Server and Airflow Server:
 
 ```shell
@@ -249,7 +251,7 @@ Airflow deploy path: ${AIRFLOW_HOME}/airflow_deploy
 Visit http://127.0.0.1:8080/ to access the airflow web server.
 ```
 
-### Prepare AI Flow Project
+#### Prepare AI Flow Project
 
 In order to properly adapt to the Airflow, the AI Flow project should have such a directory structure:
 
@@ -367,7 +369,7 @@ EOF
 cd $CURRENT_DIR
 ```
 
-### Run the Workflow and Check the Execution Result
+#### Run the Workflow and Check the Execution Result
 
 To run the workflow, just execute:
 
@@ -382,15 +384,15 @@ You can find the scheduled workflow on the [Airflow Web Server](http://127.0.0.1
 
 The outputs of each job can be found under `${AIRFLOW_HOME}/logs/airflow_dag_example/job_1/`, `${AIRFLOW_HOME}/logs/airflow_dag_example/job_2/` and `${AIRFLOW_HOME}/logs/airflow_dag_example/job_3/`.
 
-### Stop the Airflow Server and the AI Flow Master Server
+#### Stop the Airflow Server and the AI Flow Master Server
 
 Run following command to stop the servers:
 
 ```shell
 stop-aiflow.sh
 ```
-## Run in Docker
-The Dockerfile is also provided, which helps users start a Flink AI Flow server. You can build an image like this:
+## Get Started in Docker
+The Dockerfile is also provided, which helps users start a Flink AI Flow server with out-of-the-box environment. You can build an image like this:
 ```shell
 docker build --rm -t flink-ai-extended/flink-ai-flow:v1 .
 ```
@@ -400,6 +402,10 @@ You can create the database using the following command in your MySQL CLI:
 ```SQL
 CREATE DATABASE airflow CHARACTER SET UTF8mb3 COLLATE utf8_general_ci;
 ```
+Also, if you are using MySQL 8.0+,  please also type following command in your MySQL CLI as well:
+```SQL
+ALTER USER 'username' IDENTIFIED WITH mysql_native_password BY 'password';
+```
 
 Then, to run the image, you need to pass your MySQL connection string as parameter, e.g.
 ```shell
@@ -407,19 +413,28 @@ Then, to run the image, you need to pass your MySQL connection string as paramet
 ```
 Note, `127.0.0.1` should be replaced with `host.docker.internal` or any valid IP address which can be utilized by docker to access host machine's MySQL service.
 
-To submit a workflow, you can run following commands.
+To submit a workflow, you can run the following command:
 ```shell
 python ${FLINK_AI_FLOW_SOURCES}/examples/quickstart_example/python_codes/airflow_dag_example.py
 ```
 You can find the scheduled workflow on the [Airflow Web Server](http://127.0.0.1:8080/).
 Once the workflow is done, you can check its correctness by viewing the output logs under `${AIRFLOW_HOME}/logs/airflow_dag_example` directory or via [Web UI](http://127.0.0.1:8080/). 
+The Web UI should look like:
 
+![](doc/images/docker_example2.png)
+
+The Graph view is as follows:
+
+![](doc/images/docker_example1.png)
+
+If you meet any problems, please refer to the [Troubleshooting](#troubleshooting) section for help.
 
 ## Troubleshooting
+
 #### 1. Fail on mysqlclient installation
 According to mysqlclient's [document](https://github.com/PyMySQL/mysqlclient#install), extra steps are needed for installing mysqlclient with pip. Please check the document and take corresponding actions.
 
-#### 2. `(2002, "Can't connect to MySQL server on '127.0.0.1' (115)")`
+#### 2. `(2002, "Can't connect to MySQL server on '127.0.0.1' (115)")` when running in docker
 Replace `mysql://user:password@127.0.0.1/airflow` with `mysql://user:password@host.docker.internal/airflow`.
 
 #### 3. `Plugin caching_sha2_password could not be loaded:...` when running in docker
@@ -429,7 +444,6 @@ when launching docker, you can fix it by changing it back to naive version. To d
 ```SQL
 ALTER USER 'username' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
-Then restart MySQL service and the docker image.
-
+Then restart MySQL service and docker image.
 
 
