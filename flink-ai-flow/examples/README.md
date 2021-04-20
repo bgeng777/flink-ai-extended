@@ -31,7 +31,7 @@ When the program finishes, you should be able to view transform result in `sink_
 
 If you do not get the expected output, check logs in [Web UI](127.0.0.1:8080) or in log dir under the AirFlow Deploy dir.
 
-#### [2. Batch Train and Batch Predict Scheduled by AirFlow](python_examples/python_codes/batch_train_batch_predict_airflow)
+#### [2. Batch Train and Batch Predict Scheduled by AirFlow](python_examples/python_codes/batch_train_batch_predict)
 This example will read a mnist data file and follow the procedure "read data -> train -> evaluate -> validate -> push -> predict" to train an LR model and use it for inference.
 
 
