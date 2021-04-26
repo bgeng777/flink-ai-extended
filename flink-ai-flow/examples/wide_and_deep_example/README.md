@@ -36,10 +36,13 @@ Then copy these 4 jars and the `jar_dependencies/flink-sql-connector-kafka_2.11-
 - Create directory in hdfs and upload codes
     ```shell
     hdfs dfs -mkdir /demo
-    hdfs dfs -put /examples/wide_and_deep_example/code.zip /demo
+    hdfs dfs -put ./code.zip /demo
     ```
   Note, the `code.zip` must be produced by zipping the `wide_and_deep_example/python_codes/code` directory.
-  If users define their own logic in the python files under this dir, they should reproduce the zip file by running `zip -r python_codes/code code.zip`.
+  If users define their own logic in the python files under this dir, they should reproduce the zip file by running
+  ```shell
+  cd python_codes/ && zip -r ../code.zip ./code && cd ..
+  ```
   
 #### Kafka Initialization
 In the project, we will use Kafka to generate a data stream and the dataset used is `census_data/adult.data`. 
