@@ -48,16 +48,14 @@ class StreamPredictSource(SourceExecutor):
 
 class Predict(ScalarFunction):
 
-    def __init__(self):
+    def __init__(self, model_path):
         super().__init__()
         self._predictor = None
         self._exported_model = None
+        self._model_path = model_path
 
     def open(self, function_context: FunctionContext):
-        af.set_project_config_file(os.path.dirname(os.path.abspath(__file__)) + '/project.yaml')
-        model_version = af.get_deployed_model_version("wide_and_deep")
-        print("predict model path:" + model_version.model_path)
-        self._exported_model = model_version.model_path.split('|')[1]
+        self._exported_model = self._model_path.split('|')[1]
         with tf.Session() as session:
             tf.saved_model.loader.load(session, [tf.saved_model.tag_constants.SERVING], self._exported_model)
             self._predictor = tf.contrib.predictor.from_saved_model(self._exported_model)
@@ -81,14 +79,12 @@ class Predict(ScalarFunction):
                 'hours_per_week': self._float_feature(value=float(hours_per_week)),
                 'native_country': self._bytes_feature(value=native_country.encode()),
             }
-            print("predict s #####")
             model_input = tf.train.Example(features=tf.train.Features(feature=feature_dict))
             model_input = model_input.SerializeToString()
             output_dict = self._predictor({'inputs': [model_input]})
             print(str(np.argmax(output_dict['scores'])))
             return str(np.argmax(output_dict['scores']))
         except Exception:
-            print("predict f #####")
             return 'tf fail'
 
     @staticmethod
@@ -107,8 +103,9 @@ class Predict(ScalarFunction):
 class StreamPredictExecutor(Executor):
 
     def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
+        model_version = af.get_deployed_model_version("wide_and_deep")
         function_context.t_env.register_function('predict',
-                                                 udf(f=Predict(), input_types=[DataTypes.STRING(), DataTypes.STRING(),
+                                                 udf(f=Predict(model_version.model_path), input_types=[DataTypes.STRING(), DataTypes.STRING(),
                                                                                DataTypes.STRING(), DataTypes.STRING(),
                                                                                DataTypes.STRING(), DataTypes.STRING(),
                                                                                DataTypes.STRING(), DataTypes.STRING(),
@@ -116,6 +113,7 @@ class StreamPredictExecutor(Executor):
                                                                                DataTypes.STRING(), DataTypes.STRING(),
                                                                                DataTypes.STRING(), DataTypes.STRING()],
                                                      result_type=DataTypes.STRING()))
+
         return [input_list[0].select(
             'age, workclass, fnlwgt, education, education_num, marital_status, occupation, '
             'relationship, race, gender, capital_gain, capital_loss, hours_per_week, native_country, '
