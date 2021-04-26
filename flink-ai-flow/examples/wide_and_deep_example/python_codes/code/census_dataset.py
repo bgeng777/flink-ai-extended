@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+
 """Download and clean the Census Income Dataset."""
 
 from __future__ import absolute_import
