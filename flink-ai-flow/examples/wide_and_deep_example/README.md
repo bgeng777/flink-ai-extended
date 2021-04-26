@@ -1,13 +1,13 @@
 ## Guidance on Running Wide and Deep Example
 
 ### Intro
-This example, named 'wide and deep', aims at showing the mix use of [Flink-AI-Flow]() and [TF-on-Flink](). 
+This example, named 'wide and deep', aims at showing the mix use of [Flink-AI-Flow](https://github.com/alibaba/flink-ai-extended/blob/master/flink-ai-flow/QUICKSTART.md) and [TF-on-Flink](https://github.com/alibaba/flink-ai-extended/tree/master/deep-learning-on-flink). 
 In this example, we will train a [DNNLinearCombinedClassifier](https://arxiv.org/abs/1606.07792) for a binary classification task.
 In the codes, we will show how to train a model with TF-on-Flink, which can directly consume training samples from flink and how to define and execute the streaming training and streaming prediction tasks with AIFlow.
 
 ### Environment Requirements
-1. Flink-AI-Flow([ref]())
-2. TF-on-Flink([ref]())
+1. Flink-AI-Flow([ref](https://github.com/alibaba/flink-ai-extended/blob/master/flink-ai-flow/QUICKSTART.md))
+2. TF-on-Flink([ref](https://github.com/alibaba/flink-ai-extended/tree/master/deep-learning-on-flink))
 3. Flink(1.11+)
 4. Kafka(1.x or 2.x)
 5. Hadoop
@@ -70,6 +70,6 @@ python python_codes/census_workflow.py
 ```
 
 #### Check results
-After launching the project, users can go to [AIFlow Web UI]() to check all jobs are scheduled correctly and 
-   go to (Flink Web UI)[] to make sure the flink job run as expected.
+After launching the project, users can go to [AIFlow Web UI](127.0.0.1:8080) to check all jobs are scheduled correctly and 
+   go to Flink Web UI to make sure the flink job run as expected.
    Or go to Kafka Cli to check continuous generated prediction output.
