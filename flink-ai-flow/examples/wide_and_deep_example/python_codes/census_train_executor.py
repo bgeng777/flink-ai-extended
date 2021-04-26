@@ -43,7 +43,7 @@ class BatchTrainExecutor(Executor):
         work_num = 2
         ps_num = 1
         python_file = 'census_distribute.py'
-        func = 'map_func'
+        func = 'batch_map_func'
         prop = {MLCONSTANTS.PYTHON_VERSION: '', MLCONSTANTS.CONFIG_STORAGE_TYPE: MLCONSTANTS.STORAGE_ZOOKEEPER,
                 MLCONSTANTS.CONFIG_ZOOKEEPER_CONNECT_STR: 'localhost:2181',
                 MLCONSTANTS.CONFIG_ZOOKEEPER_BASE_PATH: '/demo',

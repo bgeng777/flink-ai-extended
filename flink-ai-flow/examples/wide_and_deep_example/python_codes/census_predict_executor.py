@@ -11,6 +11,10 @@ from pyflink.table import Table, TableEnvironment, ScalarFunction, \
 from pyflink.table.udf import udf
 
 
+def get_project_path():
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 class StreamPredictSource(SourceExecutor):
 
     def execute(self, function_context: FlinkFunctionContext) -> Table:
@@ -54,7 +58,7 @@ class Predict(ScalarFunction):
         self._exported_model = None
 
     def open(self, function_context: FunctionContext):
-        af.set_project_config_file(os.path.dirname(__file__) + '/project.yaml')
+        af.set_project_config_file(get_project_path() + '/project.yaml')
         model_version = af.get_deployed_model_version("wide_and_deep")
         print("predict model path:" + model_version.model_path)
         self._exported_model = model_version.model_path.split('|')[1]

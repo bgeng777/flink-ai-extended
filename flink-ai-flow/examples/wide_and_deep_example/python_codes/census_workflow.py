@@ -6,10 +6,6 @@ from census_train_executor import *
 from census_predict_executor import *
 
 
-def get_project_path():
-    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 def run_workflow():
     af.set_project_config_file(get_project_path() + '/project.yaml')
     with af.global_config_file(config_path=get_project_path() + '/resources/workflow_config.yaml'):
