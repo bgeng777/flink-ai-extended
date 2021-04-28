@@ -6,7 +6,7 @@ from ai_flow.model_center.entity.model_version_stage import ModelVersionEventTyp
 from flink_ai_flow import FlinkPythonExecutor
 from flink_ai_flow import LocalFlinkJobConfig
 from stream_train_stream_predict_pyflink_executor import *
-from examples.example_utils import example_util
+
 
 EXAMPLE_URI = os.path.abspath('.') + '/example_data/iris_{}.csv'
 
@@ -27,7 +27,7 @@ def run_pyflink_project(project_root_path):
     project_meta = af.register_project(name=project_name,
                                        uri=project_root_path,
                                        project_type='local python')
-
+    af.get_
     with af.config(python_job_config):
         train_example = af.register_example(name='train_example',
                                             support_type=ExampleSupportType.EXAMPLE_STREAM,

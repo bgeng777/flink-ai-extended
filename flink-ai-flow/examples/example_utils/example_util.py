@@ -18,16 +18,3 @@ def set_project_config(path):
 
 def get_parent_dir_name(path):
     return os.path.basename(os.path.dirname(path))
-
-
-
-def list_all_fields(obj):
-    for f in dir(obj):
-        if str(f).startswith("_"):
-            continue
-        if isinstance(f, types.MethodType):
-            continue
-        print(str(f) + str(type(f)))
-        if hasattr(obj, "__dict__") and f in obj.__dict__:
-            list_all_fields(obj.__dict__[f])
-    print("----------")

@@ -3,14 +3,14 @@ from ai_flow.common.scheduler_type import SchedulerType
 from batch_train_batch_predict_executor import *
 from ai_flow.plugins.local_platform import LocalPlatform
 from python_ai_flow.python_engine import PythonEngine
-from examples.example_utils import example_util
+from ai_flow.common.path_util import get_file_dir
 
-EXAMPLE_URI = os.path.abspath('.') + '/example_data/mnist_{}.npz'
+EXAMPLE_URI = os.path.abspath('../../..') + '/example_data/mnist_{}.npz'
 
 
 def run_project(project_root_path):
 
-    af.set_project_config_file(example_util.get_project_config_file(project_root_path))
+    af.set_project_config_file(project_root_path + "/project.yaml")
 
     # Config python job, we set platform to local and engine to python here
     python_job_config = af.BaseJobConfig(platform=LocalPlatform.platform(), engine=PythonEngine.engine())
@@ -119,7 +119,8 @@ def run_project(project_root_path):
     af.stop_before_control_dependency(predict_channel, push_model_channel)
 
     # Run workflow
-    transform_dag = 'batch_train_batch_predict'
+    transform_dag = os.path.basename(project_root_path)
+
     af.deploy_to_airflow(project_root_path, dag_id=transform_dag)
     context = af.run(project_path=project_root_path,
                      dag_id=transform_dag,
@@ -127,5 +128,5 @@ def run_project(project_root_path):
 
 
 if __name__ == '__main__':
-    project_path = example_util.init_project_path(".")
+    project_path = os.getcwd()
     run_project(project_path)

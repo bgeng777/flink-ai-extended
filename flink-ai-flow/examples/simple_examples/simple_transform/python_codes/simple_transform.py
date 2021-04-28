@@ -20,6 +20,16 @@ class SimpleTransform(Executor):
         return [result]
 
 
+class SimpleTransform2(Executor):
+    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+        # Calculate square of each data point the result(a pandas.dataframe)
+        result = input_list[0]
+        cols = result.columns
+        for col in cols:
+            result[col] = result[col].map(lambda x: x ** 3)
+        return [result]
+
+
 def run_project(project_root_path):
 
     af.set_project_config_file(example_util.get_project_config_file(project_root_path))
