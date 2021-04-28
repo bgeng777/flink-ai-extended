@@ -14,6 +14,12 @@ from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
 
 
+def preprocess_data(x_data, y_data):
+    random_state = check_random_state(0)
+    permutation = random_state.permutation(x_data.shape[0])
+    return x_data[permutation] if y_data is None else x_data[permutation], y_data[permutation]
+
+
 class ExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
@@ -26,10 +32,7 @@ class ExampleReader(ExampleExecutor):
 class ExampleTransformer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_train, y_train = input_list[0][0], input_list[0][1]
-        random_state = check_random_state(0)
-        permutation = random_state.permutation(x_train.shape[0])
-        x_train, y_train = x_train[permutation], y_train[permutation]
+        x_train, y_train = preprocess_data(input_list[0][0], input_list[0][1])
         x_train = x_train.reshape((x_train.shape[0], -1))
         res = [[StandardScaler().fit_transform(x_train), y_train]]
         return res
@@ -45,8 +48,8 @@ class ModelTrainer(Executor):
         model_path = get_file_dir(__file__) + '/saved_model'
         if not os.path.exists(model_path):
             os.makedirs(model_path)
-        model_version = time.strftime("%Y%m%d%H%M%S", time.localtime())
-        model_path = model_path + '/' + model_version
+        model_timestamp = time.strftime("%Y%m%d%H%M%S", time.localtime())
+        model_path = model_path + '/' + model_timestamp
         dump(clf, model_path)
         af.register_model_version(model=function_context.node_spec.output_model, model_path=model_path)
 
@@ -65,10 +68,7 @@ class EvaluateExampleReader(ExampleExecutor):
 class EvaluateTransformer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_test, y_test = input_list[0][0], input_list[0][1]
-        random_state = check_random_state(0)
-        permutation = random_state.permutation(x_test.shape[0])
-        x_test, y_test = x_test[permutation], y_test[permutation]
+        x_test, y_test = preprocess_data(input_list[0][0], input_list[0][1])
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test), y_test]]
 
@@ -110,10 +110,7 @@ class ValidateExampleReader(ExampleExecutor):
 class ValidateTransformer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_test, y_test = input_list[0][0], input_list[0][1]
-        random_state = check_random_state(0)
-        permutation = random_state.permutation(x_test.shape[0])
-        x_test, y_test = x_test[permutation], y_test[permutation]
+        x_test, y_test = preprocess_data(input_list[0][0], input_list[0][1])
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test), y_test]]
 
@@ -141,7 +138,6 @@ class ModelValidator(Executor):
                                     current_stage=ModelVersionStage.DEPLOYED)
 
         else:
-
             x_validate, y_validate = input_list[0][0], input_list[0][1]
             clf = load(self.model_path)
             scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro', cv=5)
