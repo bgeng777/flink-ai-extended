@@ -15,7 +15,7 @@ from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
 
 
-def preprocess_data(x_data, y_data):
+def preprocess_data(x_data, y_data=None):
     random_state = check_random_state(0)
     permutation = random_state.permutation(x_data.shape[0])
     if y_data is None:
@@ -79,13 +79,13 @@ class ModelTrainer(Executor):
             model_path = get_file_dir(__file__) + '/saved_model'
             if not os.path.exists(model_path):
                 os.makedirs(model_path)
-            model_version = time.strftime("%Y%m%d%H%M%S", time.localtime())
-            model_path = model_path + '/' + model_version
+            model_timestamp = time.strftime("%Y%m%d%H%M%S", time.localtime())
+            model_path = model_path + '/' + model_timestamp
             dump(clf, model_path)
             model = function_context.node_spec.output_model
             print(model.name)
-            print(model_version)
-
+            print(model_timestamp)
+            # When registering a model, corresponding type of event will be sent to downstream job as well.
             af.register_model_version(model=model, model_path=model_path, current_stage=ModelVersionStage.GENERATED)
             return df
 
@@ -115,23 +115,23 @@ class EvaluateTransformer(Executor):
 
 class ModelEvaluator(Executor):
 
-    def __init__(self):
+    def __init__(self, artifact_name):
         super().__init__()
-        self.model = None
         self.model_path = None
         self.model_version = None
+        self.artifact_name = artifact_name
 
     def setup(self, function_context: FunctionContext):
-        self.model = af.get_latest_generated_model_version(function_context.node_spec.model.name)
-        self.model_path = self.model.model_path
-        self.model_version = self.model.version
+        model = af.get_latest_generated_model_version(function_context.node_spec.model.name)
+        self.model_path = model.model_path
+        self.model_version = model.version
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         print("### {}".format(self.__class__.__name__))
         x_evaluate, y_evaluate = input_list[0][0], input_list[0][1]
         clf = load(self.model_path)
         scores = cross_val_score(clf, x_evaluate, y_evaluate, cv=5)
-        evaluate_artifact = af.get_artifact_by_name('evaluate_artifact2').stream_uri
+        evaluate_artifact = af.get_artifact_by_name(self.artifact_name).stream_uri
         with open(evaluate_artifact, 'a') as f:
             f.write('model version[{}] scores: {}\n'.format(self.model_version, scores))
         return []
@@ -156,12 +156,13 @@ class ValidateTransformer(Executor):
 
 class ModelValidator(Executor):
 
-    def __init__(self):
+    def __init__(self, artifact_name):
         super().__init__()
+        self.artifact_name = artifact_name
         self.model_name = None
-        self.model_meta = None
         self.model_path = None
         self.model_version = None
+        self.model_meta = None
 
     def setup(self, function_context: FunctionContext):
         self.model_name = function_context.node_spec.model.name
@@ -171,7 +172,7 @@ class ModelValidator(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
-        stream_uri = af.get_artifact_by_name('validate_artifact').stream_uri
+        stream_uri = af.get_artifact_by_name(self.artifact_name).stream_uri
         if deployed_model_version is None:
             with open(stream_uri, 'a') as f:
                 f.write('generated model version[{}] scores: {}\n'.format(self.model_version, "Init"))
@@ -186,8 +187,13 @@ class ModelValidator(Executor):
             deployed_scores = cross_val_score(deployed_clf, x_validate, y_validate, scoring='precision_macro')
 
             if np.mean(scores) > np.mean(deployed_scores):
+                # Deprecate deployed model
                 af.update_model_version(model_name=self.model_name,
                                         model_version=deployed_model_version.version,
+                                        current_stage=ModelVersionStage.DEPRECATED)
+                # Make latest generated model to be deployed
+                af.update_model_version(model_name=self.model_name,
+                                        model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
@@ -195,7 +201,7 @@ class ModelValidator(Executor):
                 with open(stream_uri, 'a') as f:
                     f.write('deployed model version[{}] scores: {}\n'.format(deployed_model_version.version,
                                                                              deployed_scores))
-                    f.write('generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                    f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, scores))
         return []
 
 

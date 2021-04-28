@@ -14,10 +14,13 @@ from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
 
 
-def preprocess_data(x_data, y_data):
+def preprocess_data(x_data, y_data=None):
     random_state = check_random_state(0)
     permutation = random_state.permutation(x_data.shape[0])
-    return x_data[permutation] if y_data is None else x_data[permutation], y_data[permutation]
+    if y_data is None:
+        return x_data[permutation]
+    else:
+        return x_data[permutation], y_data[permutation]
 
 
 class ExampleReader(ExampleExecutor):
