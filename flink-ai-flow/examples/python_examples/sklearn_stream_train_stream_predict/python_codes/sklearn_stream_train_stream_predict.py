@@ -1,8 +1,13 @@
+import os
+import ai_flow as af
 
 from ai_flow import ExampleSupportType, PythonObjectExecutor, ModelType
 from ai_flow.common.scheduler_type import SchedulerType
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from stream_train_stream_predict_executor import *
+from ai_flow.common.path_util import get_file_dir
+from stream_train_stream_predict_executor import TrainExampleReader, TrainExampleTransformer, ModelTrainer, \
+    EvaluateExampleReader, EvaluateTransformer, ModelEvaluator, ValidateExampleReader, ValidateTransformer, \
+    ModelValidator, PredictExampleReader, PredictTransformer, ModelPredictor, ExampleWriter
 
 EXAMPLE_URI = os.path.abspath('../..') + '/example_data/mnist_{}.npz'
 
