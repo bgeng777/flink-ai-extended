@@ -3,10 +3,11 @@ import ai_flow as af
 
 from ai_flow import ExampleSupportType, PythonObjectExecutor, ModelType
 from ai_flow.common.scheduler_type import SchedulerType
-from batch_train_batch_predict_executor import ExampleReader, ExampleTransformer, ModelTrainer, EvaluateExampleReader, \
+from batch_train_stream_predict_executor import ExampleReader, ExampleTransformer, ModelTrainer, EvaluateExampleReader, \
     EvaluateTransformer, ModelEvaluator, ValidateExampleReader, ValidateTransformer, ModelValidator, ModelPusher, \
     PredictExampleReader, PredictTransformer, ModelPredictor, ExampleWriter
 from ai_flow.common.path_util import get_file_dir
+from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
 
 EXAMPLE_URI = os.path.abspath('../..') + '/example_data/mnist_{}.npz'
 
@@ -17,9 +18,12 @@ def run_project(project_root_path):
     project_name = af.project_config().get_project_name()
     artifact_prefix = project_name + "."
 
+    evaluate_trigger = af.external_trigger(name='evaluate')
+    validate_trigger = af.external_trigger(name='validate')
+
     with af.global_config_file(project_root_path + '/resources/workflow_config.yaml'):
+        # the config of train job is a periodic job which means it will run every 60 seconds
         with af.config('train_job'):
-            # Training of model
             # Register metadata raw training data(example) and read example(i.e. training dataset)
             train_example = af.register_example(name=artifact_prefix + 'train_example',
                                                 support_type=ExampleSupportType.EXAMPLE_BATCH,
@@ -108,11 +112,21 @@ def run_project(project_root_path):
                              example_info=write_example,
                              executor=PythonObjectExecutor(python_object=ExampleWriter()))
 
-        # Define relation graph connected by control edge: train -> evaluate -> validate -> push -> predict
-        af.stop_before_control_dependency(evaluate_channel, train_channel)
-        af.stop_before_control_dependency(validate_channel, evaluate_channel)
+        # Define relation graph connected by control edge: train -> evaluate
+        #                                                     \---> validate -> push
+        #                                                     \---> predict
+        # Once a round of training is done, validate and evaluate will be launched.
+        # Prediction will start once the first round of training is done and
+        # when pusher push a new model, the predictor will use the latest deployed model as well.
+        af.model_version_control_dependency(src=validate_channel,
+                                            model_version_event_type=ModelVersionEventType.MODEL_GENERATED,
+                                            dependency=validate_trigger, model_name=train_model.name)
+        af.model_version_control_dependency(src=evaluate_channel,
+                                            model_version_event_type=ModelVersionEventType.MODEL_GENERATED,
+                                            dependency=evaluate_trigger, model_name=train_model.name)
+
         af.stop_before_control_dependency(push_model_channel, validate_channel)
-        af.stop_before_control_dependency(predict_channel, push_model_channel)
+        # af.stop_before_control_dependency(predict_channel, train_channel)
 
     # Run workflow
     transform_dag = os.path.basename(project_root_path)

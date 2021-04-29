@@ -6,7 +6,6 @@ from ai_flow.plugins.engine import CMDEngine
 from ai_flow.plugins.local_platform import LocalPlatform
 from python_ai_flow import Executor, FunctionContext
 from python_ai_flow.python_engine import PythonEngine
-from examples.example_utils import example_util
 
 
 # Transform Executor class
@@ -20,19 +19,9 @@ class SimpleTransform(Executor):
         return [result]
 
 
-class SimpleTransform2(Executor):
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        # Calculate square of each data point the result(a pandas.dataframe)
-        result = input_list[0]
-        cols = result.columns
-        for col in cols:
-            result[col] = result[col].map(lambda x: x ** 3)
-        return [result]
-
-
 def run_project(project_root_path):
 
-    af.set_project_config_file(example_util.get_project_config_file(project_root_path))
+    af.set_project_config_file(project_root_path + '/project.yaml')
     # Config command line job, we set platform to local and engine to cmd_line here
     cmd_job_config = af.BaseJobConfig(platform=LocalPlatform.platform(), engine=CMDEngine().engine())
     with af.config(cmd_job_config):
@@ -49,10 +38,8 @@ def run_project(project_root_path):
     with af.config(python_job_config):
         # Path of Source data(under '..../simple_transform_airflow' dir)
         source_path = os.path.dirname(os.path.abspath(__file__)) + '/source_data.csv'
-        print(source_path)
         # Path of Sink data
         sink_path = os.path.dirname(os.path.abspath(__file__)) + '/sink_data.csv'
-        print(sink_path)
 
         # To make the project replaceable, we register the example in metadata service
         read_example_meta = af.register_example(name='read_example', support_type=ExampleSupportType.EXAMPLE_BATCH,
@@ -72,12 +59,12 @@ def run_project(project_root_path):
 
         # Write example to specific path
         write = af.write_example(input_data=transform_channel, example_info=write_example_meta,
-                                 exec_args=ExecuteArgs(batch_properties=Args(sep='_', header=False, index=False)))
+                                 exec_args=ExecuteArgs(batch_properties=Args(sep=',', header=False, index=False)))
 
     # Add control dependency, which means read_example job will start right after command line job finishes.
     af.stop_before_control_dependency(read_example_channel, cmd_job)
 
-    transform_dag = example_util.get_parent_dir_name(__file__)
+    transform_dag = 'simple_transform'
     af.deploy_to_airflow(project_root_path, dag_id=transform_dag)
     context = af.run(project_path=project_root_path,
                      dag_id=transform_dag,
@@ -85,5 +72,5 @@ def run_project(project_root_path):
 
 
 if __name__ == '__main__':
-    project_path = example_util.init_project_path(".")
+    project_path = os.getcwd()
     run_project(project_path)

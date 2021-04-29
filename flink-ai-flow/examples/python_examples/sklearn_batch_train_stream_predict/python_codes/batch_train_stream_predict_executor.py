@@ -12,6 +12,7 @@ import ai_flow as af
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
+from notification_service.base_notification import EventWatcher
 
 
 def preprocess_data(x_data, y_data=None):
@@ -139,6 +140,8 @@ class ModelValidator(Executor):
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version,
                                     current_stage=ModelVersionStage.DEPLOYED)
+            # Tell downstream job that first deployment of model is dome
+            af.send_event('first_deployment', "SUCCESS")
 
         else:
             x_validate, y_validate = input_list[0][0], input_list[0][1]
@@ -205,9 +208,26 @@ class PredictTransformer(Executor):
         return [[StandardScaler().fit_transform(x_test)]]
 
 
+class PredictWatcher(EventWatcher):
+
+    def __init__(self):
+        super().__init__()
+        self.model_version = None
+
+    def process(self, notifications):
+        for notification in notifications:
+            self.model_version = notification.value
+
+
 class ModelPredictor(Executor):
     def __init__(self):
         super().__init__()
+        self.watcher = PredictWatcher()
+
+    def setup(self, function_context: FunctionContext):
+        # If there is no model deployed, wait for the event
+        if af.get_deployed_model_version(function_context.node_spec.model.name) is None:
+            af.start_listen_event(key='first_deployment', watcher=self.watcher)
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         model_name = function_context.node_spec.model.name

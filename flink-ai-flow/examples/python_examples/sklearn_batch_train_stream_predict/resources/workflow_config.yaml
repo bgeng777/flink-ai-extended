@@ -21,6 +21,10 @@ train_job:
   platform: local
   engine: python
   job_name: Train
+  periodic_config:
+    periodic_type: interval
+    args:
+      seconds: 60
 
 eval_job:
   platform: local
