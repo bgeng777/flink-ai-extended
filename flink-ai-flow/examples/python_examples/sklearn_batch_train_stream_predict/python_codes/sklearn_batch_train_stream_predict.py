@@ -126,7 +126,6 @@ def run_project(project_root_path):
                                             dependency=evaluate_trigger, model_name=train_model.name)
 
         af.stop_before_control_dependency(push_model_channel, validate_channel)
-        # af.stop_before_control_dependency(predict_channel, train_channel)
 
     # Run workflow
     transform_dag = os.path.basename(project_root_path)
