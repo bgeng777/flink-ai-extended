@@ -223,83 +223,45 @@ class ModelValidator(Executor):
         return []
 
 
-class ExamplePredictThread(threading.Thread):
-
-    def __init__(self, stream_uri):
-        super().__init__()
-        self.stream_uri = stream_uri
-        self.stream = Stream()
-
-    def run(self) -> None:
-        for i in range(0, 5):
-            f = np.load(self.stream_uri)
-            x_test = f['x_test']
-            f.close()
-            self.stream.emit(x_test)
-            print("### {} {}".format(self.__class__.__name__, "generate data flow"))
-            time.sleep(30)
-
-
 class PredictExampleReader(ExampleExecutor):
 
-    def __init__(self):
-        super().__init__()
-        self.thread = None
-
-    def setup(self, function_context: FunctionContext):
-        stream_uri = function_context.node_spec.example_meta.stream_uri
-        self.thread = ExamplePredictThread(stream_uri)
-        self.thread.start()
-
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        return [self.thread.stream]
+        f = np.load(function_context.node_spec.example_meta.batch_uri)
+        x_test = f['x_test']
+        f.close()
+        return [[x_test]]
 
 
 class PredictTransformer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        def transform(df):
-            x_test = preprocess_data(df, None)
-            x_test = x_test.reshape((x_test.shape[0], -1))
-            return StandardScaler().fit_transform(x_test)
-
-        return [input_list[0].map(transform)]
+        x_test = input_list[0][0]
+        random_state = check_random_state(0)
+        permutation = random_state.permutation(x_test.shape[0])
+        x_test = x_test[permutation]
+        x_test = x_test.reshape((x_test.shape[0], -1))
+        return [[StandardScaler().fit_transform(x_test)]]
 
 
 class ModelPredictor(Executor):
-
     def __init__(self):
         super().__init__()
-        self.model_name = None
-        self.model_version = None
+        self.model_meta = None
 
     def setup(self, function_context: FunctionContext):
-        self.model_name = function_context.node_spec.model.name
-        while af.get_deployed_model_version(self.model_name) is None:
-            time.sleep(5)
-        print("### {} setup done for {}".format(self.__class__.__name__, function_context.node_spec.model.name))
+        model_name = function_context.node_spec.model.name
+        while af.get_deployed_model_version(model_name) is None:
+            time.sleep(2)
+        else:
+            self.model_meta = af.get_deployed_model_version(model_name)
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        def predict(df):
-            x_test = df
-            model_meta = af.get_deployed_model_version(self.model_name)
-            model_path = model_meta.model_path
-            clf = load(model_path)
-            return model_meta.version, clf.predict(x_test)
-
-        return [input_list[0].map(predict)]
+        clf = load(self.model_meta.model_path)
+        return [clf.predict(input_list[0][0])]
 
 
 class ExampleWriter(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        def write_example(df):
-            with open(function_context.node_spec.example_meta.stream_uri, 'a') as f:
-                f.write('model version[{}] predict: {}\n'.format(df[0], df[1]))
-            return df
-
-        def sink(df):
-            pass
-
-        input_list[0].map(write_example).sink(sink)
+        np.savetxt(function_context.node_spec.example_meta.batch_uri, input_list[0])
         return []
