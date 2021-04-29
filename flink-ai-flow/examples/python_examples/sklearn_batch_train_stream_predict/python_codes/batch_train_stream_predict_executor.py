@@ -225,9 +225,8 @@ class ModelPredictor(Executor):
         self.watcher = PredictWatcher()
 
     def setup(self, function_context: FunctionContext):
-        # If there is no model deployed, wait for the event
-        if af.get_deployed_model_version(function_context.node_spec.model.name) is None:
-            af.start_listen_event(key='first_deployment', watcher=self.watcher)
+        while af.get_deployed_model_version(function_context.node_spec.model.name) is None:
+            time.sleep(1)
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         model_name = function_context.node_spec.model.name

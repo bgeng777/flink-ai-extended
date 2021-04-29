@@ -142,5 +142,5 @@ def run_project(project_root_path):
 
 
 if __name__ == '__main__':
-    project_path = os.getcwd()
+    project_path = os.path.dirname(get_file_dir(__file__))
     run_project(project_path)
