@@ -1,3 +1,21 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
 import os
 import shutil
 import time
@@ -135,10 +153,11 @@ class ModelValidator(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
+
         if deployed_model_version is None:
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version,
-                                    current_stage=ModelVersionStage.DEPLOYED)
+                                    current_stage=ModelVersionStage.VALIDATED)
 
         else:
             x_validate, y_validate = input_list[0][0], input_list[0][1]
@@ -150,11 +169,11 @@ class ModelValidator(Executor):
             batch_uri = af.get_artifact_by_name(self.artifact).batch_uri
             if np.mean(scores) > np.mean(deployed_scores):
                 af.update_model_version(model_name=self.model_name,
-                                        model_version=deployed_model_version.version,
+                                        model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
                 af.update_model_version(model_name=self.model_name,
-                                        model_version=self.model_version,
-                                        current_stage=ModelVersionStage.DEPLOYED)
+                                        model_version=deployed_model_version.version,
+                                        current_stage=ModelVersionStage.DEPRECATED)
                 with open(batch_uri, 'a') as f:
                     f.write('deployed model version[{}] scores: {}\n'.format(deployed_model_version.version,
                                                                              deployed_scores))
@@ -168,20 +187,24 @@ class ModelPusher(Executor):
         self.artifact = artifact
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        node_spec = function_context.node_spec
-        deployed_model_path = af.get_artifact_by_name(self.artifact).batch_uri
-        if not os.path.exists(deployed_model_path):
-            os.makedirs(deployed_model_path)
-        deployed_model_version = None
-        if deployed_model_version is None:
-            deployed_model_version = af.get_deployed_model_version(model_name=node_spec.model.name)
-        for file in os.listdir(deployed_model_path):
-            file_path = os.path.join(deployed_model_path, file)
+        model_name = function_context.node_spec.model.name
+        validated_model = af.get_latest_validated_model_version(model_name)
+        af.update_model_version(model_name=model_name,
+                                model_version=validated_model.version,
+                                current_stage=ModelVersionStage.DEPLOYED)
+        deployed_model_version = af.get_deployed_model_version(model_name=model_name)
+
+        # Copy deployed model to deploy_model_dir
+        deployed_model_dir = af.get_artifact_by_name(self.artifact).batch_uri
+        if not os.path.exists(deployed_model_dir):
+            os.makedirs(deployed_model_dir)
+        for file in os.listdir(deployed_model_dir):
+            file_path = os.path.join(deployed_model_dir, file)
             if os.path.isfile(file_path):
                 os.remove(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path, True)
-        shutil.copy(deployed_model_version.model_path, deployed_model_path)
+        shutil.copy(deployed_model_version.model_path, deployed_model_dir)
         return []
 
 
@@ -212,8 +235,7 @@ class ModelPredictor(Executor):
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         model_name = function_context.node_spec.model.name
         model_meta = af.get_deployed_model_version(model_name)
-        model_path = model_meta.model_path
-        clf = load(model_path)
+        clf = load(model_meta.model_path)
         return [clf.predict(input_list[0][0])]
 
 
