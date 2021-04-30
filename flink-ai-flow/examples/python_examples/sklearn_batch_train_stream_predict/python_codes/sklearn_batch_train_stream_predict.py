@@ -112,9 +112,7 @@ def run_project(project_root_path):
                              example_info=write_example,
                              executor=PythonObjectExecutor(python_object=ExampleWriter()))
 
-        # Define relation graph connected by control edge: train -> evaluate
-        #                                                     \---> validate -> push
-        #                                                     \---> predict
+        # Define relation graph connected by control edge:
         # Once a round of training is done, validate and evaluate will be launched.
         # Prediction will start once the first round of training is done and
         # when pusher push a new model, the predictor will use the latest deployed model as well.

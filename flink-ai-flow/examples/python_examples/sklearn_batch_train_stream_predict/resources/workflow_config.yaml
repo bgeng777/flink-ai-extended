@@ -22,7 +22,7 @@ train_job:
   engine: python
   job_name: Train
   periodic_config:
-    periodic_type: interval
+    periodic_type: interval # 'interval' or 'cron'
     args:
       seconds: 60
 

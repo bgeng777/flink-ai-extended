@@ -218,24 +218,58 @@ class ModelPusher(Executor):
         return []
 
 
+class ExamplePredictThread(threading.Thread):
+
+    def __init__(self, stream_uri):
+        super().__init__()
+        self.stream_uri = stream_uri
+        self.stream = Stream()
+
+    def run(self) -> None:
+        for i in range(0, 5):
+            f = np.load(self.stream_uri)
+            x_test = f['x_test']
+            f.close()
+            self.stream.emit(x_test)
+            print("### {} {}".format(self.__class__.__name__, "generate data flow"))
+            time.sleep(30)
+
+
 class PredictExampleReader(ExampleExecutor):
 
+    def __init__(self):
+        super().__init__()
+        self.thread = None
+
+    def setup(self, function_context: FunctionContext):
+        stream_uri = function_context.node_spec.example_meta.stream_uri
+        self.thread = ExamplePredictThread(stream_uri)
+        self.thread.start()
+
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_test = f['x_test']
-        f.close()
-        return [[x_test]]
+        return [self.thread.stream]
 
 
 class PredictTransformer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_test = input_list[0][0]
-        random_state = check_random_state(0)
-        permutation = random_state.permutation(x_test.shape[0])
-        x_test = x_test[permutation]
-        x_test = x_test.reshape((x_test.shape[0], -1))
-        return [[StandardScaler().fit_transform(x_test)]]
+        def transform(df):
+            x_test = preprocess_data(df, None)
+            x_test = x_test.reshape((x_test.shape[0], -1))
+            return StandardScaler().fit_transform(x_test)
+
+        return [input_list[0].map(transform)]
+
+
+class PredictWatcher(EventWatcher):
+
+    def __init__(self):
+        super().__init__()
+        self.model_version = None
+
+    def process(self, notifications):
+        for notification in notifications:
+            self.model_version = notification.value
 
 
 class ModelPredictor(Executor):
