@@ -30,6 +30,16 @@ import ai_flow as af
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
+from notification_service.base_notification import EventWatcher
+
+
+def preprocess_data(x_data, y_data=None):
+    random_state = check_random_state(0)
+    permutation = random_state.permutation(x_data.shape[0])
+    if y_data is None:
+        return x_data[permutation]
+    else:
+        return x_data[permutation], y_data[permutation]
 
 
 def preprocess_data(x_data, y_data=None):
@@ -226,6 +236,17 @@ class PredictTransformer(Executor):
         x_test = x_test[permutation]
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test)]]
+
+
+class PredictWatcher(EventWatcher):
+
+    def __init__(self):
+        super().__init__()
+        self.model_version = None
+
+    def process(self, notifications):
+        for notification in notifications:
+            self.model_version = notification.value
 
 
 class ModelPredictor(Executor):

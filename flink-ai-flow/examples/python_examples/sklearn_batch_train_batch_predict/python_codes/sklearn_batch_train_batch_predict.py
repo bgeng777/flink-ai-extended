@@ -26,7 +26,7 @@ from batch_train_batch_predict_executor import ExampleReader, ExampleTransformer
     PredictExampleReader, PredictTransformer, ModelPredictor, ExampleWriter
 from ai_flow.common.path_util import get_file_dir
 
-EXAMPLE_URI = os.path.abspath('../..') + '/example_data/mnist_{}.npz'
+EXAMPLE_URI = os.path.abspath(os.path.join(__file__, "../../../..")) + '/example_data/mnist_{}.npz'
 
 
 def run_project(project_root_path):

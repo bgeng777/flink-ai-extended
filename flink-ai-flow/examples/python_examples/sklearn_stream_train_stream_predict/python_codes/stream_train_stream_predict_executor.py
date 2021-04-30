@@ -105,6 +105,7 @@ class ModelTrainer(Executor):
             print(model_timestamp)
             # When registering a model, corresponding type of event will be sent to downstream job as well.
             af.register_model_version(model=model, model_path=model_path, current_stage=ModelVersionStage.GENERATED)
+            print(af.get_latest_generated_model_version(model_name=model.name).model_path)
             return df
 
         def sink(df):

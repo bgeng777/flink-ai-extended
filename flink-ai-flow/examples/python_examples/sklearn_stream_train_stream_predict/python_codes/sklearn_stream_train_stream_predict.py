@@ -27,7 +27,7 @@ from stream_train_stream_predict_executor import TrainExampleReader, TrainExampl
     EvaluateExampleReader, EvaluateTransformer, ModelEvaluator, ValidateExampleReader, ValidateTransformer, \
     ModelValidator, PredictExampleReader, PredictTransformer, ModelPredictor, ExampleWriter
 
-EXAMPLE_URI = os.path.abspath('../..') + '/example_data/mnist_{}.npz'
+EXAMPLE_URI = os.path.abspath(os.path.join(__file__, "../../../..")) + '/example_data/mnist_{}.npz'
 
 
 def run_project(project_root_path):
