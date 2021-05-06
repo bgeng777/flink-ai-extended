@@ -22,7 +22,8 @@ def run_project(project_root_path):
     push_trigger = af.external_trigger(name='push')
 
     with af.global_config_file(project_root_path + '/resources/workflow_config.yaml'):
-        # the config of train job is a periodic job which means it will run every 60 seconds
+        # the config of train job is a periodic job  which means it will
+        # run every `interval`(defined in workflow_config.yaml) seconds
         with af.config('train_job'):
             # Register metadata raw training data(example) and read example(i.e. training dataset)
             train_example = af.register_example(name=artifact_prefix + 'train_example',
@@ -47,7 +48,7 @@ def run_project(project_root_path):
             # Read validation dataset and validate model before it is used to predict
 
             validate_example = af.register_example(name=artifact_prefix + 'validate_example',
-                                                   support_type=ExampleSupportType.EXAMPLE_BATCH,
+                                                   support_type=ExampleSupportType.EXAMPLE_STREAM,
                                                    batch_uri=EXAMPLE_URI.format('evaluate'))
             validate_read_example = af.read_example(example_info=validate_example,
                                                     executor=PythonObjectExecutor(
@@ -68,14 +69,14 @@ def run_project(project_root_path):
             push_model_artifact = af.register_artifact(name=push_model_artifact_name,
                                                        batch_uri=get_file_dir(__file__) + '/pushed_model')
             push_channel = af.push_model(model_info=train_model,
-                                               executor=PythonObjectExecutor(
-                                                   python_object=ModelPusher(push_model_artifact_name)))
+                                         executor=PythonObjectExecutor(
+                                            python_object=ModelPusher(push_model_artifact_name)))
 
         with af.config('predict_job'):
             # Prediction(Inference)
             predict_example = af.register_example(name=artifact_prefix + 'predict_example',
-                                                  support_type=ExampleSupportType.EXAMPLE_BATCH,
-                                                  batch_uri=EXAMPLE_URI.format('predict'))
+                                                  support_type=ExampleSupportType.EXAMPLE_STREAM,
+                                                  stream_uri=EXAMPLE_URI.format('predict'))
             predict_read_example = af.read_example(example_info=predict_example,
                                                    executor=PythonObjectExecutor(python_object=PredictExampleReader()))
             predict_transform = af.transform(input_data_list=[predict_read_example],
@@ -86,7 +87,7 @@ def run_project(project_root_path):
             # Save prediction result
             write_example = af.register_example(name=artifact_prefix + 'write_example',
                                                 support_type=ExampleSupportType.EXAMPLE_BATCH,
-                                                batch_uri=get_file_dir(__file__) + '/predict_model')
+                                                stream_uri=get_file_dir(__file__) + '/predict_result')
             af.write_example(input_data=predict_channel,
                              example_info=write_example,
                              executor=PythonObjectExecutor(python_object=ExampleWriter()))
@@ -103,11 +104,8 @@ def run_project(project_root_path):
                                             model_version_event_type=ModelVersionEventType.MODEL_VALIDATED,
                                             dependency=push_trigger, model_name=train_model.name)
 
-        af.stop_before_control_dependency(predict_channel, push_channel)
-
     # Run workflow
-    transform_dag = os.path.basename(project_root_path)
-
+    transform_dag = project_name
     af.deploy_to_airflow(project_root_path, dag_id=transform_dag)
     af.run(project_path=project_root_path,
            dag_id=transform_dag,

@@ -18,6 +18,7 @@
 #
 import os
 import shutil
+import threading
 import time
 from typing import List
 import numpy as np
@@ -27,6 +28,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils import check_random_state
 import ai_flow as af
+from streamz import Stream
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
@@ -64,7 +66,7 @@ class ModelTrainer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         # https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html
-        clf = LogisticRegression(C=50. / 5000, penalty='l1', solver='saga', tol=0.1)
+        clf = LogisticRegression(C=50. / 5000, penalty='l1', solver='saga', tol=1)
         x_train, y_train = input_list[0][0], input_list[0][1]
         clf.fit(x_train, y_train)
         model_path = get_file_dir(__file__) + '/saved_model'
@@ -74,58 +76,15 @@ class ModelTrainer(Executor):
         model_path = model_path + '/' + model_timestamp
         dump(clf, model_path)
         af.register_model_version(model=function_context.node_spec.output_model, model_path=model_path)
-
-        return []
-
-
-class EvaluateExampleReader(ExampleExecutor):
-
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_test, y_test = f['x_test'], f['y_test']
-        f.close()
-        return [[x_test, y_test]]
-
-
-class EvaluateTransformer(Executor):
-
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_test, y_test = preprocess_data(input_list[0][0], input_list[0][1])
-        x_test = x_test.reshape((x_test.shape[0], -1))
-        return [[StandardScaler().fit_transform(x_test), y_test]]
-
-
-class ModelEvaluator(Executor):
-
-    def __init__(self, artifact):
-        super().__init__()
-        self.model_path = None
-        self.model_version = None
-        self.artifact = artifact
-
-    def setup(self, function_context: FunctionContext):
-        print(function_context.node_spec.model.name)
-        model = af.get_latest_generated_model_version(function_context.node_spec.model.name)
-        self.model_path = model.model_path
-        self.model_version = model.version
-
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_evaluate, y_evaluate = input_list[0][0], input_list[0][1]
-        clf = load(self.model_path)
-        scores = cross_val_score(clf, x_evaluate, y_evaluate, cv=5)
-        evaluate_artifact = af.get_artifact_by_name(self.artifact).batch_uri
-        with open(evaluate_artifact, 'a') as f:
-            f.write('model version[{}] scores: {}\n'.format(self.model_version, scores))
-
+        print("Done for {}".format(self.__class__.__name__))
         return []
 
 
 class ValidateExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_test, y_test = f['x_test'], f['y_test']
-        f.close()
+        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+            x_test, y_test = f['x_test'], f['y_test']
         return [[x_test, y_test]]
 
 
@@ -139,46 +98,45 @@ class ValidateTransformer(Executor):
 
 class ModelValidator(Executor):
 
-    def __init__(self, artifact):
+    def __init__(self, artifact_name):
         super().__init__()
+        self.artifact_name = artifact_name
         self.model_name = None
         self.model_path = None
         self.model_version = None
-        self.artifact = artifact
+        self.model_meta = None
 
     def setup(self, function_context: FunctionContext):
         self.model_name = function_context.node_spec.model.name
-        model = af.get_latest_generated_model_version(self.model_name)
-        self.model_path = model.model_path
-        self.model_version = model.version
+        self.model_meta = af.get_latest_generated_model_version(self.model_name)
+        self.model_path = self.model_meta.model_path
+        self.model_version = self.model_meta.version
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
-
+        x_validate, y_validate = input_list[0][0], input_list[0][1]
+        clf = load(self.model_path)
+        scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro', cv=5)
+        batch_uri = af.get_artifact_by_name(self.artifact_name).batch_uri
         if deployed_model_version is None:
+            with open(batch_uri, 'a') as f:
+                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, scores))
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version,
                                     current_stage=ModelVersionStage.VALIDATED)
-
         else:
-            x_validate, y_validate = input_list[0][0], input_list[0][1]
-            clf = load(self.model_path)
-            scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro', cv=5)
             deployed_clf = load(deployed_model_version.model_path)
             deployed_scores = cross_val_score(deployed_clf, x_validate, y_validate, scoring='precision_macro')
 
-            batch_uri = af.get_artifact_by_name(self.artifact).batch_uri
             if np.mean(scores) > np.mean(deployed_scores):
+                # Make latest generated model to be validated
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
-                af.update_model_version(model_name=self.model_name,
-                                        model_version=deployed_model_version.version,
-                                        current_stage=ModelVersionStage.DEPRECATED)
                 with open(batch_uri, 'a') as f:
-                    f.write('deployed model version[{}] scores: {}\n'.format(deployed_model_version.version,
-                                                                             deployed_scores))
-                    f.write('generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                    f.write('current model version[{}] scores: {}\n'.format(deployed_model_version.version,
+                                                                            deployed_scores))
+                    f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, scores))
         return []
 
 
@@ -190,12 +148,21 @@ class ModelPusher(Executor):
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         model_name = function_context.node_spec.model.name
         validated_model = af.get_latest_validated_model_version(model_name)
+        # Deprecate deployed model
+        deployed_model_version = af.get_deployed_model_version(model_name)
+        if deployed_model_version is not None:
+            af.update_model_version(model_name=model_name,
+                                    model_version=deployed_model_version.version,
+                                    current_stage=ModelVersionStage.DEPRECATED)
         af.update_model_version(model_name=model_name,
                                 model_version=validated_model.version,
                                 current_stage=ModelVersionStage.DEPLOYED)
-        deployed_model_version = af.get_deployed_model_version(model_name=model_name)
+
+        af.send_event(key='START_PREDICTION', value=validated_model.version)
+        print(validated_model.version)
 
         # Copy deployed model to deploy_model_dir
+
         deployed_model_dir = af.get_artifact_by_name(self.artifact).batch_uri
         if not os.path.exists(deployed_model_dir):
             os.makedirs(deployed_model_dir)
@@ -205,19 +172,9 @@ class ModelPusher(Executor):
                 os.remove(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path, True)
+        deployed_model_version = af.get_deployed_model_version(model_name)
         shutil.copy(deployed_model_version.model_path, deployed_model_dir)
         return []
-
-
-class PredictWatcher(EventWatcher):
-
-    def __init__(self):
-        super().__init__()
-        self.model_version = None
-
-    def process(self, notifications):
-        for notification in notifications:
-            self.model_version = notification.value
 
 
 class ExamplePredictThread(threading.Thread):
@@ -262,20 +219,37 @@ class PredictTransformer(Executor):
         return [input_list[0].map(transform)]
 
 
+class PredictWatcher(EventWatcher):
+
+    def __init__(self):
+        super().__init__()
+        self.model_version = None
+
+    def process(self, notifications):
+        for notification in notifications:
+            self.model_version = notification.value
+
+
 class ModelPredictor(Executor):
 
     def __init__(self):
         super().__init__()
         self.model_name = None
         self.model_version = None
+        self.watcher = PredictWatcher()
 
     def setup(self, function_context: FunctionContext):
+        # In this class, we show the usage of start_listen_event method which make it possible to send various events.
+        # Users can also refer `stream train stream predict` example to directly use provided API to get model version.
+        af.start_listen_event(key='START_PREDICTION', watcher=self.watcher)
         self.model_name = function_context.node_spec.model.name
-        while af.get_deployed_model_version(self.model_name) is None:
-            time.sleep(5)
         print("### {} setup done for {}".format(self.__class__.__name__, function_context.node_spec.model.name))
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
+        while self.watcher.model_version is None:
+            time.sleep(2)
+        print("### {} ".format(self.watcher.model_version))
+
         def predict(df):
             x_test = df
             model_meta = af.get_deployed_model_version(self.model_name)
