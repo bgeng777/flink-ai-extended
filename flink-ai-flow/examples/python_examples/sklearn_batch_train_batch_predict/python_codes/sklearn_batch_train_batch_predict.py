@@ -91,7 +91,7 @@ def run_project(project_root_path):
                                               executor=PythonObjectExecutor(python_object=ValidateTransformer()))
             validate_artifact_name = artifact_prefix + 'validate_artifact'
             validate_artifact = af.register_artifact(name=validate_artifact_name,
-                                                     batch_uri=get_file_dir(__file__) + '/validate_model')
+                                                     batch_uri=get_file_dir(__file__) + '/validate_result')
             validate_channel = af.model_validate(input_data_list=[validate_transform],
                                                  model_info=train_model,
                                                  executor=PythonObjectExecutor(
@@ -121,7 +121,7 @@ def run_project(project_root_path):
             # Save prediction result
             write_example = af.register_example(name=artifact_prefix + 'write_example',
                                                 support_type=ExampleSupportType.EXAMPLE_BATCH,
-                                                batch_uri=get_file_dir(__file__) + '/predict_model')
+                                                batch_uri=get_file_dir(__file__) + '/predict_result')
             af.write_example(input_data=predict_channel,
                              example_info=write_example,
                              executor=PythonObjectExecutor(python_object=ExampleWriter()))

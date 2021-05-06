@@ -1,9 +1,0 @@
-generated model version[1] scores: Init
-deployed model version[1] scores: [0.82302068 0.83188428 0.82799901]
-new generated model version[2] scores: [0.82338835 0.84117587 0.83445127 0.83016929 0.83247329]
-deployed model version[2] scores: [0.82313323 0.82673308 0.82527533]
-new generated model version[3] scores: [0.81998439 0.83790686 0.83484914 0.83408633 0.83504142]
-deployed model version[3] scores: [0.82390305 0.82505527 0.82671759]
-new generated model version[4] scores: [0.82755822 0.83838443 0.83968325 0.83192504 0.83040303]
-deployed model version[4] scores: [0.82533776 0.82778031 0.82976367]
-new generated model version[5] scores: [0.82676854 0.84002256 0.83673017 0.8335189  0.83275513]

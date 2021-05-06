@@ -22,15 +22,15 @@ train_job:
   engine: python
   job_name: Train
 
-eval_job:
-  platform: local
-  engine: python
-  job_name: Evaluate
-
 validate_job:
   platform: local
   engine: python
   job_name: Validate
+
+push_job:
+  platform: local
+  engine: python
+  job_name: Push
 
 predict_job:
   platform: local

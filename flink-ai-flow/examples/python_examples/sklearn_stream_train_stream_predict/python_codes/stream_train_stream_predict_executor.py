@@ -19,6 +19,7 @@
 import os
 import threading
 import time
+import shutil
 from typing import List
 import numpy as np
 from joblib import dump, load
@@ -43,7 +44,7 @@ def preprocess_data(x_data, y_data=None):
 
 
 class ExampleTrainThread(threading.Thread):
-
+    """Create stream training data"""
     def __init__(self, stream_uri):
         super().__init__()
         self.stream_uri = stream_uri
@@ -51,9 +52,8 @@ class ExampleTrainThread(threading.Thread):
 
     def run(self) -> None:
         for i in range(0, 5):
-            f = np.load(self.stream_uri)
-            x_train, y_train = f['x_train'], f['y_train']
-            f.close()
+            with np.load(self.stream_uri) as f:
+                x_train, y_train = f['x_train'], f['y_train']
             self.stream.emit((x_train, y_train))
             time.sleep(30)
 
@@ -115,53 +115,11 @@ class ModelTrainer(Executor):
         return []
 
 
-class EvaluateExampleReader(ExampleExecutor):
-
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.stream_uri)
-        x_test, y_test = f['x_test'], f['y_test']
-        f.close()
-        return [[x_test, y_test]]
-
-
-class EvaluateTransformer(Executor):
-
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_test, y_test = preprocess_data(input_list[0][0], input_list[0][1])
-        x_test = x_test.reshape((x_test.shape[0], -1))
-        return [[StandardScaler().fit_transform(x_test), y_test]]
-
-
-class ModelEvaluator(Executor):
-
-    def __init__(self, artifact_name):
-        super().__init__()
-        self.model_path = None
-        self.model_version = None
-        self.artifact_name = artifact_name
-
-    def setup(self, function_context: FunctionContext):
-        model = af.get_latest_generated_model_version(function_context.node_spec.model.name)
-        self.model_path = model.model_path
-        self.model_version = model.version
-
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        print("### {}".format(self.__class__.__name__))
-        x_evaluate, y_evaluate = input_list[0][0], input_list[0][1]
-        clf = load(self.model_path)
-        scores = cross_val_score(clf, x_evaluate, y_evaluate, cv=5)
-        evaluate_artifact = af.get_artifact_by_name(self.artifact_name).stream_uri
-        with open(evaluate_artifact, 'a') as f:
-            f.write('model version[{}] scores: {}\n'.format(self.model_version, scores))
-        return []
-
-
 class ValidateExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.stream_uri)
-        x_test, y_test = f['x_test'], f['y_test']
-        f.close()
+        with np.load(function_context.node_spec.example_meta.stream_uri) as f:
+            x_test, y_test = f['x_test'], f['y_test']
         return [[x_test, y_test]]
 
 
@@ -191,36 +149,66 @@ class ModelValidator(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
+        x_validate, y_validate = input_list[0][0], input_list[0][1]
+        clf = load(self.model_path)
+        scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro')
         stream_uri = af.get_artifact_by_name(self.artifact_name).stream_uri
         if deployed_model_version is None:
             with open(stream_uri, 'a') as f:
-                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, "Init"))
+                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, np.mean(scores)))
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version,
-                                    current_stage=ModelVersionStage.DEPLOYED)
+                                    current_stage=ModelVersionStage.VALIDATED)
         else:
-            x_validate, y_validate = input_list[0][0], input_list[0][1]
-            clf = load(self.model_path)
-            scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro', cv=5)
             deployed_clf = load(deployed_model_version.model_path)
             deployed_scores = cross_val_score(deployed_clf, x_validate, y_validate, scoring='precision_macro')
-
+            f = open(stream_uri, 'a')
+            f.write('current model version[{}] scores: {}\n'.format(deployed_model_version.version,
+                                                                    np.mean(deployed_scores)))
+            f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, np.mean(scores)))
             if np.mean(scores) > np.mean(deployed_scores):
-                # Deprecate deployed model
-                af.update_model_version(model_name=self.model_name,
-                                        model_version=deployed_model_version.version,
-                                        current_stage=ModelVersionStage.DEPRECATED)
-                # Make latest generated model to be deployed
+                # Make latest generated model to be validated
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
-                af.update_model_version(model_name=self.model_name,
-                                        model_version=self.model_version,
-                                        current_stage=ModelVersionStage.DEPLOYED)
-                with open(stream_uri, 'a') as f:
-                    f.write('deployed model version[{}] scores: {}\n'.format(deployed_model_version.version,
-                                                                             deployed_scores))
-                    f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                f.write('new generated model version[{}] pass validation.\n'.format(self.model_version))
+            else:
+                f.write('new generated model version[{}] fail validation.\n'.format(self.model_version))
+            f.close()
+
+        return []
+
+
+class ModelPusher(Executor):
+    def __init__(self, artifact):
+        super().__init__()
+        self.artifact = artifact
+
+    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+        model_name = function_context.node_spec.model.name
+        validated_model = af.get_latest_validated_model_version(model_name)
+        # Deprecate deployed model
+        deployed_model_version = af.get_deployed_model_version(model_name)
+        if deployed_model_version is not None:
+            af.update_model_version(model_name=model_name,
+                                    model_version=deployed_model_version.version,
+                                    current_stage=ModelVersionStage.DEPRECATED)
+        af.update_model_version(model_name=model_name,
+                                model_version=validated_model.version,
+                                current_stage=ModelVersionStage.DEPLOYED)
+        deployed_model_version = af.get_deployed_model_version(model_name=model_name)
+
+        # Copy deployed model to deploy_model_dir
+        deployed_model_dir = af.get_artifact_by_name(self.artifact).stream_uri
+        if not os.path.exists(deployed_model_dir):
+            os.makedirs(deployed_model_dir)
+        for file in os.listdir(deployed_model_dir):
+            file_path = os.path.join(deployed_model_dir, file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path, True)
+        shutil.copy(deployed_model_version.model_path, deployed_model_dir)
         return []
 
 
@@ -233,9 +221,8 @@ class ExamplePredictThread(threading.Thread):
 
     def run(self) -> None:
         for i in range(0, 5):
-            f = np.load(self.stream_uri)
-            x_test = f['x_test']
-            f.close()
+            with np.load(self.stream_uri) as f:
+                x_test = f['x_test']
             self.stream.emit(x_test)
             print("### {} {}".format(self.__class__.__name__, "generate data flow"))
             time.sleep(30)
@@ -276,11 +263,12 @@ class ModelPredictor(Executor):
 
     def setup(self, function_context: FunctionContext):
         self.model_name = function_context.node_spec.model.name
-        while af.get_deployed_model_version(self.model_name) is None:
-            time.sleep(5)
         print("### {} setup done for {}".format(self.__class__.__name__, function_context.node_spec.model.name))
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
+        while af.get_deployed_model_version(self.model_name) is None:
+            time.sleep(5)
+
         def predict(df):
             x_test = df
             model_meta = af.get_deployed_model_version(self.model_name)

@@ -30,16 +30,6 @@ import ai_flow as af
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.common.path_util import get_file_dir
-from notification_service.base_notification import EventWatcher
-
-
-def preprocess_data(x_data, y_data=None):
-    random_state = check_random_state(0)
-    permutation = random_state.permutation(x_data.shape[0])
-    if y_data is None:
-        return x_data[permutation]
-    else:
-        return x_data[permutation], y_data[permutation]
 
 
 def preprocess_data(x_data, y_data=None):
@@ -54,9 +44,8 @@ def preprocess_data(x_data, y_data=None):
 class ExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_train, y_train = f['x_train'], f['y_train']
-        f.close()
+        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+            x_train, y_train = f['x_train'], f['y_train']
         return [[x_train, y_train]]
 
 
@@ -65,8 +54,7 @@ class ExampleTransformer(Executor):
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         x_train, y_train = preprocess_data(input_list[0][0], input_list[0][1])
         x_train = x_train.reshape((x_train.shape[0], -1))
-        res = [[StandardScaler().fit_transform(x_train), y_train]]
-        return res
+        return [[StandardScaler().fit_transform(x_train), y_train]]
 
 
 class ModelTrainer(Executor):
@@ -90,9 +78,8 @@ class ModelTrainer(Executor):
 class EvaluateExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_test, y_test = f['x_test'], f['y_test']
-        f.close()
+        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+            x_test, y_test = f['x_test'], f['y_test']
         return [[x_test, y_test]]
 
 
@@ -132,9 +119,8 @@ class ModelEvaluator(Executor):
 class ValidateExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_test, y_test = f['x_test'], f['y_test']
-        f.close()
+        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+            x_test, y_test = f['x_test'], f['y_test']
         return [[x_test, y_test]]
 
 
@@ -181,9 +167,6 @@ class ModelValidator(Executor):
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
-                af.update_model_version(model_name=self.model_name,
-                                        model_version=deployed_model_version.version,
-                                        current_stage=ModelVersionStage.DEPRECATED)
                 with open(batch_uri, 'a') as f:
                     f.write('deployed model version[{}] scores: {}\n'.format(deployed_model_version.version,
                                                                              deployed_scores))
@@ -199,10 +182,15 @@ class ModelPusher(Executor):
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         model_name = function_context.node_spec.model.name
         validated_model = af.get_latest_validated_model_version(model_name)
+
+        cur_deployed_model = af.get_deployed_model_version(model_name=model_name)
+        if cur_deployed_model is not None:
+            af.update_model_version(model_name=model_name,
+                                    model_version=cur_deployed_model.version,
+                                    current_stage=ModelVersionStage.DEPRECATED)
         af.update_model_version(model_name=model_name,
                                 model_version=validated_model.version,
                                 current_stage=ModelVersionStage.DEPLOYED)
-        deployed_model_version = af.get_deployed_model_version(model_name=model_name)
 
         # Copy deployed model to deploy_model_dir
         deployed_model_dir = af.get_artifact_by_name(self.artifact).batch_uri
@@ -214,26 +202,22 @@ class ModelPusher(Executor):
                 os.remove(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path, True)
-        shutil.copy(deployed_model_version.model_path, deployed_model_dir)
+        shutil.copy(validated_model.model_path, deployed_model_dir)
         return []
 
 
 class PredictExampleReader(ExampleExecutor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        f = np.load(function_context.node_spec.example_meta.batch_uri)
-        x_test = f['x_test']
-        f.close()
+        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+            x_test = f['x_test']
         return [[x_test]]
 
 
 class PredictTransformer(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        x_test = input_list[0][0]
-        random_state = check_random_state(0)
-        permutation = random_state.permutation(x_test.shape[0])
-        x_test = x_test[permutation]
+        x_test = preprocess_data(input_list[0][0], None)
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test)]]
 
