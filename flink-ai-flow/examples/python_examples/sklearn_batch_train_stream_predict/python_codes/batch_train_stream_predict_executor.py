@@ -116,27 +116,31 @@ class ModelValidator(Executor):
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
         x_validate, y_validate = input_list[0][0], input_list[0][1]
         clf = load(self.model_path)
-        scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro', cv=5)
+        scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro')
         batch_uri = af.get_artifact_by_name(self.artifact_name).batch_uri
         if deployed_model_version is None:
             with open(batch_uri, 'a') as f:
-                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, np.mean(scores)))
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version,
                                     current_stage=ModelVersionStage.VALIDATED)
         else:
             deployed_clf = load(deployed_model_version.model_path)
             deployed_scores = cross_val_score(deployed_clf, x_validate, y_validate, scoring='precision_macro')
-
+            f = open(batch_uri, 'a')
+            f.write('current model version[{}] scores: {}\n'.format(deployed_model_version.version,
+                                                                    np.mean(deployed_scores)))
+            f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, np.mean(scores)))
             if np.mean(scores) > np.mean(deployed_scores):
                 # Make latest generated model to be validated
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
-                with open(batch_uri, 'a') as f:
-                    f.write('current model version[{}] scores: {}\n'.format(deployed_model_version.version,
-                                                                            deployed_scores))
-                    f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                f.write('new generated model version[{}] pass validation.\n'.format(self.model_version))
+            else:
+                f.write('new generated model version[{}] fail validation.\n'.format(self.model_version))
+            f.close()
+
         return []
 
 
@@ -185,12 +189,12 @@ class ExamplePredictThread(threading.Thread):
         self.stream = Stream()
 
     def run(self) -> None:
-        for i in range(0, 5):
+        for i in range(0, 8):
             with np.load(self.stream_uri) as f:
                 x_test = f['x_test']
             self.stream.emit(x_test)
             print("### {} {}".format(self.__class__.__name__, "generate data flow"))
-            time.sleep(30)
+            time.sleep(50)
 
 
 class PredictExampleReader(ExampleExecutor):

@@ -105,7 +105,6 @@ class ModelTrainer(Executor):
             print(model_timestamp)
             # When registering a model, corresponding type of event will be sent to downstream job as well.
             af.register_model_version(model=model, model_path=model_path, current_stage=ModelVersionStage.GENERATED)
-            print(af.get_latest_generated_model_version(model_name=model.name).model_path)
             return df
 
         def sink(df):
@@ -151,27 +150,31 @@ class ModelValidator(Executor):
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
         x_validate, y_validate = input_list[0][0], input_list[0][1]
         clf = load(self.model_path)
-        scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro', cv=5)
+        scores = cross_val_score(clf, x_validate, y_validate, scoring='precision_macro')
         stream_uri = af.get_artifact_by_name(self.artifact_name).stream_uri
         if deployed_model_version is None:
             with open(stream_uri, 'a') as f:
-                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                f.write('generated model version[{}] scores: {}\n'.format(self.model_version, np.mean(scores)))
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version,
                                     current_stage=ModelVersionStage.VALIDATED)
         else:
             deployed_clf = load(deployed_model_version.model_path)
             deployed_scores = cross_val_score(deployed_clf, x_validate, y_validate, scoring='precision_macro')
-
+            f = open(stream_uri, 'a')
+            f.write('current model version[{}] scores: {}\n'.format(deployed_model_version.version,
+                                                                    np.mean(deployed_scores)))
+            f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, np.mean(scores)))
             if np.mean(scores) > np.mean(deployed_scores):
                 # Make latest generated model to be validated
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
                                         current_stage=ModelVersionStage.VALIDATED)
-                with open(stream_uri, 'a') as f:
-                    f.write('current model version[{}] scores: {}\n'.format(deployed_model_version.version,
-                                                                            deployed_scores))
-                    f.write('new generated model version[{}] scores: {}\n'.format(self.model_version, scores))
+                f.write('new generated model version[{}] pass validation.\n'.format(self.model_version))
+            else:
+                f.write('new generated model version[{}] fail validation.\n'.format(self.model_version))
+            f.close()
+
         return []
 
 
@@ -192,7 +195,6 @@ class ModelPusher(Executor):
         af.update_model_version(model_name=model_name,
                                 model_version=validated_model.version,
                                 current_stage=ModelVersionStage.DEPLOYED)
-        deployed_model_version = af.get_deployed_model_version(model_name=model_name)
 
         # Copy deployed model to deploy_model_dir
         deployed_model_dir = af.get_artifact_by_name(self.artifact).stream_uri
@@ -204,6 +206,7 @@ class ModelPusher(Executor):
                 os.remove(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path, True)
+        deployed_model_version = af.get_deployed_model_version(model_name=model_name)
         shutil.copy(deployed_model_version.model_path, deployed_model_dir)
         return []
 
