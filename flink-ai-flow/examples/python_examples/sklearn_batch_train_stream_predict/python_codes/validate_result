@@ -1,0 +1,34 @@
+generated model version[1] scores: 0.8233200730685722
+current model version[1] scores: 0.8285775652810559
+new generated model version[2] scores: 0.8255639701095095
+new generated model version[2] fail validation.
+current model version[1] scores: 0.8267647675076709
+new generated model version[3] scores: 0.8261035919783003
+new generated model version[3] fail validation.
+current model version[1] scores: 0.8269391327763437
+new generated model version[4] scores: 0.8249350074664384
+new generated model version[4] fail validation.
+current model version[1] scores: 0.8274603364632359
+new generated model version[5] scores: 0.828016980041112
+new generated model version[5] pass validation.
+current model version[5] scores: 0.8262883921596821
+new generated model version[6] scores: 0.8233320267344554
+new generated model version[6] fail validation.
+current model version[5] scores: 0.8266944889605687
+new generated model version[7] scores: 0.8274257071128374
+new generated model version[7] pass validation.
+current model version[7] scores: 0.8237890409425827
+new generated model version[8] scores: 0.8255080788315778
+new generated model version[8] pass validation.
+current model version[8] scores: 0.8226718981970507
+new generated model version[9] scores: 0.8252506601200896
+new generated model version[9] pass validation.
+current model version[9] scores: 0.8259056404556612
+new generated model version[10] scores: 0.8263294037106208
+new generated model version[10] pass validation.
+current model version[10] scores: 0.8266854105581309
+new generated model version[11] scores: 0.8246966461056863
+new generated model version[11] fail validation.
+current model version[10] scores: 0.8263283734711159
+new generated model version[12] scores: 0.8265546412499726
+new generated model version[12] pass validation.

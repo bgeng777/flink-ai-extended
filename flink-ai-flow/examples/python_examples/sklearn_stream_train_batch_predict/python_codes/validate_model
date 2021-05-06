@@ -1,0 +1,13 @@
+generated model version[1] scores: 0.8251744968890505
+current model version[1] scores: 0.8281327757432065
+new generated model version[2] scores: 0.8258158495267166
+new generated model version[2] fail validation.
+current model version[1] scores: 0.8267016179570966
+new generated model version[3] scores: 0.8257487541736476
+new generated model version[3] fail validation.
+current model version[1] scores: 0.8255028788825646
+new generated model version[4] scores: 0.8277300501694843
+new generated model version[4] pass validation.
+current model version[4] scores: 0.8269342396324864
+new generated model version[5] scores: 0.8268956617795351
+new generated model version[5] fail validation.
