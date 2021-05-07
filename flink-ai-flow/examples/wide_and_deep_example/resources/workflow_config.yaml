@@ -1,16 +1,78 @@
+census_batch_preprocess:
+  platform: local
+  engine: python
+  job_name: census_batch_preprocess
+  periodic_config:
+    periodic_type: interval # 'interval' or 'cron'
+    args:
+      seconds: 180
+
 census_batch_train:
   platform: local
   engine: flink
   job_name: census_batch_train
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chose
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
+
+census_batch_evaluate:
+  platform: local
+  engine: flink
+  job_name: census_batch_evaluate
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  local_mode: cluster
+  language_type: PYTHON
+
+census_batch_validate:
+  platform: local
+  engine: flink
+  job_name: census_batch_validate
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  local_mode: cluster
+  language_type: PYTHON
+
+
+
+census_stream_preprocess_train:
+  platform: local
+  engine: flink
+  job_name: census_stream_preprocess_train
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  local_mode: cluster
+  language_type: PYTHON
+
 
 census_stream_train:
   platform: local
   engine: flink
   job_name: census_stream_train
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chose
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  local_mode: cluster
+  language_type: PYTHON
+
+census_stream_validate:
+  platform: local
+  engine: flink
+  job_name: census_stream_validate
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  local_mode: cluster
+  language_type: PYTHON
+
+
+census_stream_push:
+  platform: local
+  engine: flink
+  job_name: census_stream_push
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  local_mode: cluster
+  language_type: PYTHON
+
+
+census_stream_preprocess_predict:
+  platform: local
+  engine: flink
+  job_name: census_stream_preprocess_predict
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
 
@@ -18,6 +80,6 @@ census_stream_predict:
   platform: local
   engine: flink
   job_name: census_stream_predict
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chose
+  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON

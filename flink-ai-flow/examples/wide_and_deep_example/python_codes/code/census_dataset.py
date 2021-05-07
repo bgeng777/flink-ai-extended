@@ -33,8 +33,13 @@ from six.moves import urllib
 DATA_URL = 'https://ai-flow-example.oss-cn-hangzhou.aliyuncs.com/census_data'
 TRAINING_FILE = 'adult.data'
 TRAINING_URL = '%s/%s' % (DATA_URL, TRAINING_FILE)
-EVAL_FILE = 'adult.test'
-EVAL_URL = '%s/%s' % (DATA_URL, EVAL_FILE)
+REMOTE_TEST_FILE = 'adult.test'
+
+# For simplicity, we make evaluation and validation use the same remote dataset
+EVAL_FILE = 'adult.eval'
+EVAL_URL = '%s/%s' % (DATA_URL, REMOTE_TEST_FILE)
+VALIDATE_FILE = 'adult.validate'
+VALIDATE_URL = '%s/%s' % (DATA_URL, REMOTE_TEST_FILE)
 
 _CSV_COLUMNS = [
     'age', 'workclass', 'fnlwgt', 'education', 'education_num',
@@ -50,6 +55,7 @@ _HASH_BUCKET_SIZE = 1000
 
 _NUM_EXAMPLES = {
     'train': 32561,
+    'evaluate': 16281,
     'validation': 16281,
 }
 
@@ -82,6 +88,9 @@ def download(data_dir):
     eval_file_path = os.path.join(data_dir, EVAL_FILE)
     if not tf.gfile.Exists(eval_file_path):
         _download_and_clean_file(eval_file_path, EVAL_URL)
+    validate_file_path = os.path.join(data_dir, VALIDATE_FILE)
+    if not tf.gfile.Exists(validate_file_path):
+        _download_and_clean_file(validate_file_path, VALIDATE_URL)
 
 
 def build_model_columns():

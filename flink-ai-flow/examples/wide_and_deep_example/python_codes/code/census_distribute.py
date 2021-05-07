@@ -168,7 +168,7 @@ def batch_map_func(context):
 
     def train_input_fn():
         return census_dataset.input_fn(
-            train_file, -1, True, config.batch_size)
+            train_file, -1, False, config.batch_size)
 
     run_census(config, train_input_fn)
 
