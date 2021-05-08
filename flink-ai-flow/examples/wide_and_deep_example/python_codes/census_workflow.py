@@ -17,19 +17,20 @@
 # under the License.
 #
 
+import os
+import ai_flow as af
 from ai_flow.common.scheduler_type import SchedulerType
 from ai_flow import PythonObjectExecutor
 from flink_ai_flow import LocalFlinkJobConfig, FlinkPythonExecutor
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from ai_flow.graph.edge import StartBeforeControlEdge, StopBeforeControlEdge, RestartBeforeControlEdge, \
-    ModelVersionControlEdge, ExampleControlEdge, UserDefineControlEdge, \
-    TaskAction, EventLife, MetValueCondition, MetCondition, DEFAULT_NAMESPACE
+from ai_flow.graph.edge import TaskAction, EventLife, MetValueCondition, MetCondition, DEFAULT_NAMESPACE
 
-from census_train_executor import *
-from census_predict_executor import *
-from census_preprocess_executor import BatchPreprocessExecutor
-from census_batch_executors import BatchEvaluateExecutor, BatchValidateExecutor
-from census_stream_executors import StreamPreprocessExecutor, StreamValidateExecutor, StreamPushExecutor
+
+from census_batch_executors import BatchPreprocessExecutor, BatchTrainExecutor, BatchEvaluateExecutor, \
+    BatchValidateExecutor, BatchTableEnvCreator
+from census_stream_executors import StreamPreprocessExecutor, StreamValidateExecutor, StreamPushExecutor, \
+    StreamTableEnvCreator, StreamTrainSource, StreamTrainExecutor, StreamPredictSource, StreamPredictExecutor, \
+    StreamPredictSink
 
 
 def get_project_path():
@@ -46,6 +47,7 @@ def run_workflow():
 
         workflow_config = af.default_af_job_context().global_workflow_config
 
+        """Batch Job Configs"""
         batch_preprocess_config = workflow_config.job_configs['census_batch_preprocess']
 
         batch_train_config: LocalFlinkJobConfig = workflow_config.job_configs['census_batch_train']
@@ -76,78 +78,83 @@ def run_workflow():
                                                            python_object=BatchValidateExecutor()),
                                                        model_info=model_info, name='census_batch_validate')
 
-        """Stream job configs"""
-        stream_preprocess_config = workflow_config.job_configs['census_stream_preprocess_train']
+        # """Stream Job Configs"""
+        # stream_preprocess_config = workflow_config.job_configs['census_stream_preprocess_train']
+        #
+        # stream_train_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_train']
+        # stream_train_config.set_table_env_create_func(StreamTableEnvCreator())
+        #
+        # stream_validate_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_validate']
+        # stream_validate_config.set_table_env_create_func(StreamTableEnvCreator())
+        #
+        # stream_predict_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_predict']
+        # stream_predict_config.set_table_env_create_func(StreamTableEnvCreator())
+        #
+        # stream_push_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_push']
+        # stream_push_config.set_table_env_create_func(StreamTableEnvCreator())
+        #
+        # """Stream Train Jobs"""
+        # with af.config(config=stream_preprocess_config):
+        #     stream_preprocess_channel = af.user_define_operation(input_data_list=[],
+        #                                                          executor=FlinkPythonExecutor(
+        #                                                              python_object=StreamPreprocessExecutor()),
+        #                                                          name='census_stream_preprocess')
+        # with af.config(config=stream_train_config):
+        #     stream_train_source = af.read_example(example_info=stream_train_input,
+        #                                           executor=FlinkPythonExecutor(python_object=StreamTrainSource()))
+        #     stream_train_channel = af.train(input_data_list=[stream_train_source],
+        #                                     model_info=model_info,
+        #                                     executor=FlinkPythonExecutor(python_object=StreamTrainExecutor()))
+        # with af.config(config=stream_validate_config):
+        #     stream_validate_channel = af.model_validate(input_data_list=[],
+        #                                                 executor=FlinkPythonExecutor(
+        #                                                     python_object=StreamValidateExecutor()),
+        #                                                 model_info=model_info, name='census_batch_validate')
+        # with af.config(config=stream_push_config):
+        #     stream_push_channel = af.push_model(executor=FlinkPythonExecutor(python_object=StreamPushExecutor()),
+        #                                         model_info=model_info, name='census_batch_validate')
+        #
+        # """Stream Prediction"""
+        # with af.config(config=stream_predict_config):
+        #     stream_predict_source = af.read_example(example_info=stream_predict_input,
+        #                                             executor=FlinkPythonExecutor(python_object=StreamPredictSource()))
+        #     stream_predict_channel = af.predict(input_data_list=[stream_predict_source],
+        #                                         model_info=model_info,
+        #                                         executor=FlinkPythonExecutor(python_object=StreamPredictExecutor()))
+        #     stream_predict_sink = af.write_example(input_data=stream_predict_channel,
+        #                                            example_info=stream_predict_output,
+        #                                            executor=FlinkPythonExecutor(python_object=StreamPredictSink()))
 
-        stream_train_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_train']
-        stream_train_config.set_table_env_create_func(StreamTableEnvCreator())
 
-        stream_validate_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_validate']
-        stream_validate_config.set_table_env_create_func(StreamTableEnvCreator())
-
-        stream_predict_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_predict']
-        stream_predict_config.set_table_env_create_func(StreamTableEnvCreator())
-
-        stream_push_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_push']
-        stream_push_config.set_table_env_create_func(StreamTableEnvCreator())
-        """Stream Train Jobs"""
-        with af.config(config=stream_preprocess_config):
-            stream_preprocess_channel = af.user_define_operation(input_data_list=[],
-                                                                 executor=FlinkPythonExecutor(
-                                                                     python_object=StreamPreprocessExecutor()),
-                                                                 name='census_stream_preprocess')
-        with af.config(config=stream_train_config):
-            stream_train_source = af.read_example(example_info=stream_train_input,
-                                                  executor=FlinkPythonExecutor(python_object=StreamTrainSource()))
-            stream_train_channel = af.train(input_data_list=[stream_train_source],
-                                            model_info=model_info,
-                                            executor=FlinkPythonExecutor(python_object=StreamTrainExecutor()))
-        with af.config(config=stream_validate_config):
-            stream_validate_channel = af.model_validate(input_data_list=[],
-                                                        executor=FlinkPythonExecutor(
-                                                            python_object=StreamValidateExecutor()),
-                                                        model_info=model_info, name='census_batch_validate')
-        with af.config(config=stream_push_config):
-            stream_push_channel = af.push_model(executor=FlinkPythonExecutor(python_object=StreamPushExecutor()),
-                                                model_info=model_info, name='census_batch_validate')
-
-        """Stream Prediction"""
-        with af.config(config=stream_predict_config):
-            stream_predict_source = af.read_example(example_info=stream_predict_input,
-                                                    executor=FlinkPythonExecutor(python_object=StreamPredictSource()))
-            stream_predict_channel = af.predict(input_data_list=[stream_predict_source],
-                                                model_info=model_info,
-                                                executor=FlinkPythonExecutor(python_object=StreamPredictExecutor()))
-            stream_predict_sink = af.write_example(input_data=stream_predict_channel,
-                                                   example_info=stream_predict_output,
-                                                   executor=FlinkPythonExecutor(python_object=StreamPredictSink()))
         af.user_define_control_dependency(src=batch_train_channel,
                                           dependency=batch_preprocess_channel,
-                                          event_key="BATCH_PREPROCESS",
+                                          event_key="wide_and_deep_base",
                                           event_type="BATCH_PREPROCESS",
                                           event_value="BATCH_PREPROCESS",
                                           action=TaskAction.RESTART,
                                           life=EventLife.REPEATED
                                           )
         af.model_version_control_dependency(src=batch_evaluate_channel, dependency=batch_train_channel,
-                                            model_name='wide_and_deep_batch',
+                                            model_name='wide_and_deep_base',
                                             model_version_event_type=ModelVersionEventType.MODEL_GENERATED)
         af.model_version_control_dependency(src=batch_validate_channel, dependency=batch_evaluate_channel,
-                                            model_name='wide_and_deep_batch',
+                                            model_name='wide_and_deep_base',
                                             model_version_event_type=ModelVersionEventType.MODEL_VALIDATED)
-        af.model_version_control_dependency(src=stream_train_channel, dependency=batch_validate_channel,
-                                            model_name='wide_and_deep_batch',
-                                            model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
+        # af.model_version_control_dependency(src=stream_train_channel, dependency=batch_validate_channel,
+        #                                     model_name='wide_and_deep_batch',
+        #                                     model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
+        #
+        # af.model_version_control_dependency(src=stream_validate_channel, dependency=stream_train_channel,
+        #                                     model_name='wide_and_deep_stream',
+        #                                     model_version_event_type=ModelVersionEventType.MODEL_GENERATED)
+        # af.model_version_control_dependency(src=stream_push_channel, dependency=stream_validate_channel,
+        #                                     model_name='wide_and_deep_stream',
+        #                                     model_version_event_type=ModelVersionEventType.MODEL_VALIDATED)
+        # af.model_version_control_dependency(src=stream_predict_sink, dependency=stream_push_channel,
+        #                                     model_name='wide_and_deep_stream',
+        #                                     model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
 
-        af.model_version_control_dependency(src=stream_validate_channel, dependency=stream_train_channel,
-                                            model_name='wide_and_deep_stream',
-                                            model_version_event_type=ModelVersionEventType.MODEL_GENERATED)
-        af.model_version_control_dependency(src=stream_push_channel, dependency=stream_validate_channel,
-                                            model_name='wide_and_deep_stream',
-                                            model_version_event_type=ModelVersionEventType.MODEL_VALIDATED)
-        af.model_version_control_dependency(src=stream_predict_sink, dependency=stream_push_channel,
-                                            model_name='wide_and_deep_stream',
-                                            model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
+
 
         # af.stop_before_control_dependency(stream_train_channel, batch_train_channel)
         # af.stop_before_control_dependency(stream_predict_sink, batch_train_channel)

@@ -142,8 +142,7 @@ def run_census(flags_obj, input_func):
                                     current_stage=af.ModelVersionStage.DEPRECATED)
             print("Deprecate current deployed model")
         print("Deploy new model")
-        af.register_model_version(model=model_name, model_path=model_path + '|' + export_path,
-                                  current_stage=af.ModelVersionStage.DEPLOYED)
+        af.register_model_version(model=model_name, model_path=model_path + '|' + export_path)
 
 
 def batch_map_func(context):
@@ -168,7 +167,7 @@ def batch_map_func(context):
 
     def train_input_fn():
         return census_dataset.input_fn(
-            train_file, -1, False, config.batch_size)
+            train_file, 1, False, config.batch_size)
 
     run_census(config, train_input_fn)
 
@@ -211,4 +210,5 @@ def stream_map_func(context):
     config.export_dir = '/tmp/census_export'
     config.task_type = tf_config['task']['type']
     config.task_index = tf_config['task']['index']
+    config.model_type = "wide_and_deep_base"
     run_census(config, flink_train_input_fn)
