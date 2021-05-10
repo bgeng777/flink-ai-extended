@@ -100,16 +100,15 @@ class ExportCheckpointSaverListener(tf.estimator.CheckpointSaverListener):
                                  self.model_column_fn)
         print("final {}".format(real_path))
         # todo copy checkpoint
-        deploy_mv = af.get_deployed_model_version('wide_and_deep')
+        # deploy_mv = af.get_deployed_model_version('wide_and_deep')
 
         # Update model
-        if deploy_mv is not None:
-            af.update_model_version(model_name='wide_and_deep', model_version=deploy_mv.version,
-                                    current_stage=af.ModelVersionStage.DEPRECATED)
-            print("Deprecate current deployed model")
-        print("Deploy stream new model")
-        af.register_model_version(model='wide_and_deep', model_path='|' + real_path,
-                                  current_stage=af.ModelVersionStage.DEPLOYED)
+        # if deploy_mv is not None:
+        #     af.update_model_version(model_name='wide_and_deep', model_version=deploy_mv.version,
+        #                             current_stage=af.ModelVersionStage.DEPRECATED)
+        #     print("Deprecate current deployed model")
+        print("Generate stream new model")
+        af.register_model_version(model='wide_and_deep', model_path='|' + real_path)
 
     def end(self, session, global_step_value):
         print('Done with the session.')

@@ -43,7 +43,8 @@ def run_workflow():
         stream_train_input = af.get_example_by_name('stream_train_input')
         stream_predict_input = af.get_example_by_name('stream_predict_input')
         stream_predict_output = af.get_example_by_name('stream_predict_output')
-        model_info = af.get_model_by_name('wide_deep')
+
+        batch_model_info = af.get_model_by_name('wide_and_deep_base')
 
         workflow_config = af.default_af_job_context().global_workflow_config
 
@@ -51,7 +52,8 @@ def run_workflow():
         batch_preprocess_config = workflow_config.job_configs['census_batch_preprocess']
 
         batch_train_config: LocalFlinkJobConfig = workflow_config.job_configs['census_batch_train']
-        batch_train_config.set_table_env_create_func(StreamTableEnvCreator())  # TODO: why streamTable?
+        # Currently tf-on-flink only supports stream table env
+        batch_train_config.set_table_env_create_func(StreamTableEnvCreator())
 
         batch_evaluate_config = workflow_config.job_configs['census_batch_evaluate']
 
@@ -66,17 +68,17 @@ def run_workflow():
         with af.config(config=batch_train_config):
             batch_train_channel = af.train(input_data_list=[],
                                            executor=FlinkPythonExecutor(python_object=BatchTrainExecutor()),
-                                           model_info=model_info, name='census_batch_train')
+                                           model_info=batch_model_info, name='census_batch_train')
 
         with af.config(config=batch_evaluate_config):
             batch_evaluate_channel = af.evaluate(input_data_list=[],
                                                  executor=PythonObjectExecutor(python_object=BatchEvaluateExecutor()),
-                                                 model_info=model_info, name='census_batch_evaluate')
+                                                 model_info=batch_model_info, name='census_batch_evaluate')
         with af.config(config=batch_validate_config):
             batch_validate_channel = af.model_validate(input_data_list=[],
                                                        executor=PythonObjectExecutor(
                                                            python_object=BatchValidateExecutor()),
-                                                       model_info=model_info, name='census_batch_validate')
+                                                       model_info=batch_model_info, name='census_batch_validate')
 
         # """Stream Job Configs"""
         # stream_preprocess_config = workflow_config.job_configs['census_stream_preprocess_train']
@@ -132,6 +134,7 @@ def run_workflow():
                                           event_type="BATCH_PREPROCESS",
                                           event_value="BATCH_PREPROCESS",
                                           action=TaskAction.RESTART,
+                                          value_condition= MetValueCondition.UPDATE,
                                           life=EventLife.REPEATED
                                           )
         af.model_version_control_dependency(src=batch_evaluate_channel, dependency=batch_train_channel,
@@ -162,7 +165,7 @@ def run_workflow():
         #                                     model_name='wide_and_deep',
         #                                     model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
 
-        wide_deep_dag = 'census_workflow2'
+        wide_deep_dag = 'census_workflow'
 
         af.deploy_to_airflow(get_project_path(), dag_id=wide_deep_dag)
         af.run(get_project_path(), dag_id=wide_deep_dag, scheduler_type=SchedulerType.AIRFLOW)

@@ -126,6 +126,8 @@ def run_census(flags_obj, input_func):
     train_hooks = []
     model.train(input_fn=input_func, hooks=train_hooks, max_steps=flags_obj.max_steps, saving_listeners=ll)
     print("model train finish")
+
+    # TODO: why chief?
     if 'batch' == flags_obj.run_mode and flags_obj.task_type != 'chief':
         while True:
             print("sleeping")
@@ -136,12 +138,7 @@ def run_census(flags_obj, input_func):
                                    census_dataset.build_model_columns)
         print(model_path)
         print(export_path)
-        deploy_mv = af.get_deployed_model_version(model_name)
-        if deploy_mv is not None:
-            af.update_model_version(model_name=model_name, model_version=deploy_mv.version,
-                                    current_stage=af.ModelVersionStage.DEPRECATED)
-            print("Deprecate current deployed model")
-        print("Deploy new model")
+        print("##### Generate new model")
         af.register_model_version(model=model_name, model_path=model_path + '|' + export_path)
 
 
@@ -163,6 +160,7 @@ def batch_map_func(context):
     config.task_type = tf_config['task']['type']
     config.task_index = tf_config['task']['index']
     config.run_mode = 'batch'
+    config.model_type = 'wide_and_deep_base'
     train_file = os.path.join(config.data_dir, census_dataset.TRAINING_FILE)
 
     def train_input_fn():
@@ -210,5 +208,5 @@ def stream_map_func(context):
     config.export_dir = '/tmp/census_export'
     config.task_type = tf_config['task']['type']
     config.task_index = tf_config['task']['index']
-    config.model_type = "wide_and_deep_base"
+    config.model_type = "wide_and_deep"
     run_census(config, flink_train_input_fn)

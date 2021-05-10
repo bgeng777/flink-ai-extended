@@ -55,6 +55,9 @@ def init():
     af.register_model(
         model_name='wide_and_deep',
         model_type=ModelType.CHECKPOINT)
+    af.register_model(
+        model_name='wide_and_deep_base',
+        model_type=ModelType.SAVED_MODEL)
 
 
 if __name__ == '__main__':

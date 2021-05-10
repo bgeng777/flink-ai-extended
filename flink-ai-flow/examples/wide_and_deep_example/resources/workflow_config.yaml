@@ -2,10 +2,10 @@ census_batch_preprocess:
   platform: local
   engine: python
   job_name: census_batch_preprocess
-  periodic_config:
-    periodic_type: interval # 'interval' or 'cron'
-    args:
-      seconds: 180
+#  periodic_config:
+#    periodic_type: interval # 'interval' or 'cron'
+#    args:
+#      seconds: 80
 
 census_batch_train:
   platform: local

@@ -21,7 +21,10 @@ import tensorflow as tf
 import ai_flow as af
 from typing import List
 from python_ai_flow import FunctionContext, Executor
+import python_ai_flow as paf
 import pandas as pd
+import numpy as np
+from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
 from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, FlinkFunctionContext, Executor, \
     ExecutionEnvironment, BatchTableEnvironment
@@ -33,7 +36,41 @@ from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, Ta
 from ai_flow.common.path_util import get_file_dir
 import census_dataset
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
+from notification_service.base_notification import DEFAULT_NAMESPACE
 
+
+def _float_feature(value):
+    return tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
+
+
+def _bytes_feature(value):
+    return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+
+def _int64_feature(value):
+    return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
+
+def preprocess(input_dict):
+
+    feature_dict = {
+        'age': _float_feature(value=int(input_dict['age'])),
+        'workclass': _bytes_feature(value=input_dict['workclass'].encode()),
+        'fnlwgt': _float_feature(value=int(input_dict['fnlwgt'])),
+        'education': _bytes_feature(value=input_dict['education'].encode()),
+        'education_num': _float_feature(value=int(input_dict['education_num'])),
+        'marital_status': _bytes_feature(value=input_dict['marital_status'].encode()),
+        'occupation': _bytes_feature(value=input_dict['occupation'].encode()),
+        'relationship': _bytes_feature(value=input_dict['relationship'].encode()),
+        'race': _bytes_feature(value=input_dict['race'].encode()),
+        'gender': _bytes_feature(value=input_dict['gender'].encode()),
+        'capital_gain': _float_feature(value=int(input_dict['capital_gain'])),
+        'capital_loss': _float_feature(value=int(input_dict['capital_loss'])),
+        'hours_per_week': _float_feature(value=float(input_dict['hours_per_week'])),
+        'native_country': _bytes_feature(value=input_dict['native_country'].encode()),
+    }
+    model_input = tf.train.Example(features=tf.train.Features(feature=feature_dict))
+    model_input = model_input.SerializeToString()
+    return model_input
 
 class BatchTableEnvCreator(TableEnvCreator):
 
@@ -49,14 +86,15 @@ class BatchTableEnvCreator(TableEnvCreator):
         return batch_env, t_env, statement_set
 
 
-class BatchPreprocessExecutor(Executor):
+class BatchPreprocessExecutor(paf.Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         data_path = '/tmp/census_data/adult.data'
         df = pd.read_csv(data_path, header=None)
         df = shuffle(df)
         df.to_csv('/tmp/census_data/adult.data', index=False, header=None)
-        af.send_event(key='wide_and_deep_base', value='BATCH_PREPROCESS', event_type='BATCH_PREPROCESS')
+        af.send_event(key='wide_and_deep_base', value='BATCH_PREPROCESS', event_type='BATCH_PREPROCESS',
+                      namespace=DEFAULT_NAMESPACE)
         return []
 
 
@@ -98,17 +136,28 @@ class BatchEvaluateExecutor(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         test_data = '/tmp/census_data/adult.evaluate'
-        dataset = census_dataset.input_fn(test_data, 1, False, 32)
-        af.update_model_version(model_name=self.model_name,
-                                model_version=self.model_version,
-                                current_stage=ModelVersionStage.VALIDATED)
-        model = tf.keras.models.load_model(self.path)
-        loss, metric = model.evaluate(dataset, verbose=0)
+
+        predictor = tf.contrib.predictor.from_saved_model(self.path)
+        data = pd.read_csv(test_data, names=census_dataset._CSV_COLUMNS)
+        label = data.pop('income_bracket')
+        label = label.map({'<=50K': 0, '>50K': 1})
+        inputs = []
+        for _, row in data.iterrows():
+            tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
+            tmp = preprocess(tmp)
+            inputs.append(tmp)
+        output_dict = predictor({'inputs': inputs})
+        res = [np.argmax(output_dict['scores'][i]) for i in range(0, len(output_dict['scores']))]
+        score = accuracy_score(label, res)
+
+
         path = get_file_dir(__file__) + '/batch_evaluate_result'
         with open(path, 'a') as f:
-            f.write(str(loss) + '  -------->  ' + self.model_version.version)
-            f.write(str(metric) + '  -------->  ' + self.model_version.version)
+            f.write(str(score) + '  -------->  ' + self.model_version.version)
             f.write('\n')
+        af.update_model_version(model_name=self.model_name,
+                                model_version=self.model_version.version,
+                                current_stage=ModelVersionStage.VALIDATED)
         return []
 
 
@@ -121,23 +170,34 @@ class BatchValidateExecutor(Executor):
 
     def setup(self, function_context: FunctionContext):
         self.model_name = function_context.node_spec.model.name
-        self.model_version = af.get_latest_generated_model_version(self.model_name)
+        self.model_version = af.get_latest_validated_model_version(self.model_name)
         print("#### name {}".format(self.model_name))
         print("#### path {}".format(self.model_version.model_path))
         self.path = self.model_version.model_path.split('|')[1]
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         test_data = '/tmp/census_data/adult.validate'
-        dataset = census_dataset.input_fn(test_data, 1, False, 32)
-        af.update_model_version(model_name=self.model_name,
-                                model_version=self.model_version,
-                                current_stage=ModelVersionStage.DEPLOYED)
-        model = tf.keras.models.load_model(self.path)
-        loss, metric = model.evaluate(dataset, verbose=0)
+
+        predictor = tf.contrib.predictor.from_saved_model(self.path)
+        data = pd.read_csv(test_data, names=census_dataset._CSV_COLUMNS)
+        label = data.pop('income_bracket')
+        label = label.map({'<=50K': 0, '>50K': 1})
+        inputs = []
+        for _, row in data.iterrows():
+            tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
+            tmp = preprocess(tmp)
+            inputs.append(tmp)
+        output_dict = predictor({'inputs': inputs})
+        res = [np.argmax(output_dict['scores'][i]) for i in range(0, len(output_dict['scores']))]
+        score = accuracy_score(label, res)
+
         path = get_file_dir(__file__) + '/batch_validate_result'
         with open(path, 'a') as f:
-            f.write(str(loss) + '  -------->  ' + self.model_version.version)
-            f.write(str(metric) + '  -------->  ' + self.model_version.version)
+            f.write(str(score) + '  -------->  ' + self.model_version.version)
             f.write('\n')
+
+        af.update_model_version(model_name=self.model_name,
+                                model_version=self.model_version.version,
+                                current_stage=ModelVersionStage.DEPLOYED)
         return []
 
