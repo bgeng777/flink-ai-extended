@@ -34,6 +34,7 @@ class CensusKafkaUtil(object):
         with open(os.path.dirname(os.path.abspath(__file__)) + '/kafka_config.yaml', 'r') as yaml_file:
             self._yaml_config = yaml.load(yaml_file)
         self.bootstrap_servers = self._yaml_config.get('bootstrap_servers')
+        self.census_input_preprocess_topic = self._yaml_config.get('census_input_preprocess_topic')
         self.census_input_topic = self._yaml_config.get('census_input_topic')
         self.census_output_topic = self._yaml_config.get('census_output_topic')
         self.admin_client = KafkaAdminClient(bootstrap_servers=self.bootstrap_servers)
@@ -50,28 +51,29 @@ class CensusKafkaUtil(object):
         while num < count:
             for line in raw_data:
                 num += 1
-                producer.send(self.census_input_topic,
+                producer.send(self.census_input_preprocess_topic,
                               key=bytes(str(uuid.uuid1()), encoding='utf8'),
                               value=bytes(line, encoding='utf8'))
                 if num > count:
                     break
                 if 0 == num % 1000:
                     print("send data {}".format(num))
-                    time.sleep(self._yaml_config.get('time_interval') / 1000)
+                    time.sleep(self._yaml_config.get('time_interval') / 500)
+
+    def _clean_create(self, new_topic, topics):
+        if new_topic in topics:
+            self.admin_client.delete_topics(topics=[new_topic], timeout_ms=5000)
+            time.sleep(5)
+        self.admin_client.create_topics(
+            new_topics=[NewTopic(name=new_topic, num_partitions=1, replication_factor=1)])
 
     def create_topic(self):
         topics = self.admin_client.list_topics()
         print(topics)
-        if self.census_input_topic in topics:
-            self.admin_client.delete_topics(topics=[self.census_input_topic], timeout_ms=5000)
-            time.sleep(5)
-        self.admin_client.create_topics(
-            new_topics=[NewTopic(name=self.census_input_topic, num_partitions=1, replication_factor=1)])
-        if self.census_output_topic in topics:
-            self.admin_client.delete_topics(topics=[self.census_output_topic], timeout_ms=5000)
-            time.sleep(5)
-        self.admin_client.create_topics(
-            new_topics=[NewTopic(name=self.census_output_topic, num_partitions=1, replication_factor=1)])
+        self._clean_create(self.census_input_preprocess_topic, topics)
+        self._clean_create(self.census_input_topic, topics)
+        self._clean_create(self.census_output_topic, topics)
+
         # self._send_data_loop(count)
 
     def read_input_data(self, count):
@@ -96,7 +98,9 @@ class CensusKafkaUtil(object):
 if __name__ == '__main__':
     kafka_util = CensusKafkaUtil()
     # Init kafka topics
-    kafka_util.create_topic()
+    # kafka_util.create_topic()
+    topics = kafka_util.admin_client.list_topics()
+    print(topics)
     # Create continuous data stream
     kafka_util._send_data_loop(200000000)
 

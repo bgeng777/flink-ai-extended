@@ -51,6 +51,73 @@ class StreamTableEnvCreator(TableEnvCreator):
         return stream_env, t_env, statement_set
 
 
+class StreamPreprocessSource(SourceExecutor):
+
+    def execute(self, function_context: FlinkFunctionContext) -> Table:
+        table_env: TableEnvironment = function_context.get_table_env()
+        table_env.execute_sql('''
+            create table stream_train_preprocess_source (
+                age varchar,
+                workclass varchar,
+                fnlwgt varchar,
+                education varchar,
+                education_num varchar,
+                marital_status varchar,
+                occupation varchar,
+                relationship varchar,
+                race varchar,
+                gender varchar,
+                capital_gain varchar,
+                capital_loss varchar,
+                hours_per_week varchar,
+                native_country varchar,
+                income_bracket varchar
+            ) with (
+                'connector' = 'kafka',
+                'topic' = 'census_input_preprocess_topic',
+                'properties.bootstrap.servers' = 'localhost:9092',
+                'properties.group.id' = 'stream_train_preprocess_source',
+                'format' = 'csv',
+                'scan.startup.mode' = 'earliest-offset'
+            )
+        ''')
+        table = table_env.from_path('stream_train_preprocess_source')
+        return table
+
+
+class StreamPreprocessExecutor(SinkExecutor):
+    def execute(self, function_context: FlinkFunctionContext, input_table: Table) -> None:
+        table_env: TableEnvironment = function_context.get_table_env()
+        statement_set = function_context.get_statement_set()
+        table_env.execute_sql('''
+            create table stream_train_preprocess_sink (
+                age varchar,
+                workclass varchar,
+                fnlwgt varchar,
+                education varchar,
+                education_num varchar,
+                marital_status varchar,
+                occupation varchar,
+                relationship varchar,
+                race varchar,
+                gender varchar,
+                capital_gain varchar,
+                capital_loss varchar,
+                hours_per_week varchar,
+                native_country varchar,
+                income_bracket varchar
+            ) with (
+                'connector' = 'kafka',
+                'topic' = 'census_input_topic',
+                'properties.bootstrap.servers' = 'localhost:9092',
+                'properties.group.id' = 'stream_train_preprocess_sink',
+                'format' = 'csv',
+                'scan.startup.mode' = 'earliest-offset'
+            )
+        ''')
+        statement_set.add_insert('stream_train_preprocess_sink', input_table)
+
+
 class StreamTrainSource(SourceExecutor):
 
     def execute(self, function_context: FlinkFunctionContext) -> Table:
@@ -109,45 +176,6 @@ class StreamTrainExecutor(Executor):
 
         train(function_context.get_exec_env(), function_context.get_table_env(), function_context.get_statement_set(),
               input_tb, tf_config, output_schema)
-
-
-class StreamPreprocessSource(SourceExecutor):
-
-    def execute(self, function_context: FlinkFunctionContext) -> Table:
-        table_env: TableEnvironment = function_context.get_table_env()
-        table_env.execute_sql('''
-            create table stream_train_source (
-                age varchar,
-                workclass varchar,
-                fnlwgt varchar,
-                education varchar,
-                education_num varchar,
-                marital_status varchar,
-                occupation varchar,
-                relationship varchar,
-                race varchar,
-                gender varchar,
-                capital_gain varchar,
-                capital_loss varchar,
-                hours_per_week varchar,
-                native_country varchar,
-                income_bracket varchar
-            ) with (
-                'connector' = 'kafka',
-                'topic' = 'census_input_topic',
-                'properties.bootstrap.servers' = 'localhost:9092',
-                'properties.group.id' = 'stream_train_source',
-                'format' = 'csv',
-                'scan.startup.mode' = 'earliest-offset'
-            )
-        ''')
-        table = table_env.from_path('stream_train_source')
-        return table
-
-
-class StreamPreprocessExecutor(Executor):
-    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
-        return []
 
 
 class StreamValidateExecutor(Executor):

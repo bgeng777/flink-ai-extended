@@ -73,6 +73,22 @@ def preprocess(input_dict):
     model_input = model_input.SerializeToString()
     return model_input
 
+
+def get_accuracy_score(model_path, data_path):
+    predictor = tf.contrib.predictor.from_saved_model(model_path)
+    data = pd.read_csv(data_path, names=census_dataset._CSV_COLUMNS)
+    label = data.pop('income_bracket')
+    label = label.map({'<=50K': 0, '>50K': 1})
+    inputs = []
+    for _, row in data.iterrows():
+        tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
+        tmp = preprocess(tmp)
+        inputs.append(tmp)
+    output_dict = predictor({'inputs': inputs})
+    res = [np.argmax(output_dict['scores'][i]) for i in range(0, len(output_dict['scores']))]
+    return accuracy_score(label, res)
+
+
 class BatchTableEnvCreator(TableEnvCreator):
 
     def create_table_env(self):
@@ -138,21 +154,7 @@ class BatchEvaluateExecutor(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         test_data = '/tmp/census_data/adult.evaluate'
-
-        predictor = tf.contrib.predictor.from_saved_model(self.path)
-        data = pd.read_csv(test_data, names=census_dataset._CSV_COLUMNS)
-        label = data.pop('income_bracket')
-        label = label.map({'<=50K': 0, '>50K': 1})
-        inputs = []
-        for _, row in data.iterrows():
-            tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
-            tmp = preprocess(tmp)
-            inputs.append(tmp)
-        output_dict = predictor({'inputs': inputs})
-        res = [np.argmax(output_dict['scores'][i]) for i in range(0, len(output_dict['scores']))]
-        score = accuracy_score(label, res)
-
-
+        score = get_accuracy_score(self.path, test_data)
         path = get_file_dir(__file__) + '/batch_evaluate_result'
         with open(path, 'a') as f:
             f.write(str(score) + '  -------->  ' + self.model_version.version)
@@ -180,19 +182,7 @@ class BatchValidateExecutor(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         test_data = '/tmp/census_data/adult.validate'
-
-        predictor = tf.contrib.predictor.from_saved_model(self.path)
-        data = pd.read_csv(test_data, names=census_dataset._CSV_COLUMNS)
-        label = data.pop('income_bracket')
-        label = label.map({'<=50K': 0, '>50K': 1})
-        inputs = []
-        for _, row in data.iterrows():
-            tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
-            tmp = preprocess(tmp)
-            inputs.append(tmp)
-        output_dict = predictor({'inputs': inputs})
-        res = [np.argmax(output_dict['scores'][i]) for i in range(0, len(output_dict['scores']))]
-        score = accuracy_score(label, res)
+        score = get_accuracy_score(self.path, test_data)
 
         path = get_file_dir(__file__) + '/batch_validate_result'
         with open(path, 'a') as f:
@@ -201,11 +191,27 @@ class BatchValidateExecutor(Executor):
         deployed_version = af.get_deployed_model_version(self.model_name)
 
         if deployed_version is not None:
+            deployed_version_score = get_accuracy_score(deployed_version.model_path.split('|')[1], test_data)
+            if score > deployed_version_score:
+                af.update_model_version(model_name=self.model_name,
+                                        model_version=deployed_version.version,
+                                        current_stage=ModelVersionStage.DEPRECATED)
+                af.update_model_version(model_name=self.model_name,
+                                        model_version=self.model_version.version,
+                                        current_stage=ModelVersionStage.DEPLOYED)
+                with open(path, 'a') as f:
+                    f.write('version {} pass validation.'.format(self.model_version.version))
+                    f.write('\n')
+            else:
+                with open(path, 'a') as f:
+                    f.write('version {} does not pass validation.'.format(self.model_version.version))
+                    f.write('\n')
+        else:
             af.update_model_version(model_name=self.model_name,
-                                    model_version=deployed_version.version,
-                                    current_stage=ModelVersionStage.DEPRECATED)
-        af.update_model_version(model_name=self.model_name,
-                                model_version=self.model_version.version,
-                                current_stage=ModelVersionStage.DEPLOYED)
+                                    model_version=self.model_version.version,
+                                    current_stage=ModelVersionStage.DEPLOYED)
+            with open(path, 'a') as f:
+                f.write('version {} pass validation.'.format(self.model_version.version))
+                f.write('\n')
         return []
 

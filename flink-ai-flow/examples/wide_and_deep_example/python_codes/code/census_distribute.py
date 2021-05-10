@@ -107,12 +107,15 @@ def run_census(flags_obj, input_func):
     # Find project config in the script dir
     af.set_project_config_file(os.path.dirname(__file__) + '/project.yaml')
     model_name = flags_obj.model_type
+    print("model_name: "+model_name)
+    tf.logging.info("model_name: {}".format(model_name))
     if 'batch' == flags_obj.run_mode:
         version = round(time.time())
         model_path = str(flags_obj.model_dir + '/' + str(version))
     else:
         model_path = af.get_deployed_model_version(model_name).model_path.split('|')[0]
     print("model_path: " + model_path)
+
     model = build_estimator(
         model_dir=model_path, model_type=flags_obj.model_type,
         model_column_fn=census_dataset.build_model_columns,
@@ -208,5 +211,5 @@ def stream_map_func(context):
     config.export_dir = '/tmp/census_export'
     config.task_type = tf_config['task']['type']
     config.task_index = tf_config['task']['index']
-    config.model_type = "wide_and_deep"
+    config.model_type = 'wide_and_deep_base'
     run_census(config, flink_train_input_fn)

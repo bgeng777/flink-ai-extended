@@ -15,3 +15,38 @@
 0.8105153246115103  -------->  15
 0.8075671027578158  -------->  16
 0.8052945150789264  -------->  17
+0.8100853755911799  -------->  1
+version 1 pass validation.
+0.7869295497819544  -------->  2
+version 2 does not pass validation.
+0.7637737239727289  -------->  3
+version 3 does not pass validation.
+0.8009336035870033  -------->  1
+version 1 pass validation.
+0.7985381733308765  -------->  2
+version 2 does not pass validation.
+0.8047417234813586  -------->  3
+version 3 pass validation.
+0.765616362631288  -------->  4
+version 4 does not pass validation.
+0.8193599901725939  -------->  1
+version 1 pass validation.
+0.8015478164731896  -------->  2
+version 2 does not pass validation.
+0.7917204102942079  -------->  3
+version 3 does not pass validation.
+0.8046188809041214  -------->  1
+version 1 pass validation.
+0.7981082243105461  -------->  2
+version 2 does not pass validation.
+0.8043731957496468  -------->  3
+version 3 does not pass validation.
+0.7853940175664885  -------->  1
+version 1 pass validation.
+0.816964559916467  -------->  2
+version 2 pass validation.
+0.7950371598796143  -------->  1
+version 1 pass validation.
+0.8003193907008169  -------->  2
+version 2 pass validation.
+0.856028499477919  -------->  3

@@ -35,11 +35,17 @@ def init():
         data_format='csv',
         batch_uri='/tmp/census_data/adult.data')
     af.register_example(
-        name='stream_train_input',
+        name='stream_preprocess_input',
         support_type=ExampleSupportType.EXAMPLE_STREAM,
         data_type='file',
         data_format='csv',
         batch_uri='/tmp/census_data/adult.data')
+    af.register_example(
+        name='stream_train_input',
+        support_type=ExampleSupportType.EXAMPLE_STREAM,
+        data_type='kafka',
+        data_format='csv',
+        stream_uri='localhost:9092')
     af.register_example(
         name='stream_predict_input',
         support_type=ExampleSupportType.EXAMPLE_STREAM,
