@@ -23,12 +23,13 @@ from enum import Enum
 
 STAGE_GENERATED = "Generated"
 STAGE_VALIDATED = "Validated"
+STAGE_EVALUATED = "Evaluated"
 STAGE_DEPLOYED = "Deployed"
 STAGE_DEPRECATED = "Deprecated"
 STAGE_DELETED = "Deleted"
 
-ALL_STAGES = [STAGE_GENERATED, STAGE_VALIDATED, STAGE_DEPLOYED, STAGE_DEPRECATED, STAGE_DELETED]
-DEFAULT_STAGES_FOR_GET_LATEST_VERSIONS = [STAGE_GENERATED, STAGE_VALIDATED, STAGE_DEPLOYED]
+ALL_STAGES = [STAGE_GENERATED, STAGE_EVALUATED, STAGE_VALIDATED, STAGE_DEPLOYED, STAGE_DEPRECATED, STAGE_DELETED]
+DEFAULT_STAGES_FOR_GET_LATEST_VERSIONS = [STAGE_GENERATED, STAGE_EVALUATED, STAGE_VALIDATED, STAGE_DEPLOYED]
 _CANONICAL_MAPPING = {stage.lower(): stage for stage in ALL_STAGES}
 
 
@@ -43,6 +44,7 @@ def get_canonical_stage(stage):
 class ModelVersionStage(object):
     """Enum for stage of an :py:class:`ai_flow.model_center.model_repo.entity.ModelVersionDetail`."""
     GENERATED = ProtoModelVersionStage.Value('GENERATED')
+    EVALUATED = ProtoModelVersionStage.Value('EVALUATED')
     VALIDATED = ProtoModelVersionStage.Value('VALIDATED')
     DEPLOYED = ProtoModelVersionStage.Value('DEPLOYED')
     DEPRECATED = ProtoModelVersionStage.Value('DEPRECATED')
@@ -71,6 +73,7 @@ class ModelVersionStage(object):
 
 class ModelVersionEventType(str, Enum):
     MODEL_GENERATED = 'MODEL_GENERATED'
+    MODEL_EVALUATED = 'MODEL_EVALUATED'
     MODEL_VALIDATED = 'MODEL_VALIDATED'
     MODEL_DEPLOYED = 'MODEL_DEPLOYED'
     MODEL_DEPRECATED = 'MODEL_DEPRECATED'
@@ -79,6 +82,7 @@ class ModelVersionEventType(str, Enum):
 
 MODEL_VERSION_TO_EVENT_TYPE = {
     ModelVersionStage.GENERATED: ModelVersionEventType.MODEL_GENERATED,
+    ModelVersionStage.EVALUATED: ModelVersionEventType.MODEL_EVALUATED,
     ModelVersionStage.VALIDATED: ModelVersionEventType.MODEL_VALIDATED,
     ModelVersionStage.DEPLOYED: ModelVersionEventType.MODEL_DEPLOYED,
     ModelVersionStage.DEPRECATED: ModelVersionEventType.MODEL_DEPRECATED,

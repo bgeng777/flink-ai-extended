@@ -1414,6 +1414,9 @@ class SqlAlchemyStore(AbstractStore):
     def get_latest_validated_model_version(self, model_name):
         return self.get_model_with_stage(model_name, STAGE_VALIDATED)
 
+    def get_latest_evaluated_model_version(self, model_name):
+        return self.get_model_with_stage(model_name, STAGE_VALIDATED)
+
     def get_latest_generated_model_version(self, model_name):
         return self.get_model_with_stage(model_name, STAGE_GENERATED)
 
