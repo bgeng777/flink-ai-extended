@@ -287,11 +287,11 @@ enum ModelVersionStatus {
 
 enum ModelVersionStage {
     GENERATED = 0;
-    EVALUATED = 1;
-    VALIDATED = 2;
-    DEPLOYED = 3;
-    DEPRECATED = 4;
-    DELETED = 5;
+    VALIDATED = 1;
+    DEPLOYED = 2;
+    DEPRECATED = 3;
+    DELETED = 4;
+    EVALUATED = 5;
 }
 
 enum MetricTypeProto {

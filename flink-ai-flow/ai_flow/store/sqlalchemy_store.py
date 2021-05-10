@@ -36,7 +36,7 @@ from ai_flow.metadata_store.utils.ResultToMeta import ResultToMeta
 from ai_flow.metric.utils import table_to_metric_meta, table_to_metric_summary, metric_meta_to_table, \
     metric_summary_to_table
 from ai_flow.model_center.entity.model_version_stage import STAGE_DELETED, get_canonical_stage, STAGE_GENERATED, \
-    STAGE_DEPLOYED, STAGE_VALIDATED
+    STAGE_DEPLOYED, STAGE_VALIDATED, STAGE_EVALUATED
 from ai_flow.rest_endpoint.protobuf.message_pb2 import INVALID_PARAMETER_VALUE, RESOURCE_ALREADY_EXISTS
 from ai_flow.rest_endpoint.service.exception import AIFlowException
 from ai_flow.rest_endpoint.service.high_availability import Member
@@ -1415,7 +1415,7 @@ class SqlAlchemyStore(AbstractStore):
         return self.get_model_with_stage(model_name, STAGE_VALIDATED)
 
     def get_latest_evaluated_model_version(self, model_name):
-        return self.get_model_with_stage(model_name, STAGE_VALIDATED)
+        return self.get_model_with_stage(model_name, STAGE_EVALUATED)
 
     def get_latest_generated_model_version(self, model_name):
         return self.get_model_with_stage(model_name, STAGE_GENERATED)
