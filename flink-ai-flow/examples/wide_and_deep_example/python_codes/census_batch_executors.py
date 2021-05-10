@@ -26,17 +26,18 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
-from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, FlinkFunctionContext, Executor, \
+from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, FlinkFunctionContext, \
     ExecutionEnvironment, BatchTableEnvironment
+import flink_ai_flow.pyflink as faf
 from flink_ml_tensorflow.tensorflow_TFConfig import TFConfig
 from flink_ml_tensorflow.tensorflow_on_flink_mlconf import MLCONSTANTS
 from flink_ml_tensorflow.tensorflow_on_flink_table import train
-from pyflink.datastream import StreamExecutionEnvironment
+from ai_flow.client.ai_flow_client import get_ai_flow_client
 from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
 from ai_flow.common.path_util import get_file_dir
 import census_dataset
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
-from notification_service.base_notification import DEFAULT_NAMESPACE
+from notification_service.base_notification import DEFAULT_NAMESPACE, BaseEvent
 
 
 def _float_feature(value):
@@ -86,19 +87,20 @@ class BatchTableEnvCreator(TableEnvCreator):
         return batch_env, t_env, statement_set
 
 
-class BatchPreprocessExecutor(paf.Executor):
+class BatchPreprocessExecutor(Executor):
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
         data_path = '/tmp/census_data/adult.data'
         df = pd.read_csv(data_path, header=None)
         df = shuffle(df)
         df.to_csv('/tmp/census_data/adult.data', index=False, header=None)
-        af.send_event(key='wide_and_deep_base', value='BATCH_PREPROCESS', event_type='BATCH_PREPROCESS',
-                      namespace=DEFAULT_NAMESPACE)
+        get_ai_flow_client().send_event(BaseEvent(key='wide_and_deep_base', value='BATCH_PREPROCESS',
+                                                  event_type='BATCH_PREPROCESS',
+                                                  namespace=DEFAULT_NAMESPACE))
         return []
 
 
-class BatchTrainExecutor(Executor):
+class BatchTrainExecutor(faf.Executor):
 
     def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
         work_num = 2

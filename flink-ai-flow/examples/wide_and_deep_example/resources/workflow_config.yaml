@@ -17,19 +17,13 @@ census_batch_train:
 
 census_batch_evaluate:
   platform: local
-  engine: flink
+  engine: python
   job_name: census_batch_evaluate
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
-  local_mode: cluster
-  language_type: PYTHON
 
 census_batch_validate:
   platform: local
-  engine: flink
+  engine: python
   job_name: census_batch_validate
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
-  local_mode: cluster
-  language_type: PYTHON
 
 
 
