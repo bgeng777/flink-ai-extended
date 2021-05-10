@@ -175,6 +175,7 @@ class BatchValidateExecutor(Executor):
         self.model_version = af.get_latest_validated_model_version(self.model_name)
         print("#### name {}".format(self.model_name))
         print("#### path {}".format(self.model_version.model_path))
+        print("#### ver {}".format(self.model_version.version))
         self.path = self.model_version.model_path.split('|')[1]
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
@@ -197,7 +198,12 @@ class BatchValidateExecutor(Executor):
         with open(path, 'a') as f:
             f.write(str(score) + '  -------->  ' + self.model_version.version)
             f.write('\n')
+        deployed_version = af.get_deployed_model_version(self.model_name)
 
+        if deployed_version is not None:
+            af.update_model_version(model_name=self.model_name,
+                                    model_version=deployed_version.version,
+                                    current_stage=ModelVersionStage.DEPRECATED)
         af.update_model_version(model_name=self.model_name,
                                 model_version=self.model_version.version,
                                 current_stage=ModelVersionStage.DEPLOYED)
