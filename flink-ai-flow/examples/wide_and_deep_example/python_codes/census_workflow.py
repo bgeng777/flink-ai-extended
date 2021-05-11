@@ -23,14 +23,15 @@ from ai_flow.common.scheduler_type import SchedulerType
 from ai_flow import PythonObjectExecutor
 from flink_ai_flow import LocalFlinkJobConfig, FlinkPythonExecutor
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from ai_flow.graph.edge import TaskAction, EventLife, MetValueCondition, MetCondition, DEFAULT_NAMESPACE
+from ai_flow.graph.edge import TaskAction, EventLife, MetValueCondition
 
 
 from census_batch_executors import BatchPreprocessExecutor, BatchTrainExecutor, BatchEvaluateExecutor, \
-    BatchValidateExecutor, BatchTableEnvCreator, StreamTrainExecutor
-from census_stream_executors import StreamPreprocessExecutor, StreamValidateExecutor, StreamPushExecutor, \
-    StreamTableEnvCreator, StreamTrainSource, StreamPredictSource, StreamPredictExecutor, \
-    StreamPredictSink, StreamPreprocessSource
+    BatchValidateExecutor
+from cencus_stream_train_executors import StreamPreprocessExecutor, StreamValidateExecutor, StreamPushExecutor,\
+    StreamTrainExecutor, StreamTrainSource, StreamTableEnvCreator, StreamPreprocessSource
+from cencus_stream_predict_executors import StreamPredictSource, StreamPredictExecutor, StreamPredictSink, \
+    StreamPredictPreprocessSource, StreamPredictPreprocessSink
 
 
 def get_project_path():
@@ -60,7 +61,7 @@ def run_workflow():
 
         batch_validate_config = workflow_config.job_configs['census_batch_validate']
 
-        """Batch Train Jobs"""
+        """Batch Jobs"""
         with af.config(config=batch_preprocess_config):
             batch_preprocess_channel = af.user_define_operation(input_data_list=[],
                                                                 executor=PythonObjectExecutor(
@@ -81,22 +82,24 @@ def run_workflow():
                                                            python_object=BatchValidateExecutor()),
                                                        model_info=batch_model_info, name='census_batch_validate')
 
-        # """Stream Job Configs"""
+        """Stream Job Configs"""
         stream_preprocess_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_preprocess_train']
         stream_preprocess_config.set_table_env_create_func(StreamTableEnvCreator())
-        #
+
         stream_train_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_train']
         stream_train_config.set_table_env_create_func(StreamTableEnvCreator())
-        #
+
         stream_validate_config = workflow_config.job_configs['census_stream_validate']
-        #
+
         stream_push_config = workflow_config.job_configs['census_stream_push']
+
+        stream_preprocess_predict_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_preprocess_predict']
+        stream_preprocess_predict_config.set_table_env_create_func(StreamTableEnvCreator())
 
         stream_predict_config: LocalFlinkJobConfig = workflow_config.job_configs['census_stream_predict']
         stream_predict_config.set_table_env_create_func(StreamTableEnvCreator())
-        #
-        #
-        # """Stream Train Jobs"""
+
+        """Stream Train Jobs"""
         with af.config(config=stream_preprocess_config):
             stream_preprocess_source = af.read_example(example_info=stream_preprocess_input,
                                                        executor=FlinkPythonExecutor(python_object=StreamPreprocessSource()))
@@ -118,8 +121,17 @@ def run_workflow():
         with af.config(config=stream_push_config):
             stream_push_channel = af.push_model(executor=FlinkPythonExecutor(python_object=StreamPushExecutor()),
                                                 model_info=stream_model_info, name='census_stream_push')
-        #
-        # """Stream Prediction"""
+
+        """Stream Prediction Jobs"""
+        with af.config(config=stream_preprocess_predict_config):
+            stream_predict_preprocess_source = af.read_example(example_info=stream_preprocess_input,
+                                                               executor=FlinkPythonExecutor(
+                                                                   python_object=StreamPredictPreprocessSource()))
+            stream_predict_preprocess_sink = af.user_define_operation(input_data_list=[stream_predict_preprocess_source],
+                                                                      executor=FlinkPythonExecutor(
+                                                                          python_object=StreamPredictPreprocessSink()),
+                                                                      name='census_stream_predict_preprocess_sink')
+
         with af.config(config=stream_predict_config):
             stream_predict_source = af.read_example(example_info=stream_predict_input,
                                                     executor=FlinkPythonExecutor(python_object=StreamPredictSource()))

@@ -42,13 +42,14 @@ def preprocess(input_dict):
 
 def get_accuracy_score(model_path, data_path, max_sample_num=None):
     predictor = tf.contrib.predictor.from_saved_model(model_path)
-    data = pd.read_csv(data_path, names=census_dataset._CSV_COLUMNS)
+    data = pd.read_csv(data_path, names=census_dataset.CSV_COLUMNS)
     label = data.pop('income_bracket')
     label = label.map({'<=50K': 0, '>50K': 1})
     inputs = []
     data = data[:max_sample_num]
+    label = label[:max_sample_num]
     for _, row in data.iterrows():
-        tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
+        tmp = dict(zip(census_dataset.CSV_COLUMNS[:-1], row))
         tmp = preprocess(tmp)
         inputs.append(tmp)
     output_dict = predictor({'inputs': inputs})

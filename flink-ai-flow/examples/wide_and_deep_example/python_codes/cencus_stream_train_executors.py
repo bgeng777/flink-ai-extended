@@ -17,25 +17,22 @@
 # under the License.
 #
 
-import os
-from typing import List
-
-import ai_flow as af
-import numpy as np
-import tensorflow as tf
-from ai_flow import FunctionContext
-from flink_ai_flow.pyflink import SourceExecutor, FlinkFunctionContext, SinkExecutor, Executor
-from pyflink.table import Table, TableEnvironment, ScalarFunction, \
-    DataTypes
-from pyflink.table.udf import udf
-from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, FlinkFunctionContext, Executor, \
-    ExecutionEnvironment, BatchTableEnvironment
 from pyflink.datastream import StreamExecutionEnvironment
-from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
-from census_common import get_accuracy_score, preprocess
-from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
+import ai_flow as af
+from typing import List
+from python_ai_flow import FunctionContext
 import python_ai_flow as paf
-from code import census_dataset
+import time
+from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, SinkExecutor, FlinkFunctionContext
+import flink_ai_flow.pyflink as faf
+from flink_ml_tensorflow.tensorflow_TFConfig import TFConfig
+from flink_ml_tensorflow.tensorflow_on_flink_mlconf import MLCONSTANTS
+from flink_ml_tensorflow.tensorflow_on_flink_table import train
+from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
+from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
+from census_common import get_accuracy_score
+
+
 class StreamTableEnvCreator(TableEnvCreator):
 
     def create_table_env(self):
@@ -107,7 +104,7 @@ class StreamPreprocessExecutor(SinkExecutor):
                 income_bracket varchar
             ) with (
                 'connector' = 'kafka',
-                'topic' = 'census_input_topic',
+                'topic' = 'census_train_input_topic',
                 'properties.bootstrap.servers' = 'localhost:9092',
                 'properties.group.id' = 'stream_train_preprocess_sink',
                 'format' = 'csv',
@@ -140,7 +137,7 @@ class StreamTrainSource(SourceExecutor):
                 income_bracket varchar
             ) with (
                 'connector' = 'kafka',
-                'topic' = 'census_input_topic',
+                'topic' = 'census_train_input_topic',
                 'properties.bootstrap.servers' = 'localhost:9092',
                 'properties.group.id' = 'stream_train_source',
                 'format' = 'csv',
@@ -150,6 +147,32 @@ class StreamTrainSource(SourceExecutor):
         table = table_env.from_path('stream_train_source')
         return table
 
+
+class StreamTrainExecutor(faf.Executor):
+
+    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
+        time.sleep(10)
+        work_num = 2
+        ps_num = 1
+        python_file = 'census_distribute.py'
+        func = 'stream_map_func'
+        prop = {MLCONSTANTS.PYTHON_VERSION: '',
+                MLCONSTANTS.ENCODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
+                MLCONSTANTS.DECODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
+                'sys:csv_encode_types': 'STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING',
+                MLCONSTANTS.CONFIG_STORAGE_TYPE: MLCONSTANTS.STORAGE_ZOOKEEPER,
+                MLCONSTANTS.CONFIG_ZOOKEEPER_CONNECT_STR: 'localhost:2181',
+                MLCONSTANTS.CONFIG_ZOOKEEPER_BASE_PATH: '/demo',
+                MLCONSTANTS.REMOTE_CODE_ZIP_FILE: "hdfs://localhost:9000/demo/code.zip"}
+        env_path = None
+
+        input_tb = function_context.t_env.from_path('stream_train_source')
+        output_schema = None
+
+        tf_config = TFConfig(work_num, ps_num, prop, python_file, func, env_path)
+
+        train(function_context.get_exec_env(), function_context.get_table_env(), function_context.get_statement_set(),
+              input_tb, tf_config, output_schema)
 
 
 class StreamValidateExecutor(paf.Executor):
@@ -210,124 +233,3 @@ class StreamPushExecutor(paf.Executor):
                                 current_stage=ModelVersionStage.DEPLOYED)
 
         return []
-
-
-class StreamPredictSource(SourceExecutor):
-
-    def execute(self, function_context: FlinkFunctionContext) -> Table:
-        table_env: TableEnvironment = function_context.get_table_env()
-        table_env.execute_sql('''
-            create table stream_predict_source (
-                age varchar,
-                workclass varchar,
-                fnlwgt varchar,
-                education varchar,
-                education_num varchar,
-                marital_status varchar,
-                occupation varchar,
-                relationship varchar,
-                race varchar,
-                gender varchar,
-                capital_gain varchar,
-                capital_loss varchar,
-                hours_per_week varchar,
-                native_country varchar,
-                income_bracket varchar
-            ) with (
-                'connector' = 'kafka',
-                'topic' = 'census_input_topic',
-                'properties.bootstrap.servers' = 'localhost:9092',
-                'properties.group.id' = 'stream_predict_source',
-                'format' = 'csv',
-                'scan.startup.mode' = 'earliest-offset'
-            )
-        ''')
-        table = table_env.from_path('stream_predict_source')
-        print("##### StreamPredictSource")
-        return table
-
-
-class Predict(ScalarFunction):
-
-    def __init__(self, model_path):
-        super().__init__()
-        self._predictor = None
-        self._exported_model = None
-        self._model_path = model_path
-
-    def open(self, function_context: FunctionContext):
-        self._exported_model = self._model_path.split('|')[1]
-        with tf.Session() as session:
-            tf.saved_model.loader.load(session, [tf.saved_model.tag_constants.SERVING], self._exported_model)
-            self._predictor = tf.contrib.predictor.from_saved_model(self._exported_model)
-
-    def eval(self, age, workclass, fnlwgt, education, education_num, marital_status, occupation, relationship,
-             race, gender, capital_gain, capital_loss, hours_per_week, native_country):
-        try:
-            arg_list = [age, workclass, fnlwgt, education, education_num, marital_status, occupation, relationship,
-                        race, gender, capital_gain, capital_loss, hours_per_week, native_country]
-            tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], arg_list))
-            model_input = preprocess(tmp)
-            output_dict = self._predictor({'inputs': [model_input]})
-            print(str(np.argmax(output_dict['scores'])))
-            return str(np.argmax(output_dict['scores']))
-        except Exception:
-            return 'tf fail'
-
-
-class StreamPredictExecutor(Executor):
-
-    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
-        model_version = af.get_deployed_model_version('wide_and_deep')
-        print("##### StreamPredictExecutor {}".format(model_version.version))
-        function_context.t_env.register_function('predict',
-                                                 udf(f=Predict(model_version.model_path), input_types=[DataTypes.STRING(), DataTypes.STRING(),
-                                                                               DataTypes.STRING(), DataTypes.STRING(),
-                                                                               DataTypes.STRING(), DataTypes.STRING(),
-                                                                               DataTypes.STRING(), DataTypes.STRING(),
-                                                                               DataTypes.STRING(), DataTypes.STRING(),
-                                                                               DataTypes.STRING(), DataTypes.STRING(),
-                                                                               DataTypes.STRING(), DataTypes.STRING()],
-                                                     result_type=DataTypes.STRING()))
-        print("#### {}".format(self.__class__.__name__))
-        return [input_list[0].select(
-            'age, workclass, fnlwgt, education, education_num, marital_status, occupation, '
-            'relationship, race, gender, capital_gain, capital_loss, hours_per_week, native_country, '
-            'predict(age, workclass, fnlwgt, education, education_num, marital_status, occupation, '
-            'relationship, race, gender, capital_gain, capital_loss, hours_per_week, native_country) as income_bracket')]
-            # 'income_bracket')]
-
-
-class StreamPredictSink(SinkExecutor):
-
-    def execute(self, function_context: FlinkFunctionContext, input_table: Table) -> None:
-        table_env: TableEnvironment = function_context.get_table_env()
-        statement_set = function_context.get_statement_set()
-        table_env.execute_sql('''
-            create table stream_predict_sink (
-                age varchar,
-                workclass varchar,
-                fnlwgt varchar,
-                education varchar,
-                education_num varchar,
-                marital_status varchar,
-                occupation varchar,
-                relationship varchar,
-                race varchar,
-                gender varchar,
-                capital_gain varchar,
-                capital_loss varchar,
-                hours_per_week varchar,
-                native_country varchar,
-                income_bracket varchar
-            ) with (
-                'connector' = 'kafka',
-                'topic' = 'census_output_topic',
-                'properties.bootstrap.servers' = 'localhost:9092',
-                'properties.group.id' = 'stream_predict_sink',
-                'format' = 'csv',
-                'scan.startup.mode' = 'earliest-offset'
-            )
-        ''')
-        statement_set.add_insert('stream_predict_sink', input_table)
-        print("#### {}".format(self.__class__.__name__))

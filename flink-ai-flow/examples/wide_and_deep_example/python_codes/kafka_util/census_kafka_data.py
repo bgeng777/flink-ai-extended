@@ -35,8 +35,9 @@ class CensusKafkaUtil(object):
             self._yaml_config = yaml.load(yaml_file)
         self.bootstrap_servers = self._yaml_config.get('bootstrap_servers')
         self.census_input_preprocess_topic = self._yaml_config.get('census_input_preprocess_topic')
-        self.census_input_topic = self._yaml_config.get('census_input_topic')
-        self.census_output_topic = self._yaml_config.get('census_output_topic')
+        self.census_train_input_topic = self._yaml_config.get('census_train_input_topic')
+        self.census_predict_input_topic = self._yaml_config.get('census_predict_input_topic')
+        self.census_predict_output_topic = self._yaml_config.get('census_predict_output_topic')
         self.admin_client = KafkaAdminClient(bootstrap_servers=self.bootstrap_servers)
 
     def _send_data_loop(self, count=None):
@@ -58,11 +59,12 @@ class CensusKafkaUtil(object):
                     break
                 if 0 == num % 1000:
                     print("send data {}".format(num))
-                    time.sleep(self._yaml_config.get('time_interval') / 500)
+                    time.sleep(self._yaml_config.get('time_interval') / 200)
 
     def _clean_create(self, new_topic, topics):
         if new_topic in topics:
             self.admin_client.delete_topics(topics=[new_topic], timeout_ms=5000)
+            print("{} is deleted.".format(new_topic))
             time.sleep(5)
         self.admin_client.create_topics(
             new_topics=[NewTopic(name=new_topic, num_partitions=1, replication_factor=1)])
@@ -71,16 +73,17 @@ class CensusKafkaUtil(object):
         topics = self.admin_client.list_topics()
         print(topics)
         self._clean_create(self.census_input_preprocess_topic, topics)
-        self._clean_create(self.census_input_topic, topics)
-        self._clean_create(self.census_output_topic, topics)
+        self._clean_create(self.census_train_input_topic, topics)
+        self._clean_create(self.census_predict_input_topic, topics)
+        self._clean_create(self.census_predict_output_topic, topics)
 
         # self._send_data_loop(count)
 
     def read_input_data(self, count):
-        self.read_data(self.census_input_topic, count)
+        self.read_data(self.census_train_input_topic, count)
 
     def read_output_data(self, count):
-        self.read_data(self.census_output_topic, count)
+        self.read_data(self.census_predict_output_topic, count)
 
     def read_data(self, topic, count=None):
         consumer = KafkaConsumer(topic, bootstrap_servers=[self.bootstrap_servers], group_id=str(
@@ -94,6 +97,14 @@ class CensusKafkaUtil(object):
             if num > count:
                 break
 
+    def delete_topic(self):
+        topics = self.admin_client.list_topics()
+        print(topics)
+        for topic in topics:
+            if str(topic).startswith("census"):
+                self.admin_client.delete_topics(topics=[topic], timeout_ms=5000)
+                print("{} is deleted.".format(topic))
+                time.sleep(5)
 
 if __name__ == '__main__':
     kafka_util = CensusKafkaUtil()
@@ -101,6 +112,7 @@ if __name__ == '__main__':
     kafka_util.create_topic()
     topics = kafka_util.admin_client.list_topics()
     print(topics)
+    # kafka_util.delete_topic()
     # Create continuous data stream
     kafka_util._send_data_loop(200000000)
 

@@ -42,7 +42,7 @@ EVAL_URL = '%s/%s' % (DATA_URL, REMOTE_TEST_FILE)
 VALIDATE_FILE = 'adult.validate'
 VALIDATE_URL = '%s/%s' % (DATA_URL, REMOTE_TEST_FILE)
 
-_CSV_COLUMNS = [
+CSV_COLUMNS = [
     'age', 'workclass', 'fnlwgt', 'education', 'education_num',
     'marital_status', 'occupation', 'relationship', 'race', 'gender',
     'capital_gain', 'capital_loss', 'hours_per_week', 'native_country',
@@ -175,7 +175,7 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
     def parse_csv(value):
         tf.logging.info('Parsing {}'.format(data_file))
         columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
-        features = dict(zip(_CSV_COLUMNS, columns))
+        features = dict(zip(CSV_COLUMNS, columns))
         labels = features.pop('income_bracket')
         classes = tf.equal(labels, '>50K')  # binary classification
         return features, classes

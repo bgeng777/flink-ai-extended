@@ -17,23 +17,19 @@
 # under the License.
 #
 
-import tensorflow as tf
 import ai_flow as af
 from typing import List
 from python_ai_flow import FunctionContext, Executor
-import python_ai_flow as paf
 import pandas as pd
-import numpy as np
-from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
-from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, FlinkFunctionContext, \
+from flink_ai_flow.pyflink import TableEnvCreator, FlinkFunctionContext, \
     ExecutionEnvironment, BatchTableEnvironment
 import flink_ai_flow.pyflink as faf
 from flink_ml_tensorflow.tensorflow_TFConfig import TFConfig
 from flink_ml_tensorflow.tensorflow_on_flink_mlconf import MLCONSTANTS
 from flink_ml_tensorflow.tensorflow_on_flink_table import train
 from ai_flow.client.ai_flow_client import get_ai_flow_client
-from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
+from pyflink.table import EnvironmentSettings, Table
 from ai_flow.common.path_util import get_file_dir
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from notification_service.base_notification import DEFAULT_NAMESPACE, BaseEvent
@@ -166,28 +162,3 @@ class BatchValidateExecutor(Executor):
                 f.write('\n')
         return []
 
-
-class StreamTrainExecutor(faf.Executor):
-
-    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
-        work_num = 2
-        ps_num = 1
-        python_file = 'census_distribute.py'
-        func = 'stream_map_func'
-        prop = {MLCONSTANTS.PYTHON_VERSION: '',
-                MLCONSTANTS.ENCODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
-                MLCONSTANTS.DECODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
-                'sys:csv_encode_types': 'STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING',
-                MLCONSTANTS.CONFIG_STORAGE_TYPE: MLCONSTANTS.STORAGE_ZOOKEEPER,
-                MLCONSTANTS.CONFIG_ZOOKEEPER_CONNECT_STR: 'localhost:2181',
-                MLCONSTANTS.CONFIG_ZOOKEEPER_BASE_PATH: '/demo',
-                MLCONSTANTS.REMOTE_CODE_ZIP_FILE: "hdfs://localhost:9000/demo/code.zip"}
-        env_path = None
-
-        input_tb = function_context.t_env.from_path('stream_train_source')
-        output_schema = None
-
-        tf_config = TFConfig(work_num, ps_num, prop, python_file, func, env_path)
-
-        train(function_context.get_exec_env(), function_context.get_table_env(), function_context.get_statement_set(),
-              input_tb, tf_config, output_schema)

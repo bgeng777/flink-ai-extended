@@ -182,7 +182,7 @@ def stream_map_func(context):
 
         def parse_csv(value):
             columns = tf.decode_csv(value, record_defaults=census_dataset._CSV_COLUMN_DEFAULTS)
-            features = dict(zip(census_dataset._CSV_COLUMNS, columns))
+            features = dict(zip(census_dataset.CSV_COLUMNS, columns))
             labels = features.pop('income_bracket')
             classes = tf.equal(labels, '>50K')  # binary classification
             return features, classes

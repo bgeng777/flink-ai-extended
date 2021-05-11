@@ -37,3 +37,34 @@ version 6 does not pass validation.
 version 7 does not pass validation.
 0.8012407100300964  -------->  8
 0.8018549229162828  -------->  9
+0.7876051839567594  -------->  1
+0.7928259934893435  -------->  1
+version 1 pass validation.
+0.7974940114243597  -------->  1
+version 1 pass validation.
+0.8111295374976967  -------->  1
+version 1 pass validation.
+0.790184878078742  -------->  2
+version 2 does not pass validation.
+0.80468030219274  -------->  1
+version 1 pass validation.
+0.8040660893065537  -------->  1
+version 1 pass validation.
+0.8006879184325287  -------->  2
+version 2 does not pass validation.
+0.7850869111233953  -------->  2
+version 2 pass validation.
+0.8005650758552915  -------->  3
+version 3 pass validation.
+0.7928874147779621  -------->  4
+version 4 does not pass validation.
+0.786990971070573  -------->  1
+version 1 pass validation.
+0.793747312818623  -------->  2
+version 2 pass validation.
+0.8009336035870033  -------->  3
+version 3 pass validation.
+0.8052945150789264  -------->  4
+version 4 pass validation.
+0.8023462932252319  -------->  5
+version 5 does not pass validation.
