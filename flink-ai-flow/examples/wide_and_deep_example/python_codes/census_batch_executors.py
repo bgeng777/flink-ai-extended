@@ -35,58 +35,9 @@ from flink_ml_tensorflow.tensorflow_on_flink_table import train
 from ai_flow.client.ai_flow_client import get_ai_flow_client
 from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
 from ai_flow.common.path_util import get_file_dir
-import census_dataset
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from notification_service.base_notification import DEFAULT_NAMESPACE, BaseEvent
-
-
-def _float_feature(value):
-    return tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
-
-
-def _bytes_feature(value):
-    return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
-
-
-def _int64_feature(value):
-    return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-
-def preprocess(input_dict):
-
-    feature_dict = {
-        'age': _float_feature(value=int(input_dict['age'])),
-        'workclass': _bytes_feature(value=input_dict['workclass'].encode()),
-        'fnlwgt': _float_feature(value=int(input_dict['fnlwgt'])),
-        'education': _bytes_feature(value=input_dict['education'].encode()),
-        'education_num': _float_feature(value=int(input_dict['education_num'])),
-        'marital_status': _bytes_feature(value=input_dict['marital_status'].encode()),
-        'occupation': _bytes_feature(value=input_dict['occupation'].encode()),
-        'relationship': _bytes_feature(value=input_dict['relationship'].encode()),
-        'race': _bytes_feature(value=input_dict['race'].encode()),
-        'gender': _bytes_feature(value=input_dict['gender'].encode()),
-        'capital_gain': _float_feature(value=int(input_dict['capital_gain'])),
-        'capital_loss': _float_feature(value=int(input_dict['capital_loss'])),
-        'hours_per_week': _float_feature(value=float(input_dict['hours_per_week'])),
-        'native_country': _bytes_feature(value=input_dict['native_country'].encode()),
-    }
-    model_input = tf.train.Example(features=tf.train.Features(feature=feature_dict))
-    model_input = model_input.SerializeToString()
-    return model_input
-
-
-def get_accuracy_score(model_path, data_path):
-    predictor = tf.contrib.predictor.from_saved_model(model_path)
-    data = pd.read_csv(data_path, names=census_dataset._CSV_COLUMNS)
-    label = data.pop('income_bracket')
-    label = label.map({'<=50K': 0, '>50K': 1})
-    inputs = []
-    for _, row in data.iterrows():
-        tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], row))
-        tmp = preprocess(tmp)
-        inputs.append(tmp)
-    output_dict = predictor({'inputs': inputs})
-    res = [np.argmax(output_dict['scores'][i]) for i in range(0, len(output_dict['scores']))]
-    return accuracy_score(label, res)
+from census_common import get_accuracy_score
 
 
 class BatchTableEnvCreator(TableEnvCreator):
@@ -215,3 +166,28 @@ class BatchValidateExecutor(Executor):
                 f.write('\n')
         return []
 
+
+class StreamTrainExecutor(faf.Executor):
+
+    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
+        work_num = 2
+        ps_num = 1
+        python_file = 'census_distribute.py'
+        func = 'stream_map_func'
+        prop = {MLCONSTANTS.PYTHON_VERSION: '',
+                MLCONSTANTS.ENCODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
+                MLCONSTANTS.DECODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
+                'sys:csv_encode_types': 'STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING',
+                MLCONSTANTS.CONFIG_STORAGE_TYPE: MLCONSTANTS.STORAGE_ZOOKEEPER,
+                MLCONSTANTS.CONFIG_ZOOKEEPER_CONNECT_STR: 'localhost:2181',
+                MLCONSTANTS.CONFIG_ZOOKEEPER_BASE_PATH: '/demo',
+                MLCONSTANTS.REMOTE_CODE_ZIP_FILE: "hdfs://localhost:9000/demo/code.zip"}
+        env_path = None
+
+        input_tb = function_context.t_env.from_path('stream_train_source')
+        output_schema = None
+
+        tf_config = TFConfig(work_num, ps_num, prop, python_file, func, env_path)
+
+        train(function_context.get_exec_env(), function_context.get_table_env(), function_context.get_statement_set(),
+              input_tb, tf_config, output_schema)

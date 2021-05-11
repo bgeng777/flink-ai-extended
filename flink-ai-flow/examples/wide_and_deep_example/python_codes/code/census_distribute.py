@@ -113,7 +113,8 @@ def run_census(flags_obj, input_func):
         version = round(time.time())
         model_path = str(flags_obj.model_dir + '/' + str(version))
     else:
-        model_path = af.get_deployed_model_version(model_name).model_path.split('|')[0]
+        # get latest deployed base model produced by batch pipeline
+        model_path = af.get_deployed_model_version('wide_and_deep_base').model_path.split('|')[0]
     print("model_path: " + model_path)
 
     model = build_estimator(
@@ -130,7 +131,6 @@ def run_census(flags_obj, input_func):
     model.train(input_fn=input_func, hooks=train_hooks, max_steps=flags_obj.max_steps, saving_listeners=ll)
     print("model train finish")
 
-    # TODO: why chief?
     if 'batch' == flags_obj.run_mode and flags_obj.task_type != 'chief':
         while True:
             print("sleeping")
@@ -211,5 +211,5 @@ def stream_map_func(context):
     config.export_dir = '/tmp/census_export'
     config.task_type = tf_config['task']['type']
     config.task_index = tf_config['task']['index']
-    config.model_type = 'wide_and_deep_base'
+    config.model_type = 'wide_and_deep'
     run_census(config, flink_train_input_fn)

@@ -46,21 +46,14 @@ census_stream_train:
 
 census_stream_validate:
   platform: local
-  engine: flink
+  engine: python
   job_name: census_stream_validate
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
-  local_mode: cluster
-  language_type: PYTHON
 
 
 census_stream_push:
   platform: local
-  engine: flink
+  engine: python
   job_name: census_stream_push
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
-  local_mode: cluster
-  language_type: PYTHON
-
 
 census_stream_preprocess_predict:
   platform: local

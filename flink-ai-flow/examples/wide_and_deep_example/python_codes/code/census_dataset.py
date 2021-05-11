@@ -22,6 +22,7 @@ from __future__ import print_function
 import os
 
 import tensorflow as tf
+import pandas as pd
 # pylint: disable=wrong-import-order
 from absl import app as absl_app
 from absl import flags
@@ -88,6 +89,7 @@ def download(data_dir):
     eval_file_path = os.path.join(data_dir, EVAL_FILE)
     if not tf.gfile.Exists(eval_file_path):
         _download_and_clean_file(eval_file_path, EVAL_URL)
+
     validate_file_path = os.path.join(data_dir, VALIDATE_FILE)
     if not tf.gfile.Exists(validate_file_path):
         _download_and_clean_file(validate_file_path, VALIDATE_URL)

@@ -108,7 +108,7 @@ class ExportCheckpointSaverListener(tf.estimator.CheckpointSaverListener):
         #                             current_stage=af.ModelVersionStage.DEPRECATED)
         #     print("Deprecate current deployed model")
         print("Generate stream new model")
-        af.register_model_version(model='wide_and_deep', model_path='|' + real_path)
+        af.register_model_version(model=self.model_type, model_path='|' + real_path)
 
     def end(self, session, global_step_value):
         print('Done with the session.')

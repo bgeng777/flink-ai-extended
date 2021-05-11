@@ -98,7 +98,7 @@ class CensusKafkaUtil(object):
 if __name__ == '__main__':
     kafka_util = CensusKafkaUtil()
     # Init kafka topics
-    # kafka_util.create_topic()
+    kafka_util.create_topic()
     topics = kafka_util.admin_client.list_topics()
     print(topics)
     # Create continuous data stream

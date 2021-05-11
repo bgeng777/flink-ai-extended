@@ -30,13 +30,12 @@ from pyflink.table import Table, TableEnvironment, ScalarFunction, \
 from pyflink.table.udf import udf
 from flink_ai_flow.pyflink import TableEnvCreator, SourceExecutor, FlinkFunctionContext, Executor, \
     ExecutionEnvironment, BatchTableEnvironment
-from flink_ml_tensorflow.tensorflow_TFConfig import TFConfig
-from flink_ml_tensorflow.tensorflow_on_flink_mlconf import MLCONSTANTS
-from flink_ml_tensorflow.tensorflow_on_flink_table import train
 from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
-
-
+from census_common import get_accuracy_score, preprocess
+from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
+import python_ai_flow as paf
+from code import census_dataset
 class StreamTableEnvCreator(TableEnvCreator):
 
     def create_table_env(self):
@@ -152,39 +151,64 @@ class StreamTrainSource(SourceExecutor):
         return table
 
 
-class StreamTrainExecutor(Executor):
 
-    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
-        work_num = 2
-        ps_num = 1
-        python_file = 'census_distribute.py'
-        func = 'stream_map_func'
-        prop = {MLCONSTANTS.PYTHON_VERSION: '',
-                MLCONSTANTS.ENCODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
-                MLCONSTANTS.DECODING_CLASS: 'com.alibaba.flink.ml.operator.coding.RowCSVCoding',
-                'sys:csv_encode_types': 'STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING,STRING',
-                MLCONSTANTS.CONFIG_STORAGE_TYPE: MLCONSTANTS.STORAGE_ZOOKEEPER,
-                MLCONSTANTS.CONFIG_ZOOKEEPER_CONNECT_STR: 'localhost:2181',
-                MLCONSTANTS.CONFIG_ZOOKEEPER_BASE_PATH: '/demo',
-                MLCONSTANTS.REMOTE_CODE_ZIP_FILE: "hdfs://localhost:9000/demo/code.zip"}
-        env_path = None
+class StreamValidateExecutor(paf.Executor):
+    def __init__(self):
+        super().__init__()
+        self.path = None
+        self.model_version = None
+        self.model_name = None
 
-        input_tb = function_context.t_env.from_path('stream_train_source')
-        output_schema = None
+    def setup(self, function_context: FunctionContext):
+        self.model_name = function_context.node_spec.model.name
+        # wide_and_deep model
+        self.model_version = af.get_latest_generated_model_version(self.model_name)
+        print("#### name {}".format(self.model_name))
+        print("#### path {}".format(self.model_version.model_path))
+        self.path = self.model_version.model_path.split('|')[1]
 
-        tf_config = TFConfig(work_num, ps_num, prop, python_file, func, env_path)
+    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+        test_data = '/tmp/census_data/adult.validate'
 
-        train(function_context.get_exec_env(), function_context.get_table_env(), function_context.get_statement_set(),
-              input_tb, tf_config, output_schema)
+        deployed_version = af.get_deployed_model_version(self.model_name)
 
-
-class StreamValidateExecutor(Executor):
-    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
+        if deployed_version is not None:
+            score = get_accuracy_score(self.path, test_data, 300)
+            deployed_version_score = get_accuracy_score(deployed_version.model_path.split('|')[1], test_data)
+            if score > deployed_version_score:
+                af.update_model_version(model_name=self.model_name,
+                                        model_version=self.model_version.version,
+                                        current_stage=ModelVersionStage.VALIDATED)
+        else:
+            af.update_model_version(model_name=self.model_name,
+                                    model_version=self.model_version.version,
+                                    current_stage=ModelVersionStage.VALIDATED)
+        print("### {}".format("stream validation done"))
         return []
 
 
-class StreamPushExecutor(Executor):
-    def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
+class StreamPushExecutor(paf.Executor):
+    def __init__(self):
+        super().__init__()
+        self.model_name = None
+        self.model_version = None
+
+    def setup(self, function_context: FunctionContext):
+        self.model_name = function_context.node_spec.model.name
+        self.model_version = af.get_latest_validated_model_version(self.model_name)
+
+    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+        deployed_version = af.get_deployed_model_version(self.model_name)
+
+        if deployed_version is not None:
+            af.update_model_version(model_name=self.model_name,
+                                    model_version=deployed_version.version,
+                                    current_stage=ModelVersionStage.DEPRECATED)
+
+        af.update_model_version(model_name=self.model_name,
+                                model_version=self.model_version.version,
+                                current_stage=ModelVersionStage.DEPLOYED)
+
         return []
 
 
@@ -240,47 +264,22 @@ class Predict(ScalarFunction):
     def eval(self, age, workclass, fnlwgt, education, education_num, marital_status, occupation, relationship,
              race, gender, capital_gain, capital_loss, hours_per_week, native_country):
         try:
-            feature_dict = {
-                'age': self._float_feature(value=int(age)),
-                'workclass': self._bytes_feature(value=workclass.encode()),
-                'fnlwgt': self._float_feature(value=int(fnlwgt)),
-                'education': self._bytes_feature(value=education.encode()),
-                'education_num': self._float_feature(value=int(education_num)),
-                'marital_status': self._bytes_feature(value=marital_status.encode()),
-                'occupation': self._bytes_feature(value=occupation.encode()),
-                'relationship': self._bytes_feature(value=relationship.encode()),
-                'race': self._bytes_feature(value=race.encode()),
-                'gender': self._bytes_feature(value=gender.encode()),
-                'capital_gain': self._float_feature(value=int(capital_gain)),
-                'capital_loss': self._float_feature(value=int(capital_loss)),
-                'hours_per_week': self._float_feature(value=float(hours_per_week)),
-                'native_country': self._bytes_feature(value=native_country.encode()),
-            }
-            model_input = tf.train.Example(features=tf.train.Features(feature=feature_dict))
-            model_input = model_input.SerializeToString()
+            arg_list = [age, workclass, fnlwgt, education, education_num, marital_status, occupation, relationship,
+                        race, gender, capital_gain, capital_loss, hours_per_week, native_country]
+            tmp = dict(zip(census_dataset._CSV_COLUMNS[:-1], arg_list))
+            model_input = preprocess(tmp)
             output_dict = self._predictor({'inputs': [model_input]})
             print(str(np.argmax(output_dict['scores'])))
             return str(np.argmax(output_dict['scores']))
         except Exception:
             return 'tf fail'
 
-    @staticmethod
-    def _float_feature(value):
-        return tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
-
-    @staticmethod
-    def _bytes_feature(value):
-        return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
-
-    @staticmethod
-    def _int64_feature(value):
-        return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-
 
 class StreamPredictExecutor(Executor):
 
     def execute(self, function_context: FlinkFunctionContext, input_list: List[Table]) -> List[Table]:
-        model_version = af.get_deployed_model_version("wide_and_deep")
+        model_version = af.get_deployed_model_version('wide_and_deep')
+        print("##### StreamPredictExecutor {}".format(model_version.version))
         function_context.t_env.register_function('predict',
                                                  udf(f=Predict(model_version.model_path), input_types=[DataTypes.STRING(), DataTypes.STRING(),
                                                                                DataTypes.STRING(), DataTypes.STRING(),
@@ -290,12 +289,13 @@ class StreamPredictExecutor(Executor):
                                                                                DataTypes.STRING(), DataTypes.STRING(),
                                                                                DataTypes.STRING(), DataTypes.STRING()],
                                                      result_type=DataTypes.STRING()))
-
+        print("#### {}".format(self.__class__.__name__))
         return [input_list[0].select(
             'age, workclass, fnlwgt, education, education_num, marital_status, occupation, '
             'relationship, race, gender, capital_gain, capital_loss, hours_per_week, native_country, '
             'predict(age, workclass, fnlwgt, education, education_num, marital_status, occupation, '
             'relationship, race, gender, capital_gain, capital_loss, hours_per_week, native_country) as income_bracket')]
+            # 'income_bracket')]
 
 
 class StreamPredictSink(SinkExecutor):
@@ -330,3 +330,4 @@ class StreamPredictSink(SinkExecutor):
             )
         ''')
         statement_set.add_insert('stream_predict_sink', input_table)
+        print("#### {}".format(self.__class__.__name__))

@@ -41,7 +41,7 @@ Then copy these 4 jars and the `jar_dependencies/flink-sql-connector-kafka_2.11-
   Note, the `code.zip` must be produced by zipping the `wide_and_deep_example/python_codes/code` directory.
   If users define their own logic in the python files under this dir, they should reproduce the zip file by running
   ```shell
-  cd python_codes/ && zip -r ../code.zip ./code && cd ..
+  rm -r ./temp && cd python_codes/ && zip -r ../code.zip ./code && cd ..
   ```
   
 #### Kafka Initialization
