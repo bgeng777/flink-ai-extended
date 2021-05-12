@@ -1,7 +1,7 @@
 census_batch_preprocess:
   platform: local
   engine: python
-  job_name: census_batch_preprocess
+  job_name: batch_preprocess
   periodic_config:
     periodic_type: interval # 'interval' or 'cron'
     args:
@@ -10,7 +10,7 @@ census_batch_preprocess:
 census_batch_train:
   platform: local
   engine: flink
-  job_name: census_batch_train
+  job_name: batch_train
   flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
@@ -18,19 +18,19 @@ census_batch_train:
 census_batch_evaluate:
   platform: local
   engine: python
-  job_name: census_batch_evaluate
+  job_name: batch_evaluate
 
 census_batch_validate:
   platform: local
   engine: python
-  job_name: census_batch_validate
+  job_name: batch_validate
 
 
 
 census_stream_preprocess_train:
   platform: local
   engine: flink
-  job_name: census_stream_pre_train
+  job_name: stream_prep_train
   flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
@@ -39,7 +39,7 @@ census_stream_preprocess_train:
 census_stream_train:
   platform: local
   engine: flink
-  job_name: census_stream_train
+  job_name: stream_train
   flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
@@ -47,18 +47,18 @@ census_stream_train:
 census_stream_validate:
   platform: local
   engine: python
-  job_name: census_stream_validate
+  job_name: stream_validate
 
 
 census_stream_push:
   platform: local
   engine: python
-  job_name: census_stream_push
+  job_name: stream_push
 
 census_stream_preprocess_predict:
   platform: local
   engine: flink
-  job_name: census_stream_pre_predict
+  job_name: stream_prep_predict
   flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
@@ -66,7 +66,7 @@ census_stream_preprocess_predict:
 census_stream_predict:
   platform: local
   engine: flink
-  job_name: census_stream_predict
+  job_name: stream_predict
   flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
   local_mode: cluster
   language_type: PYTHON
