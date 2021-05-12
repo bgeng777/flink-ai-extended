@@ -28,6 +28,8 @@ from pyflink.table import ScalarFunction, DataTypes
 from pyflink.table.udf import udf
 from flink_ai_flow.pyflink import SourceExecutor, SinkExecutor, FlinkFunctionContext, Executor
 from pyflink.table import Table, TableEnvironment
+from pyflink.table.window import Tumble
+
 from census_common import preprocess
 from code import census_dataset
 
@@ -129,6 +131,8 @@ class StreamPredictSource(SourceExecutor):
         ''')
         table = table_env.from_path('stream_predict_source')
         print("##### StreamPredictSource")
+        # table.window(Tumble.over("10.minutes").on("rowtime").alias("w")).group_by("w")\
+        #     .select("a.sum as a, w.start as b, w.end as c, w.rowtime as d")
         return table
 
 
