@@ -308,9 +308,12 @@ class LocalFlinkOperator(BashOperator):
                                                     self.properties['workflow_execution_id'],
                                                     self.properties['instance_id'])
         logging.info('Job execution path: {}'.format(job_execution_path))
+
         if os.path.exists(job_execution_path):
             with open(job_execution_path) as f:
                 job_id = f.readline()
+            os.popen('flink cancel ' + job_id)
+            logging.info('Flink cancel: {}'.format(job_id))
             rest_url = os.environ.get('REST_URL') if 'REST_URL' in os.environ else 'http://localhost:8081'
             response = requests.patch('%s/jobs/%s' % (rest_url, job_id))
             if response.status_code == 200:
