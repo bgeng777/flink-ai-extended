@@ -57,6 +57,7 @@ class BatchPreprocessExecutor(Executor):
         df = pd.read_csv(data_path, header=None)
         df = shuffle(df)
         df.to_csv('/tmp/census_data/adult.data', index=False, header=None)
+        print("Preprocess Done")
         get_ai_flow_client().send_event(BaseEvent(key='wide_and_deep_base', value='BATCH_PREPROCESS',
                                                   event_type='BATCH_PREPROCESS',
                                                   namespace=DEFAULT_NAMESPACE))
