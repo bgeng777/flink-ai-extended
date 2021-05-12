@@ -23,8 +23,7 @@ from ai_flow.common.scheduler_type import SchedulerType
 from ai_flow import PythonObjectExecutor
 from flink_ai_flow import LocalFlinkJobConfig, FlinkPythonExecutor
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from ai_flow.graph.edge import TaskAction, EventLife, MetValueCondition
-
+from ai_flow.graph.edge import TaskAction, EventLife, MetValueCondition, MetCondition
 
 from census_batch_executors import BatchPreprocessExecutor, BatchTrainExecutor, BatchEvaluateExecutor, \
     BatchValidateExecutor
@@ -149,6 +148,7 @@ def run_workflow():
                                           event_value="BATCH_PREPROCESS",
                                           action=TaskAction.RESTART,
                                           value_condition=MetValueCondition.UPDATE,
+                                          condition=MetCondition.SUFFICIENT,
                                           life=EventLife.REPEATED
                                           )
         af.model_version_control_dependency(src=batch_evaluate_channel, dependency=batch_train_channel,
