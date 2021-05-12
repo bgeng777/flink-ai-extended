@@ -59,7 +59,7 @@ class CensusKafkaUtil(object):
                     break
                 if 0 == num % 1000:
                     print("send data {}".format(num))
-                    time.sleep(self._yaml_config.get('time_interval') / 200)
+                    time.sleep(self._yaml_config.get('time_interval') / 500)
 
     def _clean_create(self, new_topic, topics):
         if new_topic in topics:
@@ -105,6 +105,8 @@ class CensusKafkaUtil(object):
                 self.admin_client.delete_topics(topics=[topic], timeout_ms=5000)
                 print("{} is deleted.".format(topic))
                 time.sleep(5)
+        topics = self.admin_client.list_topics()
+        print(topics)
 
 if __name__ == '__main__':
     kafka_util = CensusKafkaUtil()
