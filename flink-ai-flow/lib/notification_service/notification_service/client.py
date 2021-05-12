@@ -148,7 +148,7 @@ class NotificationClient(BaseNotification):
                 value=event.value,
                 event_type=event.event_type,
                 context=event.context,
-                namespace=self._default_namespace,
+                namespace=self._default_namespace if event.namespace is None else event.namespace,
                 sender=self._sender
             ),
             uuid=str(uuid.uuid4()))
