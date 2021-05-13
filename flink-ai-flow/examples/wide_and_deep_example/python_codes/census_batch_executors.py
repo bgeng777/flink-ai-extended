@@ -122,7 +122,7 @@ class BatchValidateExecutor(Executor):
 
     def setup(self, function_context: FunctionContext):
         self.model_name = function_context.node_spec.model.name
-        self.model_version = af.get_latest_validated_model_version(self.model_name)
+        self.model_version = af.get_latest_generated_model_version(self.model_name)
         print("#### name {}".format(self.model_name))
         print("#### path {}".format(self.model_version.model_path))
         print("#### ver {}".format(self.model_version.version))

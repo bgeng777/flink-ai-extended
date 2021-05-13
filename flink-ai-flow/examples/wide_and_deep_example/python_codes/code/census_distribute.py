@@ -114,7 +114,7 @@ def run_census(flags_obj, input_func):
         model_path = str(flags_obj.model_dir + '/' + str(version))
     else:
         # get latest deployed base model produced by batch pipeline
-        model_path = af.get_deployed_model_version('wide_and_deep_base').model_path.split('|')[0]
+        model_path = af.get_latest_validated_model_version('wide_and_deep_base').model_path.split('|')[0]
     print("model_path: " + model_path)
 
     model = build_estimator(
