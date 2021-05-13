@@ -31,6 +31,9 @@ from flink_ml_tensorflow.tensorflow_on_flink_table import train
 from pyflink.table import StreamTableEnvironment, EnvironmentSettings, Table, TableEnvironment
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from census_common import get_accuracy_score
+from kafka_util import census_kafka_data
+
+
 
 
 class StreamTableEnvCreator(TableEnvCreator):
@@ -191,12 +194,14 @@ class StreamValidateExecutor(paf.Executor):
         self.path = self.model_version.model_path.split('|')[1]
 
     def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        test_data = '/tmp/census_data/adult.validate'
-
         deployed_version = af.get_deployed_model_version(self.model_name)
-
         if deployed_version is not None:
-            score = get_accuracy_score(self.path, test_data, 300)
+            test_data = '/tmp/census_data/adult.stream.validate'
+            kafka_util = census_kafka_data.CensusKafkaUtil()
+            count = 400
+            kafka_util.read_data_into_file(kafka_util.census_train_input_topic, test_data, count)
+
+            score = get_accuracy_score(self.path, test_data, count)
             deployed_version_score = get_accuracy_score(deployed_version.model_path.split('|')[1], test_data)
             if score > deployed_version_score:
                 af.update_model_version(model_name=self.model_name,

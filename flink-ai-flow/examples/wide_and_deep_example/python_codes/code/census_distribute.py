@@ -57,7 +57,7 @@ def build_estimator(model_dir, model_type, model_column_fn, inter_op, intra_op):
     # trains faster than GPU for this model.
     run_config = tf.estimator.RunConfig().replace(
         keep_checkpoint_max=2,
-        save_checkpoints_secs=20,
+        save_checkpoints_secs=40,
         session_config=tf.ConfigProto(device_count={'GPU': 0},
                                       inter_op_parallelism_threads=inter_op,
                                       intra_op_parallelism_threads=intra_op))
@@ -128,15 +128,16 @@ def run_census(flags_obj, input_func):
         ll = [ExportCheckpointSaverListener(model, flags_obj.model_type, flags_obj.export_dir,
                                             census_dataset.build_model_columns)]
     train_hooks = []
-    if 'stream' == flags_obj.run_mode:
-        time.sleep(20)
-    model.train(input_fn=input_func, hooks=train_hooks, max_steps=flags_obj.max_steps, saving_listeners=ll)
-    print("model train finish")
+    # if 'stream' == flags_obj.run_mode:
+    #     time.sleep(30)
 
     if 'batch' == flags_obj.run_mode and flags_obj.task_type != 'chief':
         while True:
             print("sleeping")
             time.sleep(10)
+
+    model.train(input_fn=input_func, hooks=train_hooks, max_steps=flags_obj.max_steps, saving_listeners=ll)
+    print("model train finish")
     # Export the model
     if flags_obj.export_dir is not None and 'batch' == flags_obj.run_mode and flags_obj.task_type == 'chief':
         export_path = export_model(model, flags_obj.model_type, flags_obj.export_dir,

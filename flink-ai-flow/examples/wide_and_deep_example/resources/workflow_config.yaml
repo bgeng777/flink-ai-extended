@@ -47,13 +47,13 @@ census_stream_train:
 census_stream_validate:
   platform: local
   engine: python
-  job_name: stream_validate
+  job_name: validate
 
 
 census_stream_push:
   platform: local
   engine: python
-  job_name: stream_push
+  job_name: push
 
 census_stream_preprocess_predict:
   platform: local

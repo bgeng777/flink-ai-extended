@@ -97,6 +97,19 @@ class CensusKafkaUtil(object):
             if num > count:
                 break
 
+    def read_data_into_file(self, topic, filepath, count=None):
+        consumer = KafkaConsumer(topic, bootstrap_servers=[self.bootstrap_servers], group_id=str(
+            uuid.uuid1()), auto_offset_reset='earliest')
+        num = 0
+        if count is None:
+            count = sys.maxsize
+        with open(filepath, "wb") as f:
+            for message in consumer:
+                num += 1
+                f.write(message.value)
+                if num >= count:
+                    break
+
     def delete_topic(self):
         topics = self.admin_client.list_topics()
         print(topics)
@@ -108,12 +121,14 @@ class CensusKafkaUtil(object):
         topics = self.admin_client.list_topics()
         print(topics)
 
+
 if __name__ == '__main__':
     kafka_util = CensusKafkaUtil()
     # Init kafka topics
     kafka_util.create_topic()
     topics = kafka_util.admin_client.list_topics()
     print(topics)
+    # kafka_util.read_data_into_file(kafka_util.census_train_input_topic, '/tmp/tmpread', 200)
     # kafka_util.delete_topic()
     # Create continuous data stream
     kafka_util._send_data_loop(200000000)
