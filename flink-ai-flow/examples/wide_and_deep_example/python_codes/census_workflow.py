@@ -141,26 +141,13 @@ def run_workflow():
                                                    example_info=stream_predict_output,
                                                    executor=FlinkPythonExecutor(python_object=StreamPredictSink()))
 
-        af.user_define_control_dependency(src=batch_train_channel,
-                                          dependency=batch_preprocess_channel,
-                                          event_key="wide_and_deep_base",
-                                          event_type="BATCH_PREPROCESS",
-                                          event_value="BATCH_PREPROCESS",
-                                          action=TaskAction.RESTART,
-                                          value_condition=MetValueCondition.UPDATE,
-                                          condition=MetCondition.SUFFICIENT,
-                                          life=EventLife.REPEATED
-                                          )
-        af.model_version_control_dependency(src=batch_evaluate_channel, dependency=batch_train_channel,
-                                            model_name='wide_and_deep_base',
-                                            model_version_event_type=ModelVersionEventType.MODEL_GENERATED)
-        af.model_version_control_dependency(src=batch_validate_channel, dependency=batch_evaluate_channel,
-                                            model_name='wide_and_deep_base',
-                                            model_version_event_type=ModelVersionEventType.MODEL_VALIDATED)
+        af.stop_before_control_dependency(src=batch_train_channel, dependency=batch_preprocess_channel)
+        af.stop_before_control_dependency(src=batch_evaluate_channel, dependency=batch_train_channel)
+        af.stop_before_control_dependency(src=batch_validate_channel, dependency=batch_evaluate_channel)
 
         af.model_version_control_dependency(src=stream_train_channel, dependency=batch_validate_channel,
                                             model_name='wide_and_deep_base',
-                                            model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
+                                            model_version_event_type=ModelVersionEventType.MODEL_VALIDATED)
         #
         af.model_version_control_dependency(src=stream_validate_channel, dependency=stream_train_channel,
                                             model_name='wide_and_deep',
@@ -171,10 +158,6 @@ def run_workflow():
         # af.model_version_control_dependency(src=stream_predict_sink, dependency=stream_push_channel,
         #                                     model_name='wide_and_deep_stream',
         #                                     model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
-
-
-        # af.stop_before_control_dependency(stream_train_channel, batch_validate_channel)
-        # af.stop_before_control_dependency(stream_predict_sink, batch_validate_channel)
         af.model_version_control_dependency(src=stream_predict_sink, dependency=stream_push_channel,
                                             model_name='wide_and_deep',
                                             model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)

@@ -107,9 +107,9 @@ class BatchEvaluateExecutor(Executor):
         with open(path, 'a') as f:
             f.write(str(score) + '  -------->  ' + self.model_version.version)
             f.write('\n')
-        af.update_model_version(model_name=self.model_name,
-                                model_version=self.model_version.version,
-                                current_stage=ModelVersionStage.VALIDATED)
+        # af.update_model_version(model_name=self.model_name,
+        #                         model_version=self.model_version.version,
+        #                         current_stage=ModelVersionStage.EVALUTED)
         return []
 
 
@@ -136,17 +136,21 @@ class BatchValidateExecutor(Executor):
         with open(path, 'a') as f:
             f.write(str(score) + '  -------->  ' + self.model_version.version)
             f.write('\n')
-        deployed_version = af.get_deployed_model_version(self.model_name)
+        validated_version = af.get_latest_validated_model_version(self.model_name)
 
-        if deployed_version is not None:
-            deployed_version_score = get_accuracy_score(deployed_version.model_path.split('|')[1], test_data)
-            if score > deployed_version_score:
+        if validated_version is not None:
+            validated_version_score = get_accuracy_score(validated_version.model_path.split('|')[1], test_data)
+            if score > validated_version_score:
                 af.update_model_version(model_name=self.model_name,
-                                        model_version=deployed_version.version,
+                                        model_version=validated_version.version,
                                         current_stage=ModelVersionStage.DEPRECATED)
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version.version,
-                                        current_stage=ModelVersionStage.DEPLOYED)
+                                        current_stage=ModelVersionStage.VALIDATED)
+                print("#### old version[{}] score: {} new version[{}] score: {}".format(validated_version.version,
+                                                                                      validated_version_score,
+                                                                                      self.model_version.version,
+                                                                                      score))
                 with open(path, 'a') as f:
                     f.write('version {} pass validation.'.format(self.model_version.version))
                     f.write('\n')
@@ -157,7 +161,8 @@ class BatchValidateExecutor(Executor):
         else:
             af.update_model_version(model_name=self.model_name,
                                     model_version=self.model_version.version,
-                                    current_stage=ModelVersionStage.DEPLOYED)
+                                    current_stage=ModelVersionStage.VALIDATED)
+            print("#### init version[{}]".format(self.model_version.version))
             with open(path, 'a') as f:
                 f.write('version {} pass validation.'.format(self.model_version.version))
                 f.write('\n')

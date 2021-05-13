@@ -129,7 +129,7 @@ def run_census(flags_obj, input_func):
                                             census_dataset.build_model_columns)]
     train_hooks = []
     if 'stream' == flags_obj.run_mode:
-        time.sleep(5)
+        time.sleep(20)
     model.train(input_fn=input_func, hooks=train_hooks, max_steps=flags_obj.max_steps, saving_listeners=ll)
     print("model train finish")
 
