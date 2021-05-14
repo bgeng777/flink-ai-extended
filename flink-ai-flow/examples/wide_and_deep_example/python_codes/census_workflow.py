@@ -162,7 +162,7 @@ def run_workflow():
                                             model_name='wide_and_deep',
                                             model_version_event_type=ModelVersionEventType.MODEL_DEPLOYED)
 
-        wide_deep_dag = 'census_workflow'
+        wide_deep_dag = 'wide_and_deep'
 
         af.deploy_to_airflow(get_project_path(), dag_id=wide_deep_dag)
         af.run(get_project_path(), dag_id=wide_deep_dag, scheduler_type=SchedulerType.AIRFLOW)
