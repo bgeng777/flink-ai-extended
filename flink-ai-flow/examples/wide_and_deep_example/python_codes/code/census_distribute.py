@@ -56,8 +56,8 @@ def build_estimator(model_dir, model_type, model_column_fn, inter_op, intra_op):
     # Create a tf.estimator.RunConfig to ensure the model is run on CPU, which
     # trains faster than GPU for this model.
     run_config = tf.estimator.RunConfig().replace(
-        keep_checkpoint_max=2,
-        save_checkpoints_secs=40,
+        keep_checkpoint_max=1,
+        save_checkpoints_secs=60,
         session_config=tf.ConfigProto(device_count={'GPU': 0},
                                       inter_op_parallelism_threads=inter_op,
                                       intra_op_parallelism_threads=intra_op))
