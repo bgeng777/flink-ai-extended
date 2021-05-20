@@ -47,7 +47,7 @@ Then copy these 4 jars and the `jar_dependencies/flink-sql-connector-kafka_2.11-
 #### Kafka Initialization
 In the project, we will use Kafka to generate a data stream and the dataset used is `census_data/adult.data`. 
    To download the dataset, run `python python_codes/code/census_dataset.py` to save the dataset in `/tmp` dir.
-   
+
 Then, run `python python_codes/kafka_util/census_kafka_data.py` to create topics and generate kafka data stream.
 
 #### Start up the whole environment
@@ -60,6 +60,20 @@ start-cluster.sh
 start-aiflow.sh mysql://admin:admin@127.0.0.1/airflow
 ```
 Note, the user should refer to QuickStart for starting AIFlow correctly.
+
+#### Modify configuration values
+
+- Modify the  `airflow_deploy_path` in `project.ymal` for the `wide and deep example`, for example:
+
+  ```shell
+  airflow_deploy_path: /home/cust/airflow/airflow_deploy
+  ```
+
+- Modify the `project.ymal` for the `wide_and_deep_example/python_codes/code`, for example:
+
+  ```shell
+  airflow_deploy_path: /home/cust/airflow/airflow_deploy
+  ```
 
 #### Run the Wide and Deep project's workflow
 Only for the first time of running the project, we need to init the AIFlow:
