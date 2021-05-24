@@ -124,8 +124,8 @@ class CensusKafkaUtil(object):
 
 if __name__ == '__main__':
     kafka_util = CensusKafkaUtil()
-    # Init kafka topics
-    # kafka_util.create_topic()
+    # Clear and init kafka topics
+    kafka_util.create_topic()
     topics = kafka_util.admin_client.list_topics()
     print(topics)
     # kafka_util.read_data_into_file(kafka_util.census_train_input_topic, '/tmp/tmpread', 200)
