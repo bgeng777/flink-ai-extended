@@ -11,7 +11,7 @@ census_batch_train:
   platform: local
   engine: flink
   job_name: batch_train
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  flink_home: xxx # Please use your own flink path in this config
   local_mode: cluster
   language_type: PYTHON
 
@@ -31,7 +31,7 @@ census_stream_preprocess_train:
   platform: local
   engine: flink
   job_name: stream_prep_train
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  flink_home: xxx # Please use your own flink path in this config
   local_mode: cluster
   language_type: PYTHON
 
@@ -40,7 +40,7 @@ census_stream_train:
   platform: local
   engine: flink
   job_name: stream_train
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  flink_home: xxx # Please use your own flink path in this config
   local_mode: cluster
   language_type: PYTHON
 
@@ -59,7 +59,7 @@ census_stream_preprocess_predict:
   platform: local
   engine: flink
   job_name: stream_prep_predict
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  flink_home: xxx # Please use your own flink path in this config
   local_mode: cluster
   language_type: PYTHON
 
@@ -67,6 +67,6 @@ census_stream_predict:
   platform: local
   engine: flink
   job_name: stream_predict
-  flink_home: xxx # currently not used. Instead, 'flink' in system environment will be chosen
+  flink_home: xxx # Please use your own flink path in this config
   local_mode: cluster
   language_type: PYTHON
