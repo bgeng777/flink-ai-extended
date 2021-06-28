@@ -30,7 +30,7 @@ import oss2
 from ai_flow.util.file_util.zip_file_util import make_dir_zipfile, make_file_zipfile
 
 
-class ModelMananger(ABC):
+class ModelManager(ABC):
 
     @abstractmethod
     def download_model(self, remote_path, local_path=None):
@@ -41,7 +41,7 @@ class ModelMananger(ABC):
         pass
 
 
-class OSSModelManager(ModelMananger):
+class OSSModelManager(ModelManager):
 
     def __init__(self, config: Dict[Text, Text]):
         ack_id = config.get('blob_server.access_key_id', None)
