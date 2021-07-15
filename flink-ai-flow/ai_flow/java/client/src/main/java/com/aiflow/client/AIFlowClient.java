@@ -339,14 +339,13 @@ public class AIFlowClient {
    * Register a model in Metadata Store.
    *
    * @param modelName Name of registered model.
-   * @param modelType Type of registered model.
    * @param modelDesc Description of registered model.
    * @param projectId Project id which registered model corresponded to.
    * @return Single ModelMeta object registered in Metadata Store.
    */
   public ModelMeta registerModel(
-      String modelName, ModelType modelType, String modelDesc, Long projectId) throws Exception {
-    return this.metadataClient.registerModel(modelName, modelType, modelDesc, projectId);
+      String modelName, String modelDesc, Long projectId) throws Exception {
+    return this.metadataClient.registerModel(modelName, modelDesc, projectId);
   }
 
   /**
@@ -389,12 +388,12 @@ public class AIFlowClient {
    *
    * @param version Name of model version.
    * @param modelId Model id corresponded to model version.
-   * @param workflowExecutionId Workflow execution id corresponded to model version.
+   * @param projectSnapshotId Project snapshot id corresponded to model version.
    * @return Single ModelVersionRelationMeta object registered in Metadata Store.
    */
   public ModelVersionRelationMeta registerModelVersionRelation(
-      String version, Long modelId, Long workflowExecutionId) throws Exception {
-    return this.metadataClient.registerModelVersionRelation(version, modelId, workflowExecutionId);
+      String version, Long modelId, Long projectSnapshotId) throws Exception {
+    return this.metadataClient.registerModelVersionRelation(version, modelId, projectSnapshotId);
   }
 
   /**
@@ -438,23 +437,21 @@ public class AIFlowClient {
    * Register a model version in Metadata Store.
    *
    * @param modelPath Source path where the AIFlow model is stored.
-   * @param modelMetric Metric address from AIFlow metric server of registered model.
-   * @param modelFlavor Flavor feature of AIFlow registered model option.
+   * @param modelType Type of AIFlow registered model option.
    * @param versionDesc Description of registered model version.
    * @param modelId Model id corresponded to model version.
-   * @param workflowExecutionId Workflow execution id corresponded to model version.
+   * @param projectSnapshotId Project snapshot id corresponded to model version.
    * @return Single ModelVersionRelationMeta object registered in Metadata Store.
    */
   public ModelVersionMeta registerModelVersion(
       String modelPath,
-      String modelMetric,
-      String modelFlavor,
+      String modelType,
       String versionDesc,
       Long modelId,
-      Long workflowExecutionId)
+      Long projectSnapshotId)
       throws Exception {
     return this.metadataClient.registerModelVersion(
-        modelPath, modelMetric, modelFlavor, versionDesc, modelId, workflowExecutionId);
+        modelPath, modelType, versionDesc, modelId, projectSnapshotId);
   }
 
   /**
@@ -467,291 +464,6 @@ public class AIFlowClient {
    */
   public Status deleteModelVersionByVersion(String version, Long modelId) throws Exception {
     return this.metadataClient.deleteModelVersionByVersion(version, modelId);
-  }
-
-  /**
-   * Get a specific workflow execution in Metadata Store by workflow execution id.
-   *
-   * @param executionId Id of workflow execution.
-   * @return Single WorkflowExecutionMeta object if workflow execution exists, otherwise returns
-   *     None if workflow execution does not exist.
-   */
-  public WorkflowExecutionMeta getWorkFlowExecutionById(Long executionId) throws Exception {
-    return this.metadataClient.getWorkFlowExecutionById(executionId);
-  }
-
-  /**
-   * Get a specific workflow execution in Metadata Store by workflow execution name.
-   *
-   * @param executionName Name of workflow execution.
-   * @return Single WorkflowExecutionMeta object if workflow execution exists, otherwise returns
-   *     None if workflow execution does not exist.
-   */
-  public WorkflowExecutionMeta getWorkFlowExecutionByName(String executionName) throws Exception {
-    return this.metadataClient.getWorkFlowExecutionByName(executionName);
-  }
-
-  /**
-   * Register a workflow execution in Metadata Store.
-   *
-   * @param name Mame of workflow execution.
-   * @param executionState State of workflow execution.
-   * @param projectId Project id corresponded to workflow execution.
-   * @param properties Properties of workflow execution.
-   * @param startTime Time when workflow execution started.
-   * @param endTime Time when workflow execution ended.
-   * @param logUri Log uri of workflow execution.
-   * @param workflowJson Workflow json of workflow execution.
-   * @param signature Signature of workflow execution.
-   * @return Single WorkflowExecutionMeta object registered in Metadata Store.
-   */
-  public WorkflowExecutionMeta registerWorkFlowExecution(
-      String name,
-      State executionState,
-      Long projectId,
-      Map<String, String> properties,
-      Long startTime,
-      Long endTime,
-      String logUri,
-      String workflowJson,
-      String signature)
-      throws Exception {
-    return this.metadataClient.registerWorkFlowExecution(
-        name,
-        executionState,
-        projectId,
-        properties,
-        startTime,
-        endTime,
-        logUri,
-        workflowJson,
-        signature);
-  }
-
-  /**
-   * Update a workflow execution in Metadata Store.
-   *
-   * @param name Mame of workflow execution.
-   * @param executionState State of workflow execution.
-   * @param projectId Project id corresponded to workflow execution.
-   * @param properties Properties of workflow execution.
-   * @param endTime Time when workflow execution ended.
-   * @param logUri Log uri of workflow execution.
-   * @param workflowJson Workflow json of workflow execution.
-   * @param signature Signature of workflow execution.
-   * @return Single WorkflowExecutionMeta object registered in Metadata Store.
-   */
-  public WorkflowExecutionMeta updateWorkFlowExecution(
-      String name,
-      State executionState,
-      Long projectId,
-      Map<String, String> properties,
-      Long endTime,
-      String logUri,
-      String workflowJson,
-      String signature)
-      throws Exception {
-    return this.metadataClient.updateWorkFlowExecution(
-        name, executionState, projectId, properties, endTime, logUri, workflowJson, signature);
-  }
-
-  /**
-   * List registered workflow executions in Metadata Store.
-   *
-   * @param pageSize Limitation of listed workflow executions.
-   * @param offset Offset of listed workflow executions.
-   * @return List of WorkflowExecutionMeta object registered in Metadata Store.
-   */
-  public List<WorkflowExecutionMeta> listWorkFlowExecution(Long pageSize, Long offset)
-      throws Exception {
-    return this.metadataClient.listWorkFlowExecution(pageSize, offset);
-  }
-
-  /**
-   * Update workflow execution end time in Metadata Store.
-   *
-   * @param endTime Time when workflow execution ended.
-   * @param executionName Name of workflow execution.
-   * @return Workflow execution uuid if workflow execution is successfully updated, raise an
-   *     exception, if fail to update otherwise.
-   */
-  public WorkflowExecutionMeta updateWorkflowExecutionEndTime(Long endTime, String executionName)
-      throws Exception {
-    return this.metadataClient.updateWorkflowExecutionEndTime(endTime, executionName);
-  }
-
-  /**
-   * Update workflow execution state in Metadata Store.
-   *
-   * @param executionState State of workflow execution.
-   * @param executionName Name of workflow execution.
-   * @return Workflow execution uuid if workflow execution is successfully updated, raise an
-   *     exception, if fail to update otherwise.
-   */
-  public WorkflowExecutionMeta updateWorkflowExecutionState(
-      State executionState, String executionName) throws Exception {
-    return this.metadataClient.updateWorkflowExecutionState(executionState, executionName);
-  }
-
-  /**
-   * Delete registered workflow execution by workflow execution id.
-   *
-   * @param executionId Id of workflow execution.
-   * @return Status.OK if workflow execution is successfully deleted, Status.ERROR if workflow
-   *     execution does not exist otherwise.
-   */
-  public Status deleteWorkflowExecutionById(Long executionId) throws Exception {
-    return this.metadataClient.deleteWorkflowExecutionById(executionId);
-  }
-
-  /**
-   * Delete registered workflow execution by workflow execution name.
-   *
-   * @param executionName Name of workflow execution.
-   * @return Status.OK if workflow execution is successfully deleted, Status.ERROR if workflow
-   *     execution does not exist otherwise.
-   */
-  public Status deleteWorkflowExecutionByName(String executionName) throws Exception {
-    return this.metadataClient.deleteWorkflowExecutionByName(executionName);
-  }
-
-  /**
-   * Get a specific job in Metadata Store by job id.
-   *
-   * @param jobId Id of job.
-   * @return Single JobMeta object if job exists, otherwise returns None if job does not exist.
-   */
-  public JobMeta getJobById(Long jobId) throws Exception {
-    return this.metadataClient.getJobById(jobId);
-  }
-
-  /**
-   * Get a specific job in Metadata Store by job name.
-   *
-   * @param jobName Name of job.
-   * @return Single JobMeta object if job exists, otherwise returns None if job does not exist.
-   */
-  public JobMeta getJobByName(String jobName) throws Exception {
-    return this.metadataClient.getJobByName(jobName);
-  }
-
-  /**
-   * Register a job in Metadata Store.
-   *
-   * @param name Mame of job.
-   * @param jobState State of job.
-   * @param workflowExecutionId Workflow execution id corresponded to job.
-   * @param properties Properties of job.
-   * @param jobId Job id of job.
-   * @param startTime Time when job started.
-   * @param endTime Time when job ended.
-   * @param logUri Log uri of job.
-   * @param signature Signature of job.
-   * @return Single JobMeta object registered in Metadata Store.
-   */
-  public JobMeta registerJob(
-      String name,
-      State jobState,
-      Long workflowExecutionId,
-      Map<String, String> properties,
-      String jobId,
-      Long startTime,
-      Long endTime,
-      String logUri,
-      String signature)
-      throws Exception {
-    return this.metadataClient.registerJob(
-        name,
-        jobState,
-        workflowExecutionId,
-        properties,
-        jobId,
-        startTime,
-        endTime,
-        logUri,
-        signature);
-  }
-
-  /**
-   * Update a job in Metadata Store.
-   *
-   * @param name Mame of job.
-   * @param jobState State of job.
-   * @param workflowExecutionId Workflow execution id corresponded to job.
-   * @param properties Properties of job.
-   * @param jobId Job id of job.
-   * @param endTime Time when job ended.
-   * @param logUri Log uri of job.
-   * @param signature Signature of job.
-   * @return Single JobMeta object registered in Metadata Store.
-   */
-  public JobMeta updateJob(
-      String name,
-      State jobState,
-      Long workflowExecutionId,
-      Map<String, String> properties,
-      String jobId,
-      Long endTime,
-      String logUri,
-      String signature)
-      throws Exception {
-    return this.metadataClient.updateJob(
-        name, jobState, workflowExecutionId, properties, jobId, endTime, logUri, signature);
-  }
-
-  /**
-   * List registered jobs in Metadata Store.
-   *
-   * @param pageSize Limitation of listed jobs.
-   * @param offset Offset of listed jobs.
-   * @return List of JobMeta object registered in Metadata Store.
-   */
-  public List<JobMeta> listJob(Long pageSize, Long offset) throws Exception {
-    return this.metadataClient.listJob(pageSize, offset);
-  }
-
-  /**
-   * Update job end time in Metadata Store.
-   *
-   * @param endTime Time when job ended.
-   * @param jobName Name of job.
-   * @return Job uuid if job is successfully updated, raise an exception, if fail to update
-   *     otherwise.
-   */
-  public JobMeta updateJobEndTime(Long endTime, String jobName) throws Exception {
-    return this.metadataClient.updateJobEndTime(endTime, jobName);
-  }
-
-  /**
-   * Update job state in Metadata Store.
-   *
-   * @param state State of job.
-   * @param jobName Name of job.
-   * @return Job uuid if job is successfully updated, raise an exception, if fail to update
-   *     otherwise.
-   */
-  public JobMeta updateJobState(State state, String jobName) throws Exception {
-    return this.metadataClient.updateJobState(state, jobName);
-  }
-
-  /**
-   * Delete registered job by job id.
-   *
-   * @param jobId Id of job.
-   * @return Status.OK if job is successfully deleted, Status.ERROR if job does not exist otherwise.
-   */
-  public Status deleteJobById(Long jobId) throws Exception {
-    return this.metadataClient.deleteJobById(jobId);
-  }
-
-  /**
-   * Delete registered job by job name.
-   *
-   * @param jobName Name of job.
-   * @return Status.OK if job is successfully deleted, Status.ERROR if job does not exist otherwise.
-   */
-  public Status deleteJobByName(String jobName) throws Exception {
-    return this.metadataClient.deleteJobByName(jobName);
   }
 
   /**
@@ -941,29 +653,27 @@ public class AIFlowClient {
    * Create a new registered model from given type in Model Center.
    *
    * @param modelName Name of registered model. This is expected to be unique in the backend store.
-   * @param modelType Type of registered model.
    * @param modelDesc (Optional) Description of registered model.
    * @return Object of RegisteredModel created in Model Center.
    */
   public RegisteredModel createRegisteredModel(
-      String modelName, ModelType modelType, String modelDesc) throws Exception {
-    return this.modelCenterClient.createRegisteredModel(modelName, modelType, modelDesc);
+      String modelName, String modelDesc) throws Exception {
+    return this.modelCenterClient.createRegisteredModel(modelName, modelDesc);
   }
 
   /**
-   * Update metadata for RegisteredModel entity backend. Either ``modelName`` or ``modelType`` or
+   * Update metadata for RegisteredModel entity backend. Either ``modelName`` or
    * ``modelDesc`` should be non-None. Backend raises exception if a registered model with given
    * name does not exist.
    *
    * @param modelName Name of registered model. This is expected to be unique in the backend store.
    * @param newName (Optional) New proposed name for the registered model.
-   * @param modelType (Optional) Type of registered model.
    * @param modelDesc (Optional) Description of registered model.
    * @return Object of RegisteredModel updated in Model Center.
    */
   public RegisteredModel updateRegisteredModel(
-      String modelName, String newName, ModelType modelType, String modelDesc) throws Exception {
-    return this.modelCenterClient.updateRegisteredModel(modelName, newName, modelType, modelDesc);
+      String modelName, String newName, String modelDesc) throws Exception {
+    return this.modelCenterClient.updateRegisteredModel(modelName, newName, modelDesc);
   }
 
   /**
@@ -1000,20 +710,18 @@ public class AIFlowClient {
    *
    * @param modelName Name of registered model. This is expected to be unique in the backend store.
    * @param modelPath Source path where the AIFlow model is stored.
-   * @param modelMetric Metric address from AIFlow metric server of registered model.
-   * @param modelFlavor (Optional) Flavor feature of AIFlow registered model option.
+   * @param modelType (Optional) Type of AIFlow registered model option.
    * @param versionDesc (Optional) Description of registered model version.
    * @return Object of ModelVersion created in Model Center.
    */
   public ModelVersion createModelVersion(
       String modelName,
       String modelPath,
-      String modelMetric,
-      String modelFlavor,
+      String modelType,
       String versionDesc)
       throws Exception {
     return this.modelCenterClient.createModelVersion(
-        modelName, modelPath, modelMetric, modelFlavor, versionDesc);
+        modelName, modelPath, modelType, versionDesc);
   }
 
   /**
@@ -1024,8 +732,7 @@ public class AIFlowClient {
    * @param modelName Name of registered model. This is expected to be unique in the backend store.
    * @param modelVersion User-defined version of registered model.
    * @param modelPath (Optional) Source path where the AIFlow model is stored.
-   * @param modelMetric (Optional) Metric address from AIFlow metric server of registered model.
-   * @param modelFlavor (Optional) Flavor feature of AIFlow registered model option.
+   * @param modelType (Optional) Type of AIFlow registered model option.
    * @param versionDesc (Optional) Description of registered model version.
    * @param currentStage (Optional) Current stage for registered model version.
    * @return Object of ModelVersion updated in Model Center.
@@ -1034,13 +741,12 @@ public class AIFlowClient {
       String modelName,
       String modelVersion,
       String modelPath,
-      String modelMetric,
-      String modelFlavor,
+      String modelType,
       String versionDesc,
       ModelStage currentStage)
       throws Exception {
     return this.modelCenterClient.updateModelVersion(
-        modelName, modelVersion, modelPath, modelMetric, modelFlavor, versionDesc, currentStage);
+        modelName, modelVersion, modelPath, modelType, versionDesc, currentStage);
   }
 
   /**

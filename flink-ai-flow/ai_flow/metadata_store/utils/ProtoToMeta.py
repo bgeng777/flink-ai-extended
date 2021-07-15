@@ -22,9 +22,10 @@ from ai_flow.meta.job_meta import State
 from ai_flow.meta.model_meta import ModelMeta, ModelVersionMeta
 from ai_flow.meta.model_relation_meta import ModelRelationMeta, ModelVersionRelationMeta
 from ai_flow.meta.project_meta import ProjectMeta
+from ai_flow.meta.workflow_meta import WorkflowMeta
 from ai_flow.protobuf.message_pb2 import DatasetProto, ProjectProto, \
     StateProto, ModelRelationProto, ModelVersionRelationProto, ModelProto, ModelVersionProto, \
-    ArtifactProto, ModelVersionStage, DataTypeProto, ModelType
+    ArtifactProto, ModelVersionStage, DataTypeProto, WorkflowMetaProto
 
 
 class ProtoToMeta:
@@ -97,6 +98,28 @@ class ProtoToMeta:
         return project_meta_list
 
     @staticmethod
+    def proto_to_workflow_meta(workflow_proto: WorkflowMetaProto) -> WorkflowMeta:
+        properties = workflow_proto.properties
+        if properties == {}:
+            properties = None
+        project_id = workflow_proto.project_id.value if workflow_proto.HasField('project_id') else None
+        create_time = workflow_proto.create_time.value if workflow_proto.HasField('create_time') else None
+        update_time = workflow_proto.update_time.value if workflow_proto.HasField('update_time') else None
+        return WorkflowMeta(uuid=workflow_proto.uuid,
+                            name=workflow_proto.name,
+                            project_id=project_id,
+                            properties=properties,
+                            create_time=create_time,
+                            update_time=update_time)
+
+    @staticmethod
+    def proto_to_workflow_meta_list(workflows: List[WorkflowMetaProto]) -> List[WorkflowMeta]:
+        workflow_meta_list = []
+        for workflow in workflows:
+            workflow_meta_list.append(ProtoToMeta.proto_to_workflow_meta(workflow))
+        return workflow_meta_list
+
+    @staticmethod
     def proto_to_artifact_meta(artifact_proto: ArtifactProto) -> ArtifactMeta:
         properties = artifact_proto.properties
         if properties == {}:
@@ -153,7 +176,6 @@ class ProtoToMeta:
     @staticmethod
     def proto_to_model_meta(model_proto: ModelProto) -> ModelMeta:
         return ModelMeta(uuid=model_proto.uuid, name=model_proto.name,
-                         model_type=ModelType.Name(model_proto.model_type),
                          model_desc=model_proto.model_desc.value if model_proto.HasField(
                              'model_desc') else None,
                          project_id=model_proto.project_id.value if model_proto.HasField('project_id') else None)
@@ -171,8 +193,8 @@ class ProtoToMeta:
         return ModelVersionRelationMeta(
             version=model_version_proto.version.value if model_version_proto.HasField('version') else None,
             model_id=model_version_proto.model_id.value if model_version_proto.HasField('model_id') else None,
-            workflow_execution_id=model_version_proto.workflow_execution_id.value
-            if model_version_proto.HasField('workflow_execution_id') else None)
+            project_snapshot_id=model_version_proto.project_snapshot_id.value
+            if model_version_proto.HasField('project_snapshot_id') else None)
 
     @staticmethod
     def proto_to_model_version_relation_meta_list(model_version_proto_list: List[ModelVersionRelationProto]) -> List[
@@ -192,12 +214,10 @@ class ProtoToMeta:
             model_id=model_version_proto.model_id.value if model_version_proto.HasField('model_id') else None,
             model_path=model_version_proto.model_path.value if model_version_proto.HasField(
                 'model_path') else None,
-            model_metric=model_version_proto.model_metric.value if model_version_proto.HasField(
-                'model_metric') else None,
-            model_flavor=model_version_proto.model_flavor.value if model_version_proto.HasField(
-                'model_flavor') else None,
-            workflow_execution_id=model_version_proto.workflow_execution_id.value if model_version_proto.HasField(
-                'workflow_execution_id') else None,
+            model_type=model_version_proto.model_type.value if model_version_proto.HasField(
+                'model_type') else None,
+            project_snapshot_id=model_version_proto.project_snapshot_id.value if model_version_proto.HasField(
+                'project_snapshot_id') else None,
             version_desc=model_version_proto.version_desc.value if model_version_proto.HasField(
                 'version_desc') else None,
             current_stage=ModelVersionStage.Name(model_version_proto.current_stage))

@@ -18,6 +18,7 @@
 #
 from functools import wraps
 
+from ai_flow.meta.workflow_meta import WorkflowMeta
 from google.protobuf.json_format import MessageToJson, Parse
 
 from ai_flow.common.status import Status
@@ -30,10 +31,10 @@ from ai_flow.metadata_store.utils.MetaToProto import MetaToProto
 from ai_flow.metadata_store.utils.ProtoToMeta import ProtoToMeta
 from ai_flow.protobuf.message_pb2 import Response, SUCCESS, ReturnCode, RESOURCE_DOES_NOT_EXIST, \
     DatasetProto, ModelProto, ModelVersionProto, ProjectProto, INTERNAL_ERROR, \
-    DataTypeProto, ArtifactProto
+    DataTypeProto, ArtifactProto, WorkflowMetaProto
 from ai_flow.protobuf.metadata_service_pb2 import DatasetListProto, \
     ProjectListProto, ModelVersionRelationListProto, ModelRelationListProto, ModelVersionListProto, \
-    ArtifactListProto
+    ArtifactListProto, WorkflowListProto
 from ai_flow.endpoint.server.exception import AIFlowException
 from ai_flow.store.sqlalchemy_store import UPDATE_FAIL
 
@@ -171,6 +172,25 @@ def _unwrap_project_list_response(response):
         raise AIFlowException(response.return_msg)
 
 
+def _unwrap_workflow_response(response):
+    if response.return_code == str(SUCCESS):
+        return ProtoToMeta.proto_to_workflow_meta(Parse(response.data, WorkflowMetaProto()))
+    elif response.return_code == str(RESOURCE_DOES_NOT_EXIST):
+        return None
+    else:
+        raise AIFlowException(response.return_msg)
+
+
+def _unwrap_workflow_list_response(response):
+    if response.return_code == str(SUCCESS):
+        workflow_proto_list = Parse(response.data, WorkflowListProto())
+        return ProtoToMeta.proto_to_workflow_meta_list(workflow_proto_list.workflows)
+    elif response.return_code == str(RESOURCE_DOES_NOT_EXIST):
+        return None
+    else:
+        raise AIFlowException(response.return_msg)
+
+
 def _unwrap_artifact_response(response):
     if response.return_code == str(SUCCESS):
         return ProtoToMeta.proto_to_artifact_meta(Parse(response.data, ArtifactProto()))
@@ -292,6 +312,18 @@ def _warp_project_list_response(project_list):
                         data=None)
 
 
+def _wrap_workflow_list_response(workflow_list):
+    if workflow_list is not None:
+        workflow_proto_list = MetaToProto.workflow_meta_list_to_proto(workflow_list)
+        return Response(return_code=str(SUCCESS), return_msg=ReturnCode.Name(SUCCESS).lower(),
+                        data=MessageToJson(WorkflowListProto(workflows=workflow_proto_list),
+                                           preserving_proto_field_name=True))
+    else:
+        return Response(return_code=str(RESOURCE_DOES_NOT_EXIST),
+                        return_msg=ReturnCode.Name(RESOURCE_DOES_NOT_EXIST).lower(),
+                        data=None)
+
+
 def _warp_artifact_list_response(artifact_list):
     if artifact_list is not None:
         artifact_proto_list = MetaToProto.artifact_meta_list_to_proto(artifact_list)
@@ -349,6 +381,18 @@ def transform_project_meta(project_proto):
         uri=project_proto.uri.value if project_proto.HasField('uri') else None)
 
 
+def transform_workflow_meta(workflow_proto) -> WorkflowMeta:
+    properties = workflow_proto.properties
+    if properties == {}:
+        properties = None
+    return WorkflowMeta(name=workflow_proto.name,
+                        project_id=workflow_proto.project_id.value if workflow_proto.HasField('project_id') else None,
+                        properties=properties,
+                        create_time=workflow_proto.create_time.value if workflow_proto.HasField('create_time') else None,
+                        update_time=workflow_proto.update_time.value if workflow_proto.HasField('update_time') else None
+                        )
+
+
 def transform_artifact_meta(artifact_proto) -> ArtifactMeta:
     properties = artifact_proto.properties
     if properties == {}:
@@ -375,12 +419,12 @@ def transform_model_version_relation_meta(model_version_relation_proto):
         if model_version_relation_proto.HasField('version') else None,
         model_id=model_version_relation_proto.model_id.value
         if model_version_relation_proto.HasField('model_id') else None,
-        workflow_execution_id=model_version_relation_proto.workflow_execution_id.value
-        if model_version_relation_proto.HasField('workflow_execution_id') else None)
+        project_snapshot_id=model_version_relation_proto.project_snapshot_id.value
+        if model_version_relation_proto.HasField('project_snapshot_id') else None)
 
 
 def transform_model_meta(model_proto):
-    return ModelMeta(name=model_proto.name, model_type=model_proto.model_type,
+    return ModelMeta(name=model_proto.name,
                      model_desc=model_proto.model_desc.value if model_proto.HasField('model_desc') else None,
                      project_id=model_proto.project_id.value if model_proto.HasField('project_id') else None)
 
@@ -390,13 +434,11 @@ def transform_model_version_meta(model_version_proto):
         'version') else None,
                             model_id=model_version_proto.model_id.value if model_version_proto.HasField(
                                 'model_id') else None,
-                            workflow_execution_id=model_version_proto.workflow_execution_id.value
-                            if model_version_proto.HasField('workflow_execution_id') else None,
+                            project_snapshot_id=model_version_proto.project_snapshot_id.value
+                            if model_version_proto.HasField('project_snapshot_id') else None,
                             model_path=model_version_proto.model_path.value if model_version_proto.HasField(
                                 "model_path") else None,
-                            model_metric=model_version_proto.model_metric.value if model_version_proto.HasField(
-                                "model_metric") else None,
-                            model_flavor=model_version_proto.model_flavor.value if model_version_proto.HasField(
-                                "model_flavor") else None,
+                            model_type=model_version_proto.model_type.value if model_version_proto.HasField(
+                                "model_type") else None,
                             version_desc=model_version_proto.version_desc.value if model_version_proto.HasField(
                                 "version_desc") else None)

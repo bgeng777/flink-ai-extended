@@ -16,53 +16,71 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-from typing import Dict, Text, Any
+import os
+from typing import Dict, Text
 from ai_flow.util.json_utils import Jsonable, loads
-from ai_flow.workflow.job_config import BaseJobConfig, get_job_config_class
+from ai_flow.workflow.job_config import JobConfig
+from ai_flow.workflow.periodic_config import PeriodicConfig
 from ai_flow.util import yaml_utils
 
-GLOBAL_CONFIG_KEY = "global_config_key"
-WORKFLOW_NAME = "workflow_name"
+WORKFLOW_PROPERTIES = "properties"  # The configuration item that represents the properties of the workflow.
+WORKFLOW_DEPENDENCIES = "dependencies"  # The configuration item of the workflow represents the dependency files.
+PERIODIC_CONFIG = "periodic_config"  # The configuration item of the workflow represents the workflow periodic running.
 
 
-class WorkFlowConfig(Jsonable):
+class WorkflowConfig(Jsonable):
+    """WorkflowConfig is the configuration information of the Workflow(ai_flow.workflow.workflow.Workflow)."""
 
-    def __init__(self) -> None:
+    def __init__(self, workflow_name: Text = None) -> None:
         super().__init__()
-        self.name = None
-        self.job_configs: Dict[Text, BaseJobConfig] = {}
+        self.workflow_name = workflow_name
+        self.job_configs: Dict[Text, JobConfig] = {}
+        self.properties: Dict[Text, Jsonable] = {}
+        self.dependencies: Dict = None
+        self.periodic_config: PeriodicConfig = None
+        self.job_periodic_config_dict: Dict[Text, PeriodicConfig] = {}
 
-    def add_job_config(self, config_key: Text, job_config: BaseJobConfig):
+    def add_job_config(self, config_key: Text, job_config: JobConfig):
         self.job_configs[config_key] = job_config
 
-    def set_upload_project_path_for_jobs(self, uploaded_project_path: Text):
-        for job_id, job_config in self.job_configs.items():
-            job_config.project_path = uploaded_project_path
 
-    def set_properties_for_jobs(self, properties: Dict[str, Any]):
-        for job_id, job_config in self.job_configs.items():
-            job_config.properties.update(properties)
-
-
-def load_workflow_config(config_path: Text) -> WorkFlowConfig:
+def load_workflow_config(config_path: Text) -> WorkflowConfig:
+    """
+    Load the workflow configuration file.
+    :param config_path: Workflow configuration file path.
+    return: WorkflowConfig.
+    """
     if config_path.endswith('.json'):
         with open(config_path, 'r') as f:
             workflow_config_json = f.read()
-        workflow_config: WorkFlowConfig = loads(workflow_config_json)
+        workflow_config: WorkflowConfig = loads(workflow_config_json)
         return workflow_config
     elif config_path.endswith('.yaml'):
+        # -5 is length of .yaml; The config file name equals workflow name.
+        workflow_name = os.path.basename(config_path)[:-5]
         workflow_data = yaml_utils.load_yaml_file(config_path)
-        workflow_config: WorkFlowConfig = WorkFlowConfig()
+
+        workflow_config: WorkflowConfig = WorkflowConfig(workflow_name=workflow_name)
+
+        if PERIODIC_CONFIG in workflow_data:
+            p_data = workflow_data.get(PERIODIC_CONFIG)
+            workflow_config.periodic_config = PeriodicConfig.from_dict(p_data)
+
+        if WORKFLOW_PROPERTIES in workflow_data:
+            workflow_config.properties = workflow_data[WORKFLOW_PROPERTIES]
+
+        if WORKFLOW_DEPENDENCIES in workflow_data:
+            workflow_config.dependencies = workflow_data[WORKFLOW_DEPENDENCIES]
+
         for k, v in workflow_data.items():
-            if k == GLOBAL_CONFIG_KEY:
+            if k == WORKFLOW_DEPENDENCIES or k == WORKFLOW_PROPERTIES or k == PERIODIC_CONFIG:
                 continue
-            elif k == WORKFLOW_NAME:
-                workflow_config.name = v
-                continue
-            job_config_class = get_job_config_class(v['platform'], v['engine'])
-            job_config = job_config_class()
-            job_config_class.from_dict(v, job_config)
+            job_config = JobConfig.from_dict({k: v})
             workflow_config.add_job_config(k, job_config)
+            if PERIODIC_CONFIG in v:
+                p_data = v.get(PERIODIC_CONFIG)
+                periodic_config = PeriodicConfig.from_dict(p_data)
+                workflow_config.job_periodic_config_dict[k] = periodic_config
         return workflow_config
     else:
         return None

@@ -121,7 +121,7 @@ class TestTensorFlowIrisModel(unittest.TestCase):
     def setUp(self) -> None:
         if os.path.exists(_SQLITE_DB_FILE):
             os.remove(_SQLITE_DB_FILE)
-        self.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT)
+        self.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT, start_scheduler_service=False)
         self.server.run()
         self.client = AIFlowClient(server_uri='localhost:' + _PORT)
 
@@ -134,11 +134,9 @@ class TestTensorFlowIrisModel(unittest.TestCase):
         iris_model = fit_and_save_model()
         tf_graph = tf.Graph()
         registered_model = self.client.create_registered_model(model_name='iris_model',
-                                                               model_type=ModelType.SAVED_MODEL,
                                                                model_desc='iris model')
         self.client.create_model_version(model_name=registered_model.model_name, model_path=iris_model.path,
-                                         model_metric='http://metric',
-                                         model_flavor='{"meta_graph_tags":["serve"],"signature_def_map_key":"predict"}',
+                                         model_type='{"meta_graph_tags":["serve"],"signature_def_map_key":"predict"}',
                                          version_desc='iris model')
 
         class IrisWatcher(EventWatcher):
@@ -161,7 +159,7 @@ class TestTensorFlowIrisModel(unittest.TestCase):
                         assert t_output is not None
 
         self.client.start_listen_event(key=registered_model.model_name,
-                                       watcher=IrisWatcher())
+                                              watcher=IrisWatcher())
 
 
 if __name__ == '__main__':

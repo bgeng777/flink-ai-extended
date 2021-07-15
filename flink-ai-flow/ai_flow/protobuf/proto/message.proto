@@ -58,23 +58,21 @@ message ModelProto {
     int64 uuid = 1;
     string name = 2;
     google.protobuf.Int64Value project_id = 3;
-    ModelType model_type = 4;
-    google.protobuf.StringValue model_desc = 5;
+    google.protobuf.StringValue model_desc = 4;
 }
 
 message ModelVersionRelationProto {
     google.protobuf.StringValue version = 1;
     google.protobuf.Int64Value model_id = 2;
-    google.protobuf.Int64Value workflow_execution_id = 3;
+    google.protobuf.Int64Value project_snapshot_id = 3;
 }
 
 message ModelVersionProto {
     google.protobuf.StringValue version = 1;
     google.protobuf.Int64Value model_id = 2;
-    google.protobuf.Int64Value workflow_execution_id = 3;
+    google.protobuf.Int64Value project_snapshot_id = 3;
     google.protobuf.StringValue model_path = 4;
-    google.protobuf.StringValue model_metric = 5;
-    google.protobuf.StringValue model_flavor = 6;
+    google.protobuf.StringValue model_type = 6;
     google.protobuf.StringValue version_desc = 7;
     ModelVersionStage current_stage = 8;
 }
@@ -123,6 +121,15 @@ message ProjectProto {
     google.protobuf.StringValue uri = 4;
 }
 
+message WorkflowMetaProto {
+    int64 uuid = 1;
+    string name = 2;
+    google.protobuf.Int64Value project_id = 3;
+    map<string, string> properties =4;
+    google.protobuf.Int64Value create_time = 5;
+    google.protobuf.Int64Value update_time = 6;
+}
+
 message ArtifactProto {
     int64 uuid = 1;
     string name = 2;
@@ -136,16 +143,14 @@ message ArtifactProto {
 
 message RegisteredModelParam {
     google.protobuf.StringValue model_name = 1;
-    ModelType model_type = 2;
-    google.protobuf.StringValue model_desc = 3;
+    google.protobuf.StringValue model_desc = 2;
 }
 
 message ModelVersionParam {
     google.protobuf.StringValue model_path = 1;
-    google.protobuf.StringValue model_metric = 2;
-    google.protobuf.StringValue model_flavor = 3;
-    google.protobuf.StringValue version_desc = 4;
-    ModelVersionStage current_stage = 5;
+    google.protobuf.StringValue model_type = 2;
+    google.protobuf.StringValue version_desc = 3;
+    ModelVersionStage current_stage = 4;
 }
 
 message ModelMetaParam {
@@ -161,16 +166,14 @@ message Response {
 
 message RegisteredModelMeta {
     string model_name = 1;
-    ModelType model_type = 2;
-    google.protobuf.StringValue model_desc = 3;
+    google.protobuf.StringValue model_desc = 2;
 }
 
 message ModelVersionMeta {
     string model_name = 1;
     string model_version = 2;
     google.protobuf.StringValue model_path = 3;
-    google.protobuf.StringValue model_metric = 4;
-    google.protobuf.StringValue model_flavor = 5;
+    google.protobuf.StringValue model_type = 5;
     google.protobuf.StringValue version_desc = 6;
     ModelVersionStatus version_status = 7;
     ModelVersionStage current_stage = 8;
@@ -178,7 +181,7 @@ message ModelVersionMeta {
 
 message RegisteredModelDetail {
     RegisteredModelMeta registered_model = 1;
-    ModelVersionMeta model_version = 2;
+    ModelVersionMeta latest_model_version = 2;
 }
 
 message RegisteredModelMetas {
@@ -274,13 +277,6 @@ enum ExecutionMode {
     STREAM = 2;
 }
 
-enum ModelType {
-    NONE_TYPE = 0;
-    CHECKPOINT = 1;
-    SAVED_MODEL = 2;
-    H5 = 3;
-}
-
 enum ModelVersionStatus {
     // Request to register a new model version is pending as server performs background tasks.
     PENDING_REGISTRATION = 0;
@@ -308,24 +304,26 @@ enum MetricTypeProto {
 }
 
 message MetricMetaProto {
-    int64 uuid = 1;
-    google.protobuf.StringValue name = 2;
-    google.protobuf.Int64Value dataset_id = 3;
-    google.protobuf.StringValue model_name = 4;
-    google.protobuf.StringValue model_version = 5;
-    google.protobuf.Int64Value job_id = 6;
-    google.protobuf.Int64Value start_time = 7;
-    google.protobuf.Int64Value end_time = 8;
-    MetricTypeProto metric_type = 9;
+    google.protobuf.StringValue metric_name = 1;
+    MetricTypeProto metric_type = 2;
+    google.protobuf.StringValue metric_desc = 3;
+    google.protobuf.StringValue project_name = 4;
+    google.protobuf.StringValue dataset_name = 5;
+    google.protobuf.StringValue model_name = 6;
+    google.protobuf.StringValue job_name = 7;
+    google.protobuf.Int64Value start_time = 8;
+    google.protobuf.Int64Value end_time = 9;
     google.protobuf.StringValue uri = 10;
     google.protobuf.StringValue tags = 11;
-    google.protobuf.StringValue metric_description = 12;
-    map<string, string> properties = 13;
+    map<string, string> properties = 12;
 }
 
 message MetricSummaryProto {
     int64 uuid = 1;
-    google.protobuf.Int64Value metric_id = 2;
+    google.protobuf.StringValue metric_name = 2;
     google.protobuf.StringValue metric_key = 3;
     google.protobuf.StringValue metric_value = 4;
+    google.protobuf.Int64Value metric_timestamp = 5;
+    google.protobuf.StringValue model_version = 6;
+    google.protobuf.StringValue job_execution_id = 7;
 }

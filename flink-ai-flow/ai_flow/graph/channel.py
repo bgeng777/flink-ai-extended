@@ -21,22 +21,17 @@ from ai_flow.util.json_utils import Jsonable
 
 
 class Channel(Jsonable):
-    """ Node Object output"""
+    """
+    The output of the Nodes(ai_flow.graph.node.Node).
+    """
 
     def __init__(self,
                  node_id: Text,
                  port: Optional[int] = 0) -> None:
         """
-        :param node_id: node identity id
-        :param port: the index of output
+        :param node_id: node_id is the unique identifier of the node.
+        :param port: the index of the node outputs
         """
         super().__init__()
         self.node_id = node_id
         self.port = port
-
-
-class NoneChannel(Channel):
-    """ the node does not has output, identity the node"""
-
-    def __init__(self, node_id: Text) -> None:
-        super().__init__(node_id, None)

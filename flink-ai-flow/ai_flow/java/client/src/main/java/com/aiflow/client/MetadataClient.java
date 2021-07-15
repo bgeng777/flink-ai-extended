@@ -18,7 +18,6 @@
  */
 package com.aiflow.client;
 
-import com.aiflow.common.ModelType;
 import com.aiflow.common.*;
 import com.aiflow.entity.ModelVersionMeta;
 import com.aiflow.entity.*;
@@ -37,8 +36,6 @@ import static com.aiflow.common.Constant.SERVER_URI;
 import static com.aiflow.entity.ArtifactMeta.buildArtifactMeta;
 import static com.aiflow.entity.ArtifactMeta.buildArtifactMetas;
 import static com.aiflow.entity.DatasetMeta.*;
-import static com.aiflow.entity.JobMeta.buildJobMeta;
-import static com.aiflow.entity.JobMeta.buildJobMetas;
 import static com.aiflow.entity.ModelMeta.buildModelMeta;
 import static com.aiflow.entity.ModelRelationMeta.buildModelRelationMeta;
 import static com.aiflow.entity.ModelRelationMeta.buildModelRelationMetas;
@@ -47,8 +44,8 @@ import static com.aiflow.entity.ModelVersionRelationMeta.buildModelVersionRelati
 import static com.aiflow.entity.ModelVersionRelationMeta.buildModelVersionRelationMetas;
 import static com.aiflow.entity.ProjectMeta.buildProjectMeta;
 import static com.aiflow.entity.ProjectMeta.buildProjectMetas;
-import static com.aiflow.entity.WorkflowExecutionMeta.buildWorkflowExecutionMeta;
-import static com.aiflow.entity.WorkflowExecutionMeta.buildWorkflowExecutionMetas;
+import static com.aiflow.entity.WorkflowMeta.buildWorkflowMeta;
+import static com.aiflow.entity.WorkflowMeta.buildWorkflowMetas;
 import static com.aiflow.util.Transform.*;
 import static com.google.protobuf.util.JsonFormat.parser;
 
@@ -341,13 +338,12 @@ public class MetadataClient {
      * Register a model in Metadata Store.
      *
      * @param modelName Name of registered model.
-     * @param modelType Type of registered model.
      * @param modelDesc Description of registered model.
      * @param projectId Project id which registered model corresponded to.
      * @return Single ModelMeta object registered in Metadata Store.
      */
-    public ModelMeta registerModel(String modelName, ModelType modelType, String modelDesc, Long projectId) throws Exception {
-        ModelProto modelProto = ModelProto.newBuilder().setName(modelName).setModelType(modelType.getModelType()).setModelDesc(stringValue(modelDesc))
+    public ModelMeta registerModel(String modelName, String modelDesc, Long projectId) throws Exception {
+        ModelProto modelProto = ModelProto.newBuilder().setName(modelName).setModelDesc(stringValue(modelDesc))
                 .setProjectId(int64Value(projectId)).build();
         RegisterModelRequest request = RegisterModelRequest.newBuilder().setModel(modelProto).build();
         Response response = metadataServiceStub.registerModel(request);
@@ -398,12 +394,12 @@ public class MetadataClient {
      *
      * @param version             Name of model version.
      * @param modelId             Model id corresponded to model version.
-     * @param workflowExecutionId Workflow execution id corresponded to model version.
+     * @param projectSnapshotId   Project snapshot id corresponded to model version.
      * @return Single ModelVersionRelationMeta object registered in Metadata Store.
      */
-    public ModelVersionRelationMeta registerModelVersionRelation(String version, Long modelId, Long workflowExecutionId) throws Exception {
+    public ModelVersionRelationMeta registerModelVersionRelation(String version, Long modelId, Long projectSnapshotId) throws Exception {
         ModelVersionRelationProto modelVersionRelationProto = ModelVersionRelationProto.newBuilder().setVersion(stringValue(version)).setModelId(int64Value(modelId))
-                .setWorkflowExecutionId(int64Value(workflowExecutionId)).build();
+                .setProjectSnapshotId(int64Value(projectSnapshotId)).build();
         RegisterModelVersionRelationRequest request = RegisterModelVersionRelationRequest.newBuilder().setModelVersionRelation(modelVersionRelationProto).build();
         Response response = metadataServiceStub.registerModelVersionRelation(request);
         ModelVersionRelationProto.Builder builder = ModelVersionRelationProto.newBuilder();
@@ -456,17 +452,16 @@ public class MetadataClient {
      * Register a model version in Metadata Store.
      *
      * @param modelPath           Source path where the AIFlow model is stored.
-     * @param modelMetric         Metric address from AIFlow metric server of registered model.
-     * @param modelFlavor         Flavor feature of AIFlow registered model option.
+     * @param modelType           Type of AIFlow registered model option.
      * @param versionDesc         Description of registered model version.
      * @param modelId             Model id corresponded to model version.
-     * @param workflowExecutionId Workflow execution id corresponded to model version.
+     * @param projectSnapshotId   Project snapshot id corresponded to model version.
      * @return Single ModelVersionRelationMeta object registered in Metadata Store.
      */
-    public ModelVersionMeta registerModelVersion(String modelPath, String modelMetric, String modelFlavor, String versionDesc, Long modelId, Long workflowExecutionId) throws Exception {
+    public ModelVersionMeta registerModelVersion(String modelPath, String modelType, String versionDesc, Long modelId, Long projectSnapshotId) throws Exception {
         ModelVersionProto modelVersionProto = ModelVersionProto.newBuilder().setModelPath(stringValue(modelPath))
-                .setModelMetric(stringValue(modelMetric)).setModelMetric(stringValue(modelMetric)).setModelFlavor(stringValue(modelFlavor))
-                .setVersionDesc(stringValue(versionDesc)).setModelId(int64Value(modelId)).setWorkflowExecutionId(int64Value(workflowExecutionId)).build();
+                .setModelType(stringValue(modelType))
+                .setVersionDesc(stringValue(versionDesc)).setModelId(int64Value(modelId)).setProjectSnapshotId(int64Value(projectSnapshotId)).build();
         RegisterModelVersionRequest request = RegisterModelVersionRequest.newBuilder().setModelVersion(modelVersionProto).build();
         Response response = metadataServiceStub.registerModelVersion(request);
         ModelVersionProto.Builder builder = ModelVersionProto.newBuilder();
@@ -483,293 +478,6 @@ public class MetadataClient {
     public Status deleteModelVersionByVersion(String version, Long modelId) throws Exception {
         ModelVersionNameRequest request = ModelVersionNameRequest.newBuilder().setName(version).setModelId(modelId).build();
         Response response = metadataServiceStub.deleteModelVersionByVersion(request);
-        return metadataDeleteResponse(response);
-    }
-
-    /**
-     * Get a specific workflow execution in Metadata Store by workflow execution id.
-     *
-     * @param executionId Id of workflow execution.
-     * @return Single WorkflowExecutionMeta object if workflow execution exists, otherwise returns None if workflow execution does not exist.
-     */
-    public WorkflowExecutionMeta getWorkFlowExecutionById(Long executionId) throws Exception {
-        IdRequest request = IdRequest.newBuilder().setId(executionId).build();
-        Response response = metadataServiceStub.getWorkFlowExecutionById(request);
-        WorkflowExecutionProto.Builder builder = WorkflowExecutionProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMeta(builder.build());
-    }
-
-    /**
-     * Get a specific workflow execution in Metadata Store by workflow execution name.
-     *
-     * @param executionName Name of workflow execution.
-     * @return Single WorkflowExecutionMeta object if workflow execution exists, otherwise returns None if workflow execution does not exist.
-     */
-    public WorkflowExecutionMeta getWorkFlowExecutionByName(String executionName) throws Exception {
-        NameRequest request = NameRequest.newBuilder().setName(executionName).build();
-        Response response = metadataServiceStub.getWorkFlowExecutionByName(request);
-        WorkflowExecutionProto.Builder builder = WorkflowExecutionProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMeta(builder.build());
-    }
-
-    /**
-     * Register a workflow execution in Metadata Store.
-     *
-     * @param name           Mame of workflow execution.
-     * @param executionState State of workflow execution.
-     * @param projectId      Project id corresponded to workflow execution.
-     * @param properties     Properties of workflow execution.
-     * @param startTime      Time when workflow execution started.
-     * @param endTime        Time when workflow execution ended.
-     * @param logUri         Log uri of workflow execution.
-     * @param workflowJson   Workflow json of workflow execution.
-     * @param signature      Signature of workflow execution.
-     * @return Single WorkflowExecutionMeta object registered in Metadata Store.
-     */
-    public WorkflowExecutionMeta registerWorkFlowExecution(String name, State executionState, Long projectId,
-                                                           Map<String, String> properties, Long startTime, Long endTime, String logUri, String workflowJson, String signature) throws Exception {
-        WorkflowExecutionProto.Builder workflowExecutionProto = WorkflowExecutionProto.newBuilder().setName(name).setProjectId(int64Value(projectId)).putAllProperties(properties)
-                .setStartTime(int64Value(startTime)).setEndTime(int64Value(endTime)).setLogUri(stringValue(logUri)).setWorkflowJson(stringValue(workflowJson)).setSignature(stringValue(signature));
-        if (executionState != null) {
-            workflowExecutionProto.setExecutionState(executionState.getExecutionState());
-        }
-        RegisterWorkFlowExecutionRequest request = RegisterWorkFlowExecutionRequest.newBuilder().setWorkflowExecution(workflowExecutionProto).build();
-        Response response = metadataServiceStub.registerWorkFlowExecution(request);
-        WorkflowExecutionProto.Builder builder = WorkflowExecutionProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMeta(builder.build());
-    }
-
-    /**
-     * Update a workflow execution in Metadata Store.
-     *
-     * @param name           Mame of workflow execution.
-     * @param executionState State of workflow execution.
-     * @param projectId      Project id corresponded to workflow execution.
-     * @param properties     Properties of workflow execution.
-     * @param endTime        Time when workflow execution ended.
-     * @param logUri         Log uri of workflow execution.
-     * @param workflowJson   Workflow json of workflow execution.
-     * @param signature      Signature of workflow execution.
-     * @return Single WorkflowExecutionMeta object registered in Metadata Store.
-     */
-    public WorkflowExecutionMeta updateWorkFlowExecution(String name, State executionState, Long projectId,
-                                                         Map<String, String> properties, Long endTime, String logUri, String workflowJson, String signature) throws Exception {
-        UpdateWorkflowExecutionRequest.Builder workflowExecutionProto = UpdateWorkflowExecutionRequest.newBuilder().setName(name).setProjectId(int64Value(projectId)).putAllProperties(properties)
-                .setEndTime(int64Value(endTime)).setLogUri(stringValue(logUri)).setWorkflowJson(stringValue(workflowJson)).setSignature(stringValue(signature));
-        if (executionState != null) {
-            workflowExecutionProto.setExecutionState(executionState.getExecutionState());
-        }
-        UpdateWorkflowExecutionRequest request = workflowExecutionProto.build();
-        Response response = metadataServiceStub.updateWorkflowExecution(request);
-        WorkflowExecutionProto.Builder builder = WorkflowExecutionProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMeta(builder.build());
-    }
-
-    /**
-     * List registered workflow executions in Metadata Store.
-     *
-     * @param pageSize Limitation of listed workflow executions.
-     * @param offset   Offset of listed workflow executions.
-     * @return List of WorkflowExecutionMeta object registered in Metadata Store.
-     */
-    public List<WorkflowExecutionMeta> listWorkFlowExecution(Long pageSize, Long offset) throws Exception {
-        ListRequest request = ListRequest.newBuilder().setPageSize(pageSize).setOffset(offset).build();
-        Response response = metadataServiceStub.listWorkFlowExecution(request);
-        WorkFlowExecutionListProto.Builder builder = WorkFlowExecutionListProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMetas(builder.build());
-    }
-
-    /**
-     * Update workflow execution end time in Metadata Store.
-     *
-     * @param endTime       Time when workflow execution ended.
-     * @param executionName Name of workflow execution.
-     * @return Workflow execution uuid if workflow execution is successfully updated, raise an exception, if fail to update otherwise.
-     */
-    public WorkflowExecutionMeta updateWorkflowExecutionEndTime(Long endTime, String executionName) throws Exception {
-        UpdateWorkflowExecutionEndTimeRequest request = UpdateWorkflowExecutionEndTimeRequest.newBuilder().setEndTime(endTime).setName(executionName).build();
-        Response response = metadataServiceStub.updateWorkflowExecutionEndTime(request);
-        WorkflowExecutionProto.Builder builder = WorkflowExecutionProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMeta(builder.build());
-    }
-
-    /**
-     * Update workflow execution state in Metadata Store.
-     *
-     * @param executionState State of workflow execution.
-     * @param executionName  Name of workflow execution.
-     * @return Workflow execution uuid if workflow execution is successfully updated, raise an exception, if fail to update otherwise.
-     */
-    public WorkflowExecutionMeta updateWorkflowExecutionState(State executionState, String executionName) throws Exception {
-        UpdateWorkflowExecutionStateRequest request = UpdateWorkflowExecutionStateRequest.newBuilder().setState(executionState.getExecutionState()).setName(executionName).build();
-        Response response = metadataServiceStub.updateWorkflowExecutionState(request);
-        WorkflowExecutionProto.Builder builder = WorkflowExecutionProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowExecutionMeta(builder.build());
-    }
-
-    /**
-     * Delete registered workflow execution by workflow execution id.
-     *
-     * @param executionId Id of workflow execution.
-     * @return Status.OK if workflow execution is successfully deleted, Status.ERROR if workflow execution does not exist otherwise.
-     */
-    public Status deleteWorkflowExecutionById(Long executionId) throws Exception {
-        IdRequest request = IdRequest.newBuilder().setId(executionId).build();
-        Response response = metadataServiceStub.deleteWorkflowExecutionById(request);
-        return metadataDeleteResponse(response);
-    }
-
-    /**
-     * Delete registered workflow execution by workflow execution name.
-     *
-     * @param executionName Name of workflow execution.
-     * @return Status.OK if workflow execution is successfully deleted, Status.ERROR if workflow execution does not exist otherwise.
-     */
-    public Status deleteWorkflowExecutionByName(String executionName) throws Exception {
-        NameRequest request = NameRequest.newBuilder().setName(executionName).build();
-        Response response = metadataServiceStub.deleteWorkflowExecutionByName(request);
-        return metadataDeleteResponse(response);
-    }
-
-    /**
-     * Get a specific job in Metadata Store by job id.
-     *
-     * @param jobId Id of job.
-     * @return Single JobMeta object if job exists, otherwise returns None if job does not exist.
-     */
-    public JobMeta getJobById(Long jobId) throws Exception {
-        IdRequest request = IdRequest.newBuilder().setId(jobId).build();
-        Response response = metadataServiceStub.getJobById(request);
-        JobProto.Builder builder = JobProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMeta(builder.build());
-    }
-
-    /**
-     * Get a specific job in Metadata Store by job name.
-     *
-     * @param jobName Name of job.
-     * @return Single JobMeta object if job exists, otherwise returns None if job does not exist.
-     */
-    public JobMeta getJobByName(String jobName) throws Exception {
-        NameRequest request = NameRequest.newBuilder().setName(jobName).build();
-        Response response = metadataServiceStub.getJobByName(request);
-        JobProto.Builder builder = JobProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMeta(builder.build());
-    }
-
-    /**
-     * Register a job in Metadata Store.
-     *
-     * @param name                Mame of job.
-     * @param jobState            State of job.
-     * @param workflowExecutionId Workflow execution id corresponded to job.
-     * @param properties          Properties of job.
-     * @param jobId               Job id of job.
-     * @param startTime           Time when job started.
-     * @param endTime             Time when job ended.
-     * @param logUri              Log uri of job.
-     * @param signature           Signature of job.
-     * @return Single JobMeta object registered in Metadata Store.
-     */
-    public JobMeta registerJob(String name, State jobState, Long workflowExecutionId, Map<String, String> properties,
-                               String jobId, Long startTime, Long endTime, String logUri, String signature) throws Exception {
-        JobProto jobProto = JobProto.newBuilder().setName(name).setJobState(jobState.getExecutionState())
-                .setWorkflowExecutionId(int64Value(workflowExecutionId)).putAllProperties(properties).setJobId(stringValue(jobId))
-                .setStartTime(int64Value(startTime)).setEndTime(int64Value(endTime)).setLogUri(stringValue(logUri))
-                .setSignature(stringValue(signature)).build();
-        RegisterJobRequest request = RegisterJobRequest.newBuilder().setJob(jobProto).build();
-        Response response = metadataServiceStub.registerJob(request);
-        JobProto.Builder builder = JobProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMeta(builder.build());
-    }
-
-    /**
-     * Update a job in Metadata Store.
-     *
-     * @param name                Mame of job.
-     * @param jobState            State of job.
-     * @param workflowExecutionId Workflow execution id corresponded to job.
-     * @param properties          Properties of job.
-     * @param jobId               Job id of job.
-     * @param endTime             Time when job ended.
-     * @param logUri              Log uri of job.
-     * @param signature           Signature of job.
-     * @return Single JobMeta object registered in Metadata Store.
-     */
-    public JobMeta updateJob(String name, State jobState, Long workflowExecutionId, Map<String, String> properties,
-                             String jobId, Long endTime, String logUri, String signature) throws Exception {
-        UpdateJobRequest.Builder jobProto = UpdateJobRequest.newBuilder().setName(name).setJobState(jobState.getExecutionState())
-                .setWorkflowExecutionId(int64Value(workflowExecutionId)).putAllProperties(properties).setJobId(stringValue(jobId))
-                .setEndTime(int64Value(endTime)).setLogUri(stringValue(logUri)).setSignature(stringValue(signature));
-        UpdateJobRequest request = jobProto.build();
-        Response response = metadataServiceStub.updateJob(request);
-        JobProto.Builder builder = JobProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMeta(builder.build());
-    }
-
-    /**
-     * List registered jobs in Metadata Store.
-     *
-     * @param pageSize Limitation of listed jobs.
-     * @param offset   Offset of listed jobs.
-     * @return List of JobMeta object registered in Metadata Store.
-     */
-    public List<JobMeta> listJob(Long pageSize, Long offset) throws Exception {
-        ListRequest request = ListRequest.newBuilder().setPageSize(pageSize).setOffset(offset).build();
-        Response response = metadataServiceStub.listJob(request);
-        JobListProto.Builder builder = JobListProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMetas(builder.build());
-    }
-
-    /**
-     * Update job end time in Metadata Store.
-     *
-     * @param endTime Time when job ended.
-     * @param jobName Name of job.
-     * @return Job uuid if job is successfully updated, raise an exception, if fail to update otherwise.
-     */
-    public JobMeta updateJobEndTime(Long endTime, String jobName) throws Exception {
-        UpdateJobEndTimeRequest request = UpdateJobEndTimeRequest.newBuilder().setEndTime(endTime).setName(jobName).build();
-        Response response = metadataServiceStub.updateJobEndTime(request);
-        JobProto.Builder builder = JobProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMeta(builder.build());
-    }
-
-    /**
-     * Update job state in Metadata Store.
-     *
-     * @param state   State of job.
-     * @param jobName Name of job.
-     * @return Job uuid if job is successfully updated, raise an exception, if fail to update otherwise.
-     */
-    public JobMeta updateJobState(State state, String jobName) throws Exception {
-        UpdateJobStateRequest request = UpdateJobStateRequest.newBuilder().setState(state.getExecutionState()).setName(jobName).build();
-        Response response = metadataServiceStub.updateJobState(request);
-        JobProto.Builder builder = JobProto.newBuilder();
-        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildJobMeta(builder.build());
-    }
-
-    /**
-     * Delete registered job by job id.
-     *
-     * @param jobId Id of job.
-     * @return Status.OK if job is successfully deleted, Status.ERROR if job does not exist otherwise.
-     */
-    public Status deleteJobById(Long jobId) throws Exception {
-        IdRequest request = IdRequest.newBuilder().setId(jobId).build();
-        Response response = metadataServiceStub.deleteJobById(request);
-        return metadataDeleteResponse(response);
-    }
-
-    /**
-     * Delete registered job by job name.
-     *
-     * @param jobName Name of job.
-     * @return Status.OK if job is successfully deleted, Status.ERROR if job does not exist otherwise.
-     */
-    public Status deleteJobByName(String jobName) throws Exception {
-        NameRequest request = NameRequest.newBuilder().setName(jobName).build();
-        Response response = metadataServiceStub.deleteJobByName(request);
         return metadataDeleteResponse(response);
     }
 
@@ -973,5 +681,112 @@ public class MetadataClient {
         NameRequest request = NameRequest.newBuilder().setName(artifactName).build();
         Response response = metadataServiceStub.deleteArtifactByName(request);
         return metadataDeleteResponse(response);
+    }
+
+    /***
+     * Register a workflow in metadata store.
+     *
+     * @param name       The workflow name
+     * @param projectId  The id of project which contains the workflow
+     * @param properties The workflow properties
+     * @return WorkflowMeta object registered in Metadata Store
+     */
+    public WorkflowMeta registerWorkflow(String name, Long projectId,
+                                         Map<String, String> properties) throws Exception {
+        WorkflowMetaProto workflowProto = WorkflowMetaProto.newBuilder().setName(name).setProjectId(int64Value(projectId))
+                .putAllProperties(properties).build();
+        RegisterWorkflowRequest request = RegisterWorkflowRequest.newBuilder().setWorkflow(workflowProto).build();
+        Response response = metadataServiceStub.registerWorkflow(request);
+        WorkflowMetaProto.Builder builder = WorkflowMetaProto.newBuilder();
+        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowMeta(builder.build());
+    }
+
+    /***
+     * Get a workflow by specific project name and workflow name
+     *
+     * @param projectName   The name of project which contains the workflow
+     * @param workflowName  The workflow name
+     * @return WorkflowMeta object registered in Metadata Store
+     */
+    public WorkflowMeta getWorkflowByName(String projectName, String workflowName) throws Exception {
+        WorkflowNameRequest request = WorkflowNameRequest.newBuilder().setProjectName(projectName).setWorkflowName(workflowName).build();
+        Response response = metadataServiceStub.getWorkflowByName(request);
+        WorkflowMetaProto.Builder builder = WorkflowMetaProto.newBuilder();
+        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ?
+                null: buildWorkflowMeta(builder.build());
+    }
+
+    /***
+     * Get a workflow by uuid
+     *
+     * @param workflowId The workflow id
+     * @return WorkflowMeta object registered in Metadata Store
+     */
+    public WorkflowMeta getWorkflowById(Long workflowId) throws Exception {
+        IdRequest request = IdRequest.newBuilder().setId(workflowId).build();
+        Response response = metadataServiceStub.getWorkflowById(request);
+        WorkflowMetaProto.Builder builder = WorkflowMetaProto.newBuilder();
+        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ?
+                null : buildWorkflowMeta(builder.build());
+    }
+
+    /***
+     * List all workflows of the specific project
+     *
+     * @param projectName  The name of project which contains the workflow
+     * @param pageSize     Limitation of listed workflows.
+     * @param offset       Offset of listed workflows.
+     * @return
+     */
+    public List<WorkflowMeta> listWorkflows(String projectName, Long pageSize, Long offset) throws Exception {
+        ListWorkflowsRequest request = ListWorkflowsRequest.newBuilder()
+                .setProjectName(projectName).setPageSize(pageSize).setOffset(offset).build();
+        Response response = metadataServiceStub.listWorkflows(request);
+        WorkflowListProto.Builder builder = WorkflowListProto.newBuilder();
+        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowMetas(builder.build());
+    }
+
+    /***
+     * Delete the workflow by specific project and workflow name
+     *
+     * @param projectName  The name of project which contains the workflow
+     * @param workflowName The workflow name
+     * @return Status.OK if workflow is successfully deleted, Status.ERROR if workflow does not exist otherwise.
+     */
+    public Status deleteWorkflowByName(String projectName, String workflowName) throws Exception {
+        WorkflowNameRequest request = WorkflowNameRequest.newBuilder()
+                .setProjectName(projectName).setWorkflowName(workflowName).build();
+        Response response = metadataServiceStub.deleteWorkflowByName(request);
+        return metadataDeleteResponse(response);
+    }
+
+
+    /**
+     * Delete the workflow by specific uuid.
+     *
+     * @param workflowId Id of worflow.
+     * @return Status.OK if workflow is successfully deleted, Status.ERROR if workflow does not exist otherwise.
+     */
+    public Status deleteWorkflowById(Long workflowId) throws Exception {
+        IdRequest request = IdRequest.newBuilder().setId(workflowId).build();
+        Response response = metadataServiceStub.deleteWorkflowById(request);
+        return metadataDeleteResponse(response);
+    }
+
+    /***
+     * Update the workflow
+     *
+     * @param workflowName The workflow name
+     * @param projectName  The name of project which contains the workflow
+     * @param properties   Properties needs to be updated
+     * @return WorkflowMeta object registered in Metadata Store
+     */
+    public WorkflowMeta updateWorkflow(String workflowName, String projectName, Map<String,
+            String> properties) throws Exception {
+        UpdateWorkflowRequest request = UpdateWorkflowRequest.newBuilder().setWorkflowName(workflowName)
+                .setProjectName(projectName).putAllProperties(properties).build();
+        Response response = metadataServiceStub.updateWorkflow(request);
+        WorkflowMetaProto.Builder builder = WorkflowMetaProto.newBuilder();
+        return StringUtils.isEmpty(metadataDetailResponse(response, this.parser, builder)) ? null : buildWorkflowMeta(builder.build());
     }
 }

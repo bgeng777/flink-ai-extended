@@ -21,7 +21,7 @@ from typing import List, Text
 from ai_flow.meta.dataset_meta import DatasetMeta
 from ai_flow.endpoint.server.exception import AIFlowException
 from ai_flow.store.db.db_model import SqlDataset, SqlProject, SqlModelRelation, \
-    SqlModelVersionRelation, SqlArtifact
+    SqlModelVersionRelation, SqlArtifact, SqlWorkflow, MongoWorkflow
 from ai_flow.store.db.db_model import (MongoProject, MongoDataset,
                                        MongoArtifact,
                                        MongoModelRelation, MongoModelVersionRelation)
@@ -124,11 +124,24 @@ class MetaToTable:
         return _class(name=name, project_id=project_id)
 
     @staticmethod
-    def model_version_relation_to_table(version, model_id, workflow_execution_id, store_type='SqlAlchemyStore'):
+    def model_version_relation_to_table(version, model_id, project_snapshot_id, store_type='SqlAlchemyStore'):
         if store_type == 'MongoStore':
             _class = MongoModelVersionRelation
         else:
             _class = SqlModelVersionRelation
         return _class(version=version, model_id=model_id,
-                      workflow_execution_id=workflow_execution_id)
+                      project_snapshot_id=project_snapshot_id)
 
+    @staticmethod
+    def workflow_to_table(name, project_id, properties, create_time, update_time, store_type='SqlAlchemyStore'):
+        if properties is not None:
+            properties = str(properties)
+        if store_type == 'MongoStore':
+            _class = MongoWorkflow
+        else:
+            _class = SqlWorkflow
+        return _class(name=name,
+                      project_id=project_id,
+                      properties=properties,
+                      create_time=create_time,
+                      update_time=update_time)

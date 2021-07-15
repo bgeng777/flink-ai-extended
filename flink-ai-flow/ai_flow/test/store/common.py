@@ -149,6 +149,60 @@ class AbstractTestStore(object):
         self.assertEqual(update_dataset.schema.name_list, ['a'])
         self.assertEqual(update_dataset_1.catalog_database, 'my_db')
 
+    """test workflow"""
+    def test_save_workflow_get_workflow_by_id_and_name(self):
+        project_response = self.store.register_project(name='project', uri='www.code.com')
+        self.assertEqual(project_response.uuid, 1)
+        response = self.store.register_workflow(name='workflow',
+                                                project_id=project_response.uuid,
+                                                properties=Properties({'a': 'b'}))
+        self.assertEqual(response.uuid, 1)
+        self.assertEqual(response.properties, Properties({'a': 'b'}))
+        response_by_id = self.store.get_workflow_by_id(response.uuid)
+        response_by_name = self.store.get_workflow_by_name(project_response.name, response.name)
+        self.assertEqual('workflow', response_by_id.name)
+        self.assertEqual('workflow', response_by_name.name)
+        self.assertEqual(Properties({'a': 'b'}), response_by_id.properties)
+        self.assertEqual(Properties({'a': 'b'}), response_by_name.properties)
+
+    def test_double_register_workflow(self):
+        project_response = self.store.register_project(name='project', uri='www.code.com')
+        project_response2 = self.store.register_project(name='project2', uri='www.code.com')
+        self.store.register_workflow(name='workflow', project_id=project_response.uuid)
+        self.store.register_workflow(name='workflow', project_id=project_response2.uuid)
+        self.assertRaises(AIFlowException, self.store.register_workflow, name='workflow',
+                          project_id=project_response.uuid)
+
+    def test_list_workflows(self):
+        project_response = self.store.register_project(name='project', uri='www.code.com')
+        self.store.register_workflow(name='workflow1', project_id=project_response.uuid)
+        self.store.register_workflow(name='workflow2', project_id=project_response.uuid)
+        response_list = self.store.list_workflows(project_response.name, 2, 0)
+        self.assertEqual('workflow1', response_list[0].name)
+        self.assertEqual('workflow2', response_list[1].name)
+
+    def test_delete_workflow(self):
+        project_response = self.store.register_project(name='project', uri='www.code.com')
+        response = self.store.register_workflow(name='workflow', project_id=project_response.uuid)
+        self.assertEqual(Status.OK, self.store.delete_workflow_by_name(project_name=project_response.name,
+                                                                       workflow_name='workflow'))
+        self.assertIsNone(self.store.get_workflow_by_id(response.uuid))
+
+        response = self.store.register_workflow(name='workflow', project_id=project_response.uuid)
+        self.assertEqual(Status.OK, self.store.delete_workflow_by_id(response.uuid))
+        self.assertIsNone(self.store.get_workflow_by_id(response.uuid))
+
+    def test_update_workflow(self):
+        project_response = self.store.register_project(name='project', uri='www.code.com')
+        response = self.store.register_workflow(name='workflow',
+                                                project_id=project_response.uuid,
+                                                properties=Properties({'a': 'b'}))
+
+        updated_workflow = self.store.update_workflow(project_name=project_response.name,
+                                                      workflow_name='workflow',
+                                                      properties=Properties({'a': 'c'}))
+        self.assertEqual(updated_workflow.properties, Properties({'a': 'c'}))
+
     """test project"""
 
     def test_save_project_get_project_by_id_and_name(self):
@@ -179,7 +233,7 @@ class AbstractTestStore(object):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
         self.store.register_model_version_relation(version='1', model_id=1,
-                                                   workflow_execution_id=1)
+                                                   project_snapshot_id=None)
         self.assertEqual(self.store.get_project_by_id(1).name, 'project')
         self.assertEqual(self.store.get_model_relation_by_id(1).name, 'model')
         self.assertEqual(self.store.get_model_version_relation_by_version('1', '1').version, '1')
@@ -193,14 +247,14 @@ class AbstractTestStore(object):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=2)
         self.store.register_model_version_relation(version='1', model_id=2,
-                                                   workflow_execution_id=2)
+                                                   project_snapshot_id=None)
         self.assertEqual(Status.OK, self.store.delete_project_by_id(2))
 
     def test_delete_project_by_name(self):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
         self.store.register_model_version_relation(version='1', model_id=1,
-                                                   workflow_execution_id=1)
+                                                   project_snapshot_id=None)
         self.assertEqual(self.store.get_project_by_id(1).name, 'project')
         self.assertEqual(self.store.get_model_relation_by_id(1).name, 'model')
         self.assertEqual(self.store.get_model_version_relation_by_version('1', '1').version, '1')
@@ -214,7 +268,7 @@ class AbstractTestStore(object):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=2)
         self.store.register_model_version_relation(version='1', model_id=2,
-                                                   workflow_execution_id=2)
+                                                   project_snapshot_id=None)
         self.assertEqual(Status.OK, self.store.delete_project_by_name('project'))
 
     def test_update_project(self):
@@ -244,7 +298,7 @@ class AbstractTestStore(object):
     def test_delete_model_by_id(self):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
-        response = self.store.register_model_version_relation(version='1', model_id=1, workflow_execution_id=1)
+        response = self.store.register_model_version_relation(version='1', model_id=1, project_snapshot_id=None)
         self.assertEqual(response.version, '1')
         self.assertEqual(self.store.get_model_version_relation_by_version('1', 1).version, '1')
         self.assertEqual(self.store.get_model_relation_by_name('model').name, 'model')
@@ -252,13 +306,13 @@ class AbstractTestStore(object):
         self.assertIsNone(self.store.get_model_version_relation_by_version('1', '1'))
         self.assertIsNone(self.store.get_model_relation_by_name('model'))
         self.store.register_model_relation(name='model', project_id=1)
-        self.store.register_model_version_relation(version='1', model_id=2, workflow_execution_id=1)
+        self.store.register_model_version_relation(version='1', model_id=2, project_snapshot_id=None)
         self.assertEqual(Status.OK, self.store.delete_model_relation_by_id(2))
 
     def test_delete_model_by_name(self):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
-        response = self.store.register_model_version_relation(version='1', model_id=1, workflow_execution_id=1)
+        response = self.store.register_model_version_relation(version='1', model_id=1, project_snapshot_id=None)
         self.assertEqual(response.version, '1')
         self.assertEqual(self.store.get_model_version_relation_by_version('1', '1').version, '1')
         self.assertEqual(self.store.get_model_relation_by_name('model').name, 'model')
@@ -266,7 +320,7 @@ class AbstractTestStore(object):
         self.assertIsNone(self.store.get_model_version_relation_by_version('1', '1'))
         self.assertIsNone(self.store.get_model_relation_by_name('model'))
         self.store.register_model_relation(name='model', project_id=1)
-        self.store.register_model_version_relation(version='1', model_id=2, workflow_execution_id=1)
+        self.store.register_model_version_relation(version='1', model_id=2, project_snapshot_id=None)
         self.assertEqual(Status.OK, self.store.delete_model_relation_by_name('model'))
 
     def test_double_register_model_relation(self):
@@ -280,15 +334,15 @@ class AbstractTestStore(object):
     def test_save_model_version_get_by_version(self):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
-        response = self.store.register_model_version_relation(version='1', model_id=1, workflow_execution_id=1)
+        response = self.store.register_model_version_relation(version='1', model_id=1, project_snapshot_id=None)
         self.assertEqual(response.version, '1')
         self.assertEqual(self.store.get_model_version_relation_by_version(version_name='1', model_id=1).version, '1')
 
     def test_list_model_version(self):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
-        self.store.register_model_version_relation(version='1', model_id=1, workflow_execution_id=1)
-        self.store.register_model_version_relation(version='2', model_id=1, workflow_execution_id=1)
+        self.store.register_model_version_relation(version='1', model_id=1, project_snapshot_id=None)
+        self.store.register_model_version_relation(version='2', model_id=1, project_snapshot_id=None)
         self.assertEqual(len(self.store.list_model_version_relation(1, 2, 0)), 2)
         self.assertEqual(self.store.list_model_version_relation(1, 2, 0)[0].version, '1')
         self.assertEqual(self.store.list_model_version_relation(1, 2, 0)[1].version, '2')
@@ -296,11 +350,11 @@ class AbstractTestStore(object):
     def test_delete_model_version_by_version(self):
         self.store.register_project(name='project', uri='www.code.com')
         self.store.register_model_relation(name='model', project_id=1)
-        self.store.register_model_version_relation(version='1', model_id=1, workflow_execution_id=1)
+        self.store.register_model_version_relation(version='1', model_id=1, project_snapshot_id=None)
         self.assertEqual(self.store.get_model_version_relation_by_version('1', 1).version, '1')
         self.assertEqual(Status.OK, self.store.delete_model_version_relation_by_version('1', 1))
         self.assertIsNone(self.store.get_model_version_relation_by_version('1', 1))
-        self.store.register_model_version_relation(version='1', model_id=1, workflow_execution_id=1)
+        self.store.register_model_version_relation(version='1', model_id=1, project_snapshot_id=None)
         self.assertEqual(Status.OK, self.store.delete_model_version_relation_by_version('1', 1))
 
     """test artifact"""
@@ -331,51 +385,45 @@ class AbstractTestStore(object):
         self.assertIsNone(update_artifact.properties)
         self.assertIsNone(update_artifact.artifact_type)
 
-    def _create_registered_model(self, model_name, model_type='model type', model_desc='model desc'):
-        return self.store.create_registered_model(model_name, model_type, model_desc)
+    def _create_registered_model(self, model_name, model_desc='model desc'):
+        return self.store.create_registered_model(model_name, model_desc)
 
-    def _create_model_version(self, model_name, model_path='path/to/source', model_metric='http://localhost/metric',
-                              model_flavor='{"flavor.version":1}', version_desc='model version desc'):
-        return self.store.create_model_version(model_name, model_path, model_metric, model_flavor, version_desc)
+    def _create_model_version(self, model_name, model_path='path/to/source',
+                              model_type='{"flavor.version":1}', version_desc='model version desc'):
+        return self.store.create_model_version(model_name, model_path, model_type, version_desc)
 
     def test_create_registered_model(self):
         model_name1 = random_str() + 'ABcd'
-        model_type1 = 'Checkpoint'
         model_desc1 = 'test_create_registered_model1'
-        register_model1 = self._create_registered_model(model_name1, model_type1, model_desc1)
+        register_model1 = self._create_registered_model(model_name1, model_desc1)
         self.assertEqual(register_model1.model_name, model_name1)
 
         # error on duplicate
-        model_type2 = 'SavedModel'
         model_desc2 = 'test_create_registered_model2'
         with self.assertRaises(AIFlowException) as exception_context:
-            self._create_registered_model(model_name1, model_type2, model_desc2)
+            self._create_registered_model(model_name1, model_desc2)
         assert exception_context.exception.error_code == RESOURCE_ALREADY_EXISTS
 
         # slightly different name is ok
         for model_name2 in [model_name1 + 'extra', model_name1 + model_name1]:
-            register_model2 = self._create_registered_model(model_name2, model_type2, model_desc2)
+            register_model2 = self._create_registered_model(model_name2, model_desc2)
             self.assertEqual(register_model2.model_name, model_name2)
 
     def test_double_create_model(self):
         model_name1 = random_str() + 'ABcd'
-        model_type1 = 'Checkpoint'
         model_desc1 = 'test_create_registered_model1'
-        self._create_registered_model(model_name1, model_type1, model_desc1)
+        self._create_registered_model(model_name1, model_desc1)
         model_name2 = random_str() + 'ABcd'
-        model_type2 = 'Checkpoint'
         model_desc2 = 'test_create_registered_model1'
-        self._create_registered_model(model_name2, model_type2, model_desc2)
-        self.assertRaises(AIFlowException, self._create_registered_model, model_name2, model_type2, model_desc=' ')
+        self._create_registered_model(model_name2, model_desc2)
+        self.assertRaises(AIFlowException, self._create_registered_model, model_name2, model_desc=' ')
 
     def test_update_registered_model(self):
         model_name1 = random_str() + 'ABcd'
-        model_type1 = 'Checkpoint'
         model_desc1 = 'test_update_registered_model'
-        register_model1 = self._create_registered_model(model_name1, model_type1, model_desc1)
+        register_model1 = self._create_registered_model(model_name1, model_desc1)
         register_model_detail1 = self.store.get_registered_model_detail(register_model1)
         self.assertEqual(register_model1.model_name, model_name1)
-        self.assertEqual(register_model_detail1.model_type, model_type1)
 
         # update model name
         register_model2 = self.store.update_registered_model(register_model1,
@@ -383,38 +431,27 @@ class AbstractTestStore(object):
         register_model_detail2 = self.store.get_registered_model_detail(register_model2)
         self.assertEqual(register_model2.model_name, 'NewName')
         self.assertEqual(register_model_detail2.model_name, 'NewName')
-        self.assertEqual(register_model_detail2.model_type, model_type1)
-
-        # update model type
-        register_model3 = self.store.update_registered_model(register_model2,
-                                                             model_type='SavedModel')
-        register_model_detail3 = self.store.get_registered_model_detail(register_model3)
-        self.assertEqual(register_model3.model_name, 'NewName')
-        self.assertEqual(register_model_detail3.model_name, 'NewName')
-        self.assertEqual(register_model_detail3.model_type, 'SavedModel')
 
         # update model description
-        register_model4 = self.store.update_registered_model(register_model3,
+        register_model4 = self.store.update_registered_model(register_model2,
                                                              model_desc='update_registered_model_desc')
         register_model_detail4 = self.store.get_registered_model_detail(register_model4)
         self.assertEqual(register_model4.model_name, 'NewName')
         self.assertEqual(register_model_detail4.model_name, 'NewName')
         self.assertEqual(register_model_detail4.model_desc, 'update_registered_model_desc')
 
-        # update both model name, type and description
+        # update both model name and description
         register_model5 = self.store.update_registered_model(register_model4,
                                                              model_name='AnotherName',
-                                                             model_type='H5',
                                                              model_desc='TEST')
         register_model_detail5 = self.store.get_registered_model_detail(register_model5)
         self.assertEqual(register_model5.model_name, 'AnotherName')
         self.assertEqual(register_model_detail5.model_name, 'AnotherName')
-        self.assertEqual(register_model_detail5.model_type, 'H5')
         self.assertEqual(register_model_detail5.model_desc, 'TEST')
 
         # new models with old names
-        self._create_registered_model(model_name1, model_type1, model_desc1)
-        register_model5 = self._create_registered_model('NewName', 'SavedModel', 'update_registered_model_desc')
+        self._create_registered_model(model_name1, model_desc1)
+        register_model5 = self._create_registered_model('NewName', 'update_registered_model_desc')
 
         # cannot rename model to conflict with an existing model
         with self.assertRaises(AIFlowException) as exception_context:
@@ -449,18 +486,16 @@ class AbstractTestStore(object):
 
     def test_get_registered_model_detail(self):
         model_name = 'test_model'
-        model_type = 'Checkpoint'
         model_desc = 'test_get_registered_model_detail'
         # use fake clock
         with mock.patch('time.time') as mock_time:
             mock_time.return_value = 1234
-            registered_model = self._create_registered_model(model_name, model_type, model_desc)
+            registered_model = self._create_registered_model(model_name, model_desc)
             self.assertEqual(registered_model.model_name, model_name)
         register_model_detail = self.store.get_registered_model_detail(registered_model)
         self.assertEqual(register_model_detail.model_name, model_name)
-        self.assertEqual(register_model_detail.model_type, model_type)
         self.assertEqual(register_model_detail.model_desc, model_desc)
-        self.assertEqual(register_model_detail.model_version, None)
+        self.assertEqual(register_model_detail.latest_model_version, None)
 
     def test_create_model_version(self):
         model_name = 'test_for_create_model_version'
@@ -475,8 +510,6 @@ class AbstractTestStore(object):
         self.assertEqual(model_version_detail1.model_name, model_name)
         self.assertEqual(model_version_detail1.model_version, '1')
         self.assertEqual(model_version_detail1.model_path, 'path/to/source')
-        self.assertEqual(model_version_detail1.model_metric, 'http://localhost/metric')
-        self.assertEqual(model_version_detail1.model_flavor, '{"flavor.version":1}')
         self.assertEqual(model_version_detail1.version_desc, 'model version desc')
         self.assertEqual(model_version_detail1.version_status, 'READY')
         self.assertEqual(model_version_detail1.current_stage, 'Generated')
@@ -588,41 +621,116 @@ class AbstractTestStore(object):
 
         self.store.delete_model_version(model_version)
 
-    def test_create_metric_meta(self):
-        start = round(time.time())
-        end = start + 1
-        metric_meta = self.store.register_metric_meta(name='test_create_metric_meta_1', dataset_id=1,
-                                                      model_name='metric_meta_model_1',
-                                                      model_version='metric_meta_model_version_1', job_id=1,
-                                                      start_time=start, end_time=end, uri='/tmp/metric',
+    def test_metric_meta(self):
+        start_time = round(time.time())
+        end_time = start_time + 1
+        metric_meta = self.store.register_metric_meta(metric_name='test_metric_meta_1',
                                                       metric_type=MetricType.DATASET,
-                                                      tags='', metric_description='', properties={'a': 'a'})
-        self.assertGreater(metric_meta.uuid, 0)
-        metric_meta = self.store.update_metric_meta(uuid=metric_meta.uuid, job_id=2)
-        get_metric_meta = self.store.get_dataset_metric_meta(dataset_id=1)
-        self.assertIsNotNone(metric_meta.model_version)
-        self.assertEqual(metric_meta.properties['a'], get_metric_meta.properties['a'])
-        self.assertEqual(2, get_metric_meta.job_id)
-        self.store.register_metric_meta(name='test_create_metric_meta_2', dataset_id=1,
-                                        model_name='metric_meta_model_2',
-                                        model_version='metric_meta_model_version_2', job_id=1,
-                                        start_time=start, end_time=end, uri='/tmp/metric_1',
-                                        metric_type=MetricType.MODEL,
-                                        tags='', metric_description='', properties={'a': 'a'})
-        self.store.register_metric_meta(name='test_create_metric_meta_3', dataset_id=2,
-                                        model_name='metric_meta_model_2',
-                                        model_version='metric_meta_model_version_2', job_id=1,
-                                        start_time=start, end_time=end, uri='/tmp/metric_2',
-                                        metric_type=MetricType.MODEL,
-                                        tags='', metric_description='', properties={'a': 'a'})
-        results = self.store.get_model_metric_meta(model_name='metric_meta_model_2',
-                                                   model_version='metric_meta_model_version_2')
-        self.assertEqual(2, len(results))
+                                                      metric_desc='test dataset metric meta',
+                                                      project_name='test_metric_meta_project_1',
+                                                      dataset_name='test_metric_meta_dataset_1',
+                                                      start_time=start_time, end_time=end_time,
+                                                      uri='/tmp/metric', tags='test_metric_meta_tag',
+                                                      properties={'a': 'a'})
+        metric_meta = self.store.get_metric_meta(metric_meta.metric_name)
+        self.assertEqual('test_metric_meta_1', metric_meta.metric_name)
+        self.assertEqual(MetricType.DATASET, MetricType.value_of(metric_meta.metric_type))
+        self.assertEqual('test dataset metric meta', metric_meta.metric_desc)
+        self.assertEqual('test_metric_meta_project_1', metric_meta.project_name)
+        self.assertEqual('test_metric_meta_dataset_1', metric_meta.dataset_name)
+        self.assertEqual(start_time, metric_meta.start_time)
+        self.assertEqual(end_time, metric_meta.end_time)
+        self.assertEqual('/tmp/metric', metric_meta.uri)
+        self.assertEqual('test_metric_meta_tag', metric_meta.tags)
+        self.assertEqual(metric_meta.properties['a'], metric_meta.properties['a'])
+        metric_meta = self.store.update_metric_meta(metric_name=metric_meta.metric_name,
+                                                    project_name='test_metric_meta_project_2',
+                                                    dataset_name='test_metric_meta_dataset_2')
+        metric_meta = self.store.list_dataset_metric_metas(dataset_name=metric_meta.dataset_name)
+        self.assertEqual('test_metric_meta_project_2', metric_meta.project_name)
+        self.assertEqual('test_metric_meta_dataset_2', metric_meta.dataset_name)
+        metric_meta = self.store.list_dataset_metric_metas(project_name=metric_meta.project_name,
+                                                           dataset_name=metric_meta.dataset_name)
+        self.assertEqual('test_metric_meta_project_2', metric_meta.project_name)
+        self.assertEqual('test_metric_meta_dataset_2', metric_meta.dataset_name)
+        metric_meta = self.store.register_metric_meta(metric_name='test_metric_meta_2',
+                                                      metric_type=MetricType.MODEL,
+                                                      metric_desc='test model metric meta',
+                                                      project_name='test_metric_meta_project_1',
+                                                      model_name='test_metric_meta_model_1',
+                                                      start_time=start_time, end_time=end_time,
+                                                      uri='/tmp/metric', tags='test_metric_meta_tag',
+                                                      properties={'a': 'a'})
+        metric_meta = self.store.register_metric_meta(metric_name='test_metric_meta_3',
+                                                      metric_type=metric_meta.metric_type,
+                                                      metric_desc=metric_meta.metric_desc,
+                                                      project_name=metric_meta.project_name,
+                                                      model_name=metric_meta.model_name,
+                                                      start_time=metric_meta.start_time, end_time=metric_meta.end_time,
+                                                      uri=metric_meta.uri, tags=metric_meta.tags,
+                                                      properties=metric_meta.properties)
+        model_metrics = self.store.list_model_metric_metas(model_name=metric_meta.model_name)
+        self.assertEqual(2, len(model_metrics))
+        self.assertEqual('test_metric_meta_2', model_metrics[0].metric_name)
+        self.assertEqual('test_metric_meta_3', model_metrics[1].metric_name)
+        self.assertEqual(2, len(
+            self.store.list_model_metric_metas(model_name=metric_meta.model_name,
+                                               project_name=metric_meta.project_name)))
+        self.store.delete_metric_meta(metric_meta.metric_name)
+        model_metric = self.store.list_model_metric_metas(model_name=metric_meta.model_name)
+        self.assertEqual('test_metric_meta_2', model_metric.metric_name)
 
-    def test_create_metric_summary(self):
-        metric_summary = self.store.register_metric_summary(metric_id=1, metric_key='name', metric_value='value')
-        self.assertGreater(metric_summary.uuid, 0)
-        self.store.update_metric_summary(uuid=metric_summary.uuid, metric_value='value_2')
-        metric_summary_list = self.store.get_metric_summary(metric_id=1)
-        self.assertEqual(1, len(metric_summary_list))
-        self.assertEqual('value_2', metric_summary_list[0].metric_value)
+    def test_metric_summary(self):
+        metric_timestamp = round(time.time())
+        metric_summary = self.store.register_metric_summary(metric_name='test_metric_summary_1', metric_key='auc',
+                                                            metric_value='0.6', metric_timestamp=metric_timestamp)
+        metric_summary = self.store.get_metric_summary(metric_summary.uuid)
+        self.assertEqual(1, metric_summary.uuid)
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.6', metric_summary.metric_value)
+        self.assertEqual(metric_timestamp, metric_summary.metric_timestamp)
+        metric_summary = self.store.update_metric_summary(uuid=metric_summary.uuid, metric_value='0.8')
+        metric_summary = self.store.get_metric_summary(metric_summary.uuid)
+        self.assertEqual('0.8', metric_summary.metric_value)
+        metric_summary = self.store.register_metric_summary(metric_name=metric_summary.metric_name,
+                                                            metric_key=metric_summary.metric_key,
+                                                            metric_value='0.7', metric_timestamp=metric_timestamp + 1,
+                                                            model_version='test_metric_summary_model_version_1')
+        metric_summary = self.store.register_metric_summary(metric_name=metric_summary.metric_name,
+                                                            metric_key='roc',
+                                                            metric_value='0.9', metric_timestamp=metric_timestamp + 1,
+                                                            model_version='test_metric_summary_model_version_2')
+        metric_summaries = self.store.list_metric_summaries(metric_name=metric_summary.metric_name)
+        self.assertEqual(3, len(metric_summaries))
+        self.assertEqual('auc', metric_summaries[0].metric_key)
+        self.assertEqual('0.8', metric_summaries[0].metric_value)
+        self.assertEqual('auc', metric_summaries[1].metric_key)
+        self.assertEqual('0.7', metric_summaries[1].metric_value)
+        self.assertEqual('roc', metric_summaries[2].metric_key)
+        self.assertEqual('0.9', metric_summaries[2].metric_value)
+        metric_summaries = self.store.list_metric_summaries(metric_key='auc')
+        self.assertEqual(2, len(metric_summaries))
+        self.assertEqual('0.8', metric_summaries[0].metric_value)
+        self.assertEqual('0.7', metric_summaries[1].metric_value)
+        metric_summary = self.store.list_metric_summaries(model_version='test_metric_summary_model_version_1')
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.7', metric_summary.metric_value)
+        metric_summary = self.store.list_metric_summaries(model_version='test_metric_summary_model_version_1')
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.7', metric_summary.metric_value)
+        metric_summaries = self.store.list_metric_summaries(metric_name=metric_summary.metric_name,
+                                                            start_time=metric_timestamp + 1,
+                                                            end_time=metric_summary.metric_timestamp)
+        self.assertEqual(2, len(metric_summaries))
+        self.assertEqual('auc', metric_summaries[0].metric_key)
+        self.assertEqual('0.7', metric_summaries[0].metric_value)
+        self.assertEqual('roc', metric_summaries[1].metric_key)
+        self.assertEqual('0.9', metric_summaries[1].metric_value)
+        metric_summary = self.store.list_metric_summaries(metric_name=metric_summary.metric_name, metric_key='auc',
+                                                          model_version='test_metric_summary_model_version_1')
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.7', metric_summary.metric_value)

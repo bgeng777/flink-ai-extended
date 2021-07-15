@@ -16,25 +16,47 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-from typing import Text, List
+from typing import Text, List, Union, Dict
 from ai_flow.common.properties import Properties
 from ai_flow.util.json_utils import Jsonable
-from ai_flow.graph.channel import Channel, NoneChannel
+from ai_flow.graph.channel import Channel
 
 
-class BaseNode(Jsonable):
-    """abstract node"""
+class _IdGenerator(Jsonable):
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.node_type_to_num: Dict[Text, int] = {}
+
+    def generate_id(self, node) -> Text:
+        node_type = type(node).__name__
+        if node_type in self.node_type_to_num:
+            self.node_type_to_num[node_type] += 1
+        else:
+            self.node_type_to_num[node_type] = 0
+        return node_type + "_" + str(self.node_type_to_num[node_type])
+
+
+__id_generator__ = _IdGenerator()
+
+
+def _get_id_generator():
+    return __id_generator__
+
+
+class Node(Jsonable):
+    """
+    Nodes are part of the graph(ai_flow.graph.graph.Graph),
+    and there are edges(ai_flow.graph.edge.Edge) connected between nodes
+    """
     def __init__(self,
                  name: Text = None,
-                 instance_id: Text = None,
                  properties: Properties = None,
-                 output_num: int = 1) -> None:
+                 output_num: int = 0) -> None:
         """
-
-        :param name: the node name
-        :param instance_id: the identity of node
+        :param name: the name of Node
         :param properties: node properties
-        :param output_num: the node output number
+        :param output_num: each node has outputs, this represents the number of outputs
         """
         super().__init__()
         self.name = name
@@ -42,13 +64,12 @@ class BaseNode(Jsonable):
             self.properties = Properties()
         else:
             self.properties = properties
-        self.instance_id = instance_id
+        # node_id is the unique identifier of the node.
+        self.node_id = _get_id_generator().generate_id(self)
         self.output_num = output_num
 
-    def set_instance_id(self, instance_id: Text):
-        self.instance_id = instance_id
-        if self.name is None or len(self.name) == 0:
-            self.name = instance_id
-
-    def outputs(self) -> List[Channel]:
-        return [NoneChannel(self.instance_id)]
+    def outputs(self) -> Union[None, List[Channel]]:
+        """
+        Return: The outputs(ai_flow.graph.channel.Channel) of the node.
+        """
+        return None

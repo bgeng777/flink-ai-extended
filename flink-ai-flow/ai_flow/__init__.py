@@ -16,42 +16,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# ai.flow.api
-# ai_flow.plugin
-from ai_flow import plugins
-from ai_flow.api.ai_flow_context import engine, config, config, global_config, global_config_file, \
-    default_af_job_context
-from ai_flow.api.configuration import set_default_project_config, set_project_config_file, set_project_server_uri, \
-    ensure_project_registered, unset_project_config, project_config
-from ai_flow.api.notification import *
+from ai_flow.api.ai_flow_context import init_ai_flow_context
+from ai_flow.api import workflow_operation
 from ai_flow.api.ops import read_dataset, write_dataset, transform, train, predict, evaluate, dataset_validate, \
-    model_validate, push_model, external_trigger, user_define_operation, \
-    stop_before_control_dependency, model_version_control_dependency, \
-    dataset_control_dependency, user_define_control_dependency
-from ai_flow.api.project import run, submit_ai_flow, stop_execution_by_id, wait_workflow_execution_finished, \
-    compile_workflow, deploy_to_airflow, generate_airflow_file_text, submit
-# ai_flow.application_master.master
-from ai_flow.endpoint.server.server_runner import AIFlowServerRunner, set_master_config
+    model_validate, push_model, user_define_operation, action_on_event, action_on_job_status
+from ai_flow.context.project_context import current_project_context, current_project_config
+from ai_flow.context.workflow_config_loader import current_workflow_config
+from ai_flow.context.job_context import job_config
+from ai_flow.ai_graph.ai_graph import current_graph
+from ai_flow.endpoint.server.server_runner import AIFlowServerRunner
+
 # ai_flow.client
 from ai_flow.client import *
+
 # ai_flow.common
 from ai_flow.common.args import Args, ExecuteArgs
-from ai_flow.common.properties import Properties, ExecuteProperties
-# ai_flow.executor.executor
-from ai_flow.executor.executor import PythonFuncExecutor, PythonObjectExecutor, CmdExecutor
-from ai_flow.graph.graph import default_graph
+from ai_flow.common.properties import Properties
+
+# ai_flow.meta
 from ai_flow.meta import *
 from ai_flow.meta.artifact_meta import *
 from ai_flow.meta.dataset_meta import *
 from ai_flow.meta.job_meta import *
-# ai_flow.meta
 from ai_flow.meta.model_meta import *
 from ai_flow.meta.model_meta import *
 from ai_flow.meta.project_meta import *
-from ai_flow.plugins.local_cmd_job_plugin import LocalCMDJobConfig
-from ai_flow.plugins.local_platform import LocalPlatform
-from ai_flow.udf.function_context import FunctionContext
-# ai_flow.workflow.job_config
-from ai_flow.workflow.job_config import BaseJobConfig, PeriodicConfig
-from ai_flow.common.scheduler_type import SchedulerType
-from ai_flow.api import workflow_operation

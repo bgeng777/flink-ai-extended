@@ -64,7 +64,7 @@ class TestSklearnModel(unittest.TestCase):
     def setUp(self) -> None:
         if os.path.exists(_SQLITE_DB_FILE):
             os.remove(_SQLITE_DB_FILE)
-        self.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT)
+        self.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT, start_scheduler_service=False)
         self.server.run()
         self.client = AIFlowClient(server_uri='localhost:' + _PORT)
 
@@ -80,10 +80,10 @@ class TestSklearnModel(unittest.TestCase):
             os.makedirs(model_path)
         model_path = os.path.join(model_path, 'model.pkl')
         save_model(sk_model=knn_model.model, output_path=model_path, serialization_format=SERIALIZATION_FORMAT_PICKLE)
-        registered_model = self.client.create_registered_model(model_name='knn_model', model_type=ModelType.SAVED_MODEL,
+        registered_model = self.client.create_registered_model(model_name='knn_model',
                                                                model_desc='knn model')
         self.client.create_model_version(model_name=registered_model.model_name, model_path=model_path,
-                                         model_metric='http://metric', model_flavor='sklearn', version_desc='knn model')
+                                         model_type='sklearn', version_desc='knn model')
 
         class KnnWatcher(EventWatcher):
 

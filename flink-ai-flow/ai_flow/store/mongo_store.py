@@ -18,6 +18,9 @@
 #
 import logging
 import time
+
+from ai_flow.meta.workflow_meta import WorkflowMeta
+from ai_flow.store import MONGO_DB_ALIAS_META_SERVICE
 from typing import Optional, Text, List, Union
 
 import mongoengine
@@ -37,12 +40,11 @@ from ai_flow.model_center.entity.model_version_stage import STAGE_DELETED, get_c
 from ai_flow.protobuf.message_pb2 import INVALID_PARAMETER_VALUE, RESOURCE_ALREADY_EXISTS
 from ai_flow.endpoint.server.exception import AIFlowException
 from ai_flow.endpoint.server.high_availability import Member
-from ai_flow.store import MONGO_DB_ALIAS_META_SERVICE
 from ai_flow.store.abstract_store import AbstractStore
 from ai_flow.store.db.db_model import (MongoProject, MongoDataset, MongoModelVersion,
                                        MongoArtifact, MongoRegisteredModel, MongoModelRelation,
                                        MongoMetricSummary, MongoMetricMeta,
-                                       MongoModelVersionRelation, MongoMember)
+                                       MongoModelVersionRelation, MongoMember, MongoProjectSnapshot, MongoWorkflow)
 from ai_flow.store.db.db_util import parse_mongo_uri
 
 if not hasattr(time, 'time_ns'):
@@ -477,6 +479,140 @@ class MongoStore(AbstractStore):
         except mongoengine.OperationError as e:
             raise AIFlowException(str(e))
 
+    '''workflow api'''
+
+    def register_workflow(self, name, project_id, properties=None) -> WorkflowMeta:
+        """
+        Register a workflow in metadata store.
+
+        :param name: the workflow name
+        :param project_id: the id of project which contains the workflow
+        :param properties: the workflow properties
+        """
+        update_time = create_time = int(time.time() * 1000)
+        try:
+            workflow = MetaToTable.workflow_to_table(name=name,
+                                                     project_id=project_id,
+                                                     properties=properties,
+                                                     create_time=create_time,
+                                                     update_time=update_time,
+                                                     store_type=type(self).__name__)
+            workflow.save()
+            return WorkflowMeta(uuid=workflow.uuid, name=name,
+                                project_id=project_id, properties=properties,
+                                create_time=create_time, update_time=update_time)
+        except mongoengine.OperationError as e:
+            raise AIFlowException('Registered Workflow (name={}, project_id={}) already exists. '
+                                  'Error: {}'.format(workflow.name, workflow.project_id, str(e)))
+
+    def get_workflow_by_name(self, project_name, workflow_name) -> Optional[WorkflowMeta]:
+        """
+        Get a workflow by specific project name and workflow name
+
+        :param project_name: the name of project which contains the workflow
+        :param workflow_name: the workflow name
+        """
+        project = self.get_project_by_name(project_name)
+        if not project:
+            return None
+        workflow_result = MongoWorkflow.objects(name=workflow_name, project_id=project.uuid, is_deleted__ne=TRUE)
+        if len(workflow_result) == 0:
+            return None
+        return ResultToMeta.result_to_workflow_meta(workflow_result[0])
+
+    def get_workflow_by_id(self, workflow_id) -> Optional[WorkflowMeta]:
+        """
+        Get a workflow by specific uuid
+
+        :param workflow_id: the uuid of workflow
+        """
+        workflow_result = MongoWorkflow.objects(uuid=workflow_id, is_deleted__ne=TRUE)
+        if len(workflow_result) == 0:
+            return None
+        return ResultToMeta.result_to_workflow_meta(workflow_result[0])
+
+    def list_workflows(self, project_name, page_size, offset) -> Optional[List[WorkflowMeta]]:
+        """
+        List all workflows of the specific project
+
+        :param project_name: the name of project which contains the workflow
+        :param page_size     limitation of listed workflows.
+        :param offset        offset of listed workflows.
+        """
+        project = self.get_project_by_name(project_name)
+        if not project:
+            return None
+        workflow_result = MongoWorkflow.objects(project_id=project.uuid, is_deleted__ne=TRUE)\
+            .skip(offset).limit(page_size)
+        if len(workflow_result) == 0:
+            return None
+        workflows = []
+        for workflow in workflow_result:
+            workflows.append(ResultToMeta.result_to_workflow_meta(workflow))
+        return workflows
+
+    def delete_workflow_by_name(self, project_name, workflow_name) -> Status:
+        """
+        Delete the workflow by specific project and workflow name
+
+        :param project_name: the name of project which contains the workflow
+        :param workflow_name: the workflow name
+        """
+
+        workflow = self.get_workflow_by_name(project_name=project_name,
+                                             workflow_name=workflow_name)
+        if workflow is None:
+            return Status.ERROR
+        else:
+            return self.delete_workflow_by_id(workflow.uuid)
+
+    def delete_workflow_by_id(self, workflow_id) -> Status:
+        """
+        Delete the workflow by specific id
+
+        :param workflow_id: the uuid of workflow
+        """
+        try:
+            workflow = MongoWorkflow.objects(uuid=workflow_id, is_deleted__ne=TRUE).first()
+            if workflow is None:
+                return Status.ERROR
+            deleted_workflow_counts = MongoWorkflow.objects(
+                project_id=workflow.project_id,
+                name__startswith=deleted_character + workflow.name + deleted_character,
+                is_deleted=TRUE).count()
+            workflow.is_deleted = TRUE
+            workflow.name = deleted_character + workflow.name + deleted_character + str(deleted_workflow_counts + 1)
+            workflow.save()
+            return Status.OK
+        except mongoengine.OperationError as e:
+            raise AIFlowException(str(e))
+
+    def update_workflow(self, workflow_name, project_name, properties=None) -> Optional[WorkflowMeta]:
+        """
+        Update the workflow
+
+        :param workflow_name: the workflow name
+        :param project_name: the name of project which contains the workflow
+        :param properties: (Optional) the properties need to be updated
+        """
+        try:
+            project = self.get_project_by_name(project_name)
+            if not project:
+                raise AIFlowException("The project name you specific doesn't exists, project: \"{}\""
+                                      .format(project_name))
+            workflow: MongoWorkflow = MongoWorkflow.objects(name=workflow_name,
+                                                            project_id=project.uuid,
+                                                            is_deleted__ne=TRUE).first()
+            if workflow is None:
+                return None
+            if properties is not None:
+                workflow.properties = properties
+            workflow.update_time = int(time.time() * 1000)
+            workflow.save()
+            return ResultToMeta.result_to_workflow_meta(workflow)
+        except mongoengine.OperationError as e:
+            raise AIFlowException(e)
+
     """model api"""
 
     def get_model_relation_by_id(self, model_id) -> Optional[ModelRelationMeta]:
@@ -623,19 +759,19 @@ class MongoStore(AbstractStore):
 
     def register_model_version_relation(self, version: Text,
                                         model_id: int,
-                                        workflow_execution_id: int = None) -> ModelVersionRelationMeta:
+                                        project_snapshot_id: int = None) -> ModelVersionRelationMeta:
         """
         register a model version relation in metadata store.
 
         :param version: the specific model version
         :param model_id: the model id corresponded to the model version
-        :param workflow_execution_id: the workflow execution id corresponded to the model version
+        :param project_snapshot_id: the project snapshot id corresponded to the model version
         :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelVersionRelationMeta` object.
         """
         try:
             model_version_relation = MetaToTable.model_version_relation_to_table(version=version,
                                                                                  model_id=model_id,
-                                                                                 workflow_execution_id=workflow_execution_id,
+                                                                                 project_snapshot_id=project_snapshot_id,
                                                                                  store_type=type(self).__name__)
             model_version_relation.save()
             # update reference field
@@ -647,8 +783,16 @@ class MongoStore(AbstractStore):
                     model_relation.model_version_relation.append(model_version_relation)
                 model_relation.save()
 
+            if project_snapshot_id is not None:
+                project_snapshot = MongoProjectSnapshot.objects(uuid=project_snapshot_id).first()
+                if project_snapshot.model_version_relation is None:
+                    project_snapshot.model_version_relation = [model_version_relation]
+                else:
+                    project_snapshot.model_version_relation.append(model_version_relation)
+                project_snapshot.save()
+
             model_version_relation_meta = ModelVersionRelationMeta(version=version, model_id=model_id,
-                                                                   workflow_execution_id=workflow_execution_id)
+                                                                   project_snapshot_id=project_snapshot_id)
             return model_version_relation_meta
         except mongoengine.OperationError as e:
             raise AIFlowException('Registered ModelVersion (name={}) already exists. '
@@ -882,12 +1026,11 @@ class MongoStore(AbstractStore):
                          register_models[0].model_version)
             return register_models[0]
 
-    def create_registered_model(self, model_name, model_type=None, model_desc=None):
+    def create_registered_model(self, model_name, model_desc=None):
         """
         Create a new registered model in model repository.
 
         :param model_name: Name of registered model. This is expected to be unique in the backend store.
-        :param model_type: (Optional) Type of registered model.
         :param model_desc: (Optional) Description of registered model.
 
         :return: Object of :py:class:`ai_flow.model_center.entity.RegisteredModel` created in Model Center.
@@ -897,16 +1040,14 @@ class MongoStore(AbstractStore):
         try:
             before_model = self._get_registered_model(model_name=model_name)
             if before_model is not None:
-                if _compare_model_fields(model_type, model_desc, before_model):
+                if _compare_model_fields(model_desc, before_model):
                     registered_model = MongoRegisteredModel(model_name=model_name,
-                                                            model_type=model_type,
                                                             model_desc=model_desc)
                     return registered_model.to_meta_entity()
                 else:
                     raise AIFlowException("You have registered the model with same name: \"{}\" "
                                           "but different fields".format(model_name), RESOURCE_ALREADY_EXISTS)
             registered_model = MongoRegisteredModel(model_name=model_name,
-                                                    model_type=model_type,
                                                     model_desc=model_desc)
             registered_model.save()
             return registered_model.to_meta_entity()
@@ -914,14 +1055,13 @@ class MongoStore(AbstractStore):
             raise AIFlowException('Registered Model (name={}) already exists. Error: {}'.format(model_name, str(e)),
                                   RESOURCE_ALREADY_EXISTS)
 
-    def update_registered_model(self, registered_model, model_name=None, model_type=None, model_desc=None):
+    def update_registered_model(self, registered_model, model_name=None, model_desc=None):
         """
-        Update metadata for RegisteredModel entity. Either ``model_name`` or ``model_type`` or ``model_desc``
+        Update metadata for RegisteredModel entity. Either ``model_name`` or ``model_desc``
         should be non-None. Backend raises exception if registered model with given name does not exist.
 
         :param registered_model: :py:class:`ai_flow.model_center.entity.RegisteredModel` object.
         :param model_name: (Optional) New proposed name for the registered model.
-        :param model_type: (Optional) Type of registered model.
         :param model_desc: (Optional) Description of registered model.
 
         :return: A single updated :py:class:`ai_flow.model_center.entity.RegisteredModel` object.
@@ -936,8 +1076,6 @@ class MongoStore(AbstractStore):
                     # Update model name of registered model version
                     for model_version in registered_model.model_version:
                         model_version.model_name = model_name
-                if model_type is not None:
-                    registered_model.model_type = model_type
                 if model_desc is not None:
                     registered_model.model_desc = model_desc
                 self._save_all([registered_model] + registered_model.model_version)
@@ -1022,15 +1160,14 @@ class MongoStore(AbstractStore):
                                          model_version__startswith=deleted_character + model_version + deleted_character,
                                          current_stage__ne=STAGE_DELETED).count()
 
-    def create_model_version(self, model_name, model_path, model_metric, model_flavor=None,
+    def create_model_version(self, model_name, model_path, model_type=None,
                              version_desc=None, current_stage=STAGE_GENERATED):
         """
         Create a new model version from given model source and model metric.
 
         :param model_name: Name for containing registered model.
         :param model_path: Source path where the AIFlow model is stored.
-        :param model_metric: Metric address from AIFlow metric server of registered model.
-        :param model_flavor: (Optional) Flavor feature of AIFlow registered model option.
+        :param model_type: (Optional) Type of AIFlow registered model option.
         :param version_desc: (Optional) Description of registered model version.
         :param current_stage: (Optional) Stage of registered model version
 
@@ -1058,8 +1195,7 @@ class MongoStore(AbstractStore):
                     doc_model_version = MongoModelVersion(model_name=model_name,
                                                           model_version=model_version,
                                                           model_path=model_path,
-                                                          model_metric=model_metric,
-                                                          model_flavor=model_flavor,
+                                                          model_type=model_type,
                                                           version_desc=version_desc,
                                                           current_stage=get_canonical_stage(current_stage))
                     doc_model_version.save()
@@ -1083,15 +1219,14 @@ class MongoStore(AbstractStore):
             'Create model version error (model_name={}). Giving up after {} attempts.'.format(model_name,
                                                                                               self.CREATE_RETRY_TIMES))
 
-    def update_model_version(self, model_version, model_path=None, model_metric=None, model_flavor=None,
+    def update_model_version(self, model_version, model_path=None, model_type=None,
                              version_desc=None, current_stage=None):
         """
         Update metadata associated with a model version in model repository.
 
         :param model_version: :py:class:`ai_flow.model_center.entity.ModelVersion` object.
         :param model_path: (Optional) New Source path where AIFlow model is stored.
-        :param model_metric: (Optional) New Metric address AIFlow metric server of registered model provided.
-        :param model_flavor: (Optional) Flavor feature of AIFlow registered model option.
+        :param model_type: (Optional) Type of AIFlow registered model option.
         :param version_desc: (Optional) New Description of registered model version.
         :param current_stage: (Optional) New desired stage for this model version.
 
@@ -1108,10 +1243,8 @@ class MongoStore(AbstractStore):
             try:
                 if model_path is not None:
                     model_version.model_path = model_path
-                if model_metric is not None:
-                    model_version.model_metric = model_metric
-                if model_flavor is not None:
-                    model_version.model_flavor = model_flavor
+                if model_type is not None:
+                    model_version.model_type = model_type
                 if version_desc is not None:
                     model_version.version_desc = version_desc
                 if current_stage is not None:
@@ -1136,8 +1269,7 @@ class MongoStore(AbstractStore):
             return None
 
         doc_model_version.model_path = "REDACTED-SOURCE-PATH"
-        doc_model_version.model_metric = "REDACTED-METRIC-ADDRESS"
-        doc_model_version.model_flavor = "REDACTED-FLAVOR-FEATURE"
+        doc_model_version.model_type = "REDACTED-TYPE-FEATURE"
         doc_model_version.version_status = None
         doc_model_version.version_desc = None
         doc_model_version.current_stage = STAGE_DELETED
@@ -1152,256 +1284,106 @@ class MongoStore(AbstractStore):
         doc_model_version = self._get_model_version(model_version)
         return None if doc_model_version is None else doc_model_version.to_meta_entity()
 
-    def register_metric_meta(self,
-                             name,
-                             dataset_id,
-                             model_name,
-                             model_version,
-                             job_id,
-                             start_time,
-                             end_time,
-                             metric_type,
-                             uri,
-                             tags,
-                             metric_description,
-                             properties) -> MetricMeta:
-        """
-        register metric meta to store
-        :param name: the metric name
-        :param dataset_id: the dataset id of the metric or model metric associate with dataset id
-        :param model_name: if then model metric, associate with model name
-        :param model_version: if then model metric, associate with model version
-        :param job_id: the job_id which create the metric
-        :param start_time:
-        :param end_time:
-        :param metric_type: MetricType DATASET or MODEL
-        :param uri: the metric uri
-        :param tags: such as flink,tensorflow
-        :param metric_description:
-        :param properties:
-        :return:
-        """
+    """metric api"""
+
+    def register_metric_meta(self, metric_name, metric_type, project_name, metric_desc=None, dataset_name=None,
+                             model_name=None, job_name=None, start_time=None, end_time=None, uri=None, tags=None,
+                             properties=None) -> MetricMeta:
         try:
-            metric_meta_table = metric_meta_to_table(name,
-                                                     dataset_id,
-                                                     model_name,
-                                                     model_version,
-                                                     job_id,
-                                                     start_time,
-                                                     end_time,
-                                                     metric_type,
-                                                     uri,
-                                                     tags,
-                                                     metric_description,
-                                                     properties,
-                                                     type(self).__name__)
+            metric_meta_table = metric_meta_to_table(metric_name, metric_type, metric_desc, project_name,
+                                                     dataset_name, model_name, job_name, start_time, end_time, uri,
+                                                     tags, properties, type(self).__name__)
             metric_meta_table.save()
-            return MetricMeta(uuid=metric_meta_table.uuid,
-                              name=name,
-                              dataset_id=dataset_id,
+            return MetricMeta(metric_name=metric_name,
+                              metric_type=metric_type,
+                              metric_desc=metric_desc,
+                              project_name=project_name,
+                              dataset_name=dataset_name,
                               model_name=model_name,
-                              model_version=model_version,
-                              job_id=job_id,
+                              job_name=job_name,
                               start_time=start_time,
                               end_time=end_time,
-                              metric_type=metric_type,
                               uri=uri,
                               tags=tags,
-                              metric_description=metric_description,
                               properties=properties)
         except Exception as e:
-            raise AIFlowException('Registered metric meta failed!'
-                                  'Error: {}'.format(str(e)))
+            raise AIFlowException('Register metric meta failed! Error: {}.'.format(str(e)))
 
-    def delete_metric_meta(self, uuid: int):
-        try:
-            metric_meta_table = MongoMetricMeta.objects(uuid=uuid).first()
-            metric_meta_table.is_deleted = TRUE
-            metric_meta_table.save()
-        except Exception as e:
-            raise AIFlowException('delete metric meta failed!'
-                                  'Error: {}'.format(str(e)))
-
-    def register_metric_summary(self,
-                                metric_id,
-                                metric_key,
-                                metric_value) -> MetricSummary:
-        """
-        register metric summary
-        :param metric_id: associate with metric meta uuid
-        :param metric_key:
-        :param metric_value:
-        :return:
-        """
-        try:
-            metric_summary_table = metric_summary_to_table(metric_id, metric_key, metric_value, type(self).__name__)
-            metric_summary_table.save()
-            return MetricSummary(uuid=metric_summary_table.uuid,
-                                 metric_id=metric_id,
-                                 metric_key=metric_key,
-                                 metric_value=metric_value)
-        except mongoengine.OperationError as e:
-            raise AIFlowException('Registered metric summary failed!'
-                                  'Error: {}'.format(str(e)))
-
-    def delete_metric_summary(self, uuid: int):
-        try:
-            metric_summary_table = MongoMetricSummary.objects(uuid=uuid).first()
-            metric_summary_table.is_deleted = TRUE
-            metric_summary_table.save()
-        except Exception as e:
-            raise AIFlowException('delete metric summary failed!'
-                                  'Error: {}'.format(str(e)))
-
-    def update_metric_meta(self,
-                           uuid,
-                           name=None,
-                           dataset_id=None,
-                           model_name=None,
-                           model_version=None,
-                           job_id=None,
-                           start_time=None,
-                           end_time=None,
-                           metric_type=None,
-                           uri=None,
-                           tags=None,
-                           metric_description=None,
+    def update_metric_meta(self, metric_name, metric_desc=None, project_name=None, dataset_name=None,
+                           model_name=None, job_name=None, start_time=None, end_time=None, uri=None, tags=None,
                            properties=None) -> MetricMeta:
-        """
-        register metric meta to store
-        :param uuid: metric meta unique id
-        :param name:
-        :param dataset_id: the dataset id of the metric or model metric associate with dataset id
-        :param model_name:
-        :param model_version: if then model metric, associate with model version id
-        :param job_id: the job_id which create the metric
-        :param start_time:
-        :param end_time:
-        :param metric_type: MetricType DATASET or MODEL
-        :param uri: the metric uri
-        :param tags: such as flink,tensorflow
-        :param metric_description:
-        :param properties:
-        :return:
-        """
         try:
-            metric_meta_table: MongoMetricMeta = MongoMetricMeta.objects(uuid=uuid, is_deleted__ne=TRUE).first()
-            if name is not None:
-                metric_meta_table.name = name
-            if dataset_id is not None:
-                metric_meta_table.dataset_id = dataset_id
+            metric_meta_table: MongoMetricMeta = MongoMetricMeta.objects(metric_name=metric_name,
+                                                                         is_deleted__ne=TRUE).first()
+            if metric_desc is not None:
+                metric_meta_table.metric_desc = metric_desc
+            if project_name is not None:
+                metric_meta_table.project_name = project_name
+            if dataset_name is not None:
+                metric_meta_table.dataset_name = dataset_name
             if model_name is not None:
                 metric_meta_table.model_name = model_name
-            if model_version is not None:
-                metric_meta_table.model_version = model_version
-            if job_id is not None:
-                metric_meta_table.job_id = job_id
+            if job_name is not None:
+                metric_meta_table.job_name = job_name
             if start_time is not None:
                 metric_meta_table.start_time = start_time
             if end_time is not None:
                 metric_meta_table.end_time = end_time
-            if metric_type is not None:
-                metric_meta_table.metric_type = metric_type.value
             if uri is not None:
                 metric_meta_table.uri = uri
             if tags is not None:
                 metric_meta_table.tags = tags
-            if metric_description is not None:
-                metric_meta_table.metric_description = metric_description
             if properties is not None and properties != {}:
                 metric_meta_table.properties = str(properties)
             metric_meta_table.save()
             return table_to_metric_meta(metric_meta_table)
         except Exception as e:
-            raise AIFlowException('Registered metric meta failed!'
-                                  'Error: {}'.format(str(e)))
+            raise AIFlowException('Update metric meta failed! Error: {}.'.format(str(e)))
 
-    def update_metric_summary(self,
-                              uuid,
-                              metric_id=None,
-                              metric_key=None,
-                              metric_value=None) -> MetricSummary:
-        """
-        register metric summary
-        :param uuid: metric summary unique id
-        :param metric_id: associate with metric meta uuid
-        :param metric_key:
-        :param metric_value:
-        :return:
-        """
+    def delete_metric_meta(self, metric_name):
         try:
-            metric_summary_table = MongoMetricSummary.objects(uuid=uuid, is_deleted__ne=TRUE).first()
-            if metric_id is not None:
-                metric_summary_table.metric_id = metric_id
-            if metric_key is not None:
-                metric_summary_table.metric_key = metric_key
-            if metric_value is not None:
-                metric_summary_table.metric_value = metric_value
-            metric_summary_table.save()
-            return table_to_metric_summary(metric_summary_table)
+            metric_meta = MongoMetricMeta.objects(metric_name=metric_name, is_deleted__ne=TRUE).first()
+            if metric_meta is None:
+                return Status.ERROR
+            deleted_metric_meta_counts = MongoMetricMeta.objects(
+                name__startswith=deleted_character + metric_meta.metric_name + deleted_character,
+                is_deleted=TRUE).count()
+            metric_meta.is_deleted = TRUE
+            metric_meta.metric_name = deleted_character + metric_meta.metric_name + deleted_character + str(
+                deleted_metric_meta_counts + 1)
+            for metric_summary in metric_meta.metric_summary:
+                deleted_metric_summary_counts = MongoMetricSummary.objects(
+                    name__startswith=deleted_character + metric_summary.metric_name + deleted_character,
+                    is_deleted=TRUE).count()
+                metric_summary.is_deleted = TRUE
+                metric_summary.metric_name = deleted_character + metric_summary.metric_name + deleted_character + str(
+                    deleted_metric_summary_counts + 1)
+            self._save_all([metric_meta] + metric_meta.metric_summary)
+            return Status.OK
         except Exception as e:
-            raise AIFlowException('Registered metric summary failed!'
-                                  'Error: {}'.format(str(e)))
+            raise AIFlowException('Delete metric meta failed! Error: {}.'.format(str(e)))
 
-    def get_metric_meta(self, name) -> Union[None, MetricMeta]:
-        """
-        get dataset metric
-        :param name:
-        :return:
-        """
+    def get_metric_meta(self, metric_name) -> Union[None, MetricMeta]:
         try:
-            metric_meta_table = MongoMetricMeta.objects(name=name, is_deleted__ne=TRUE).first()
-
+            metric_meta_table = MongoMetricMeta.objects(metric_name=metric_name, is_deleted__ne=TRUE).first()
             if metric_meta_table is None:
                 return None
             else:
-                _logger.info("Get dataset metric.")
                 return table_to_metric_meta(metric_meta_table)
-
         except Exception as e:
-            raise AIFlowException('Get metric meta  '
-                                  'Error: {}'.format(str(e)))
+            raise AIFlowException('Get metric meta failed! Error: {}.'.format(str(e)))
 
-    def get_dataset_metric_meta(self, dataset_id) -> Union[None, MetricMeta, List[MetricMeta]]:
-        """
-        get dataset metric
-        :param dataset_id:
-        :return:
-        """
+    def list_dataset_metric_metas(self, dataset_name, project_name=None) -> Union[None, MetricMeta, List[MetricMeta]]:
         try:
-            metric_meta_tables = MongoMetricMeta.objects(dataset_id=dataset_id,
-                                                         metric_type=MetricType.DATASET.value,
-                                                         is_deleted__ne=TRUE)
-
-            if len(metric_meta_tables) == 0:
-                return None
-            elif len(metric_meta_tables) == 1:
-                _logger.info("Get dataset metric.")
-                metric_meta_table = metric_meta_tables[0]
-                return table_to_metric_meta(metric_meta_table)
+            if project_name is None:
+                metric_meta_tables = MongoMetricMeta.objects(dataset_name=dataset_name,
+                                                             metric_type=MetricType.DATASET.value,
+                                                             is_deleted__ne=TRUE)
             else:
-                _logger.info("Get dataset metric.")
-                res = []
-                for metric_meta_table in metric_meta_tables:
-                    res.append(table_to_metric_meta(metric_meta_table))
-                return res
-        except Exception as e:
-            raise AIFlowException('Get metric meta  '
-                                  'Error: {}'.format(str(e)))
-
-    def get_model_metric_meta(self, model_name, model_version) -> Union[None, MetricMeta, List[MetricMeta]]:
-        """
-        get model metric
-        :param model_name:
-        :param model_version:
-        :return:
-        """
-        try:
-            metric_meta_tables = MongoMetricMeta.objects(model_name=model_name,
-                                                         model_version=model_version,
-                                                         metric_type=MetricType.MODEL.value,
-                                                         is_deleted__ne=TRUE)
-
+                metric_meta_tables = MongoMetricMeta.objects(dataset_name=dataset_name,
+                                                             project_name=project_name,
+                                                             metric_type=MetricType.DATASET.value,
+                                                             is_deleted__ne=TRUE)
             if len(metric_meta_tables) == 0:
                 return None
             elif len(metric_meta_tables) == 1:
@@ -1413,30 +1395,120 @@ class MongoStore(AbstractStore):
                     result.append(table_to_metric_meta(metric_meta_table))
                 return result
         except Exception as e:
-            raise AIFlowException('Get metric meta  '
-                                  'Error: {}'.format(str(e)))
+            raise AIFlowException('Get dataset metric metas failed! Error: {}.'.format(str(e)))
 
-    def get_metric_summary(self, metric_id) -> Optional[List[MetricSummary]]:
-        """
-        get metric summary
-        :param metric_id:
-        :return:
-        """
+    def list_model_metric_metas(self, model_name, project_name=None) -> Union[
+            None, MetricMeta, List[MetricMeta]]:
         try:
-            metric_summary_tables = MongoMetricSummary.objects(metric_id=metric_id,
-                                                               is_deleted__ne=TRUE)
+            if project_name is None:
+                metric_meta_tables = MongoMetricMeta.objects(model_name=model_name,
+                                                             metric_type=MetricType.MODEL.value,
+                                                             is_deleted__ne=TRUE)
+            else:
+                metric_meta_tables = MongoMetricMeta.objects(model_name=model_name,
+                                                             project_name=project_name,
+                                                             metric_type=MetricType.MODEL.value,
+                                                             is_deleted__ne=TRUE)
+            if len(metric_meta_tables) == 0:
+                return None
+            elif len(metric_meta_tables) == 1:
+                metric_meta_table = metric_meta_tables[0]
+                return table_to_metric_meta(metric_meta_table)
+            else:
+                result = []
+                for metric_meta_table in metric_meta_tables:
+                    result.append(table_to_metric_meta(metric_meta_table))
+                return result
+        except Exception as e:
+            raise AIFlowException('Get model metric metas failed! Error: {}.'.format(str(e)))
 
-            if len(metric_summary_tables) == 0:
+    def register_metric_summary(self, metric_name, metric_key, metric_value, metric_timestamp, model_version=None,
+                                job_execution_id=None) -> MetricSummary:
+        try:
+            metric_summary_table = metric_summary_to_table(metric_name, metric_key, metric_value, metric_timestamp,
+                                                           model_version, job_execution_id)
+            metric_summary_table.save()
+            return MetricSummary(uuid=metric_summary_table.uuid,
+                                 metric_name=metric_name,
+                                 metric_key=metric_key,
+                                 metric_value=metric_value,
+                                 metric_timestamp=metric_timestamp,
+                                 model_version=model_version,
+                                 job_execution_id=job_execution_id)
+        except mongoengine.OperationError as e:
+            raise AIFlowException('Register metric summary failed! Error: {}.'.format(str(e)))
+
+    def update_metric_summary(self, uuid, metric_name=None, metric_key=None, metric_value=None, metric_timestamp=None,
+                              model_version=None, job_execution_id=None) -> MetricSummary:
+        try:
+            metric_summary_table = MongoMetricSummary.objects(uuid=uuid, is_deleted__ne=TRUE).first()
+            if metric_name is not None:
+                metric_summary_table.metric_name = metric_name
+            if metric_key is not None:
+                metric_summary_table.metric_key = metric_key
+            if metric_value is not None:
+                metric_summary_table.metric_value = metric_value
+            if metric_timestamp is not None:
+                metric_summary_table.metric_timestamp = metric_timestamp
+            if model_version is not None:
+                metric_summary_table.model_version = model_version
+            if job_execution_id is not None:
+                metric_summary_table.job_execution_id = job_execution_id
+            metric_summary_table.save()
+            return table_to_metric_summary(metric_summary_table)
+        except Exception as e:
+            raise AIFlowException('Update metric summary failed! Error: {}.'.format(str(e)))
+
+    def delete_metric_summary(self, uuid: int):
+        try:
+            metric_summary_table = MongoMetricSummary.objects(uuid=uuid).first()
+            metric_summary_table.is_deleted = TRUE
+            metric_summary_table.save()
+        except Exception as e:
+            raise AIFlowException('Delete metric summary failed! Error: {}.'.format(str(e)))
+
+    def get_metric_summary(self, uuid) -> Union[None, MetricSummary]:
+        try:
+            metric_summary_table = MongoMetricSummary.objects(uuid=uuid,
+                                                              is_deleted__ne=TRUE)
+            if metric_summary_table is None:
                 return None
             else:
-                _logger.info("Get metric summary.")
-                res = []
-                for metric_summary_table in metric_summary_tables:
-                    res.append(table_to_metric_summary(metric_summary_table))
-                return res
+                return table_to_metric_summary(metric_summary_table)
         except Exception as e:
-            raise AIFlowException('Get metric summary  '
-                                  'Error: {}'.format(str(e)))
+            raise AIFlowException('Get metric summary failed! Error: {}.'.format(str(e)))
+
+    def list_metric_summaries(self, metric_name=None, metric_key=None, model_version=None, start_time=None,
+                              end_time=None) -> Union[None, MetricSummary, List[MetricSummary]]:
+        try:
+            metric_summary_tables = MongoMetricSummary.objects(is_deleted__ne=TRUE)
+            if metric_name is not None:
+                metric_summary_tables = MongoMetricSummary.objects(metric_name=metric_name,
+                                                                   is_deleted__ne=TRUE)
+            if metric_key is not None:
+                metric_summary_tables = MongoMetricSummary.objects(metric_key=metric_key,
+                                                                   is_deleted__ne=TRUE)
+            if model_version is not None:
+                metric_summary_tables = MongoMetricSummary.objects(model_version=model_version,
+                                                                   is_deleted__ne=TRUE)
+            if start_time is not None:
+                metric_summary_tables = MongoMetricSummary.objects(start_time__ge=start_time,
+                                                                   is_deleted__ne=TRUE)
+            if end_time is not None:
+                metric_summary_tables = MongoMetricSummary.objects(start_time__le=end_time,
+                                                                   is_deleted__ne=TRUE)
+            if len(metric_summary_tables) == 0:
+                return None
+            elif len(metric_summary_tables) == 1:
+                metric_summary_table = metric_summary_tables[0]
+                return table_to_metric_summary(metric_summary_table)
+            else:
+                results = []
+                for metric_summary_table in metric_summary_tables:
+                    results.append(table_to_metric_summary(metric_summary_table))
+                return results
+        except Exception as e:
+            raise AIFlowException('List metric summaries failed! Error: {}.'.format(str(e)))
 
     """member api"""
 
@@ -1497,8 +1569,8 @@ def _compare_artifact_fields(artifact_type, description, uri, properties, before
            and uri == before_artifact.uri and properties == before_artifact.properties
 
 
-def _compare_model_fields(model_type, model_desc, before_model):
-    return model_type == before_model.model_type and model_desc == before_model.model_desc
+def _compare_model_fields(model_desc, before_model):
+    return model_desc == before_model.model_desc
 
 
 def _compare_model_relation_fields(project_id, before_model_relation):

@@ -30,7 +30,6 @@ from ai_flow.common.status import Status
 from ai_flow.meta.dataset_meta import DatasetMeta, DataType, Schema
 from ai_flow.meta.job_meta import State
 from ai_flow.meta.metric_meta import MetricType, MetricMeta, MetricSummary
-from ai_flow.meta.model_meta import ModelType
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from ai_flow.protobuf.message_pb2 import RESOURCE_ALREADY_EXISTS
 from ai_flow.client.ai_flow_client import AIFlowClient
@@ -182,7 +181,7 @@ class AIFlowClientTestCases(object):
         model = client.register_model_relation(name='model', project_id=project.uuid)
 
         client.register_model_version_relation(version='1', model_id=model.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         self.assertEqual(client.get_project_by_id(project.uuid).name, 'project')
         self.assertEqual(client.get_model_relation_by_id(model.uuid).name, 'model')
         self.assertEqual(client.get_model_version_relation_by_version('1', 1).version, '1')
@@ -199,7 +198,7 @@ class AIFlowClientTestCases(object):
         model = client.register_model_relation(name='model', project_id=project.uuid)
 
         client.register_model_version_relation(version='1', model_id=model.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         self.assertEqual(client.get_project_by_id(project.uuid).name, 'project')
         self.assertEqual(client.get_model_relation_by_id(model.uuid).name, 'model')
         self.assertEqual(client.get_model_version_relation_by_version('1', 1).version, '1')
@@ -217,18 +216,75 @@ class AIFlowClientTestCases(object):
         project = client.get_project_by_name('project')
         self.assertEqual(update_project.uri, project.uri)
 
+    """test workflow"""
+
+    def test_save_workflow_get_workflow_by_id_and_name(self):
+        project_response = client.register_project(name='project', uri='www.code.com')
+        self.assertEqual(project_response.uuid, 1)
+        response = client.register_workflow(name='workflow',
+                                            project_id=project_response.uuid,
+                                            properties=Properties({'a': 'b'}))
+        self.assertEqual(response.uuid, 1)
+        self.assertEqual(response.properties, Properties({'a': 'b'}))
+        response_by_id = client.get_workflow_by_id(response.uuid)
+        response_by_name = client.get_workflow_by_name(project_response.name, response.name)
+        self.assertEqual('workflow', response_by_id.name)
+        self.assertEqual('workflow', response_by_name.name)
+        self.assertEqual(Properties({'a': 'b'}), response_by_id.properties)
+        self.assertEqual(Properties({'a': 'b'}), response_by_name.properties)
+
+    def test_double_register_workflow(self):
+        project_response = client.register_project(name='project', uri='www.code.com')
+        project_response2 = client.register_project(name='project2', uri='www.code.com')
+        client.register_workflow(name='workflow', project_id=project_response.uuid)
+        client.register_workflow(name='workflow', project_id=project_response2.uuid)
+        self.assertRaises(AIFlowException, client.register_workflow, name='workflow',
+                          project_id=project_response.uuid)
+
+    def test_list_workflows(self):
+        project_response = client.register_project(name='project', uri='www.code.com')
+        client.register_workflow(name='workflow1', project_id=project_response.uuid)
+        client.register_workflow(name='workflow2', project_id=project_response.uuid)
+        response_list = client.list_workflows(project_response.name, 2, 0)
+        self.assertEqual('workflow1', response_list[0].name)
+        self.assertEqual('workflow2', response_list[1].name)
+
+    def test_delete_workflow(self):
+        project_response = client.register_project(name='project', uri='www.code.com')
+        response = client.register_workflow(name='workflow',
+                                            project_id=project_response.uuid,
+                                            properties=Properties({'a': 'b'}))
+        self.assertEqual(Status.OK, client.delete_workflow_by_name(project_name=project_response.name,
+                                                                   workflow_name='workflow'))
+        self.assertIsNone(client.get_workflow_by_id(response.uuid))
+
+        response = client.register_workflow(name='workflow', project_id=project_response.uuid)
+        self.assertEqual(Status.OK, client.delete_workflow_by_id(response.uuid))
+        self.assertIsNone(client.get_workflow_by_id(response.uuid))
+
+    def test_update_workflow(self):
+        project_response = client.register_project(name='project', uri='www.code.com')
+        response = client.register_workflow(name='workflow',
+                                            project_id=project_response.uuid,
+                                            properties=Properties({'a': 'b'}))
+
+        updated_workflow = client.update_workflow(project_name=project_response.name,
+                                                  workflow_name='workflow',
+                                                  properties=Properties({'a': 'c'}))
+        self.assertEqual(updated_workflow.properties, Properties({'a': 'c'}))
+
     """test model"""
 
     def test_model_api(self):
         project = client.register_project(name='project', uri='www.code.com')
-        model = client.register_model(model_name='test_register_model1', model_type=ModelType.SAVED_MODEL,
+        model = client.register_model(model_name='test_register_model1',
                                       model_desc='test register model1', project_id=project.uuid)
         self.assertIsNone(client.get_model_by_name('no'))
         self.assertIsNone(client.get_model_by_id(2))
         self.assertEqual(client.get_model_by_id(model.uuid).name, 'test_register_model1')
         self.assertEqual(client.get_model_by_name('test_register_model1').name, 'test_register_model1')
         self.assertEqual(client.get_model_by_name('test_register_model1').model_desc, 'test register model1')
-        client.register_model(model_name='test_register_model2', model_type=ModelType.SAVED_MODEL,
+        client.register_model(model_name='test_register_model2',
                               model_desc='test register model2', project_id=1)
         self.assertEqual(len(client.list_model_relation(10, 0)), 2)
 
@@ -239,7 +295,7 @@ class AIFlowClientTestCases(object):
 
     def test_get_deployed_model_version(self):
         project = client.register_project(name='project', uri='www.code.com')
-        model = client.register_model(model_name='test_register_model1', model_type=ModelType.SAVED_MODEL,
+        model = client.register_model(model_name='test_register_model1',
                                       model_desc='test register model1', project_id=project.uuid)
         model_version = client.register_model_version(model=model.uuid, model_path='/path/to/your/model/version')
         deployed_model_version = client.get_deployed_model_version(model_name=model.name)
@@ -272,9 +328,8 @@ class AIFlowClientTestCases(object):
     def test_delete_model_by_id(self):
         project = client.register_project(name='project', uri='www.code.com')
         model_relation = client.register_model_relation(name='model', project_id=project.uuid)
-
         client.register_model_version_relation(version='1', model_id=model_relation.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         self.assertEqual(client.get_model_version_relation_by_version('1', model_relation.uuid).version, '1')
         self.assertEqual(client.get_model_relation_by_name('model').name, 'model')
         self.assertEqual(Status.OK, client.delete_model_relation_by_id(model_relation.uuid))
@@ -284,9 +339,8 @@ class AIFlowClientTestCases(object):
     def test_delete_model_by_name(self):
         project = client.register_project(name='project', uri='www.code.com')
         model_relation = client.register_model_relation(name='model', project_id=project.uuid)
-
         client.register_model_version_relation(version='1', model_id=model_relation.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         self.assertEqual(client.get_model_version_relation_by_version('1', model_relation.uuid).version, '1')
         self.assertEqual(client.get_model_relation_by_name('model').name, 'model')
         self.assertEqual(Status.OK, client.delete_model_relation_by_name('model'))
@@ -297,23 +351,21 @@ class AIFlowClientTestCases(object):
 
     def test_model_version_api(self):
         project = client.register_project(name='project', uri='www.code.com')
-        model = client.register_model(model_name='test_register_model', model_type=ModelType.SAVED_MODEL,
+        model = client.register_model(model_name='test_register_model',
                                       model_desc='test register model', project_id=project.uuid)
         self.assertIsNone(client.get_model_version_by_version('1', model.uuid))
         self.assertEqual(client.get_model_by_id(model.uuid).name, 'test_register_model')
         self.assertEqual(client.get_model_by_name('test_register_model').name, 'test_register_model')
-
         response = client.register_model_version(model=model.uuid,
-                                                 workflow_execution_id=1,
-                                                 model_path='fs://source1.pkl', model_metric='http://metric1',
+                                                 project_snapshot_id=None,
+                                                 model_path='fs://source1.pkl',
                                                  version_desc='test model version 1',
                                                  current_stage=ModelVersionStage.GENERATED)
         self.assertEqual(response.version, '1')
         model_version_meta = client.get_model_version_by_version(response.version, model.uuid)
         self.assertEqual(model_version_meta.version, '1')
         self.assertEqual(model_version_meta.model_path, 'fs://source1.pkl')
-        self.assertEqual(model_version_meta.model_metric, 'http://metric1')
-        self.assertIsNone(model_version_meta.model_flavor)
+        self.assertIsNone(model_version_meta.model_type)
         self.assertEqual(model_version_meta.version_desc, 'test model version 1')
         response = client.update_model_version(model_name=model.name, model_version='1',
                                                current_stage=ModelVersionStage.DEPLOYED)
@@ -322,9 +374,9 @@ class AIFlowClientTestCases(object):
         self.assertEqual(response.version, '1')
 
         response = client.register_model_version(model=model.uuid,
-                                                 workflow_execution_id=1,
-                                                 model_path='fs://source2.pkl', model_metric='http://metric2',
-                                                 model_flavor='{"flavor.version":2}',
+                                                 project_snapshot_id=None,
+                                                 model_path='fs://source2.pkl',
+                                                 model_type='{"flavor.version":2}',
                                                  version_desc='test model version 2')
         self.assertEqual(response.version, '2')
         self.assertEqual(len(client.list_model_version_relation(1, 10, 0)), 2)
@@ -333,25 +385,23 @@ class AIFlowClientTestCases(object):
         self.assertEqual(len(client.list_model_version_relation(1, 10, 0)), 1)
         # register model version with deleted model version name
         response = client.register_model_version(model=model.uuid,
-                                                 workflow_execution_id=1,
-                                                 model_path='fs://source1.pkl', model_metric='http://metric1',
+                                                 project_snapshot_id=None,
+                                                 model_path='fs://source1.pkl',
                                                  version_desc='test model version 1')
         self.assertEqual(response.version, '2')
         model_version_meta = client.get_model_version_by_version(response.version, model.uuid)
         self.assertEqual(model_version_meta.version, '2')
         self.assertEqual(model_version_meta.model_path, 'fs://source1.pkl')
-        self.assertEqual(model_version_meta.model_metric, 'http://metric1')
-        self.assertIsNone(model_version_meta.model_flavor)
+        self.assertIsNone(model_version_meta.model_type)
         self.assertEqual(model_version_meta.version_desc, 'test model version 1')
 
     def test_get_latest_model_version(self):
         project = client.register_project(name='project', uri='www.code.com')
-        model = client.register_model(model_name='test_register_model', model_type=ModelType.SAVED_MODEL,
+        model = client.register_model(model_name='test_register_model',
                                       model_desc='test register model', project_id=project.uuid)
-
         response_1 = client.register_model_version(model=model.uuid,
-                                                   workflow_execution_id=1,
-                                                   model_path='fs://source1.pkl', model_metric='http://metric1',
+                                                   project_snapshot_id=None,
+                                                   model_path='fs://source1.pkl',
                                                    version_desc='test model version 1',
                                                    current_stage=ModelVersionStage.GENERATED)
         new_generated_model_version_1 = client.get_latest_generated_model_version(model.name)
@@ -363,8 +413,8 @@ class AIFlowClientTestCases(object):
         new_validated_model_version_2 = client.get_latest_validated_model_version(model.name)
         self.assertEqual(new_validated_model_version_2.version, response_1.version)
         response_2 = client.register_model_version(model=model.uuid,
-                                                   workflow_execution_id=1,
-                                                   model_path='fs://source1.pkl', model_metric='http://metric1',
+                                                   project_snapshot_id=None,
+                                                   model_path='fs://source1.pkl',
                                                    version_desc='test model version 1',
                                                    current_stage=ModelVersionStage.GENERATED)
         new_generated_model_version_2 = client.get_latest_generated_model_version(model.name)
@@ -378,7 +428,7 @@ class AIFlowClientTestCases(object):
         project = client.register_project(name='project', uri='www.code.com')
         model = client.register_model_relation(name='model', project_id=project.uuid)
         response = client.register_model_version_relation(version='1', model_id=model.uuid,
-                                                          workflow_execution_id=1)
+                                                          project_snapshot_id=None)
         self.assertEqual(response.version, '1')
         self.assertEqual(client.get_model_version_relation_by_version(response.version, model.uuid).version, '1')
         self.assertEqual(len(client.list_model_version_relation(model.uuid, 2, 0)), 1)
@@ -387,11 +437,10 @@ class AIFlowClientTestCases(object):
     def test_list_model_version(self):
         project = client.register_project(name='project', uri='www.code.com')
         model = client.register_model_relation(name='model', project_id=project.uuid)
-
         client.register_model_version_relation(version='1', model_id=model.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         client.register_model_version_relation(version='2', model_id=model.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         self.assertEqual(len(client.list_model_version_relation(1, 2, 0)), 2)
         self.assertEqual(client.list_model_version_relation(1, 2, 0)[0].version, '1')
         self.assertEqual(client.list_model_version_relation(1, 2, 0)[1].version, '2')
@@ -399,9 +448,8 @@ class AIFlowClientTestCases(object):
     def test_delete_model_version_by_version(self):
         project = client.register_project(name='project', uri='www.code.com')
         model = client.register_model_relation(name='model', project_id=project.uuid)
-
         client.register_model_version_relation(version='1', model_id=model.uuid,
-                                               workflow_execution_id=1)
+                                               project_snapshot_id=None)
         self.assertEqual(client.get_model_version_relation_by_version('1', model.uuid).version, '1')
         client.delete_model_version_relation_by_version('1', model.uuid)
         self.assertIsNone(client.get_model_version_relation_by_version('1', model.uuid))
@@ -448,61 +496,51 @@ class AIFlowClientTestCases(object):
 
     def test_create_registered_model(self):
         model_name = 'test_create_registered_model'
-        model_type1 = ModelType.CHECKPOINT
         model_desc = 'test create registered model'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type1, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
-        self.assertEqual(response.model_type, model_type1)
         self.assertEqual(response.model_desc, model_desc)
 
-        model_type2 = ModelType.SAVED_MODEL
         with self.assertRaises(AIFlowException) as exception_context:
-            client.create_registered_model(model_name=model_name, model_type=model_type2)
+            client.create_registered_model(model_name=model_name)
         assert exception_context.exception.error_code == str(RESOURCE_ALREADY_EXISTS)
 
     def test_double_register_model(self):
         model_name = 'test_create_registered_model'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test create registered model'
-        client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
-        client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        client.create_registered_model(model_name=model_name, model_desc=model_desc)
+        client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertRaises(AIFlowException, client.create_registered_model, model_name=model_name,
-                          model_type=model_type,
                           model_desc='')
         project = client.register_project(name='project')
-        client.register_model(model_name=model_name, project_id=project.uuid, model_type=model_type,
+        client.register_model(model_name=model_name, project_id=project.uuid,
                               model_desc=model_desc)
-        client.register_model(model_name=model_name, project_id=project.uuid, model_type=model_type,
+        client.register_model(model_name=model_name, project_id=project.uuid,
                               model_desc=model_desc)
         self.assertRaises(AIFlowException, client.register_model, model_name=model_name,
-                          project_id=project.uuid, model_type=model_type,
+                          project_id=project.uuid,
                           model_desc='')
 
     def test_update_registered_model(self):
         model_name1 = 'test_update_registered_model1'
-        model_type1 = ModelType.CHECKPOINT
         model_desc1 = 'test update registered model1'
-        response = client.create_registered_model(model_name=model_name1, model_type=model_type1,
+        response = client.create_registered_model(model_name=model_name1,
                                                   model_desc=model_desc1)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name1)
-        self.assertEqual(response.model_type, model_type1)
 
         model_name2 = 'test_update_registered_model2'
-        model_type2 = ModelType.SAVED_MODEL
         model_desc2 = 'test update registered model2'
-        response = client.update_registered_model(model_name=model_name1, new_name=model_name2, model_type=model_type2,
+        response = client.update_registered_model(model_name=model_name1, new_name=model_name2,
                                                   model_desc=model_desc2)
         self.assertEqual(response.model_name, model_name2)
-        self.assertEqual(response.model_type, model_type2)
         self.assertEqual(response.model_desc, model_desc2)
 
     def test_delete_registered_model(self):
         model_name = 'test_delete_registered_model'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test delete registered model'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
 
@@ -512,176 +550,149 @@ class AIFlowClientTestCases(object):
 
     def test_list_registered_model(self):
         model_name1 = 'test_list_registered_model1'
-        model_type1 = ModelType.CHECKPOINT
         model_desc1 = 'test list registered model1'
-        response = client.create_registered_model(model_name=model_name1, model_type=model_type1,
+        response = client.create_registered_model(model_name=model_name1,
                                                   model_desc=model_desc1)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name1)
-        self.assertEqual(response.model_type, model_type1)
 
         model_name2 = 'test_list_registered_model2'
-        model_type2 = ModelType.SAVED_MODEL
         model_desc2 = 'test list registered model2'
-        response = client.create_registered_model(model_name=model_name2, model_type=model_type2,
+        response = client.create_registered_model(model_name=model_name2,
                                                   model_desc=model_desc2)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name2)
-        self.assertEqual(response.model_type, model_type2)
 
         response = client.list_registered_models()
         self.assertEqual(len(response), 2)
         self.assertEqual(response[0].model_name, model_name1)
-        self.assertEqual(response[0].model_type, model_type1)
         self.assertEqual(response[1].model_name, model_name2)
-        self.assertEqual(response[1].model_type, model_type2)
 
     def test_get_registered_model_detail(self):
         model_name = 'test_get_registered_model_detail'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test get registered model detail'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
 
         response = client.get_registered_model_detail(model_name=model_name)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
-        self.assertEqual(response.model_type, model_type)
         self.assertEqual(response.model_desc, model_desc)
 
         model_path1 = 'fs://source1.pkl'
-        model_metric1 = 'http://metric1'
-        model_flavor1 = '{"flavor.version":1}'
+        model_type1 = '{"flavor.version":1}'
         version_desc1 = 'test get registered model detail1'
         response = client.create_model_version(model_name=model_name, model_path=model_path1,
-                                               model_metric=model_metric1, model_flavor=model_flavor1,
+                                               model_type=model_type1,
                                                version_desc=version_desc1)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path1)
-        self.assertEqual(response.model_metric, model_metric1)
-        self.assertEqual(response.model_flavor, model_flavor1)
+        self.assertEqual(response.model_type, model_type1)
         self.assertEqual(response.version_desc, version_desc1)
 
         response = client.get_registered_model_detail(model_name=model_name)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
-        self.assertEqual(response.model_type, model_type)
         self.assertEqual(response.model_desc, model_desc)
-        model_version = response.model_version
+        model_version = response.latest_model_version
         self.assertEqual(model_version.model_version, '1')
         self.assertEqual(model_version.model_path, model_path1)
-        self.assertEqual(model_version.model_metric, model_metric1)
-        self.assertEqual(model_version.model_flavor, model_flavor1)
+        self.assertEqual(model_version.model_type, model_type1)
         self.assertEqual(model_version.version_desc, version_desc1)
 
         model_path2 = 'fs://source2.pkl'
-        model_metric2 = 'http://metric2'
-        model_flavor2 = '{"flavor.version":2}'
+        model_type2 = '{"flavor.version":2}'
         version_desc2 = 'test get registered model detail2'
         response = client.create_model_version(model_name=model_name, model_path=model_path2,
-                                               model_metric=model_metric2, model_flavor=model_flavor2,
+                                               model_type=model_type2,
                                                version_desc=version_desc2)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '2')
         self.assertEqual(response.model_path, model_path2)
-        self.assertEqual(response.model_metric, model_metric2)
-        self.assertEqual(response.model_flavor, model_flavor2)
+        self.assertEqual(response.model_type, model_type2)
         self.assertEqual(response.version_desc, version_desc2)
 
         response = client.get_registered_model_detail(model_name=model_name)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
-        self.assertEqual(response.model_type, model_type)
         self.assertEqual(response.model_desc, model_desc)
-        model_version = response.model_version
+        model_version = response.latest_model_version
         self.assertEqual(model_version.model_version, '2')
         self.assertEqual(model_version.model_path, model_path2)
-        self.assertEqual(model_version.model_metric, model_metric2)
-        self.assertEqual(model_version.model_flavor, model_flavor2)
+        self.assertEqual(model_version.model_type, model_type2)
         self.assertEqual(model_version.version_desc, version_desc2)
 
     def test_create_model_version(self):
         model_name = 'test_create_model_version'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test create model version'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
 
         model_path1 = 'fs://source1.pkl'
-        model_metric1 = 'http://metric1'
-        model_flavor1 = '{"flavor.version":1}'
+        model_type1 = '{"flavor.version":1}'
         version_desc1 = 'test create model version1'
         response = client.create_model_version(model_name=model_name, model_path=model_path1,
-                                               model_metric=model_metric1, model_flavor=model_flavor1,
+                                               model_type=model_type1,
                                                version_desc=version_desc1)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path1)
-        self.assertEqual(response.model_metric, model_metric1)
-        self.assertEqual(response.model_flavor, model_flavor1)
+        self.assertEqual(response.model_type, model_type1)
         self.assertEqual(response.version_desc, version_desc1)
 
         model_path2 = 'fs://source2.pkl'
-        model_metric2 = 'http://metric2'
-        model_flavor2 = '{"flavor.version":2}'
+        model_type2 = '{"flavor.version":2}'
         version_desc2 = 'test create model version2'
         response = client.create_model_version(model_name=model_name, model_path=model_path2,
-                                               model_metric=model_metric2, model_flavor=model_flavor2,
+                                               model_type=model_type2,
                                                version_desc=version_desc2)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '2')
         self.assertEqual(response.model_path, model_path2)
-        self.assertEqual(response.model_metric, model_metric2)
-        self.assertEqual(response.model_flavor, model_flavor2)
+        self.assertEqual(response.model_type, model_type2)
         self.assertEqual(response.version_desc, version_desc2)
 
     def test_update_model_version(self):
         model_name = 'test_update_model_version'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test update model version'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
 
         model_path1 = 'fs://source1.pkl'
-        model_metric1 = 'http://metric1'
-        model_flavor1 = '{"flavor.version":1}'
+        model_type1 = '{"flavor.version":1}'
         version_desc1 = 'test update model version1'
         version_stage1 = ModelVersionStage.GENERATED
         response = client.create_model_version(model_name=model_name, model_path=model_path1,
-                                               model_metric=model_metric1, model_flavor=model_flavor1,
+                                               model_type=model_type1,
                                                version_desc=version_desc1, current_stage=version_stage1)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path1)
-        self.assertEqual(response.model_metric, model_metric1)
-        self.assertEqual(response.model_flavor, model_flavor1)
+        self.assertEqual(response.model_type, model_type1)
         self.assertEqual(response.version_desc, version_desc1)
         self.assertEqual(response.current_stage, version_stage1)
 
         model_path2 = 'fs://source2.pkl'
-        model_metric2 = 'http://metric2'
-        model_flavor2 = '{"flavor.version":2}'
+        model_type2 = '{"flavor.version":2}'
         version_desc2 = 'test update model version2'
         version_stage2 = ModelVersionStage.VALIDATED
         response = client.update_model_version(model_name=model_name, model_version='1',
-                                               model_path=model_path2, model_metric=model_metric2,
-                                               model_flavor=model_flavor2, version_desc=version_desc2,
-                                               current_stage=version_stage2)
+                                               model_path=model_path2, model_type=model_type2,
+                                               version_desc=version_desc2, current_stage=version_stage2)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path2)
-        self.assertEqual(response.model_metric, model_metric2)
-        self.assertEqual(response.model_flavor, model_flavor2)
+        self.assertEqual(response.model_type, model_type2)
         self.assertEqual(response.version_desc, version_desc2)
         self.assertEqual(response.current_stage, version_stage2)
 
@@ -691,24 +702,21 @@ class AIFlowClientTestCases(object):
 
     def test_delete_model_version(self):
         model_name = 'test_delete_model_version'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test delete model version'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
 
         model_path = 'fs://source.pkl'
-        model_metric = 'http://metric'
-        model_flavor = '{"flavor.version":1}'
+        model_type = '{"flavor.version":1}'
         version_desc = 'test delete model version'
-        response = client.create_model_version(model_name=model_name, model_path=model_path, model_metric=model_metric,
-                                               model_flavor=model_flavor, version_desc=version_desc)
+        response = client.create_model_version(model_name=model_name, model_path=model_path,
+                                               model_type=model_type, version_desc=version_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path)
-        self.assertEqual(response.model_metric, model_metric)
-        self.assertEqual(response.model_flavor, model_flavor)
+        self.assertEqual(response.model_type, model_type)
         self.assertEqual(response.version_desc, version_desc)
 
         client.delete_model_version(model_name, '1')
@@ -717,24 +725,21 @@ class AIFlowClientTestCases(object):
 
     def test_get_model_version_detail(self):
         model_name = 'test_get_model_version_detail'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test get model version detail'
-        response = client.create_registered_model(model_name=model_name, model_type=model_type, model_desc=model_desc)
+        response = client.create_registered_model(model_name=model_name, model_desc=model_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
 
         model_path = 'fs://source.pkl'
-        model_metric = 'http://metric'
-        model_flavor = '{"flavor.version":1}'
+        model_type = '{"flavor.version":1}'
         version_desc = 'test get model version detail'
-        response = client.create_model_version(model_name=model_name, model_path=model_path, model_metric=model_metric,
-                                               model_flavor=model_flavor, version_desc=version_desc)
+        response = client.create_model_version(model_name=model_name, model_path=model_path,
+                                               model_type=model_type, version_desc=version_desc)
         self.assertIsNotNone(response)
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path)
-        self.assertEqual(response.model_metric, model_metric)
-        self.assertEqual(response.model_flavor, model_flavor)
+        self.assertEqual(response.model_type, model_type)
         self.assertEqual(response.version_desc, version_desc)
 
         response = client.get_model_version_detail(model_name, '1')
@@ -742,8 +747,7 @@ class AIFlowClientTestCases(object):
         self.assertEqual(response.model_name, model_name)
         self.assertEqual(response.model_version, '1')
         self.assertEqual(response.model_path, model_path)
-        self.assertEqual(response.model_metric, model_metric)
-        self.assertEqual(response.model_flavor, model_flavor)
+        self.assertEqual(response.model_type, model_type)
         self.assertEqual(response.version_desc, version_desc)
 
     def test_update_and_list_notification(self):
@@ -892,30 +896,140 @@ class AIFlowClientTestCases(object):
     #     self.assertEqual(State.FINISHED, execution_meta.execution_state)
 
     def test_dataset_metric_meta(self):
-        self.register_workflow_job()
+        start_time = round(time.time())
+        end_time = start_time + 1
+        metric_meta = client.register_metric_meta(metric_name='test_dataset_metric_meta_1',
+                                                  metric_type=MetricType.DATASET,
+                                                  project_name='test_dataset_metric_meta_project_1',
+                                                  dataset_name='test_dataset_metric_meta_dataset_1',
+                                                  job_name='test_dataset_metric_meta_job',
+                                                  start_time=start_time, end_time=end_time, uri='/tmp/metric',
+                                                  tags='test_dataset_metric_meta', properties=Properties({'a': 'a'}))[2]
+        metric_meta = client.get_metric_meta(metric_meta.metric_name)[2]
+        self.assertEqual('test_dataset_metric_meta_1', metric_meta.metric_name)
+        self.assertEqual(MetricType.DATASET, MetricType.value_of(metric_meta.metric_type))
+        self.assertEqual('test_dataset_metric_meta_project_1', metric_meta.project_name)
+        self.assertEqual('test_dataset_metric_meta_dataset_1', metric_meta.dataset_name)
+        self.assertEqual(start_time, metric_meta.start_time)
+        self.assertEqual(end_time, metric_meta.end_time)
+        self.assertEqual('/tmp/metric', metric_meta.uri)
+        self.assertEqual('test_dataset_metric_meta', metric_meta.tags)
+        self.assertEqual(metric_meta.properties['a'], metric_meta.properties['a'])
+        metric_meta = client.update_metric_meta(metric_name=metric_meta.metric_name,
+                                                dataset_name='test_dataset_metric_meta_dataset_2')[2]
+        metric_meta = client.get_metric_meta(metric_meta.metric_name)[2]
+        self.assertEqual('test_dataset_metric_meta_dataset_2', metric_meta.dataset_name)
+        metric_meta = client.register_metric_meta(metric_name='test_dataset_metric_meta_2',
+                                                  metric_type=metric_meta.metric_type,
+                                                  project_name='test_dataset_metric_meta_project_2',
+                                                  dataset_name=metric_meta.dataset_name,
+                                                  job_name=metric_meta.job_name,
+                                                  start_time=metric_meta.start_time, end_time=metric_meta.end_time,
+                                                  uri=metric_meta.uri,
+                                                  tags=metric_meta.tags, properties=metric_meta.properties)[2]
+        metric_metas = client.list_dataset_metric_metas(dataset_name=metric_meta.dataset_name)[2]
+        self.assertEqual(2, len(metric_metas))
+        metric_meta = client.list_dataset_metric_metas(dataset_name=metric_meta.dataset_name,
+                                                       project_name=metric_meta.project_name)[2]
+        self.assertEqual('test_dataset_metric_meta_2', metric_meta.metric_name)
+        self.assertEqual('test_dataset_metric_meta_project_2', metric_meta.project_name)
+        self.assertTrue(client.delete_metric_meta(metric_name=metric_meta.metric_name))
+        metric_metas = client.list_dataset_metric_metas(dataset_name=metric_meta.dataset_name)[2]
+        self.assertTrue(isinstance(metric_metas, MetricMeta))
+        self.assertEqual('test_dataset_metric_meta_1', metric_metas.metric_name)
 
-        start = round(time.time())
-        end = start + 1
-        res = client.register_metric_meta(name='a', dataset_id=1, model_name=None, model_version=None, job_id=1,
-                                          start_time=start, end_time=end, uri='/tmp/metric_1',
-                                          metric_type=MetricType.DATASET,
-                                          tags='', metric_description='', properties=Properties({'a': 'a'}))
-        client.update_metric_meta(uuid=res[2].uuid, job_id=5)
-        metric_meta_result = client.get_dataset_metric_meta(dataset_id=1)
-        self.assertTrue(isinstance(metric_meta_result[2], MetricMeta))
-        self.assertEqual(5, metric_meta_result[2].job_id)
+    def test_model_metric_meta(self):
+        metric_meta = client.register_metric_meta(metric_name='test_model_metric_meta_1',
+                                                  metric_type=MetricType.MODEL,
+                                                  project_name='test_model_metric_meta_project_1',
+                                                  model_name='test_model_metric_meta_model_1',
+                                                  job_name='test_model_metric_meta_job',
+                                                  uri='/tmp/metric',
+                                                  tags='test_model_metric_meta', properties=Properties({'a': 'a'}))[2]
+        metric_meta = client.get_metric_meta(metric_meta.metric_name)[2]
+        self.assertEqual('test_model_metric_meta_1', metric_meta.metric_name)
+        self.assertEqual(MetricType.MODEL, MetricType.value_of(metric_meta.metric_type))
+        self.assertEqual('test_model_metric_meta_project_1', metric_meta.project_name)
+        self.assertEqual('test_model_metric_meta_model_1', metric_meta.model_name)
+        self.assertEqual('/tmp/metric', metric_meta.uri)
+        self.assertEqual('test_model_metric_meta', metric_meta.tags)
+        self.assertEqual(metric_meta.properties['a'], metric_meta.properties['a'])
+        metric_meta = client.update_metric_meta(metric_name=metric_meta.metric_name,
+                                                model_name='test_model_metric_meta_model_2')[2]
+        metric_meta = client.get_metric_meta(metric_meta.metric_name)[2]
+        self.assertEqual('test_model_metric_meta_model_2', metric_meta.model_name)
+        metric_meta = client.register_metric_meta(metric_name='test_model_metric_meta_2',
+                                                  metric_type=metric_meta.metric_type,
+                                                  project_name='test_model_metric_meta_project_2',
+                                                  model_name=metric_meta.model_name,
+                                                  job_name=metric_meta.job_name,
+                                                  uri=metric_meta.uri,
+                                                  tags=metric_meta.tags, properties=metric_meta.properties)[2]
+        metric_metas = client.list_model_metric_metas(model_name=metric_meta.model_name)[2]
+        self.assertEqual(2, len(metric_metas))
+        metric_meta = client.list_model_metric_metas(model_name=metric_meta.model_name,
+                                                     project_name=metric_meta.project_name)[2]
+        self.assertEqual('test_model_metric_meta_2', metric_meta.metric_name)
+        self.assertEqual('test_model_metric_meta_project_2', metric_meta.project_name)
+        self.assertTrue(client.delete_metric_meta(metric_name=metric_meta.metric_name))
+        metric_metas = client.list_model_metric_metas(model_name=metric_meta.model_name)[2]
+        self.assertTrue(isinstance(metric_metas, MetricMeta))
+        self.assertEqual('test_model_metric_meta_1', metric_metas.metric_name)
 
-        res = client.register_metric_meta(name='b', dataset_id=1, model_name=None, model_version=None, job_id=1,
-                                          start_time=start, end_time=end, uri='/tmp/metric_2',
-                                          metric_type=MetricType.DATASET,
-                                          tags='flink', metric_description='', properties=Properties({'b': 'b'}))
-        metric_meta_result = client.get_dataset_metric_meta(dataset_id=1)
-        get_metric_meta = client.get_metric_meta(name=res[2].name)
-
-        self.assertEqual(res[2].tags, get_metric_meta[2].tags)
-
-        self.assertTrue(isinstance(metric_meta_result[2], List))
-        self.assertEqual(2, len(metric_meta_result[2]))
+    def test_metric_summary(self):
+        metric_timestamp = round(time.time())
+        metric_summary = client.register_metric_summary(metric_name='test_metric_summary_1', metric_key='auc',
+                                                        metric_value='0.6', metric_timestamp=metric_timestamp)[2]
+        metric_summary = client.get_metric_summary(metric_summary.uuid)[2]
+        self.assertEqual(1, metric_summary.uuid)
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.6', metric_summary.metric_value)
+        self.assertEqual(metric_timestamp, metric_summary.metric_timestamp)
+        metric_summary = client.update_metric_summary(uuid=metric_summary.uuid, metric_value='0.8')[2]
+        metric_summary = client.get_metric_summary(metric_summary.uuid)[2]
+        self.assertEqual('0.8', metric_summary.metric_value)
+        metric_summary = client.register_metric_summary(metric_name=metric_summary.metric_name,
+                                                        metric_key=metric_summary.metric_key,
+                                                        metric_value='0.7', metric_timestamp=metric_timestamp + 1,
+                                                        model_version='test_metric_summary_model_version_1')[2]
+        metric_summary = client.register_metric_summary(metric_name=metric_summary.metric_name,
+                                                        metric_key='roc',
+                                                        metric_value='0.9', metric_timestamp=metric_timestamp + 1,
+                                                        model_version='test_metric_summary_model_version_2')[2]
+        metric_summaries = client.list_metric_summaries(metric_name=metric_summary.metric_name)[2]
+        self.assertEqual(3, len(metric_summaries))
+        self.assertEqual('auc', metric_summaries[0].metric_key)
+        self.assertEqual('0.8', metric_summaries[0].metric_value)
+        self.assertEqual('auc', metric_summaries[1].metric_key)
+        self.assertEqual('0.7', metric_summaries[1].metric_value)
+        self.assertEqual('roc', metric_summaries[2].metric_key)
+        self.assertEqual('0.9', metric_summaries[2].metric_value)
+        metric_summaries = client.list_metric_summaries(metric_key='auc')[2]
+        self.assertEqual(2, len(metric_summaries))
+        self.assertEqual('0.8', metric_summaries[0].metric_value)
+        self.assertEqual('0.7', metric_summaries[1].metric_value)
+        metric_summary = client.list_metric_summaries(model_version='test_metric_summary_model_version_1')[2]
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.7', metric_summary.metric_value)
+        metric_summary = client.list_metric_summaries(model_version='test_metric_summary_model_version_1')[2]
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.7', metric_summary.metric_value)
+        metric_summaries = client.list_metric_summaries(metric_name=metric_summary.metric_name,
+                                                        start_time=metric_timestamp + 1,
+                                                        end_time=metric_summary.metric_timestamp)[2]
+        self.assertEqual(2, len(metric_summaries))
+        self.assertEqual('auc', metric_summaries[0].metric_key)
+        self.assertEqual('0.7', metric_summaries[0].metric_value)
+        self.assertEqual('roc', metric_summaries[1].metric_key)
+        self.assertEqual('0.9', metric_summaries[1].metric_value)
+        metric_summary = client.list_metric_summaries(metric_name=metric_summary.metric_name, metric_key='auc',
+                                                      model_version='test_metric_summary_model_version_1')[2]
+        self.assertEqual('test_metric_summary_1', metric_summary.metric_name)
+        self.assertEqual('auc', metric_summary.metric_key)
+        self.assertEqual('0.7', metric_summary.metric_value)
 
     @staticmethod
     def register_workflow_job():
@@ -926,60 +1040,13 @@ class AIFlowClientTestCases(object):
     @staticmethod
     def register_model_and_version(project):
         model_name = 'test_create_registered_model'
-        model_type = ModelType.CHECKPOINT
         model_desc = 'test create registered model'
-        model = client.register_model(model_name=model_name, project_id=project.uuid, model_type=model_type,
+        model = client.register_model(model_name=model_name, project_id=project.uuid,
                                       model_desc=model_desc)
         version = client.register_model_version(model=model.uuid,
                                                 model_path="/tmp",
-                                                workflow_execution_id=1)
+                                                project_snapshot_id=None)
         return model, version
-
-    def test_model_metric_meta(self):
-        project = self.register_workflow_job()
-        model, version = self.register_model_and_version(project)
-        start = round(time.time())
-        end = start + 1
-        client.register_metric_meta(name='a', dataset_id=1, model_name=model.name,
-                                    model_version=version.version, job_id=1,
-                                    start_time=start, end_time=end, uri='/tmp/metric_1',
-                                    metric_type=MetricType.MODEL,
-                                    tags='', metric_description='', properties=Properties({'a': 'a'}))
-        metric_meta_result = client.get_model_metric_meta(model_name=model.name, model_version=version.version)
-
-        self.assertTrue(isinstance(metric_meta_result[2], MetricMeta))
-
-        client.register_metric_meta(name='b', dataset_id=2, model_name=model.name,
-                                    model_version=version.version, job_id=3,
-                                    start_time=start, end_time=end, uri='/tmp/metric_2',
-                                    metric_type=MetricType.MODEL,
-                                    tags='', metric_description='', properties=Properties({'b': 'b'}))
-        metric_meta_result = client.get_model_metric_meta(model_name=model.name, model_version=version.version)
-
-        self.assertTrue(isinstance(metric_meta_result[2], List))
-        self.assertEqual(2, len(metric_meta_result[2]))
-        client.delete_metric_meta(metric_meta_result[2][0].uuid)
-        metric_meta_result = client.get_model_metric_meta(model_name=model.name, model_version=version.version)
-        self.assertTrue(isinstance(metric_meta_result[2], MetricMeta))
-
-    def test_metric_summary(self):
-        metric_summary_result = client.register_metric_summary(metric_id=1, metric_key='a', metric_value='1.0')
-        self.assertTrue(isinstance(metric_summary_result[2], MetricSummary))
-
-        client.update_metric_summary(uuid=metric_summary_result[2].uuid, metric_value='5.0')
-
-        metric_summary_result = client.get_metric_summary(metric_id=1)
-        self.assertTrue(isinstance(metric_summary_result[2], List))
-        self.assertEqual('5.0', metric_summary_result[2][0].metric_value)
-
-        client.register_metric_summary(metric_id=1, metric_key='b', metric_value='2.0')
-        metric_summary_result = client.get_metric_summary(metric_id=1)
-
-        self.assertEqual(2, len(metric_summary_result[2]))
-
-        client.delete_metric_summary(metric_summary_result[2][0].uuid)
-        metric_summary_result = client.get_metric_summary(metric_id=1)
-        self.assertEqual(1, len(metric_summary_result[2]))
 
 
 class TestAIFlowClientSqlite(AIFlowClientTestCases, unittest.TestCase):
@@ -990,7 +1057,7 @@ class TestAIFlowClientSqlite(AIFlowClientTestCases, unittest.TestCase):
         print("TestAIFlowClientSqlite setUpClass")
         if os.path.exists(_SQLITE_DB_FILE):
             os.remove(_SQLITE_DB_FILE)
-        cls.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT)
+        cls.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT, start_scheduler_service=False)
         cls.server.run()
         client = AIFlowClient(server_uri='localhost:' + _PORT)
         client1 = AIFlowClient(server_uri='localhost:' + _PORT)
@@ -1024,7 +1091,7 @@ class TestAIFlowClientSqliteWithSingleHighAvailableServer(
         print("TestAIFlowClientSqlite setUpClass")
         if os.path.exists(_SQLITE_DB_FILE):
             os.remove(_SQLITE_DB_FILE)
-        cls.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT, enabled_ha=True,
+        cls.server = AIFlowServer(store_uri=_SQLITE_DB_URI, port=_PORT, enabled_ha=True, start_scheduler_service=False,
                                   ha_server_uri='localhost:' + _PORT)
         cls.server.run()
         config = ProjectConfig()

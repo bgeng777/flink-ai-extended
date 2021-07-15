@@ -16,9 +16,4 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-from ai_flow.translator.base_translator import register_job_generator
-# from ai_flow.translator.cmd_job_generator import CMDJobGenerator
-#
-# register_job_generator(CMDJobGenerator(platform="local"))
-# register_job_generator(CMDJobGenerator(platform="k8s"))
-
+from ai_flow.translator.translator import register_job_generator

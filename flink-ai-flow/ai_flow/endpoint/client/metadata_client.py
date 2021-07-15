@@ -16,6 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+from ai_flow.meta.workflow_meta import WorkflowMeta
 from typing import Optional, Text, List
 
 import grpc
@@ -30,7 +31,7 @@ from ai_flow.metadata_store.utils.MetaToProto import MetaToProto
 from ai_flow.protobuf import metadata_service_pb2_grpc, metadata_service_pb2
 from ai_flow.protobuf.message_pb2 import DatasetProto, SchemaProto, ModelRelationProto, ModelProto, \
     ModelVersionRelationProto, ModelVersionProto, ProjectProto, \
-    ArtifactProto, ModelVersionStage, ModelType
+    ArtifactProto, ModelVersionStage, WorkflowMetaProto
 from ai_flow.protobuf.metadata_service_pb2 import ModelNameRequest
 from ai_flow.endpoint.server import stringValue, int64Value
 from ai_flow.endpoint.client.base_client import BaseClient
@@ -40,7 +41,7 @@ from ai_flow.endpoint.server.util import _unwrap_dataset_response, \
     _unwrap_model_version_relation_response, _unwrap_model_version_relation_list_response, \
     _unwrap_model_version_response, \
     _unwrap_project_response, _unwrap_project_list_response, \
-    _unwrap_artifact_response, _unwrap_artifact_list_response
+    _unwrap_artifact_response, _unwrap_artifact_list_response, _unwrap_workflow_response, _unwrap_workflow_list_response
 
 
 class MetadataClient(BaseClient):
@@ -318,17 +319,16 @@ class MetadataClient(BaseClient):
         response = self.metadata_store_stub.getModelByName(request)
         return _unwrap_model_response(response)
 
-    def register_model(self, model_name, project_id, model_type, model_desc=None) -> ModelMeta:
+    def register_model(self, model_name, project_id, model_desc=None) -> ModelMeta:
         """
         register a model in metadata store
 
         :param model_name: Name of registered model
         :param project_id: Project id which registered model corresponded to.
-        :param model_type: Type of registered model
         :param model_desc: Description of registered model
         :return: A single :py:class:`ai_flow.meta.model_meta.ModelMeta` object.
         """
-        model_request = ModelProto(name=model_name, model_type=ModelType.Value(model_type),
+        model_request = ModelProto(name=model_name,
                                    model_desc=stringValue(model_desc),
                                    project_id=int64Value(project_id))
         request = metadata_service_pb2.RegisterModelRequest(model=model_request)
@@ -375,17 +375,17 @@ class MetadataClient(BaseClient):
         return _unwrap_model_version_relation_response(response)
 
     def register_model_version_relation(self, version, model_id,
-                                        workflow_execution_id=None) -> ModelVersionRelationMeta:
+                                        project_snapshot_id=None) -> ModelVersionRelationMeta:
         """
         register a model version relation in metadata store.
 
         :param version: the specific model version
         :param model_id: the model id corresponded to the model version
-        :param workflow_execution_id: the workflow execution id corresponded to the model version
+        :param project_snapshot_id: the project snapshot id corresponded to the model version
         :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelVersionRelationMeta` object.
         """
         model_version = ModelVersionRelationProto(version=stringValue(version), model_id=int64Value(model_id),
-                                                  workflow_execution_id=int64Value(workflow_execution_id))
+                                                  project_snapshot_id=int64Value(project_snapshot_id))
         request = metadata_service_pb2.RegisterModelVersionRelationRequest(model_version_relation=model_version)
         response = self.metadata_store_stub.registerModelVersionRelation(request)
         return _unwrap_model_version_relation_response(response)
@@ -422,10 +422,10 @@ class MetadataClient(BaseClient):
 
     def get_model_version_by_version(self, version, model_id) -> Optional[ModelVersionMeta]:
         """
-        get a specific model version in metadata store by model version name.
+        Get a specific model version in metadata store by model version name.
 
         :param version: User-defined version of registered model
-        :param model_id: the model id corresponded to the model version
+        :param model_id: The model id corresponded to the model version
         :return: A single :py:class:`ai_flow.meta.model_meta.ModelVersionMeta` object if the model version exists,
         Otherwise, returns None if the model version does not exist.
         """
@@ -433,17 +433,16 @@ class MetadataClient(BaseClient):
         response = self.metadata_store_stub.getModelVersionByVersion(request)
         return _unwrap_model_version_response(response)
 
-    def register_model_version(self, model, model_path, workflow_execution_id=None, model_metric=None,
-                               model_flavor=None, version_desc=None,
+    def register_model_version(self, model, model_path, project_snapshot_id=None,
+                               model_type=None, version_desc=None,
                                current_stage=ModelVersionStage.GENERATED) -> ModelVersionMeta:
         """
         register a model version in metadata store.
 
-        :param model:  model id or model meta of registered model corresponded to model version
+        :param model: Model id or model meta of registered model corresponded to model version
         :param model_path: Source path where the AIFlow model is stored.
-        :param workflow_execution_id: id of workflow execution corresponded to model version
-        :param model_metric: Metric address from AIFlow metric server of registered model.
-        :param model_flavor: (Optional) Flavor feature of AIFlow registered model option.
+        :param project_snapshot_id: Id of project snapshot corresponded to model version
+        :param model_type: (Optional) Type of AIFlow registered model option.
         :param version_desc: (Optional) Description of registered model version.
         :param current_stage: (Optional) Stage of registered model version
         :return: A single :py:class:`ai_flow.meta.model_meta.ModelVersionMeta` object.
@@ -457,10 +456,9 @@ class MetadataClient(BaseClient):
             raise Exception("can not recognize model {}".format(model))
         model_version = ModelVersionProto(version=None,
                                           model_id=int64Value(model_id),
-                                          workflow_execution_id=int64Value(workflow_execution_id),
+                                          project_snapshot_id=int64Value(project_snapshot_id),
                                           model_path=stringValue(model_path),
-                                          model_metric=stringValue(model_metric),
-                                          model_flavor=stringValue(model_flavor),
+                                          model_type=stringValue(model_type),
                                           version_desc=stringValue(version_desc),
                                           current_stage=current_stage)
         request = metadata_service_pb2.RegisterModelVersionRequest(model_version=model_version)
@@ -685,3 +683,93 @@ class MetadataClient(BaseClient):
         request = metadata_service_pb2.NameRequest(name=artifact_name)
         response = self.metadata_store_stub.deleteArtifactByName(request)
         return _unwrap_delete_response(response)
+
+    '''workflow api'''
+
+    def register_workflow(self, name: Text, project_id: int, properties: Properties = None) -> WorkflowMeta:
+        """
+        Register a workflow in metadata store.
+
+        :param name: the workflow name
+        :param project_id: the id of project which contains the workflow
+        :param properties: the workflow properties
+        """
+        workflow_request = WorkflowMetaProto(name=name,
+                                             project_id=int64Value(project_id),
+                                             properties=properties)
+        request = metadata_service_pb2.RegisterWorkflowRequest(workflow=workflow_request)
+        response = self.metadata_store_stub.registerWorkflow(request)
+        return _unwrap_workflow_response(response)
+
+    def get_workflow_by_name(self, project_name: Text, workflow_name: Text) -> Optional[WorkflowMeta]:
+        """
+        Get a workflow by specific project name and workflow name
+
+        :param project_name: the name of project which contains the workflow
+        :param workflow_name: the workflow name
+        """
+        request = metadata_service_pb2.WorkflowNameRequest(workflow_name=workflow_name,
+                                                           project_name=project_name)
+        response = self.metadata_store_stub.getWorkflowByName(request)
+        return _unwrap_workflow_response(response)
+
+    def get_workflow_by_id(self, workflow_id: int) -> Optional[WorkflowMeta]:
+        """
+        Get a workflow by specific uuid
+
+        :param workflow_id: the uuid of workflow
+        """
+        request = metadata_service_pb2.IdRequest(id=workflow_id)
+        response = self.metadata_store_stub.getWorkflowById(request)
+        return _unwrap_workflow_response(response)
+
+    def list_workflows(self, project_name: Text, page_size: int, offset: int) -> Optional[List[WorkflowMeta]]:
+        """
+        List all workflows of the specific project
+
+        :param project_name: the name of project which contains the workflow
+        :param page_size      Limitation of listed workflows.
+        :param offset        Offset of listed workflows.
+        """
+        request = metadata_service_pb2.ListWorkflowsRequest(project_name=project_name,
+                                                            page_size=page_size,
+                                                            offset=offset)
+        response = self.metadata_store_stub.listWorkflows(request)
+        return _unwrap_workflow_list_response(response)
+
+    def delete_workflow_by_name(self, project_name: Text, workflow_name: Text) -> Status:
+        """
+        Delete the workflow by specific project and workflow name
+
+        :param project_name: the name of project which contains the workflow
+        :param workflow_name: the workflow name
+        """
+        request = metadata_service_pb2.WorkflowNameRequest(workflow_name=workflow_name,
+                                                           project_name=project_name)
+        response = self.metadata_store_stub.deleteWorkflowByName(request)
+        return _unwrap_delete_response(response)
+
+    def delete_workflow_by_id(self, workflow_id: int) -> Status:
+        """
+        Delete the workflow by specific id
+
+        :param workflow_id: the uuid of workflow
+        """
+        request = metadata_service_pb2.IdRequest(id=workflow_id)
+        response = self.metadata_store_stub.deleteWorkflowById(request)
+        return _unwrap_delete_response(response)
+
+    def update_workflow(self, workflow_name: Text, project_name: Text,
+                        properties: Properties = None) -> Optional[WorkflowMeta]:
+        """
+        Update the workflow
+
+        :param workflow_name: the workflow name
+        :param project_name: the name of project which contains the workflow
+        :param properties: (Optional) the properties need to be updated
+        """
+        request = metadata_service_pb2.UpdateWorkflowRequest(workflow_name=workflow_name,
+                                                             project_name=project_name,
+                                                             properties=properties)
+        response = self.metadata_store_stub.updateWorkflow(request)
+        return _unwrap_workflow_response(response)

@@ -16,20 +16,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-import time
 
 from ai_flow.common.status import Status
 from ai_flow.meta.dataset_meta import DataType
 from ai_flow.metadata_store.utils.MetaToProto import MetaToProto
 from ai_flow.metadata_store.utils.ProtoToMeta import ProtoToMeta
 from ai_flow.protobuf import metadata_service_pb2_grpc
-from ai_flow.protobuf.message_pb2 import DataTypeProto, ModelType
+from ai_flow.protobuf.message_pb2 import DataTypeProto
 from ai_flow.endpoint.client.model_center_client import ModelCenterClient
 from ai_flow.endpoint.server.util import _wrap_meta_response, transform_dataset_meta, \
     _warp_dataset_list_response, _wrap_delete_response, transform_model_relation_meta, \
     _warp_model_relation_list_response, _warp_model_version_relation_list_response, \
     transform_model_version_relation_meta, _warp_project_list_response, transform_project_meta, catch_exception, \
-    transform_model_meta, transform_model_version_meta, transform_artifact_meta, _warp_artifact_list_response
+    transform_model_meta, transform_model_version_meta, transform_artifact_meta, _warp_artifact_list_response, \
+    transform_workflow_meta, _wrap_workflow_list_response
 from ai_flow.store.sqlalchemy_store import SqlAlchemyStore
 from ai_flow.store.mongo_store import MongoStore
 from ai_flow.store.db.db_util import extract_db_engine_from_uri, parse_mongo_uri
@@ -193,7 +193,7 @@ class MetadataService(metadata_service_pb2_grpc.MetadataServiceServicer):
     @catch_exception
     def registerModel(self, request, context):
         model = transform_model_meta(request.model)
-        model_detail = self.model_center_client.create_registered_model(model.name, ModelType.Name(model.model_type),
+        model_detail = self.model_center_client.create_registered_model(model.name,
                                                                         model.model_desc)
         model_relation = self.store.register_model_relation(name=model.name, project_id=model.project_id)
         return _wrap_meta_response(MetaToProto.model_meta_to_proto(model_relation, model_detail))
@@ -232,7 +232,7 @@ class MetadataService(metadata_service_pb2_grpc.MetadataServiceServicer):
         model_version = transform_model_version_relation_meta(request.model_version_relation)
         response = self.store.register_model_version_relation(version=model_version.version,
                                                               model_id=model_version.model_id,
-                                                              workflow_execution_id=model_version.workflow_execution_id)
+                                                              project_snapshot_id=model_version.project_snapshot_id)
         return _wrap_meta_response(MetaToProto.model_version_relation_meta_to_proto(response))
 
     @catch_exception
@@ -259,14 +259,13 @@ class MetadataService(metadata_service_pb2_grpc.MetadataServiceServicer):
         model_relation = self.store.get_model_relation_by_id(model_version.model_id)
         model_version_detail = self.model_center_client.create_model_version(model_relation.name,
                                                                              model_version.model_path,
-                                                                             model_version.model_metric,
-                                                                             model_version.model_flavor,
+                                                                             model_version.model_type,
                                                                              model_version.version_desc,
                                                                              request.model_version.current_stage)
         model_version_relation = self.store.register_model_version_relation(version=model_version_detail.model_version,
                                                                             model_id=model_version.model_id,
-                                                                            workflow_execution_id=
-                                                                            model_version.workflow_execution_id)
+                                                                            project_snapshot_id=
+                                                                            model_version.project_snapshot_id)
         return _wrap_meta_response(
             MetaToProto.model_version_meta_to_proto(model_version_relation, model_version_detail))
 
@@ -409,3 +408,44 @@ class MetadataService(metadata_service_pb2_grpc.MetadataServiceServicer):
     def deleteArtifactByName(self, request, context):
         status = self.store.delete_artifact_by_name(request.name)
         return _wrap_delete_response(status)
+
+    @catch_exception
+    def registerWorkflow(self, request, context):
+        workflow = transform_workflow_meta(request.workflow)
+        response = self.store.register_workflow(name=workflow.name,
+                                                project_id=workflow.project_id,
+                                                properties=workflow.properties)
+        return _wrap_meta_response(MetaToProto.workflow_meta_to_proto(response))
+
+    @catch_exception
+    def updateWorkflow(self, request, context):
+        properties = None if request.properties == {} else request.properties
+        workflow = self.store.update_workflow(workflow_name=request.workflow_name,
+                                              project_name=request.project_name,
+                                              properties=properties)
+        return _wrap_meta_response(MetaToProto.workflow_meta_to_proto(workflow))
+
+    def getWorkflowById(self, request, context):
+        workflow = self.store.get_workflow_by_id(workflow_id=request.id)
+        return _wrap_meta_response(MetaToProto.workflow_meta_to_proto(workflow))
+
+    def getWorkflowByName(self, request, context):
+        workflow = self.store.get_workflow_by_name(project_name=request.project_name,
+                                                   workflow_name=request.workflow_name)
+        return _wrap_meta_response(MetaToProto.workflow_meta_to_proto(workflow))
+
+    def deleteWorkflowById(self, request, context):
+        status = self.store.delete_workflow_by_id(workflow_id=request.id)
+        return _wrap_delete_response(status)
+
+    def deleteWorkflowByName(self, request, context):
+        status = self.store.delete_workflow_by_name(project_name=request.project_name,
+                                                    workflow_name=request.workflow_name)
+        return _wrap_delete_response(status)
+
+    def listWorkflows(self, request, context):
+        workflow_meta_list = self.store.list_workflows(project_name=request.project_name,
+                                                       page_size=request.page_size,
+                                                       offset=request.offset)
+        return _wrap_workflow_list_response(workflow_meta_list)
+

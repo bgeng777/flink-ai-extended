@@ -1015,132 +1015,6 @@ public final class Message {
   }
 
   /**
-   * Protobuf enum {@code ai_flow.ModelType}
-   */
-  public enum ModelType
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>NONE_TYPE = 0;</code>
-     */
-    NONE_TYPE(0),
-    /**
-     * <code>CHECKPOINT = 1;</code>
-     */
-    CHECKPOINT(1),
-    /**
-     * <code>SAVED_MODEL = 2;</code>
-     */
-    SAVED_MODEL(2),
-    /**
-     * <code>H5 = 3;</code>
-     */
-    H5(3),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>NONE_TYPE = 0;</code>
-     */
-    public static final int NONE_TYPE_VALUE = 0;
-    /**
-     * <code>CHECKPOINT = 1;</code>
-     */
-    public static final int CHECKPOINT_VALUE = 1;
-    /**
-     * <code>SAVED_MODEL = 2;</code>
-     */
-    public static final int SAVED_MODEL_VALUE = 2;
-    /**
-     * <code>H5 = 3;</code>
-     */
-    public static final int H5_VALUE = 3;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static ModelType valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static ModelType forNumber(int value) {
-      switch (value) {
-        case 0: return NONE_TYPE;
-        case 1: return CHECKPOINT;
-        case 2: return SAVED_MODEL;
-        case 3: return H5;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<ModelType>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ModelType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ModelType>() {
-            public ModelType findValueByNumber(int number) {
-              return ModelType.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
-      }
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(5);
-    }
-
-    private static final ModelType[] VALUES = values();
-
-    public static ModelType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private ModelType(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:ai_flow.ModelType)
-  }
-
-  /**
    * Protobuf enum {@code ai_flow.ModelVersionStatus}
    */
   public enum ModelVersionStatus
@@ -1289,7 +1163,7 @@ public final class Message {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(6);
+      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(5);
     }
 
     private static final ModelVersionStatus[] VALUES = values();
@@ -1424,7 +1298,7 @@ public final class Message {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(7);
+      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(6);
     }
 
     private static final ModelVersionStage[] VALUES = values();
@@ -1532,7 +1406,7 @@ public final class Message {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(8);
+      return com.aiflow.proto.Message.getDescriptor().getEnumTypes().get(7);
     }
 
     private static final MetricTypeProto[] VALUES = values();
@@ -6564,28 +6438,17 @@ public final class Message {
     com.google.protobuf.Int64ValueOrBuilder getProjectIdOrBuilder();
 
     /**
-     * <code>.ai_flow.ModelType model_type = 4;</code>
-     * @return The enum numeric value on the wire for modelType.
-     */
-    int getModelTypeValue();
-    /**
-     * <code>.ai_flow.ModelType model_type = 4;</code>
-     * @return The modelType.
-     */
-    com.aiflow.proto.Message.ModelType getModelType();
-
-    /**
-     * <code>.google.protobuf.StringValue model_desc = 5;</code>
+     * <code>.google.protobuf.StringValue model_desc = 4;</code>
      * @return Whether the modelDesc field is set.
      */
     boolean hasModelDesc();
     /**
-     * <code>.google.protobuf.StringValue model_desc = 5;</code>
+     * <code>.google.protobuf.StringValue model_desc = 4;</code>
      * @return The modelDesc.
      */
     com.google.protobuf.StringValue getModelDesc();
     /**
-     * <code>.google.protobuf.StringValue model_desc = 5;</code>
+     * <code>.google.protobuf.StringValue model_desc = 4;</code>
      */
     com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder();
   }
@@ -6603,7 +6466,6 @@ public final class Message {
     }
     private ModelProto() {
       name_ = "";
-      modelType_ = 0;
     }
 
     @java.lang.Override
@@ -6660,13 +6522,7 @@ public final class Message {
 
               break;
             }
-            case 32: {
-              int rawValue = input.readEnum();
-
-              modelType_ = rawValue;
-              break;
-            }
-            case 42: {
+            case 34: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
               if (modelDesc_ != null) {
                 subBuilder = modelDesc_.toBuilder();
@@ -6786,29 +6642,10 @@ public final class Message {
       return getProjectId();
     }
 
-    public static final int MODEL_TYPE_FIELD_NUMBER = 4;
-    private int modelType_;
-    /**
-     * <code>.ai_flow.ModelType model_type = 4;</code>
-     * @return The enum numeric value on the wire for modelType.
-     */
-    @java.lang.Override public int getModelTypeValue() {
-      return modelType_;
-    }
-    /**
-     * <code>.ai_flow.ModelType model_type = 4;</code>
-     * @return The modelType.
-     */
-    @java.lang.Override public com.aiflow.proto.Message.ModelType getModelType() {
-      @SuppressWarnings("deprecation")
-      com.aiflow.proto.Message.ModelType result = com.aiflow.proto.Message.ModelType.valueOf(modelType_);
-      return result == null ? com.aiflow.proto.Message.ModelType.UNRECOGNIZED : result;
-    }
-
-    public static final int MODEL_DESC_FIELD_NUMBER = 5;
+    public static final int MODEL_DESC_FIELD_NUMBER = 4;
     private com.google.protobuf.StringValue modelDesc_;
     /**
-     * <code>.google.protobuf.StringValue model_desc = 5;</code>
+     * <code>.google.protobuf.StringValue model_desc = 4;</code>
      * @return Whether the modelDesc field is set.
      */
     @java.lang.Override
@@ -6816,7 +6653,7 @@ public final class Message {
       return modelDesc_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_desc = 5;</code>
+     * <code>.google.protobuf.StringValue model_desc = 4;</code>
      * @return The modelDesc.
      */
     @java.lang.Override
@@ -6824,7 +6661,7 @@ public final class Message {
       return modelDesc_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelDesc_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_desc = 5;</code>
+     * <code>.google.protobuf.StringValue model_desc = 4;</code>
      */
     @java.lang.Override
     public com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder() {
@@ -6854,11 +6691,8 @@ public final class Message {
       if (projectId_ != null) {
         output.writeMessage(3, getProjectId());
       }
-      if (modelType_ != com.aiflow.proto.Message.ModelType.NONE_TYPE.getNumber()) {
-        output.writeEnum(4, modelType_);
-      }
       if (modelDesc_ != null) {
-        output.writeMessage(5, getModelDesc());
+        output.writeMessage(4, getModelDesc());
       }
       unknownFields.writeTo(output);
     }
@@ -6880,13 +6714,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getProjectId());
       }
-      if (modelType_ != com.aiflow.proto.Message.ModelType.NONE_TYPE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, modelType_);
-      }
       if (modelDesc_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getModelDesc());
+          .computeMessageSize(4, getModelDesc());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6912,7 +6742,6 @@ public final class Message {
         if (!getProjectId()
             .equals(other.getProjectId())) return false;
       }
-      if (modelType_ != other.modelType_) return false;
       if (hasModelDesc() != other.hasModelDesc()) return false;
       if (hasModelDesc()) {
         if (!getModelDesc()
@@ -6938,8 +6767,6 @@ public final class Message {
         hash = (37 * hash) + PROJECT_ID_FIELD_NUMBER;
         hash = (53 * hash) + getProjectId().hashCode();
       }
-      hash = (37 * hash) + MODEL_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + modelType_;
       if (hasModelDesc()) {
         hash = (37 * hash) + MODEL_DESC_FIELD_NUMBER;
         hash = (53 * hash) + getModelDesc().hashCode();
@@ -7087,8 +6914,6 @@ public final class Message {
           projectId_ = null;
           projectIdBuilder_ = null;
         }
-        modelType_ = 0;
-
         if (modelDescBuilder_ == null) {
           modelDesc_ = null;
         } else {
@@ -7128,7 +6953,6 @@ public final class Message {
         } else {
           result.projectId_ = projectIdBuilder_.build();
         }
-        result.modelType_ = modelType_;
         if (modelDescBuilder_ == null) {
           result.modelDesc_ = modelDesc_;
         } else {
@@ -7191,9 +7015,6 @@ public final class Message {
         }
         if (other.hasProjectId()) {
           mergeProjectId(other.getProjectId());
-        }
-        if (other.modelType_ != 0) {
-          setModelTypeValue(other.getModelTypeValue());
         }
         if (other.hasModelDesc()) {
           mergeModelDesc(other.getModelDesc());
@@ -7453,72 +7274,18 @@ public final class Message {
         return projectIdBuilder_;
       }
 
-      private int modelType_ = 0;
-      /**
-       * <code>.ai_flow.ModelType model_type = 4;</code>
-       * @return The enum numeric value on the wire for modelType.
-       */
-      @java.lang.Override public int getModelTypeValue() {
-        return modelType_;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 4;</code>
-       * @param value The enum numeric value on the wire for modelType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModelTypeValue(int value) {
-        
-        modelType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 4;</code>
-       * @return The modelType.
-       */
-      @java.lang.Override
-      public com.aiflow.proto.Message.ModelType getModelType() {
-        @SuppressWarnings("deprecation")
-        com.aiflow.proto.Message.ModelType result = com.aiflow.proto.Message.ModelType.valueOf(modelType_);
-        return result == null ? com.aiflow.proto.Message.ModelType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 4;</code>
-       * @param value The modelType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModelType(com.aiflow.proto.Message.ModelType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        modelType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearModelType() {
-        
-        modelType_ = 0;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.StringValue modelDesc_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelDescBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        * @return Whether the modelDesc field is set.
        */
       public boolean hasModelDesc() {
         return modelDescBuilder_ != null || modelDesc_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        * @return The modelDesc.
        */
       public com.google.protobuf.StringValue getModelDesc() {
@@ -7529,7 +7296,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       public Builder setModelDesc(com.google.protobuf.StringValue value) {
         if (modelDescBuilder_ == null) {
@@ -7545,7 +7312,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       public Builder setModelDesc(
           com.google.protobuf.StringValue.Builder builderForValue) {
@@ -7559,7 +7326,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       public Builder mergeModelDesc(com.google.protobuf.StringValue value) {
         if (modelDescBuilder_ == null) {
@@ -7577,7 +7344,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       public Builder clearModelDesc() {
         if (modelDescBuilder_ == null) {
@@ -7591,7 +7358,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       public com.google.protobuf.StringValue.Builder getModelDescBuilder() {
         
@@ -7599,7 +7366,7 @@ public final class Message {
         return getModelDescFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       public com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder() {
         if (modelDescBuilder_ != null) {
@@ -7610,7 +7377,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 5;</code>
+       * <code>.google.protobuf.StringValue model_desc = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
@@ -7713,19 +7480,19 @@ public final class Message {
     com.google.protobuf.Int64ValueOrBuilder getModelIdOrBuilder();
 
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return Whether the workflowExecutionId field is set.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return Whether the projectSnapshotId field is set.
      */
-    boolean hasWorkflowExecutionId();
+    boolean hasProjectSnapshotId();
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return The workflowExecutionId.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return The projectSnapshotId.
      */
-    com.google.protobuf.Int64Value getWorkflowExecutionId();
+    com.google.protobuf.Int64Value getProjectSnapshotId();
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
      */
-    com.google.protobuf.Int64ValueOrBuilder getWorkflowExecutionIdOrBuilder();
+    com.google.protobuf.Int64ValueOrBuilder getProjectSnapshotIdOrBuilder();
   }
   /**
    * Protobuf type {@code ai_flow.ModelVersionRelationProto}
@@ -7800,13 +7567,13 @@ public final class Message {
             }
             case 26: {
               com.google.protobuf.Int64Value.Builder subBuilder = null;
-              if (workflowExecutionId_ != null) {
-                subBuilder = workflowExecutionId_.toBuilder();
+              if (projectSnapshotId_ != null) {
+                subBuilder = projectSnapshotId_.toBuilder();
               }
-              workflowExecutionId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              projectSnapshotId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(workflowExecutionId_);
-                workflowExecutionId_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(projectSnapshotId_);
+                projectSnapshotId_ = subBuilder.buildPartial();
               }
 
               break;
@@ -7895,30 +7662,30 @@ public final class Message {
       return getModelId();
     }
 
-    public static final int WORKFLOW_EXECUTION_ID_FIELD_NUMBER = 3;
-    private com.google.protobuf.Int64Value workflowExecutionId_;
+    public static final int PROJECT_SNAPSHOT_ID_FIELD_NUMBER = 3;
+    private com.google.protobuf.Int64Value projectSnapshotId_;
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return Whether the workflowExecutionId field is set.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return Whether the projectSnapshotId field is set.
      */
     @java.lang.Override
-    public boolean hasWorkflowExecutionId() {
-      return workflowExecutionId_ != null;
+    public boolean hasProjectSnapshotId() {
+      return projectSnapshotId_ != null;
     }
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return The workflowExecutionId.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return The projectSnapshotId.
      */
     @java.lang.Override
-    public com.google.protobuf.Int64Value getWorkflowExecutionId() {
-      return workflowExecutionId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : workflowExecutionId_;
+    public com.google.protobuf.Int64Value getProjectSnapshotId() {
+      return projectSnapshotId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : projectSnapshotId_;
     }
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.Int64ValueOrBuilder getWorkflowExecutionIdOrBuilder() {
-      return getWorkflowExecutionId();
+    public com.google.protobuf.Int64ValueOrBuilder getProjectSnapshotIdOrBuilder() {
+      return getProjectSnapshotId();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -7941,8 +7708,8 @@ public final class Message {
       if (modelId_ != null) {
         output.writeMessage(2, getModelId());
       }
-      if (workflowExecutionId_ != null) {
-        output.writeMessage(3, getWorkflowExecutionId());
+      if (projectSnapshotId_ != null) {
+        output.writeMessage(3, getProjectSnapshotId());
       }
       unknownFields.writeTo(output);
     }
@@ -7961,9 +7728,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getModelId());
       }
-      if (workflowExecutionId_ != null) {
+      if (projectSnapshotId_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getWorkflowExecutionId());
+          .computeMessageSize(3, getProjectSnapshotId());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7990,10 +7757,10 @@ public final class Message {
         if (!getModelId()
             .equals(other.getModelId())) return false;
       }
-      if (hasWorkflowExecutionId() != other.hasWorkflowExecutionId()) return false;
-      if (hasWorkflowExecutionId()) {
-        if (!getWorkflowExecutionId()
-            .equals(other.getWorkflowExecutionId())) return false;
+      if (hasProjectSnapshotId() != other.hasProjectSnapshotId()) return false;
+      if (hasProjectSnapshotId()) {
+        if (!getProjectSnapshotId()
+            .equals(other.getProjectSnapshotId())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -8014,9 +7781,9 @@ public final class Message {
         hash = (37 * hash) + MODEL_ID_FIELD_NUMBER;
         hash = (53 * hash) + getModelId().hashCode();
       }
-      if (hasWorkflowExecutionId()) {
-        hash = (37 * hash) + WORKFLOW_EXECUTION_ID_FIELD_NUMBER;
-        hash = (53 * hash) + getWorkflowExecutionId().hashCode();
+      if (hasProjectSnapshotId()) {
+        hash = (37 * hash) + PROJECT_SNAPSHOT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getProjectSnapshotId().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -8163,11 +7930,11 @@ public final class Message {
           modelId_ = null;
           modelIdBuilder_ = null;
         }
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionId_ = null;
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotId_ = null;
         } else {
-          workflowExecutionId_ = null;
-          workflowExecutionIdBuilder_ = null;
+          projectSnapshotId_ = null;
+          projectSnapshotIdBuilder_ = null;
         }
         return this;
       }
@@ -8205,10 +7972,10 @@ public final class Message {
         } else {
           result.modelId_ = modelIdBuilder_.build();
         }
-        if (workflowExecutionIdBuilder_ == null) {
-          result.workflowExecutionId_ = workflowExecutionId_;
+        if (projectSnapshotIdBuilder_ == null) {
+          result.projectSnapshotId_ = projectSnapshotId_;
         } else {
-          result.workflowExecutionId_ = workflowExecutionIdBuilder_.build();
+          result.projectSnapshotId_ = projectSnapshotIdBuilder_.build();
         }
         onBuilt();
         return result;
@@ -8264,8 +8031,8 @@ public final class Message {
         if (other.hasModelId()) {
           mergeModelId(other.getModelId());
         }
-        if (other.hasWorkflowExecutionId()) {
-          mergeWorkflowExecutionId(other.getWorkflowExecutionId());
+        if (other.hasProjectSnapshotId()) {
+          mergeProjectSnapshotId(other.getProjectSnapshotId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -8534,123 +8301,123 @@ public final class Message {
         return modelIdBuilder_;
       }
 
-      private com.google.protobuf.Int64Value workflowExecutionId_;
+      private com.google.protobuf.Int64Value projectSnapshotId_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> workflowExecutionIdBuilder_;
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> projectSnapshotIdBuilder_;
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-       * @return Whether the workflowExecutionId field is set.
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+       * @return Whether the projectSnapshotId field is set.
        */
-      public boolean hasWorkflowExecutionId() {
-        return workflowExecutionIdBuilder_ != null || workflowExecutionId_ != null;
+      public boolean hasProjectSnapshotId() {
+        return projectSnapshotIdBuilder_ != null || projectSnapshotId_ != null;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-       * @return The workflowExecutionId.
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+       * @return The projectSnapshotId.
        */
-      public com.google.protobuf.Int64Value getWorkflowExecutionId() {
-        if (workflowExecutionIdBuilder_ == null) {
-          return workflowExecutionId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : workflowExecutionId_;
+      public com.google.protobuf.Int64Value getProjectSnapshotId() {
+        if (projectSnapshotIdBuilder_ == null) {
+          return projectSnapshotId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : projectSnapshotId_;
         } else {
-          return workflowExecutionIdBuilder_.getMessage();
+          return projectSnapshotIdBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder setWorkflowExecutionId(com.google.protobuf.Int64Value value) {
-        if (workflowExecutionIdBuilder_ == null) {
+      public Builder setProjectSnapshotId(com.google.protobuf.Int64Value value) {
+        if (projectSnapshotIdBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          workflowExecutionId_ = value;
+          projectSnapshotId_ = value;
           onChanged();
         } else {
-          workflowExecutionIdBuilder_.setMessage(value);
+          projectSnapshotIdBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder setWorkflowExecutionId(
+      public Builder setProjectSnapshotId(
           com.google.protobuf.Int64Value.Builder builderForValue) {
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionId_ = builderForValue.build();
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotId_ = builderForValue.build();
           onChanged();
         } else {
-          workflowExecutionIdBuilder_.setMessage(builderForValue.build());
+          projectSnapshotIdBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder mergeWorkflowExecutionId(com.google.protobuf.Int64Value value) {
-        if (workflowExecutionIdBuilder_ == null) {
-          if (workflowExecutionId_ != null) {
-            workflowExecutionId_ =
-              com.google.protobuf.Int64Value.newBuilder(workflowExecutionId_).mergeFrom(value).buildPartial();
+      public Builder mergeProjectSnapshotId(com.google.protobuf.Int64Value value) {
+        if (projectSnapshotIdBuilder_ == null) {
+          if (projectSnapshotId_ != null) {
+            projectSnapshotId_ =
+              com.google.protobuf.Int64Value.newBuilder(projectSnapshotId_).mergeFrom(value).buildPartial();
           } else {
-            workflowExecutionId_ = value;
+            projectSnapshotId_ = value;
           }
           onChanged();
         } else {
-          workflowExecutionIdBuilder_.mergeFrom(value);
+          projectSnapshotIdBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder clearWorkflowExecutionId() {
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionId_ = null;
+      public Builder clearProjectSnapshotId() {
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotId_ = null;
           onChanged();
         } else {
-          workflowExecutionId_ = null;
-          workflowExecutionIdBuilder_ = null;
+          projectSnapshotId_ = null;
+          projectSnapshotIdBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public com.google.protobuf.Int64Value.Builder getWorkflowExecutionIdBuilder() {
+      public com.google.protobuf.Int64Value.Builder getProjectSnapshotIdBuilder() {
         
         onChanged();
-        return getWorkflowExecutionIdFieldBuilder().getBuilder();
+        return getProjectSnapshotIdFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public com.google.protobuf.Int64ValueOrBuilder getWorkflowExecutionIdOrBuilder() {
-        if (workflowExecutionIdBuilder_ != null) {
-          return workflowExecutionIdBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.Int64ValueOrBuilder getProjectSnapshotIdOrBuilder() {
+        if (projectSnapshotIdBuilder_ != null) {
+          return projectSnapshotIdBuilder_.getMessageOrBuilder();
         } else {
-          return workflowExecutionId_ == null ?
-              com.google.protobuf.Int64Value.getDefaultInstance() : workflowExecutionId_;
+          return projectSnapshotId_ == null ?
+              com.google.protobuf.Int64Value.getDefaultInstance() : projectSnapshotId_;
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
-          getWorkflowExecutionIdFieldBuilder() {
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getProjectSnapshotIdFieldBuilder() {
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
-                  getWorkflowExecutionId(),
+                  getProjectSnapshotId(),
                   getParentForChildren(),
                   isClean());
-          workflowExecutionId_ = null;
+          projectSnapshotId_ = null;
         }
-        return workflowExecutionIdBuilder_;
+        return projectSnapshotIdBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -8740,19 +8507,19 @@ public final class Message {
     com.google.protobuf.Int64ValueOrBuilder getModelIdOrBuilder();
 
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return Whether the workflowExecutionId field is set.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return Whether the projectSnapshotId field is set.
      */
-    boolean hasWorkflowExecutionId();
+    boolean hasProjectSnapshotId();
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return The workflowExecutionId.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return The projectSnapshotId.
      */
-    com.google.protobuf.Int64Value getWorkflowExecutionId();
+    com.google.protobuf.Int64Value getProjectSnapshotId();
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
      */
-    com.google.protobuf.Int64ValueOrBuilder getWorkflowExecutionIdOrBuilder();
+    com.google.protobuf.Int64ValueOrBuilder getProjectSnapshotIdOrBuilder();
 
     /**
      * <code>.google.protobuf.StringValue model_path = 4;</code>
@@ -8770,34 +8537,19 @@ public final class Message {
     com.google.protobuf.StringValueOrBuilder getModelPathOrBuilder();
 
     /**
-     * <code>.google.protobuf.StringValue model_metric = 5;</code>
-     * @return Whether the modelMetric field is set.
+     * <code>.google.protobuf.StringValue model_type = 6;</code>
+     * @return Whether the modelType field is set.
      */
-    boolean hasModelMetric();
+    boolean hasModelType();
     /**
-     * <code>.google.protobuf.StringValue model_metric = 5;</code>
-     * @return The modelMetric.
+     * <code>.google.protobuf.StringValue model_type = 6;</code>
+     * @return The modelType.
      */
-    com.google.protobuf.StringValue getModelMetric();
+    com.google.protobuf.StringValue getModelType();
     /**
-     * <code>.google.protobuf.StringValue model_metric = 5;</code>
+     * <code>.google.protobuf.StringValue model_type = 6;</code>
      */
-    com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder();
-
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-     * @return Whether the modelFlavor field is set.
-     */
-    boolean hasModelFlavor();
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-     * @return The modelFlavor.
-     */
-    com.google.protobuf.StringValue getModelFlavor();
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder();
+    com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder();
 
     /**
      * <code>.google.protobuf.StringValue version_desc = 7;</code>
@@ -8899,13 +8651,13 @@ public final class Message {
             }
             case 26: {
               com.google.protobuf.Int64Value.Builder subBuilder = null;
-              if (workflowExecutionId_ != null) {
-                subBuilder = workflowExecutionId_.toBuilder();
+              if (projectSnapshotId_ != null) {
+                subBuilder = projectSnapshotId_.toBuilder();
               }
-              workflowExecutionId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              projectSnapshotId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(workflowExecutionId_);
-                workflowExecutionId_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(projectSnapshotId_);
+                projectSnapshotId_ = subBuilder.buildPartial();
               }
 
               break;
@@ -8923,28 +8675,15 @@ public final class Message {
 
               break;
             }
-            case 42: {
-              com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelMetric_ != null) {
-                subBuilder = modelMetric_.toBuilder();
-              }
-              modelMetric_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(modelMetric_);
-                modelMetric_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
             case 50: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelFlavor_ != null) {
-                subBuilder = modelFlavor_.toBuilder();
+              if (modelType_ != null) {
+                subBuilder = modelType_.toBuilder();
               }
-              modelFlavor_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              modelType_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(modelFlavor_);
-                modelFlavor_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(modelType_);
+                modelType_ = subBuilder.buildPartial();
               }
 
               break;
@@ -9052,30 +8791,30 @@ public final class Message {
       return getModelId();
     }
 
-    public static final int WORKFLOW_EXECUTION_ID_FIELD_NUMBER = 3;
-    private com.google.protobuf.Int64Value workflowExecutionId_;
+    public static final int PROJECT_SNAPSHOT_ID_FIELD_NUMBER = 3;
+    private com.google.protobuf.Int64Value projectSnapshotId_;
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return Whether the workflowExecutionId field is set.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return Whether the projectSnapshotId field is set.
      */
     @java.lang.Override
-    public boolean hasWorkflowExecutionId() {
-      return workflowExecutionId_ != null;
+    public boolean hasProjectSnapshotId() {
+      return projectSnapshotId_ != null;
     }
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-     * @return The workflowExecutionId.
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+     * @return The projectSnapshotId.
      */
     @java.lang.Override
-    public com.google.protobuf.Int64Value getWorkflowExecutionId() {
-      return workflowExecutionId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : workflowExecutionId_;
+    public com.google.protobuf.Int64Value getProjectSnapshotId() {
+      return projectSnapshotId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : projectSnapshotId_;
     }
     /**
-     * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+     * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.Int64ValueOrBuilder getWorkflowExecutionIdOrBuilder() {
-      return getWorkflowExecutionId();
+    public com.google.protobuf.Int64ValueOrBuilder getProjectSnapshotIdOrBuilder() {
+      return getProjectSnapshotId();
     }
 
     public static final int MODEL_PATH_FIELD_NUMBER = 4;
@@ -9104,56 +8843,30 @@ public final class Message {
       return getModelPath();
     }
 
-    public static final int MODEL_METRIC_FIELD_NUMBER = 5;
-    private com.google.protobuf.StringValue modelMetric_;
+    public static final int MODEL_TYPE_FIELD_NUMBER = 6;
+    private com.google.protobuf.StringValue modelType_;
     /**
-     * <code>.google.protobuf.StringValue model_metric = 5;</code>
-     * @return Whether the modelMetric field is set.
+     * <code>.google.protobuf.StringValue model_type = 6;</code>
+     * @return Whether the modelType field is set.
      */
     @java.lang.Override
-    public boolean hasModelMetric() {
-      return modelMetric_ != null;
+    public boolean hasModelType() {
+      return modelType_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_metric = 5;</code>
-     * @return The modelMetric.
+     * <code>.google.protobuf.StringValue model_type = 6;</code>
+     * @return The modelType.
      */
     @java.lang.Override
-    public com.google.protobuf.StringValue getModelMetric() {
-      return modelMetric_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+    public com.google.protobuf.StringValue getModelType() {
+      return modelType_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_metric = 5;</code>
+     * <code>.google.protobuf.StringValue model_type = 6;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder() {
-      return getModelMetric();
-    }
-
-    public static final int MODEL_FLAVOR_FIELD_NUMBER = 6;
-    private com.google.protobuf.StringValue modelFlavor_;
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-     * @return Whether the modelFlavor field is set.
-     */
-    @java.lang.Override
-    public boolean hasModelFlavor() {
-      return modelFlavor_ != null;
-    }
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-     * @return The modelFlavor.
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValue getModelFlavor() {
-      return modelFlavor_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-    }
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder() {
-      return getModelFlavor();
+    public com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder() {
+      return getModelType();
     }
 
     public static final int VERSION_DESC_FIELD_NUMBER = 7;
@@ -9221,17 +8934,14 @@ public final class Message {
       if (modelId_ != null) {
         output.writeMessage(2, getModelId());
       }
-      if (workflowExecutionId_ != null) {
-        output.writeMessage(3, getWorkflowExecutionId());
+      if (projectSnapshotId_ != null) {
+        output.writeMessage(3, getProjectSnapshotId());
       }
       if (modelPath_ != null) {
         output.writeMessage(4, getModelPath());
       }
-      if (modelMetric_ != null) {
-        output.writeMessage(5, getModelMetric());
-      }
-      if (modelFlavor_ != null) {
-        output.writeMessage(6, getModelFlavor());
+      if (modelType_ != null) {
+        output.writeMessage(6, getModelType());
       }
       if (versionDesc_ != null) {
         output.writeMessage(7, getVersionDesc());
@@ -9256,21 +8966,17 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getModelId());
       }
-      if (workflowExecutionId_ != null) {
+      if (projectSnapshotId_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getWorkflowExecutionId());
+          .computeMessageSize(3, getProjectSnapshotId());
       }
       if (modelPath_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getModelPath());
       }
-      if (modelMetric_ != null) {
+      if (modelType_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getModelMetric());
-      }
-      if (modelFlavor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getModelFlavor());
+          .computeMessageSize(6, getModelType());
       }
       if (versionDesc_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -9305,25 +9011,20 @@ public final class Message {
         if (!getModelId()
             .equals(other.getModelId())) return false;
       }
-      if (hasWorkflowExecutionId() != other.hasWorkflowExecutionId()) return false;
-      if (hasWorkflowExecutionId()) {
-        if (!getWorkflowExecutionId()
-            .equals(other.getWorkflowExecutionId())) return false;
+      if (hasProjectSnapshotId() != other.hasProjectSnapshotId()) return false;
+      if (hasProjectSnapshotId()) {
+        if (!getProjectSnapshotId()
+            .equals(other.getProjectSnapshotId())) return false;
       }
       if (hasModelPath() != other.hasModelPath()) return false;
       if (hasModelPath()) {
         if (!getModelPath()
             .equals(other.getModelPath())) return false;
       }
-      if (hasModelMetric() != other.hasModelMetric()) return false;
-      if (hasModelMetric()) {
-        if (!getModelMetric()
-            .equals(other.getModelMetric())) return false;
-      }
-      if (hasModelFlavor() != other.hasModelFlavor()) return false;
-      if (hasModelFlavor()) {
-        if (!getModelFlavor()
-            .equals(other.getModelFlavor())) return false;
+      if (hasModelType() != other.hasModelType()) return false;
+      if (hasModelType()) {
+        if (!getModelType()
+            .equals(other.getModelType())) return false;
       }
       if (hasVersionDesc() != other.hasVersionDesc()) return false;
       if (hasVersionDesc()) {
@@ -9350,21 +9051,17 @@ public final class Message {
         hash = (37 * hash) + MODEL_ID_FIELD_NUMBER;
         hash = (53 * hash) + getModelId().hashCode();
       }
-      if (hasWorkflowExecutionId()) {
-        hash = (37 * hash) + WORKFLOW_EXECUTION_ID_FIELD_NUMBER;
-        hash = (53 * hash) + getWorkflowExecutionId().hashCode();
+      if (hasProjectSnapshotId()) {
+        hash = (37 * hash) + PROJECT_SNAPSHOT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getProjectSnapshotId().hashCode();
       }
       if (hasModelPath()) {
         hash = (37 * hash) + MODEL_PATH_FIELD_NUMBER;
         hash = (53 * hash) + getModelPath().hashCode();
       }
-      if (hasModelMetric()) {
-        hash = (37 * hash) + MODEL_METRIC_FIELD_NUMBER;
-        hash = (53 * hash) + getModelMetric().hashCode();
-      }
-      if (hasModelFlavor()) {
-        hash = (37 * hash) + MODEL_FLAVOR_FIELD_NUMBER;
-        hash = (53 * hash) + getModelFlavor().hashCode();
+      if (hasModelType()) {
+        hash = (37 * hash) + MODEL_TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getModelType().hashCode();
       }
       if (hasVersionDesc()) {
         hash = (37 * hash) + VERSION_DESC_FIELD_NUMBER;
@@ -9517,11 +9214,11 @@ public final class Message {
           modelId_ = null;
           modelIdBuilder_ = null;
         }
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionId_ = null;
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotId_ = null;
         } else {
-          workflowExecutionId_ = null;
-          workflowExecutionIdBuilder_ = null;
+          projectSnapshotId_ = null;
+          projectSnapshotIdBuilder_ = null;
         }
         if (modelPathBuilder_ == null) {
           modelPath_ = null;
@@ -9529,17 +9226,11 @@ public final class Message {
           modelPath_ = null;
           modelPathBuilder_ = null;
         }
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = null;
+        if (modelTypeBuilder_ == null) {
+          modelType_ = null;
         } else {
-          modelMetric_ = null;
-          modelMetricBuilder_ = null;
-        }
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = null;
-        } else {
-          modelFlavor_ = null;
-          modelFlavorBuilder_ = null;
+          modelType_ = null;
+          modelTypeBuilder_ = null;
         }
         if (versionDescBuilder_ == null) {
           versionDesc_ = null;
@@ -9585,25 +9276,20 @@ public final class Message {
         } else {
           result.modelId_ = modelIdBuilder_.build();
         }
-        if (workflowExecutionIdBuilder_ == null) {
-          result.workflowExecutionId_ = workflowExecutionId_;
+        if (projectSnapshotIdBuilder_ == null) {
+          result.projectSnapshotId_ = projectSnapshotId_;
         } else {
-          result.workflowExecutionId_ = workflowExecutionIdBuilder_.build();
+          result.projectSnapshotId_ = projectSnapshotIdBuilder_.build();
         }
         if (modelPathBuilder_ == null) {
           result.modelPath_ = modelPath_;
         } else {
           result.modelPath_ = modelPathBuilder_.build();
         }
-        if (modelMetricBuilder_ == null) {
-          result.modelMetric_ = modelMetric_;
+        if (modelTypeBuilder_ == null) {
+          result.modelType_ = modelType_;
         } else {
-          result.modelMetric_ = modelMetricBuilder_.build();
-        }
-        if (modelFlavorBuilder_ == null) {
-          result.modelFlavor_ = modelFlavor_;
-        } else {
-          result.modelFlavor_ = modelFlavorBuilder_.build();
+          result.modelType_ = modelTypeBuilder_.build();
         }
         if (versionDescBuilder_ == null) {
           result.versionDesc_ = versionDesc_;
@@ -9665,17 +9351,14 @@ public final class Message {
         if (other.hasModelId()) {
           mergeModelId(other.getModelId());
         }
-        if (other.hasWorkflowExecutionId()) {
-          mergeWorkflowExecutionId(other.getWorkflowExecutionId());
+        if (other.hasProjectSnapshotId()) {
+          mergeProjectSnapshotId(other.getProjectSnapshotId());
         }
         if (other.hasModelPath()) {
           mergeModelPath(other.getModelPath());
         }
-        if (other.hasModelMetric()) {
-          mergeModelMetric(other.getModelMetric());
-        }
-        if (other.hasModelFlavor()) {
-          mergeModelFlavor(other.getModelFlavor());
+        if (other.hasModelType()) {
+          mergeModelType(other.getModelType());
         }
         if (other.hasVersionDesc()) {
           mergeVersionDesc(other.getVersionDesc());
@@ -9950,123 +9633,123 @@ public final class Message {
         return modelIdBuilder_;
       }
 
-      private com.google.protobuf.Int64Value workflowExecutionId_;
+      private com.google.protobuf.Int64Value projectSnapshotId_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> workflowExecutionIdBuilder_;
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> projectSnapshotIdBuilder_;
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-       * @return Whether the workflowExecutionId field is set.
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+       * @return Whether the projectSnapshotId field is set.
        */
-      public boolean hasWorkflowExecutionId() {
-        return workflowExecutionIdBuilder_ != null || workflowExecutionId_ != null;
+      public boolean hasProjectSnapshotId() {
+        return projectSnapshotIdBuilder_ != null || projectSnapshotId_ != null;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
-       * @return The workflowExecutionId.
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
+       * @return The projectSnapshotId.
        */
-      public com.google.protobuf.Int64Value getWorkflowExecutionId() {
-        if (workflowExecutionIdBuilder_ == null) {
-          return workflowExecutionId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : workflowExecutionId_;
+      public com.google.protobuf.Int64Value getProjectSnapshotId() {
+        if (projectSnapshotIdBuilder_ == null) {
+          return projectSnapshotId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : projectSnapshotId_;
         } else {
-          return workflowExecutionIdBuilder_.getMessage();
+          return projectSnapshotIdBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder setWorkflowExecutionId(com.google.protobuf.Int64Value value) {
-        if (workflowExecutionIdBuilder_ == null) {
+      public Builder setProjectSnapshotId(com.google.protobuf.Int64Value value) {
+        if (projectSnapshotIdBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          workflowExecutionId_ = value;
+          projectSnapshotId_ = value;
           onChanged();
         } else {
-          workflowExecutionIdBuilder_.setMessage(value);
+          projectSnapshotIdBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder setWorkflowExecutionId(
+      public Builder setProjectSnapshotId(
           com.google.protobuf.Int64Value.Builder builderForValue) {
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionId_ = builderForValue.build();
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotId_ = builderForValue.build();
           onChanged();
         } else {
-          workflowExecutionIdBuilder_.setMessage(builderForValue.build());
+          projectSnapshotIdBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder mergeWorkflowExecutionId(com.google.protobuf.Int64Value value) {
-        if (workflowExecutionIdBuilder_ == null) {
-          if (workflowExecutionId_ != null) {
-            workflowExecutionId_ =
-              com.google.protobuf.Int64Value.newBuilder(workflowExecutionId_).mergeFrom(value).buildPartial();
+      public Builder mergeProjectSnapshotId(com.google.protobuf.Int64Value value) {
+        if (projectSnapshotIdBuilder_ == null) {
+          if (projectSnapshotId_ != null) {
+            projectSnapshotId_ =
+              com.google.protobuf.Int64Value.newBuilder(projectSnapshotId_).mergeFrom(value).buildPartial();
           } else {
-            workflowExecutionId_ = value;
+            projectSnapshotId_ = value;
           }
           onChanged();
         } else {
-          workflowExecutionIdBuilder_.mergeFrom(value);
+          projectSnapshotIdBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public Builder clearWorkflowExecutionId() {
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionId_ = null;
+      public Builder clearProjectSnapshotId() {
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotId_ = null;
           onChanged();
         } else {
-          workflowExecutionId_ = null;
-          workflowExecutionIdBuilder_ = null;
+          projectSnapshotId_ = null;
+          projectSnapshotIdBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public com.google.protobuf.Int64Value.Builder getWorkflowExecutionIdBuilder() {
+      public com.google.protobuf.Int64Value.Builder getProjectSnapshotIdBuilder() {
         
         onChanged();
-        return getWorkflowExecutionIdFieldBuilder().getBuilder();
+        return getProjectSnapshotIdFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
-      public com.google.protobuf.Int64ValueOrBuilder getWorkflowExecutionIdOrBuilder() {
-        if (workflowExecutionIdBuilder_ != null) {
-          return workflowExecutionIdBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.Int64ValueOrBuilder getProjectSnapshotIdOrBuilder() {
+        if (projectSnapshotIdBuilder_ != null) {
+          return projectSnapshotIdBuilder_.getMessageOrBuilder();
         } else {
-          return workflowExecutionId_ == null ?
-              com.google.protobuf.Int64Value.getDefaultInstance() : workflowExecutionId_;
+          return projectSnapshotId_ == null ?
+              com.google.protobuf.Int64Value.getDefaultInstance() : projectSnapshotId_;
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value workflow_execution_id = 3;</code>
+       * <code>.google.protobuf.Int64Value project_snapshot_id = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
-          getWorkflowExecutionIdFieldBuilder() {
-        if (workflowExecutionIdBuilder_ == null) {
-          workflowExecutionIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getProjectSnapshotIdFieldBuilder() {
+        if (projectSnapshotIdBuilder_ == null) {
+          projectSnapshotIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
-                  getWorkflowExecutionId(),
+                  getProjectSnapshotId(),
                   getParentForChildren(),
                   isClean());
-          workflowExecutionId_ = null;
+          projectSnapshotId_ = null;
         }
-        return workflowExecutionIdBuilder_;
+        return projectSnapshotIdBuilder_;
       }
 
       private com.google.protobuf.StringValue modelPath_;
@@ -10188,242 +9871,123 @@ public final class Message {
         return modelPathBuilder_;
       }
 
-      private com.google.protobuf.StringValue modelMetric_;
+      private com.google.protobuf.StringValue modelType_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelMetricBuilder_;
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelTypeBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
-       * @return Whether the modelMetric field is set.
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
+       * @return Whether the modelType field is set.
        */
-      public boolean hasModelMetric() {
-        return modelMetricBuilder_ != null || modelMetric_ != null;
+      public boolean hasModelType() {
+        return modelTypeBuilder_ != null || modelType_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
-       * @return The modelMetric.
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
+       * @return The modelType.
        */
-      public com.google.protobuf.StringValue getModelMetric() {
-        if (modelMetricBuilder_ == null) {
-          return modelMetric_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+      public com.google.protobuf.StringValue getModelType() {
+        if (modelTypeBuilder_ == null) {
+          return modelType_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
         } else {
-          return modelMetricBuilder_.getMessage();
+          return modelTypeBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
-      public Builder setModelMetric(com.google.protobuf.StringValue value) {
-        if (modelMetricBuilder_ == null) {
+      public Builder setModelType(com.google.protobuf.StringValue value) {
+        if (modelTypeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          modelMetric_ = value;
+          modelType_ = value;
           onChanged();
         } else {
-          modelMetricBuilder_.setMessage(value);
+          modelTypeBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
-      public Builder setModelMetric(
+      public Builder setModelType(
           com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = builderForValue.build();
+        if (modelTypeBuilder_ == null) {
+          modelType_ = builderForValue.build();
           onChanged();
         } else {
-          modelMetricBuilder_.setMessage(builderForValue.build());
+          modelTypeBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
-      public Builder mergeModelMetric(com.google.protobuf.StringValue value) {
-        if (modelMetricBuilder_ == null) {
-          if (modelMetric_ != null) {
-            modelMetric_ =
-              com.google.protobuf.StringValue.newBuilder(modelMetric_).mergeFrom(value).buildPartial();
+      public Builder mergeModelType(com.google.protobuf.StringValue value) {
+        if (modelTypeBuilder_ == null) {
+          if (modelType_ != null) {
+            modelType_ =
+              com.google.protobuf.StringValue.newBuilder(modelType_).mergeFrom(value).buildPartial();
           } else {
-            modelMetric_ = value;
+            modelType_ = value;
           }
           onChanged();
         } else {
-          modelMetricBuilder_.mergeFrom(value);
+          modelTypeBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
-      public Builder clearModelMetric() {
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = null;
+      public Builder clearModelType() {
+        if (modelTypeBuilder_ == null) {
+          modelType_ = null;
           onChanged();
         } else {
-          modelMetric_ = null;
-          modelMetricBuilder_ = null;
+          modelType_ = null;
+          modelTypeBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
-      public com.google.protobuf.StringValue.Builder getModelMetricBuilder() {
+      public com.google.protobuf.StringValue.Builder getModelTypeBuilder() {
         
         onChanged();
-        return getModelMetricFieldBuilder().getBuilder();
+        return getModelTypeFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
-      public com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder() {
-        if (modelMetricBuilder_ != null) {
-          return modelMetricBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder() {
+        if (modelTypeBuilder_ != null) {
+          return modelTypeBuilder_.getMessageOrBuilder();
         } else {
-          return modelMetric_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+          return modelType_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 5;</code>
+       * <code>.google.protobuf.StringValue model_type = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelMetricFieldBuilder() {
-        if (modelMetricBuilder_ == null) {
-          modelMetricBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getModelTypeFieldBuilder() {
+        if (modelTypeBuilder_ == null) {
+          modelTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelMetric(),
+                  getModelType(),
                   getParentForChildren(),
                   isClean());
-          modelMetric_ = null;
+          modelType_ = null;
         }
-        return modelMetricBuilder_;
-      }
-
-      private com.google.protobuf.StringValue modelFlavor_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelFlavorBuilder_;
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       * @return Whether the modelFlavor field is set.
-       */
-      public boolean hasModelFlavor() {
-        return modelFlavorBuilder_ != null || modelFlavor_ != null;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       * @return The modelFlavor.
-       */
-      public com.google.protobuf.StringValue getModelFlavor() {
-        if (modelFlavorBuilder_ == null) {
-          return modelFlavor_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-        } else {
-          return modelFlavorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      public Builder setModelFlavor(com.google.protobuf.StringValue value) {
-        if (modelFlavorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          modelFlavor_ = value;
-          onChanged();
-        } else {
-          modelFlavorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      public Builder setModelFlavor(
-          com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = builderForValue.build();
-          onChanged();
-        } else {
-          modelFlavorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      public Builder mergeModelFlavor(com.google.protobuf.StringValue value) {
-        if (modelFlavorBuilder_ == null) {
-          if (modelFlavor_ != null) {
-            modelFlavor_ =
-              com.google.protobuf.StringValue.newBuilder(modelFlavor_).mergeFrom(value).buildPartial();
-          } else {
-            modelFlavor_ = value;
-          }
-          onChanged();
-        } else {
-          modelFlavorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      public Builder clearModelFlavor() {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = null;
-          onChanged();
-        } else {
-          modelFlavor_ = null;
-          modelFlavorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      public com.google.protobuf.StringValue.Builder getModelFlavorBuilder() {
-        
-        onChanged();
-        return getModelFlavorFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      public com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder() {
-        if (modelFlavorBuilder_ != null) {
-          return modelFlavorBuilder_.getMessageOrBuilder();
-        } else {
-          return modelFlavor_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 6;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelFlavorFieldBuilder() {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelFlavor(),
-                  getParentForChildren(),
-                  isClean());
-          modelFlavor_ = null;
-        }
-        return modelFlavorBuilder_;
+        return modelTypeBuilder_;
       }
 
       private com.google.protobuf.StringValue versionDesc_;
@@ -18249,6 +17813,1574 @@ public final class Message {
 
   }
 
+  public interface WorkflowMetaProtoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ai_flow.WorkflowMetaProto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 uuid = 1;</code>
+     * @return The uuid.
+     */
+    long getUuid();
+
+    /**
+     * <code>string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <code>string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>.google.protobuf.Int64Value project_id = 3;</code>
+     * @return Whether the projectId field is set.
+     */
+    boolean hasProjectId();
+    /**
+     * <code>.google.protobuf.Int64Value project_id = 3;</code>
+     * @return The projectId.
+     */
+    com.google.protobuf.Int64Value getProjectId();
+    /**
+     * <code>.google.protobuf.Int64Value project_id = 3;</code>
+     */
+    com.google.protobuf.Int64ValueOrBuilder getProjectIdOrBuilder();
+
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+    int getPropertiesCount();
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+    boolean containsProperties(
+        java.lang.String key);
+    /**
+     * Use {@link #getPropertiesMap()} instead.
+     */
+    @java.lang.Deprecated
+    java.util.Map<java.lang.String, java.lang.String>
+    getProperties();
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+    java.util.Map<java.lang.String, java.lang.String>
+    getPropertiesMap();
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+
+    java.lang.String getPropertiesOrDefault(
+        java.lang.String key,
+        java.lang.String defaultValue);
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+
+    java.lang.String getPropertiesOrThrow(
+        java.lang.String key);
+
+    /**
+     * <code>.google.protobuf.Int64Value create_time = 5;</code>
+     * @return Whether the createTime field is set.
+     */
+    boolean hasCreateTime();
+    /**
+     * <code>.google.protobuf.Int64Value create_time = 5;</code>
+     * @return The createTime.
+     */
+    com.google.protobuf.Int64Value getCreateTime();
+    /**
+     * <code>.google.protobuf.Int64Value create_time = 5;</code>
+     */
+    com.google.protobuf.Int64ValueOrBuilder getCreateTimeOrBuilder();
+
+    /**
+     * <code>.google.protobuf.Int64Value update_time = 6;</code>
+     * @return Whether the updateTime field is set.
+     */
+    boolean hasUpdateTime();
+    /**
+     * <code>.google.protobuf.Int64Value update_time = 6;</code>
+     * @return The updateTime.
+     */
+    com.google.protobuf.Int64Value getUpdateTime();
+    /**
+     * <code>.google.protobuf.Int64Value update_time = 6;</code>
+     */
+    com.google.protobuf.Int64ValueOrBuilder getUpdateTimeOrBuilder();
+  }
+  /**
+   * Protobuf type {@code ai_flow.WorkflowMetaProto}
+   */
+  public static final class WorkflowMetaProto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ai_flow.WorkflowMetaProto)
+      WorkflowMetaProtoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use WorkflowMetaProto.newBuilder() to construct.
+    private WorkflowMetaProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private WorkflowMetaProto() {
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new WorkflowMetaProto();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private WorkflowMetaProto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              uuid_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.Int64Value.Builder subBuilder = null;
+              if (projectId_ != null) {
+                subBuilder = projectId_.toBuilder();
+              }
+              projectId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(projectId_);
+                projectId_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                properties_ = com.google.protobuf.MapField.newMapField(
+                    PropertiesDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000001;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+              properties__ = input.readMessage(
+                  PropertiesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              properties_.getMutableMap().put(
+                  properties__.getKey(), properties__.getValue());
+              break;
+            }
+            case 42: {
+              com.google.protobuf.Int64Value.Builder subBuilder = null;
+              if (createTime_ != null) {
+                subBuilder = createTime_.toBuilder();
+              }
+              createTime_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(createTime_);
+                createTime_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 50: {
+              com.google.protobuf.Int64Value.Builder subBuilder = null;
+              if (updateTime_ != null) {
+                subBuilder = updateTime_.toBuilder();
+              }
+              updateTime_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(updateTime_);
+                updateTime_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.aiflow.proto.Message.internal_static_ai_flow_WorkflowMetaProto_descriptor;
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    @java.lang.Override
+    protected com.google.protobuf.MapField internalGetMapField(
+        int number) {
+      switch (number) {
+        case 4:
+          return internalGetProperties();
+        default:
+          throw new RuntimeException(
+              "Invalid map field number: " + number);
+      }
+    }
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.aiflow.proto.Message.internal_static_ai_flow_WorkflowMetaProto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.aiflow.proto.Message.WorkflowMetaProto.class, com.aiflow.proto.Message.WorkflowMetaProto.Builder.class);
+    }
+
+    public static final int UUID_FIELD_NUMBER = 1;
+    private long uuid_;
+    /**
+     * <code>int64 uuid = 1;</code>
+     * @return The uuid.
+     */
+    @java.lang.Override
+    public long getUuid() {
+      return uuid_;
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PROJECT_ID_FIELD_NUMBER = 3;
+    private com.google.protobuf.Int64Value projectId_;
+    /**
+     * <code>.google.protobuf.Int64Value project_id = 3;</code>
+     * @return Whether the projectId field is set.
+     */
+    @java.lang.Override
+    public boolean hasProjectId() {
+      return projectId_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value project_id = 3;</code>
+     * @return The projectId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64Value getProjectId() {
+      return projectId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : projectId_;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value project_id = 3;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64ValueOrBuilder getProjectIdOrBuilder() {
+      return getProjectId();
+    }
+
+    public static final int PROPERTIES_FIELD_NUMBER = 4;
+    private static final class PropertiesDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<
+          java.lang.String, java.lang.String> defaultEntry =
+              com.google.protobuf.MapEntry
+              .<java.lang.String, java.lang.String>newDefaultInstance(
+                  com.aiflow.proto.Message.internal_static_ai_flow_WorkflowMetaProto_PropertiesEntry_descriptor, 
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "",
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "");
+    }
+    private com.google.protobuf.MapField<
+        java.lang.String, java.lang.String> properties_;
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+    internalGetProperties() {
+      if (properties_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            PropertiesDefaultEntryHolder.defaultEntry);
+      }
+      return properties_;
+    }
+
+    public int getPropertiesCount() {
+      return internalGetProperties().getMap().size();
+    }
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+
+    @java.lang.Override
+    public boolean containsProperties(
+        java.lang.String key) {
+      if (key == null) { throw new java.lang.NullPointerException(); }
+      return internalGetProperties().getMap().containsKey(key);
+    }
+    /**
+     * Use {@link #getPropertiesMap()} instead.
+     */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, java.lang.String> getProperties() {
+      return getPropertiesMap();
+    }
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+    @java.lang.Override
+
+    public java.util.Map<java.lang.String, java.lang.String> getPropertiesMap() {
+      return internalGetProperties().getMap();
+    }
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+    @java.lang.Override
+
+    public java.lang.String getPropertiesOrDefault(
+        java.lang.String key,
+        java.lang.String defaultValue) {
+      if (key == null) { throw new java.lang.NullPointerException(); }
+      java.util.Map<java.lang.String, java.lang.String> map =
+          internalGetProperties().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     * <code>map&lt;string, string&gt; properties = 4;</code>
+     */
+    @java.lang.Override
+
+    public java.lang.String getPropertiesOrThrow(
+        java.lang.String key) {
+      if (key == null) { throw new java.lang.NullPointerException(); }
+      java.util.Map<java.lang.String, java.lang.String> map =
+          internalGetProperties().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public static final int CREATE_TIME_FIELD_NUMBER = 5;
+    private com.google.protobuf.Int64Value createTime_;
+    /**
+     * <code>.google.protobuf.Int64Value create_time = 5;</code>
+     * @return Whether the createTime field is set.
+     */
+    @java.lang.Override
+    public boolean hasCreateTime() {
+      return createTime_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value create_time = 5;</code>
+     * @return The createTime.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64Value getCreateTime() {
+      return createTime_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : createTime_;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value create_time = 5;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64ValueOrBuilder getCreateTimeOrBuilder() {
+      return getCreateTime();
+    }
+
+    public static final int UPDATE_TIME_FIELD_NUMBER = 6;
+    private com.google.protobuf.Int64Value updateTime_;
+    /**
+     * <code>.google.protobuf.Int64Value update_time = 6;</code>
+     * @return Whether the updateTime field is set.
+     */
+    @java.lang.Override
+    public boolean hasUpdateTime() {
+      return updateTime_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value update_time = 6;</code>
+     * @return The updateTime.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64Value getUpdateTime() {
+      return updateTime_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : updateTime_;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value update_time = 6;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64ValueOrBuilder getUpdateTimeOrBuilder() {
+      return getUpdateTime();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (uuid_ != 0L) {
+        output.writeInt64(1, uuid_);
+      }
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      if (projectId_ != null) {
+        output.writeMessage(3, getProjectId());
+      }
+      com.google.protobuf.GeneratedMessageV3
+        .serializeStringMapTo(
+          output,
+          internalGetProperties(),
+          PropertiesDefaultEntryHolder.defaultEntry,
+          4);
+      if (createTime_ != null) {
+        output.writeMessage(5, getCreateTime());
+      }
+      if (updateTime_ != null) {
+        output.writeMessage(6, getUpdateTime());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (uuid_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, uuid_);
+      }
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      if (projectId_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getProjectId());
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetProperties().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        properties__ = PropertiesDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(4, properties__);
+      }
+      if (createTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getCreateTime());
+      }
+      if (updateTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getUpdateTime());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.aiflow.proto.Message.WorkflowMetaProto)) {
+        return super.equals(obj);
+      }
+      com.aiflow.proto.Message.WorkflowMetaProto other = (com.aiflow.proto.Message.WorkflowMetaProto) obj;
+
+      if (getUuid()
+          != other.getUuid()) return false;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (hasProjectId() != other.hasProjectId()) return false;
+      if (hasProjectId()) {
+        if (!getProjectId()
+            .equals(other.getProjectId())) return false;
+      }
+      if (!internalGetProperties().equals(
+          other.internalGetProperties())) return false;
+      if (hasCreateTime() != other.hasCreateTime()) return false;
+      if (hasCreateTime()) {
+        if (!getCreateTime()
+            .equals(other.getCreateTime())) return false;
+      }
+      if (hasUpdateTime() != other.hasUpdateTime()) return false;
+      if (hasUpdateTime()) {
+        if (!getUpdateTime()
+            .equals(other.getUpdateTime())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + UUID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUuid());
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+      if (hasProjectId()) {
+        hash = (37 * hash) + PROJECT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getProjectId().hashCode();
+      }
+      if (!internalGetProperties().getMap().isEmpty()) {
+        hash = (37 * hash) + PROPERTIES_FIELD_NUMBER;
+        hash = (53 * hash) + internalGetProperties().hashCode();
+      }
+      if (hasCreateTime()) {
+        hash = (37 * hash) + CREATE_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getCreateTime().hashCode();
+      }
+      if (hasUpdateTime()) {
+        hash = (37 * hash) + UPDATE_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getUpdateTime().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.aiflow.proto.Message.WorkflowMetaProto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.aiflow.proto.Message.WorkflowMetaProto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ai_flow.WorkflowMetaProto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ai_flow.WorkflowMetaProto)
+        com.aiflow.proto.Message.WorkflowMetaProtoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.aiflow.proto.Message.internal_static_ai_flow_WorkflowMetaProto_descriptor;
+      }
+
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMapField(
+          int number) {
+        switch (number) {
+          case 4:
+            return internalGetProperties();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMutableMapField(
+          int number) {
+        switch (number) {
+          case 4:
+            return internalGetMutableProperties();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.aiflow.proto.Message.internal_static_ai_flow_WorkflowMetaProto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.aiflow.proto.Message.WorkflowMetaProto.class, com.aiflow.proto.Message.WorkflowMetaProto.Builder.class);
+      }
+
+      // Construct using com.aiflow.proto.Message.WorkflowMetaProto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        uuid_ = 0L;
+
+        name_ = "";
+
+        if (projectIdBuilder_ == null) {
+          projectId_ = null;
+        } else {
+          projectId_ = null;
+          projectIdBuilder_ = null;
+        }
+        internalGetMutableProperties().clear();
+        if (createTimeBuilder_ == null) {
+          createTime_ = null;
+        } else {
+          createTime_ = null;
+          createTimeBuilder_ = null;
+        }
+        if (updateTimeBuilder_ == null) {
+          updateTime_ = null;
+        } else {
+          updateTime_ = null;
+          updateTimeBuilder_ = null;
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.aiflow.proto.Message.internal_static_ai_flow_WorkflowMetaProto_descriptor;
+      }
+
+      @java.lang.Override
+      public com.aiflow.proto.Message.WorkflowMetaProto getDefaultInstanceForType() {
+        return com.aiflow.proto.Message.WorkflowMetaProto.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.aiflow.proto.Message.WorkflowMetaProto build() {
+        com.aiflow.proto.Message.WorkflowMetaProto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.aiflow.proto.Message.WorkflowMetaProto buildPartial() {
+        com.aiflow.proto.Message.WorkflowMetaProto result = new com.aiflow.proto.Message.WorkflowMetaProto(this);
+        int from_bitField0_ = bitField0_;
+        result.uuid_ = uuid_;
+        result.name_ = name_;
+        if (projectIdBuilder_ == null) {
+          result.projectId_ = projectId_;
+        } else {
+          result.projectId_ = projectIdBuilder_.build();
+        }
+        result.properties_ = internalGetProperties();
+        result.properties_.makeImmutable();
+        if (createTimeBuilder_ == null) {
+          result.createTime_ = createTime_;
+        } else {
+          result.createTime_ = createTimeBuilder_.build();
+        }
+        if (updateTimeBuilder_ == null) {
+          result.updateTime_ = updateTime_;
+        } else {
+          result.updateTime_ = updateTimeBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.aiflow.proto.Message.WorkflowMetaProto) {
+          return mergeFrom((com.aiflow.proto.Message.WorkflowMetaProto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.aiflow.proto.Message.WorkflowMetaProto other) {
+        if (other == com.aiflow.proto.Message.WorkflowMetaProto.getDefaultInstance()) return this;
+        if (other.getUuid() != 0L) {
+          setUuid(other.getUuid());
+        }
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.hasProjectId()) {
+          mergeProjectId(other.getProjectId());
+        }
+        internalGetMutableProperties().mergeFrom(
+            other.internalGetProperties());
+        if (other.hasCreateTime()) {
+          mergeCreateTime(other.getCreateTime());
+        }
+        if (other.hasUpdateTime()) {
+          mergeUpdateTime(other.getUpdateTime());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.aiflow.proto.Message.WorkflowMetaProto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.aiflow.proto.Message.WorkflowMetaProto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private long uuid_ ;
+      /**
+       * <code>int64 uuid = 1;</code>
+       * @return The uuid.
+       */
+      @java.lang.Override
+      public long getUuid() {
+        return uuid_;
+      }
+      /**
+       * <code>int64 uuid = 1;</code>
+       * @param value The uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuid(long value) {
+        
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 uuid = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUuid() {
+        
+        uuid_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.Int64Value projectId_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> projectIdBuilder_;
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       * @return Whether the projectId field is set.
+       */
+      public boolean hasProjectId() {
+        return projectIdBuilder_ != null || projectId_ != null;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       * @return The projectId.
+       */
+      public com.google.protobuf.Int64Value getProjectId() {
+        if (projectIdBuilder_ == null) {
+          return projectId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : projectId_;
+        } else {
+          return projectIdBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      public Builder setProjectId(com.google.protobuf.Int64Value value) {
+        if (projectIdBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          projectId_ = value;
+          onChanged();
+        } else {
+          projectIdBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      public Builder setProjectId(
+          com.google.protobuf.Int64Value.Builder builderForValue) {
+        if (projectIdBuilder_ == null) {
+          projectId_ = builderForValue.build();
+          onChanged();
+        } else {
+          projectIdBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      public Builder mergeProjectId(com.google.protobuf.Int64Value value) {
+        if (projectIdBuilder_ == null) {
+          if (projectId_ != null) {
+            projectId_ =
+              com.google.protobuf.Int64Value.newBuilder(projectId_).mergeFrom(value).buildPartial();
+          } else {
+            projectId_ = value;
+          }
+          onChanged();
+        } else {
+          projectIdBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      public Builder clearProjectId() {
+        if (projectIdBuilder_ == null) {
+          projectId_ = null;
+          onChanged();
+        } else {
+          projectId_ = null;
+          projectIdBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      public com.google.protobuf.Int64Value.Builder getProjectIdBuilder() {
+        
+        onChanged();
+        return getProjectIdFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      public com.google.protobuf.Int64ValueOrBuilder getProjectIdOrBuilder() {
+        if (projectIdBuilder_ != null) {
+          return projectIdBuilder_.getMessageOrBuilder();
+        } else {
+          return projectId_ == null ?
+              com.google.protobuf.Int64Value.getDefaultInstance() : projectId_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value project_id = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
+          getProjectIdFieldBuilder() {
+        if (projectIdBuilder_ == null) {
+          projectIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
+                  getProjectId(),
+                  getParentForChildren(),
+                  isClean());
+          projectId_ = null;
+        }
+        return projectIdBuilder_;
+      }
+
+      private com.google.protobuf.MapField<
+          java.lang.String, java.lang.String> properties_;
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetProperties() {
+        if (properties_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+              PropertiesDefaultEntryHolder.defaultEntry);
+        }
+        return properties_;
+      }
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetMutableProperties() {
+        onChanged();;
+        if (properties_ == null) {
+          properties_ = com.google.protobuf.MapField.newMapField(
+              PropertiesDefaultEntryHolder.defaultEntry);
+        }
+        if (!properties_.isMutable()) {
+          properties_ = properties_.copy();
+        }
+        return properties_;
+      }
+
+      public int getPropertiesCount() {
+        return internalGetProperties().getMap().size();
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+
+      @java.lang.Override
+      public boolean containsProperties(
+          java.lang.String key) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        return internalGetProperties().getMap().containsKey(key);
+      }
+      /**
+       * Use {@link #getPropertiesMap()} instead.
+       */
+      @java.lang.Override
+      @java.lang.Deprecated
+      public java.util.Map<java.lang.String, java.lang.String> getProperties() {
+        return getPropertiesMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+      @java.lang.Override
+
+      public java.util.Map<java.lang.String, java.lang.String> getPropertiesMap() {
+        return internalGetProperties().getMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+      @java.lang.Override
+
+      public java.lang.String getPropertiesOrDefault(
+          java.lang.String key,
+          java.lang.String defaultValue) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        java.util.Map<java.lang.String, java.lang.String> map =
+            internalGetProperties().getMap();
+        return map.containsKey(key) ? map.get(key) : defaultValue;
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+      @java.lang.Override
+
+      public java.lang.String getPropertiesOrThrow(
+          java.lang.String key) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        java.util.Map<java.lang.String, java.lang.String> map =
+            internalGetProperties().getMap();
+        if (!map.containsKey(key)) {
+          throw new java.lang.IllegalArgumentException();
+        }
+        return map.get(key);
+      }
+
+      public Builder clearProperties() {
+        internalGetMutableProperties().getMutableMap()
+            .clear();
+        return this;
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+
+      public Builder removeProperties(
+          java.lang.String key) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        internalGetMutableProperties().getMutableMap()
+            .remove(key);
+        return this;
+      }
+      /**
+       * Use alternate mutation accessors instead.
+       */
+      @java.lang.Deprecated
+      public java.util.Map<java.lang.String, java.lang.String>
+      getMutableProperties() {
+        return internalGetMutableProperties().getMutableMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+      public Builder putProperties(
+          java.lang.String key,
+          java.lang.String value) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        if (value == null) { throw new java.lang.NullPointerException(); }
+        internalGetMutableProperties().getMutableMap()
+            .put(key, value);
+        return this;
+      }
+      /**
+       * <code>map&lt;string, string&gt; properties = 4;</code>
+       */
+
+      public Builder putAllProperties(
+          java.util.Map<java.lang.String, java.lang.String> values) {
+        internalGetMutableProperties().getMutableMap()
+            .putAll(values);
+        return this;
+      }
+
+      private com.google.protobuf.Int64Value createTime_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> createTimeBuilder_;
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       * @return Whether the createTime field is set.
+       */
+      public boolean hasCreateTime() {
+        return createTimeBuilder_ != null || createTime_ != null;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       * @return The createTime.
+       */
+      public com.google.protobuf.Int64Value getCreateTime() {
+        if (createTimeBuilder_ == null) {
+          return createTime_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : createTime_;
+        } else {
+          return createTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      public Builder setCreateTime(com.google.protobuf.Int64Value value) {
+        if (createTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          createTime_ = value;
+          onChanged();
+        } else {
+          createTimeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      public Builder setCreateTime(
+          com.google.protobuf.Int64Value.Builder builderForValue) {
+        if (createTimeBuilder_ == null) {
+          createTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          createTimeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      public Builder mergeCreateTime(com.google.protobuf.Int64Value value) {
+        if (createTimeBuilder_ == null) {
+          if (createTime_ != null) {
+            createTime_ =
+              com.google.protobuf.Int64Value.newBuilder(createTime_).mergeFrom(value).buildPartial();
+          } else {
+            createTime_ = value;
+          }
+          onChanged();
+        } else {
+          createTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      public Builder clearCreateTime() {
+        if (createTimeBuilder_ == null) {
+          createTime_ = null;
+          onChanged();
+        } else {
+          createTime_ = null;
+          createTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      public com.google.protobuf.Int64Value.Builder getCreateTimeBuilder() {
+        
+        onChanged();
+        return getCreateTimeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      public com.google.protobuf.Int64ValueOrBuilder getCreateTimeOrBuilder() {
+        if (createTimeBuilder_ != null) {
+          return createTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return createTime_ == null ?
+              com.google.protobuf.Int64Value.getDefaultInstance() : createTime_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value create_time = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
+          getCreateTimeFieldBuilder() {
+        if (createTimeBuilder_ == null) {
+          createTimeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
+                  getCreateTime(),
+                  getParentForChildren(),
+                  isClean());
+          createTime_ = null;
+        }
+        return createTimeBuilder_;
+      }
+
+      private com.google.protobuf.Int64Value updateTime_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> updateTimeBuilder_;
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       * @return Whether the updateTime field is set.
+       */
+      public boolean hasUpdateTime() {
+        return updateTimeBuilder_ != null || updateTime_ != null;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       * @return The updateTime.
+       */
+      public com.google.protobuf.Int64Value getUpdateTime() {
+        if (updateTimeBuilder_ == null) {
+          return updateTime_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : updateTime_;
+        } else {
+          return updateTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      public Builder setUpdateTime(com.google.protobuf.Int64Value value) {
+        if (updateTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          updateTime_ = value;
+          onChanged();
+        } else {
+          updateTimeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      public Builder setUpdateTime(
+          com.google.protobuf.Int64Value.Builder builderForValue) {
+        if (updateTimeBuilder_ == null) {
+          updateTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          updateTimeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      public Builder mergeUpdateTime(com.google.protobuf.Int64Value value) {
+        if (updateTimeBuilder_ == null) {
+          if (updateTime_ != null) {
+            updateTime_ =
+              com.google.protobuf.Int64Value.newBuilder(updateTime_).mergeFrom(value).buildPartial();
+          } else {
+            updateTime_ = value;
+          }
+          onChanged();
+        } else {
+          updateTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      public Builder clearUpdateTime() {
+        if (updateTimeBuilder_ == null) {
+          updateTime_ = null;
+          onChanged();
+        } else {
+          updateTime_ = null;
+          updateTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      public com.google.protobuf.Int64Value.Builder getUpdateTimeBuilder() {
+        
+        onChanged();
+        return getUpdateTimeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      public com.google.protobuf.Int64ValueOrBuilder getUpdateTimeOrBuilder() {
+        if (updateTimeBuilder_ != null) {
+          return updateTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return updateTime_ == null ?
+              com.google.protobuf.Int64Value.getDefaultInstance() : updateTime_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value update_time = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
+          getUpdateTimeFieldBuilder() {
+        if (updateTimeBuilder_ == null) {
+          updateTimeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
+                  getUpdateTime(),
+                  getParentForChildren(),
+                  isClean());
+          updateTime_ = null;
+        }
+        return updateTimeBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ai_flow.WorkflowMetaProto)
+    }
+
+    // @@protoc_insertion_point(class_scope:ai_flow.WorkflowMetaProto)
+    private static final com.aiflow.proto.Message.WorkflowMetaProto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.aiflow.proto.Message.WorkflowMetaProto();
+    }
+
+    public static com.aiflow.proto.Message.WorkflowMetaProto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<WorkflowMetaProto>
+        PARSER = new com.google.protobuf.AbstractParser<WorkflowMetaProto>() {
+      @java.lang.Override
+      public WorkflowMetaProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new WorkflowMetaProto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<WorkflowMetaProto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<WorkflowMetaProto> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.aiflow.proto.Message.WorkflowMetaProto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface ArtifactProtoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:ai_flow.ArtifactProto)
       com.google.protobuf.MessageOrBuilder {
@@ -20243,28 +21375,17 @@ public final class Message {
     com.google.protobuf.StringValueOrBuilder getModelNameOrBuilder();
 
     /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The enum numeric value on the wire for modelType.
-     */
-    int getModelTypeValue();
-    /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The modelType.
-     */
-    com.aiflow.proto.Message.ModelType getModelType();
-
-    /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return Whether the modelDesc field is set.
      */
     boolean hasModelDesc();
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return The modelDesc.
      */
     com.google.protobuf.StringValue getModelDesc();
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      */
     com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder();
   }
@@ -20281,7 +21402,6 @@ public final class Message {
       super(builder);
     }
     private RegisteredModelParam() {
-      modelType_ = 0;
     }
 
     @java.lang.Override
@@ -20327,13 +21447,7 @@ public final class Message {
 
               break;
             }
-            case 16: {
-              int rawValue = input.readEnum();
-
-              modelType_ = rawValue;
-              break;
-            }
-            case 26: {
+            case 18: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
               if (modelDesc_ != null) {
                 subBuilder = modelDesc_.toBuilder();
@@ -20404,29 +21518,10 @@ public final class Message {
       return getModelName();
     }
 
-    public static final int MODEL_TYPE_FIELD_NUMBER = 2;
-    private int modelType_;
-    /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The enum numeric value on the wire for modelType.
-     */
-    @java.lang.Override public int getModelTypeValue() {
-      return modelType_;
-    }
-    /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The modelType.
-     */
-    @java.lang.Override public com.aiflow.proto.Message.ModelType getModelType() {
-      @SuppressWarnings("deprecation")
-      com.aiflow.proto.Message.ModelType result = com.aiflow.proto.Message.ModelType.valueOf(modelType_);
-      return result == null ? com.aiflow.proto.Message.ModelType.UNRECOGNIZED : result;
-    }
-
-    public static final int MODEL_DESC_FIELD_NUMBER = 3;
+    public static final int MODEL_DESC_FIELD_NUMBER = 2;
     private com.google.protobuf.StringValue modelDesc_;
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return Whether the modelDesc field is set.
      */
     @java.lang.Override
@@ -20434,7 +21529,7 @@ public final class Message {
       return modelDesc_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return The modelDesc.
      */
     @java.lang.Override
@@ -20442,7 +21537,7 @@ public final class Message {
       return modelDesc_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelDesc_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      */
     @java.lang.Override
     public com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder() {
@@ -20466,11 +21561,8 @@ public final class Message {
       if (modelName_ != null) {
         output.writeMessage(1, getModelName());
       }
-      if (modelType_ != com.aiflow.proto.Message.ModelType.NONE_TYPE.getNumber()) {
-        output.writeEnum(2, modelType_);
-      }
       if (modelDesc_ != null) {
-        output.writeMessage(3, getModelDesc());
+        output.writeMessage(2, getModelDesc());
       }
       unknownFields.writeTo(output);
     }
@@ -20485,13 +21577,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getModelName());
       }
-      if (modelType_ != com.aiflow.proto.Message.ModelType.NONE_TYPE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, modelType_);
-      }
       if (modelDesc_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getModelDesc());
+          .computeMessageSize(2, getModelDesc());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -20513,7 +21601,6 @@ public final class Message {
         if (!getModelName()
             .equals(other.getModelName())) return false;
       }
-      if (modelType_ != other.modelType_) return false;
       if (hasModelDesc() != other.hasModelDesc()) return false;
       if (hasModelDesc()) {
         if (!getModelDesc()
@@ -20534,8 +21621,6 @@ public final class Message {
         hash = (37 * hash) + MODEL_NAME_FIELD_NUMBER;
         hash = (53 * hash) + getModelName().hashCode();
       }
-      hash = (37 * hash) + MODEL_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + modelType_;
       if (hasModelDesc()) {
         hash = (37 * hash) + MODEL_DESC_FIELD_NUMBER;
         hash = (53 * hash) + getModelDesc().hashCode();
@@ -20679,8 +21764,6 @@ public final class Message {
           modelName_ = null;
           modelNameBuilder_ = null;
         }
-        modelType_ = 0;
-
         if (modelDescBuilder_ == null) {
           modelDesc_ = null;
         } else {
@@ -20718,7 +21801,6 @@ public final class Message {
         } else {
           result.modelName_ = modelNameBuilder_.build();
         }
-        result.modelType_ = modelType_;
         if (modelDescBuilder_ == null) {
           result.modelDesc_ = modelDesc_;
         } else {
@@ -20774,9 +21856,6 @@ public final class Message {
         if (other == com.aiflow.proto.Message.RegisteredModelParam.getDefaultInstance()) return this;
         if (other.hasModelName()) {
           mergeModelName(other.getModelName());
-        }
-        if (other.modelType_ != 0) {
-          setModelTypeValue(other.getModelTypeValue());
         }
         if (other.hasModelDesc()) {
           mergeModelDesc(other.getModelDesc());
@@ -20929,72 +22008,18 @@ public final class Message {
         return modelNameBuilder_;
       }
 
-      private int modelType_ = 0;
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @return The enum numeric value on the wire for modelType.
-       */
-      @java.lang.Override public int getModelTypeValue() {
-        return modelType_;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @param value The enum numeric value on the wire for modelType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModelTypeValue(int value) {
-        
-        modelType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @return The modelType.
-       */
-      @java.lang.Override
-      public com.aiflow.proto.Message.ModelType getModelType() {
-        @SuppressWarnings("deprecation")
-        com.aiflow.proto.Message.ModelType result = com.aiflow.proto.Message.ModelType.valueOf(modelType_);
-        return result == null ? com.aiflow.proto.Message.ModelType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @param value The modelType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModelType(com.aiflow.proto.Message.ModelType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        modelType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearModelType() {
-        
-        modelType_ = 0;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.StringValue modelDesc_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelDescBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        * @return Whether the modelDesc field is set.
        */
       public boolean hasModelDesc() {
         return modelDescBuilder_ != null || modelDesc_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        * @return The modelDesc.
        */
       public com.google.protobuf.StringValue getModelDesc() {
@@ -21005,7 +22030,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder setModelDesc(com.google.protobuf.StringValue value) {
         if (modelDescBuilder_ == null) {
@@ -21021,7 +22046,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder setModelDesc(
           com.google.protobuf.StringValue.Builder builderForValue) {
@@ -21035,7 +22060,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder mergeModelDesc(com.google.protobuf.StringValue value) {
         if (modelDescBuilder_ == null) {
@@ -21053,7 +22078,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder clearModelDesc() {
         if (modelDescBuilder_ == null) {
@@ -21067,7 +22092,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public com.google.protobuf.StringValue.Builder getModelDescBuilder() {
         
@@ -21075,7 +22100,7 @@ public final class Message {
         return getModelDescFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder() {
         if (modelDescBuilder_ != null) {
@@ -21086,7 +22111,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
@@ -21174,57 +22199,42 @@ public final class Message {
     com.google.protobuf.StringValueOrBuilder getModelPathOrBuilder();
 
     /**
-     * <code>.google.protobuf.StringValue model_metric = 2;</code>
-     * @return Whether the modelMetric field is set.
+     * <code>.google.protobuf.StringValue model_type = 2;</code>
+     * @return Whether the modelType field is set.
      */
-    boolean hasModelMetric();
+    boolean hasModelType();
     /**
-     * <code>.google.protobuf.StringValue model_metric = 2;</code>
-     * @return The modelMetric.
+     * <code>.google.protobuf.StringValue model_type = 2;</code>
+     * @return The modelType.
      */
-    com.google.protobuf.StringValue getModelMetric();
+    com.google.protobuf.StringValue getModelType();
     /**
-     * <code>.google.protobuf.StringValue model_metric = 2;</code>
+     * <code>.google.protobuf.StringValue model_type = 2;</code>
      */
-    com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder();
+    com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder();
 
     /**
-     * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-     * @return Whether the modelFlavor field is set.
-     */
-    boolean hasModelFlavor();
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-     * @return The modelFlavor.
-     */
-    com.google.protobuf.StringValue getModelFlavor();
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder();
-
-    /**
-     * <code>.google.protobuf.StringValue version_desc = 4;</code>
+     * <code>.google.protobuf.StringValue version_desc = 3;</code>
      * @return Whether the versionDesc field is set.
      */
     boolean hasVersionDesc();
     /**
-     * <code>.google.protobuf.StringValue version_desc = 4;</code>
+     * <code>.google.protobuf.StringValue version_desc = 3;</code>
      * @return The versionDesc.
      */
     com.google.protobuf.StringValue getVersionDesc();
     /**
-     * <code>.google.protobuf.StringValue version_desc = 4;</code>
+     * <code>.google.protobuf.StringValue version_desc = 3;</code>
      */
     com.google.protobuf.StringValueOrBuilder getVersionDescOrBuilder();
 
     /**
-     * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+     * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
      * @return The enum numeric value on the wire for currentStage.
      */
     int getCurrentStageValue();
     /**
-     * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+     * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
      * @return The currentStage.
      */
     com.aiflow.proto.Message.ModelVersionStage getCurrentStage();
@@ -21290,31 +22300,18 @@ public final class Message {
             }
             case 18: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelMetric_ != null) {
-                subBuilder = modelMetric_.toBuilder();
+              if (modelType_ != null) {
+                subBuilder = modelType_.toBuilder();
               }
-              modelMetric_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              modelType_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(modelMetric_);
-                modelMetric_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(modelType_);
+                modelType_ = subBuilder.buildPartial();
               }
 
               break;
             }
             case 26: {
-              com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelFlavor_ != null) {
-                subBuilder = modelFlavor_.toBuilder();
-              }
-              modelFlavor_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(modelFlavor_);
-                modelFlavor_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 34: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
               if (versionDesc_ != null) {
                 subBuilder = versionDesc_.toBuilder();
@@ -21327,7 +22324,7 @@ public final class Message {
 
               break;
             }
-            case 40: {
+            case 32: {
               int rawValue = input.readEnum();
 
               currentStage_ = rawValue;
@@ -21391,62 +22388,36 @@ public final class Message {
       return getModelPath();
     }
 
-    public static final int MODEL_METRIC_FIELD_NUMBER = 2;
-    private com.google.protobuf.StringValue modelMetric_;
+    public static final int MODEL_TYPE_FIELD_NUMBER = 2;
+    private com.google.protobuf.StringValue modelType_;
     /**
-     * <code>.google.protobuf.StringValue model_metric = 2;</code>
-     * @return Whether the modelMetric field is set.
+     * <code>.google.protobuf.StringValue model_type = 2;</code>
+     * @return Whether the modelType field is set.
      */
     @java.lang.Override
-    public boolean hasModelMetric() {
-      return modelMetric_ != null;
+    public boolean hasModelType() {
+      return modelType_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_metric = 2;</code>
-     * @return The modelMetric.
+     * <code>.google.protobuf.StringValue model_type = 2;</code>
+     * @return The modelType.
      */
     @java.lang.Override
-    public com.google.protobuf.StringValue getModelMetric() {
-      return modelMetric_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+    public com.google.protobuf.StringValue getModelType() {
+      return modelType_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_metric = 2;</code>
+     * <code>.google.protobuf.StringValue model_type = 2;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder() {
-      return getModelMetric();
-    }
-
-    public static final int MODEL_FLAVOR_FIELD_NUMBER = 3;
-    private com.google.protobuf.StringValue modelFlavor_;
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-     * @return Whether the modelFlavor field is set.
-     */
-    @java.lang.Override
-    public boolean hasModelFlavor() {
-      return modelFlavor_ != null;
-    }
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-     * @return The modelFlavor.
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValue getModelFlavor() {
-      return modelFlavor_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-    }
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder() {
-      return getModelFlavor();
+    public com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder() {
+      return getModelType();
     }
 
-    public static final int VERSION_DESC_FIELD_NUMBER = 4;
+    public static final int VERSION_DESC_FIELD_NUMBER = 3;
     private com.google.protobuf.StringValue versionDesc_;
     /**
-     * <code>.google.protobuf.StringValue version_desc = 4;</code>
+     * <code>.google.protobuf.StringValue version_desc = 3;</code>
      * @return Whether the versionDesc field is set.
      */
     @java.lang.Override
@@ -21454,7 +22425,7 @@ public final class Message {
       return versionDesc_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue version_desc = 4;</code>
+     * <code>.google.protobuf.StringValue version_desc = 3;</code>
      * @return The versionDesc.
      */
     @java.lang.Override
@@ -21462,24 +22433,24 @@ public final class Message {
       return versionDesc_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : versionDesc_;
     }
     /**
-     * <code>.google.protobuf.StringValue version_desc = 4;</code>
+     * <code>.google.protobuf.StringValue version_desc = 3;</code>
      */
     @java.lang.Override
     public com.google.protobuf.StringValueOrBuilder getVersionDescOrBuilder() {
       return getVersionDesc();
     }
 
-    public static final int CURRENT_STAGE_FIELD_NUMBER = 5;
+    public static final int CURRENT_STAGE_FIELD_NUMBER = 4;
     private int currentStage_;
     /**
-     * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+     * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
      * @return The enum numeric value on the wire for currentStage.
      */
     @java.lang.Override public int getCurrentStageValue() {
       return currentStage_;
     }
     /**
-     * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+     * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
      * @return The currentStage.
      */
     @java.lang.Override public com.aiflow.proto.Message.ModelVersionStage getCurrentStage() {
@@ -21505,17 +22476,14 @@ public final class Message {
       if (modelPath_ != null) {
         output.writeMessage(1, getModelPath());
       }
-      if (modelMetric_ != null) {
-        output.writeMessage(2, getModelMetric());
-      }
-      if (modelFlavor_ != null) {
-        output.writeMessage(3, getModelFlavor());
+      if (modelType_ != null) {
+        output.writeMessage(2, getModelType());
       }
       if (versionDesc_ != null) {
-        output.writeMessage(4, getVersionDesc());
+        output.writeMessage(3, getVersionDesc());
       }
       if (currentStage_ != com.aiflow.proto.Message.ModelVersionStage.GENERATED.getNumber()) {
-        output.writeEnum(5, currentStage_);
+        output.writeEnum(4, currentStage_);
       }
       unknownFields.writeTo(output);
     }
@@ -21530,21 +22498,17 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getModelPath());
       }
-      if (modelMetric_ != null) {
+      if (modelType_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getModelMetric());
-      }
-      if (modelFlavor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getModelFlavor());
+          .computeMessageSize(2, getModelType());
       }
       if (versionDesc_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getVersionDesc());
+          .computeMessageSize(3, getVersionDesc());
       }
       if (currentStage_ != com.aiflow.proto.Message.ModelVersionStage.GENERATED.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(5, currentStage_);
+          .computeEnumSize(4, currentStage_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -21566,15 +22530,10 @@ public final class Message {
         if (!getModelPath()
             .equals(other.getModelPath())) return false;
       }
-      if (hasModelMetric() != other.hasModelMetric()) return false;
-      if (hasModelMetric()) {
-        if (!getModelMetric()
-            .equals(other.getModelMetric())) return false;
-      }
-      if (hasModelFlavor() != other.hasModelFlavor()) return false;
-      if (hasModelFlavor()) {
-        if (!getModelFlavor()
-            .equals(other.getModelFlavor())) return false;
+      if (hasModelType() != other.hasModelType()) return false;
+      if (hasModelType()) {
+        if (!getModelType()
+            .equals(other.getModelType())) return false;
       }
       if (hasVersionDesc() != other.hasVersionDesc()) return false;
       if (hasVersionDesc()) {
@@ -21597,13 +22556,9 @@ public final class Message {
         hash = (37 * hash) + MODEL_PATH_FIELD_NUMBER;
         hash = (53 * hash) + getModelPath().hashCode();
       }
-      if (hasModelMetric()) {
-        hash = (37 * hash) + MODEL_METRIC_FIELD_NUMBER;
-        hash = (53 * hash) + getModelMetric().hashCode();
-      }
-      if (hasModelFlavor()) {
-        hash = (37 * hash) + MODEL_FLAVOR_FIELD_NUMBER;
-        hash = (53 * hash) + getModelFlavor().hashCode();
+      if (hasModelType()) {
+        hash = (37 * hash) + MODEL_TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getModelType().hashCode();
       }
       if (hasVersionDesc()) {
         hash = (37 * hash) + VERSION_DESC_FIELD_NUMBER;
@@ -21750,17 +22705,11 @@ public final class Message {
           modelPath_ = null;
           modelPathBuilder_ = null;
         }
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = null;
+        if (modelTypeBuilder_ == null) {
+          modelType_ = null;
         } else {
-          modelMetric_ = null;
-          modelMetricBuilder_ = null;
-        }
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = null;
-        } else {
-          modelFlavor_ = null;
-          modelFlavorBuilder_ = null;
+          modelType_ = null;
+          modelTypeBuilder_ = null;
         }
         if (versionDescBuilder_ == null) {
           versionDesc_ = null;
@@ -21801,15 +22750,10 @@ public final class Message {
         } else {
           result.modelPath_ = modelPathBuilder_.build();
         }
-        if (modelMetricBuilder_ == null) {
-          result.modelMetric_ = modelMetric_;
+        if (modelTypeBuilder_ == null) {
+          result.modelType_ = modelType_;
         } else {
-          result.modelMetric_ = modelMetricBuilder_.build();
-        }
-        if (modelFlavorBuilder_ == null) {
-          result.modelFlavor_ = modelFlavor_;
-        } else {
-          result.modelFlavor_ = modelFlavorBuilder_.build();
+          result.modelType_ = modelTypeBuilder_.build();
         }
         if (versionDescBuilder_ == null) {
           result.versionDesc_ = versionDesc_;
@@ -21868,11 +22812,8 @@ public final class Message {
         if (other.hasModelPath()) {
           mergeModelPath(other.getModelPath());
         }
-        if (other.hasModelMetric()) {
-          mergeModelMetric(other.getModelMetric());
-        }
-        if (other.hasModelFlavor()) {
-          mergeModelFlavor(other.getModelFlavor());
+        if (other.hasModelType()) {
+          mergeModelType(other.getModelType());
         }
         if (other.hasVersionDesc()) {
           mergeVersionDesc(other.getVersionDesc());
@@ -22028,256 +22969,137 @@ public final class Message {
         return modelPathBuilder_;
       }
 
-      private com.google.protobuf.StringValue modelMetric_;
+      private com.google.protobuf.StringValue modelType_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelMetricBuilder_;
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelTypeBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
-       * @return Whether the modelMetric field is set.
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
+       * @return Whether the modelType field is set.
        */
-      public boolean hasModelMetric() {
-        return modelMetricBuilder_ != null || modelMetric_ != null;
+      public boolean hasModelType() {
+        return modelTypeBuilder_ != null || modelType_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
-       * @return The modelMetric.
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
+       * @return The modelType.
        */
-      public com.google.protobuf.StringValue getModelMetric() {
-        if (modelMetricBuilder_ == null) {
-          return modelMetric_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+      public com.google.protobuf.StringValue getModelType() {
+        if (modelTypeBuilder_ == null) {
+          return modelType_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
         } else {
-          return modelMetricBuilder_.getMessage();
+          return modelTypeBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
-      public Builder setModelMetric(com.google.protobuf.StringValue value) {
-        if (modelMetricBuilder_ == null) {
+      public Builder setModelType(com.google.protobuf.StringValue value) {
+        if (modelTypeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          modelMetric_ = value;
+          modelType_ = value;
           onChanged();
         } else {
-          modelMetricBuilder_.setMessage(value);
+          modelTypeBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
-      public Builder setModelMetric(
+      public Builder setModelType(
           com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = builderForValue.build();
+        if (modelTypeBuilder_ == null) {
+          modelType_ = builderForValue.build();
           onChanged();
         } else {
-          modelMetricBuilder_.setMessage(builderForValue.build());
+          modelTypeBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
-      public Builder mergeModelMetric(com.google.protobuf.StringValue value) {
-        if (modelMetricBuilder_ == null) {
-          if (modelMetric_ != null) {
-            modelMetric_ =
-              com.google.protobuf.StringValue.newBuilder(modelMetric_).mergeFrom(value).buildPartial();
+      public Builder mergeModelType(com.google.protobuf.StringValue value) {
+        if (modelTypeBuilder_ == null) {
+          if (modelType_ != null) {
+            modelType_ =
+              com.google.protobuf.StringValue.newBuilder(modelType_).mergeFrom(value).buildPartial();
           } else {
-            modelMetric_ = value;
+            modelType_ = value;
           }
           onChanged();
         } else {
-          modelMetricBuilder_.mergeFrom(value);
+          modelTypeBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
-      public Builder clearModelMetric() {
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = null;
+      public Builder clearModelType() {
+        if (modelTypeBuilder_ == null) {
+          modelType_ = null;
           onChanged();
         } else {
-          modelMetric_ = null;
-          modelMetricBuilder_ = null;
+          modelType_ = null;
+          modelTypeBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
-      public com.google.protobuf.StringValue.Builder getModelMetricBuilder() {
+      public com.google.protobuf.StringValue.Builder getModelTypeBuilder() {
         
         onChanged();
-        return getModelMetricFieldBuilder().getBuilder();
+        return getModelTypeFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
-      public com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder() {
-        if (modelMetricBuilder_ != null) {
-          return modelMetricBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder() {
+        if (modelTypeBuilder_ != null) {
+          return modelTypeBuilder_.getMessageOrBuilder();
         } else {
-          return modelMetric_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+          return modelType_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 2;</code>
+       * <code>.google.protobuf.StringValue model_type = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelMetricFieldBuilder() {
-        if (modelMetricBuilder_ == null) {
-          modelMetricBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getModelTypeFieldBuilder() {
+        if (modelTypeBuilder_ == null) {
+          modelTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelMetric(),
+                  getModelType(),
                   getParentForChildren(),
                   isClean());
-          modelMetric_ = null;
+          modelType_ = null;
         }
-        return modelMetricBuilder_;
-      }
-
-      private com.google.protobuf.StringValue modelFlavor_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelFlavorBuilder_;
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       * @return Whether the modelFlavor field is set.
-       */
-      public boolean hasModelFlavor() {
-        return modelFlavorBuilder_ != null || modelFlavor_ != null;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       * @return The modelFlavor.
-       */
-      public com.google.protobuf.StringValue getModelFlavor() {
-        if (modelFlavorBuilder_ == null) {
-          return modelFlavor_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-        } else {
-          return modelFlavorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      public Builder setModelFlavor(com.google.protobuf.StringValue value) {
-        if (modelFlavorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          modelFlavor_ = value;
-          onChanged();
-        } else {
-          modelFlavorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      public Builder setModelFlavor(
-          com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = builderForValue.build();
-          onChanged();
-        } else {
-          modelFlavorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      public Builder mergeModelFlavor(com.google.protobuf.StringValue value) {
-        if (modelFlavorBuilder_ == null) {
-          if (modelFlavor_ != null) {
-            modelFlavor_ =
-              com.google.protobuf.StringValue.newBuilder(modelFlavor_).mergeFrom(value).buildPartial();
-          } else {
-            modelFlavor_ = value;
-          }
-          onChanged();
-        } else {
-          modelFlavorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      public Builder clearModelFlavor() {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = null;
-          onChanged();
-        } else {
-          modelFlavor_ = null;
-          modelFlavorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      public com.google.protobuf.StringValue.Builder getModelFlavorBuilder() {
-        
-        onChanged();
-        return getModelFlavorFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      public com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder() {
-        if (modelFlavorBuilder_ != null) {
-          return modelFlavorBuilder_.getMessageOrBuilder();
-        } else {
-          return modelFlavor_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 3;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelFlavorFieldBuilder() {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelFlavor(),
-                  getParentForChildren(),
-                  isClean());
-          modelFlavor_ = null;
-        }
-        return modelFlavorBuilder_;
+        return modelTypeBuilder_;
       }
 
       private com.google.protobuf.StringValue versionDesc_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> versionDescBuilder_;
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        * @return Whether the versionDesc field is set.
        */
       public boolean hasVersionDesc() {
         return versionDescBuilder_ != null || versionDesc_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        * @return The versionDesc.
        */
       public com.google.protobuf.StringValue getVersionDesc() {
@@ -22288,7 +23110,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       public Builder setVersionDesc(com.google.protobuf.StringValue value) {
         if (versionDescBuilder_ == null) {
@@ -22304,7 +23126,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       public Builder setVersionDesc(
           com.google.protobuf.StringValue.Builder builderForValue) {
@@ -22318,7 +23140,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       public Builder mergeVersionDesc(com.google.protobuf.StringValue value) {
         if (versionDescBuilder_ == null) {
@@ -22336,7 +23158,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       public Builder clearVersionDesc() {
         if (versionDescBuilder_ == null) {
@@ -22350,7 +23172,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       public com.google.protobuf.StringValue.Builder getVersionDescBuilder() {
         
@@ -22358,7 +23180,7 @@ public final class Message {
         return getVersionDescFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       public com.google.protobuf.StringValueOrBuilder getVersionDescOrBuilder() {
         if (versionDescBuilder_ != null) {
@@ -22369,7 +23191,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue version_desc = 4;</code>
+       * <code>.google.protobuf.StringValue version_desc = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
@@ -22387,14 +23209,14 @@ public final class Message {
 
       private int currentStage_ = 0;
       /**
-       * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+       * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
        * @return The enum numeric value on the wire for currentStage.
        */
       @java.lang.Override public int getCurrentStageValue() {
         return currentStage_;
       }
       /**
-       * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+       * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
        * @param value The enum numeric value on the wire for currentStage to set.
        * @return This builder for chaining.
        */
@@ -22405,7 +23227,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+       * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
        * @return The currentStage.
        */
       @java.lang.Override
@@ -22415,7 +23237,7 @@ public final class Message {
         return result == null ? com.aiflow.proto.Message.ModelVersionStage.UNRECOGNIZED : result;
       }
       /**
-       * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+       * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
        * @param value The currentStage to set.
        * @return This builder for chaining.
        */
@@ -22429,7 +23251,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.ai_flow.ModelVersionStage current_stage = 5;</code>
+       * <code>.ai_flow.ModelVersionStage current_stage = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearCurrentStage() {
@@ -24200,28 +25022,17 @@ public final class Message {
         getModelNameBytes();
 
     /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The enum numeric value on the wire for modelType.
-     */
-    int getModelTypeValue();
-    /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The modelType.
-     */
-    com.aiflow.proto.Message.ModelType getModelType();
-
-    /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return Whether the modelDesc field is set.
      */
     boolean hasModelDesc();
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return The modelDesc.
      */
     com.google.protobuf.StringValue getModelDesc();
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      */
     com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder();
   }
@@ -24239,7 +25050,6 @@ public final class Message {
     }
     private RegisteredModelMeta() {
       modelName_ = "";
-      modelType_ = 0;
     }
 
     @java.lang.Override
@@ -24278,13 +25088,7 @@ public final class Message {
               modelName_ = s;
               break;
             }
-            case 16: {
-              int rawValue = input.readEnum();
-
-              modelType_ = rawValue;
-              break;
-            }
-            case 26: {
+            case 18: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
               if (modelDesc_ != null) {
                 subBuilder = modelDesc_.toBuilder();
@@ -24367,29 +25171,10 @@ public final class Message {
       }
     }
 
-    public static final int MODEL_TYPE_FIELD_NUMBER = 2;
-    private int modelType_;
-    /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The enum numeric value on the wire for modelType.
-     */
-    @java.lang.Override public int getModelTypeValue() {
-      return modelType_;
-    }
-    /**
-     * <code>.ai_flow.ModelType model_type = 2;</code>
-     * @return The modelType.
-     */
-    @java.lang.Override public com.aiflow.proto.Message.ModelType getModelType() {
-      @SuppressWarnings("deprecation")
-      com.aiflow.proto.Message.ModelType result = com.aiflow.proto.Message.ModelType.valueOf(modelType_);
-      return result == null ? com.aiflow.proto.Message.ModelType.UNRECOGNIZED : result;
-    }
-
-    public static final int MODEL_DESC_FIELD_NUMBER = 3;
+    public static final int MODEL_DESC_FIELD_NUMBER = 2;
     private com.google.protobuf.StringValue modelDesc_;
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return Whether the modelDesc field is set.
      */
     @java.lang.Override
@@ -24397,7 +25182,7 @@ public final class Message {
       return modelDesc_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      * @return The modelDesc.
      */
     @java.lang.Override
@@ -24405,7 +25190,7 @@ public final class Message {
       return modelDesc_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelDesc_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_desc = 3;</code>
+     * <code>.google.protobuf.StringValue model_desc = 2;</code>
      */
     @java.lang.Override
     public com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder() {
@@ -24429,11 +25214,8 @@ public final class Message {
       if (!getModelNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, modelName_);
       }
-      if (modelType_ != com.aiflow.proto.Message.ModelType.NONE_TYPE.getNumber()) {
-        output.writeEnum(2, modelType_);
-      }
       if (modelDesc_ != null) {
-        output.writeMessage(3, getModelDesc());
+        output.writeMessage(2, getModelDesc());
       }
       unknownFields.writeTo(output);
     }
@@ -24447,13 +25229,9 @@ public final class Message {
       if (!getModelNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, modelName_);
       }
-      if (modelType_ != com.aiflow.proto.Message.ModelType.NONE_TYPE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, modelType_);
-      }
       if (modelDesc_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getModelDesc());
+          .computeMessageSize(2, getModelDesc());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -24472,7 +25250,6 @@ public final class Message {
 
       if (!getModelName()
           .equals(other.getModelName())) return false;
-      if (modelType_ != other.modelType_) return false;
       if (hasModelDesc() != other.hasModelDesc()) return false;
       if (hasModelDesc()) {
         if (!getModelDesc()
@@ -24491,8 +25268,6 @@ public final class Message {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MODEL_NAME_FIELD_NUMBER;
       hash = (53 * hash) + getModelName().hashCode();
-      hash = (37 * hash) + MODEL_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + modelType_;
       if (hasModelDesc()) {
         hash = (37 * hash) + MODEL_DESC_FIELD_NUMBER;
         hash = (53 * hash) + getModelDesc().hashCode();
@@ -24632,8 +25407,6 @@ public final class Message {
         super.clear();
         modelName_ = "";
 
-        modelType_ = 0;
-
         if (modelDescBuilder_ == null) {
           modelDesc_ = null;
         } else {
@@ -24667,7 +25440,6 @@ public final class Message {
       public com.aiflow.proto.Message.RegisteredModelMeta buildPartial() {
         com.aiflow.proto.Message.RegisteredModelMeta result = new com.aiflow.proto.Message.RegisteredModelMeta(this);
         result.modelName_ = modelName_;
-        result.modelType_ = modelType_;
         if (modelDescBuilder_ == null) {
           result.modelDesc_ = modelDesc_;
         } else {
@@ -24724,9 +25496,6 @@ public final class Message {
         if (!other.getModelName().isEmpty()) {
           modelName_ = other.modelName_;
           onChanged();
-        }
-        if (other.modelType_ != 0) {
-          setModelTypeValue(other.getModelTypeValue());
         }
         if (other.hasModelDesc()) {
           mergeModelDesc(other.getModelDesc());
@@ -24836,72 +25605,18 @@ public final class Message {
         return this;
       }
 
-      private int modelType_ = 0;
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @return The enum numeric value on the wire for modelType.
-       */
-      @java.lang.Override public int getModelTypeValue() {
-        return modelType_;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @param value The enum numeric value on the wire for modelType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModelTypeValue(int value) {
-        
-        modelType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @return The modelType.
-       */
-      @java.lang.Override
-      public com.aiflow.proto.Message.ModelType getModelType() {
-        @SuppressWarnings("deprecation")
-        com.aiflow.proto.Message.ModelType result = com.aiflow.proto.Message.ModelType.valueOf(modelType_);
-        return result == null ? com.aiflow.proto.Message.ModelType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @param value The modelType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModelType(com.aiflow.proto.Message.ModelType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        modelType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.ModelType model_type = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearModelType() {
-        
-        modelType_ = 0;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.StringValue modelDesc_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelDescBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        * @return Whether the modelDesc field is set.
        */
       public boolean hasModelDesc() {
         return modelDescBuilder_ != null || modelDesc_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        * @return The modelDesc.
        */
       public com.google.protobuf.StringValue getModelDesc() {
@@ -24912,7 +25627,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder setModelDesc(com.google.protobuf.StringValue value) {
         if (modelDescBuilder_ == null) {
@@ -24928,7 +25643,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder setModelDesc(
           com.google.protobuf.StringValue.Builder builderForValue) {
@@ -24942,7 +25657,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder mergeModelDesc(com.google.protobuf.StringValue value) {
         if (modelDescBuilder_ == null) {
@@ -24960,7 +25675,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public Builder clearModelDesc() {
         if (modelDescBuilder_ == null) {
@@ -24974,7 +25689,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public com.google.protobuf.StringValue.Builder getModelDescBuilder() {
         
@@ -24982,7 +25697,7 @@ public final class Message {
         return getModelDescFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       public com.google.protobuf.StringValueOrBuilder getModelDescOrBuilder() {
         if (modelDescBuilder_ != null) {
@@ -24993,7 +25708,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_desc = 3;</code>
+       * <code>.google.protobuf.StringValue model_desc = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
@@ -25105,34 +25820,19 @@ public final class Message {
     com.google.protobuf.StringValueOrBuilder getModelPathOrBuilder();
 
     /**
-     * <code>.google.protobuf.StringValue model_metric = 4;</code>
-     * @return Whether the modelMetric field is set.
+     * <code>.google.protobuf.StringValue model_type = 5;</code>
+     * @return Whether the modelType field is set.
      */
-    boolean hasModelMetric();
+    boolean hasModelType();
     /**
-     * <code>.google.protobuf.StringValue model_metric = 4;</code>
-     * @return The modelMetric.
+     * <code>.google.protobuf.StringValue model_type = 5;</code>
+     * @return The modelType.
      */
-    com.google.protobuf.StringValue getModelMetric();
+    com.google.protobuf.StringValue getModelType();
     /**
-     * <code>.google.protobuf.StringValue model_metric = 4;</code>
+     * <code>.google.protobuf.StringValue model_type = 5;</code>
      */
-    com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder();
-
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-     * @return Whether the modelFlavor field is set.
-     */
-    boolean hasModelFlavor();
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-     * @return The modelFlavor.
-     */
-    com.google.protobuf.StringValue getModelFlavor();
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder();
+    com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder();
 
     /**
      * <code>.google.protobuf.StringValue version_desc = 6;</code>
@@ -25245,28 +25945,15 @@ public final class Message {
 
               break;
             }
-            case 34: {
-              com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelMetric_ != null) {
-                subBuilder = modelMetric_.toBuilder();
-              }
-              modelMetric_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(modelMetric_);
-                modelMetric_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
             case 42: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelFlavor_ != null) {
-                subBuilder = modelFlavor_.toBuilder();
+              if (modelType_ != null) {
+                subBuilder = modelType_.toBuilder();
               }
-              modelFlavor_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              modelType_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(modelFlavor_);
-                modelFlavor_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(modelType_);
+                modelType_ = subBuilder.buildPartial();
               }
 
               break;
@@ -25430,56 +26117,30 @@ public final class Message {
       return getModelPath();
     }
 
-    public static final int MODEL_METRIC_FIELD_NUMBER = 4;
-    private com.google.protobuf.StringValue modelMetric_;
+    public static final int MODEL_TYPE_FIELD_NUMBER = 5;
+    private com.google.protobuf.StringValue modelType_;
     /**
-     * <code>.google.protobuf.StringValue model_metric = 4;</code>
-     * @return Whether the modelMetric field is set.
+     * <code>.google.protobuf.StringValue model_type = 5;</code>
+     * @return Whether the modelType field is set.
      */
     @java.lang.Override
-    public boolean hasModelMetric() {
-      return modelMetric_ != null;
+    public boolean hasModelType() {
+      return modelType_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_metric = 4;</code>
-     * @return The modelMetric.
+     * <code>.google.protobuf.StringValue model_type = 5;</code>
+     * @return The modelType.
      */
     @java.lang.Override
-    public com.google.protobuf.StringValue getModelMetric() {
-      return modelMetric_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+    public com.google.protobuf.StringValue getModelType() {
+      return modelType_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_metric = 4;</code>
+     * <code>.google.protobuf.StringValue model_type = 5;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder() {
-      return getModelMetric();
-    }
-
-    public static final int MODEL_FLAVOR_FIELD_NUMBER = 5;
-    private com.google.protobuf.StringValue modelFlavor_;
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-     * @return Whether the modelFlavor field is set.
-     */
-    @java.lang.Override
-    public boolean hasModelFlavor() {
-      return modelFlavor_ != null;
-    }
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-     * @return The modelFlavor.
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValue getModelFlavor() {
-      return modelFlavor_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-    }
-    /**
-     * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder() {
-      return getModelFlavor();
+    public com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder() {
+      return getModelType();
     }
 
     public static final int VERSION_DESC_FIELD_NUMBER = 6;
@@ -25569,11 +26230,8 @@ public final class Message {
       if (modelPath_ != null) {
         output.writeMessage(3, getModelPath());
       }
-      if (modelMetric_ != null) {
-        output.writeMessage(4, getModelMetric());
-      }
-      if (modelFlavor_ != null) {
-        output.writeMessage(5, getModelFlavor());
+      if (modelType_ != null) {
+        output.writeMessage(5, getModelType());
       }
       if (versionDesc_ != null) {
         output.writeMessage(6, getVersionDesc());
@@ -25603,13 +26261,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getModelPath());
       }
-      if (modelMetric_ != null) {
+      if (modelType_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getModelMetric());
-      }
-      if (modelFlavor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getModelFlavor());
+          .computeMessageSize(5, getModelType());
       }
       if (versionDesc_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -25647,15 +26301,10 @@ public final class Message {
         if (!getModelPath()
             .equals(other.getModelPath())) return false;
       }
-      if (hasModelMetric() != other.hasModelMetric()) return false;
-      if (hasModelMetric()) {
-        if (!getModelMetric()
-            .equals(other.getModelMetric())) return false;
-      }
-      if (hasModelFlavor() != other.hasModelFlavor()) return false;
-      if (hasModelFlavor()) {
-        if (!getModelFlavor()
-            .equals(other.getModelFlavor())) return false;
+      if (hasModelType() != other.hasModelType()) return false;
+      if (hasModelType()) {
+        if (!getModelType()
+            .equals(other.getModelType())) return false;
       }
       if (hasVersionDesc() != other.hasVersionDesc()) return false;
       if (hasVersionDesc()) {
@@ -25683,13 +26332,9 @@ public final class Message {
         hash = (37 * hash) + MODEL_PATH_FIELD_NUMBER;
         hash = (53 * hash) + getModelPath().hashCode();
       }
-      if (hasModelMetric()) {
-        hash = (37 * hash) + MODEL_METRIC_FIELD_NUMBER;
-        hash = (53 * hash) + getModelMetric().hashCode();
-      }
-      if (hasModelFlavor()) {
-        hash = (37 * hash) + MODEL_FLAVOR_FIELD_NUMBER;
-        hash = (53 * hash) + getModelFlavor().hashCode();
+      if (hasModelType()) {
+        hash = (37 * hash) + MODEL_TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getModelType().hashCode();
       }
       if (hasVersionDesc()) {
         hash = (37 * hash) + VERSION_DESC_FIELD_NUMBER;
@@ -25842,17 +26487,11 @@ public final class Message {
           modelPath_ = null;
           modelPathBuilder_ = null;
         }
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = null;
+        if (modelTypeBuilder_ == null) {
+          modelType_ = null;
         } else {
-          modelMetric_ = null;
-          modelMetricBuilder_ = null;
-        }
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = null;
-        } else {
-          modelFlavor_ = null;
-          modelFlavorBuilder_ = null;
+          modelType_ = null;
+          modelTypeBuilder_ = null;
         }
         if (versionDescBuilder_ == null) {
           versionDesc_ = null;
@@ -25897,15 +26536,10 @@ public final class Message {
         } else {
           result.modelPath_ = modelPathBuilder_.build();
         }
-        if (modelMetricBuilder_ == null) {
-          result.modelMetric_ = modelMetric_;
+        if (modelTypeBuilder_ == null) {
+          result.modelType_ = modelType_;
         } else {
-          result.modelMetric_ = modelMetricBuilder_.build();
-        }
-        if (modelFlavorBuilder_ == null) {
-          result.modelFlavor_ = modelFlavor_;
-        } else {
-          result.modelFlavor_ = modelFlavorBuilder_.build();
+          result.modelType_ = modelTypeBuilder_.build();
         }
         if (versionDescBuilder_ == null) {
           result.versionDesc_ = versionDesc_;
@@ -25973,11 +26607,8 @@ public final class Message {
         if (other.hasModelPath()) {
           mergeModelPath(other.getModelPath());
         }
-        if (other.hasModelMetric()) {
-          mergeModelMetric(other.getModelMetric());
-        }
-        if (other.hasModelFlavor()) {
-          mergeModelFlavor(other.getModelFlavor());
+        if (other.hasModelType()) {
+          mergeModelType(other.getModelType());
         }
         if (other.hasVersionDesc()) {
           mergeVersionDesc(other.getVersionDesc());
@@ -26288,242 +26919,123 @@ public final class Message {
         return modelPathBuilder_;
       }
 
-      private com.google.protobuf.StringValue modelMetric_;
+      private com.google.protobuf.StringValue modelType_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelMetricBuilder_;
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelTypeBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
-       * @return Whether the modelMetric field is set.
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
+       * @return Whether the modelType field is set.
        */
-      public boolean hasModelMetric() {
-        return modelMetricBuilder_ != null || modelMetric_ != null;
+      public boolean hasModelType() {
+        return modelTypeBuilder_ != null || modelType_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
-       * @return The modelMetric.
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
+       * @return The modelType.
        */
-      public com.google.protobuf.StringValue getModelMetric() {
-        if (modelMetricBuilder_ == null) {
-          return modelMetric_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+      public com.google.protobuf.StringValue getModelType() {
+        if (modelTypeBuilder_ == null) {
+          return modelType_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
         } else {
-          return modelMetricBuilder_.getMessage();
+          return modelTypeBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
-      public Builder setModelMetric(com.google.protobuf.StringValue value) {
-        if (modelMetricBuilder_ == null) {
+      public Builder setModelType(com.google.protobuf.StringValue value) {
+        if (modelTypeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          modelMetric_ = value;
+          modelType_ = value;
           onChanged();
         } else {
-          modelMetricBuilder_.setMessage(value);
+          modelTypeBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
-      public Builder setModelMetric(
+      public Builder setModelType(
           com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = builderForValue.build();
+        if (modelTypeBuilder_ == null) {
+          modelType_ = builderForValue.build();
           onChanged();
         } else {
-          modelMetricBuilder_.setMessage(builderForValue.build());
+          modelTypeBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
-      public Builder mergeModelMetric(com.google.protobuf.StringValue value) {
-        if (modelMetricBuilder_ == null) {
-          if (modelMetric_ != null) {
-            modelMetric_ =
-              com.google.protobuf.StringValue.newBuilder(modelMetric_).mergeFrom(value).buildPartial();
+      public Builder mergeModelType(com.google.protobuf.StringValue value) {
+        if (modelTypeBuilder_ == null) {
+          if (modelType_ != null) {
+            modelType_ =
+              com.google.protobuf.StringValue.newBuilder(modelType_).mergeFrom(value).buildPartial();
           } else {
-            modelMetric_ = value;
+            modelType_ = value;
           }
           onChanged();
         } else {
-          modelMetricBuilder_.mergeFrom(value);
+          modelTypeBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
-      public Builder clearModelMetric() {
-        if (modelMetricBuilder_ == null) {
-          modelMetric_ = null;
+      public Builder clearModelType() {
+        if (modelTypeBuilder_ == null) {
+          modelType_ = null;
           onChanged();
         } else {
-          modelMetric_ = null;
-          modelMetricBuilder_ = null;
+          modelType_ = null;
+          modelTypeBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
-      public com.google.protobuf.StringValue.Builder getModelMetricBuilder() {
+      public com.google.protobuf.StringValue.Builder getModelTypeBuilder() {
         
         onChanged();
-        return getModelMetricFieldBuilder().getBuilder();
+        return getModelTypeFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
-      public com.google.protobuf.StringValueOrBuilder getModelMetricOrBuilder() {
-        if (modelMetricBuilder_ != null) {
-          return modelMetricBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getModelTypeOrBuilder() {
+        if (modelTypeBuilder_ != null) {
+          return modelTypeBuilder_.getMessageOrBuilder();
         } else {
-          return modelMetric_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelMetric_;
+          return modelType_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : modelType_;
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_metric = 4;</code>
+       * <code>.google.protobuf.StringValue model_type = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelMetricFieldBuilder() {
-        if (modelMetricBuilder_ == null) {
-          modelMetricBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getModelTypeFieldBuilder() {
+        if (modelTypeBuilder_ == null) {
+          modelTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelMetric(),
+                  getModelType(),
                   getParentForChildren(),
                   isClean());
-          modelMetric_ = null;
+          modelType_ = null;
         }
-        return modelMetricBuilder_;
-      }
-
-      private com.google.protobuf.StringValue modelFlavor_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelFlavorBuilder_;
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       * @return Whether the modelFlavor field is set.
-       */
-      public boolean hasModelFlavor() {
-        return modelFlavorBuilder_ != null || modelFlavor_ != null;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       * @return The modelFlavor.
-       */
-      public com.google.protobuf.StringValue getModelFlavor() {
-        if (modelFlavorBuilder_ == null) {
-          return modelFlavor_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-        } else {
-          return modelFlavorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      public Builder setModelFlavor(com.google.protobuf.StringValue value) {
-        if (modelFlavorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          modelFlavor_ = value;
-          onChanged();
-        } else {
-          modelFlavorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      public Builder setModelFlavor(
-          com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = builderForValue.build();
-          onChanged();
-        } else {
-          modelFlavorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      public Builder mergeModelFlavor(com.google.protobuf.StringValue value) {
-        if (modelFlavorBuilder_ == null) {
-          if (modelFlavor_ != null) {
-            modelFlavor_ =
-              com.google.protobuf.StringValue.newBuilder(modelFlavor_).mergeFrom(value).buildPartial();
-          } else {
-            modelFlavor_ = value;
-          }
-          onChanged();
-        } else {
-          modelFlavorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      public Builder clearModelFlavor() {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavor_ = null;
-          onChanged();
-        } else {
-          modelFlavor_ = null;
-          modelFlavorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      public com.google.protobuf.StringValue.Builder getModelFlavorBuilder() {
-        
-        onChanged();
-        return getModelFlavorFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      public com.google.protobuf.StringValueOrBuilder getModelFlavorOrBuilder() {
-        if (modelFlavorBuilder_ != null) {
-          return modelFlavorBuilder_.getMessageOrBuilder();
-        } else {
-          return modelFlavor_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelFlavor_;
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue model_flavor = 5;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelFlavorFieldBuilder() {
-        if (modelFlavorBuilder_ == null) {
-          modelFlavorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelFlavor(),
-                  getParentForChildren(),
-                  isClean());
-          modelFlavor_ = null;
-        }
-        return modelFlavorBuilder_;
+        return modelTypeBuilder_;
       }
 
       private com.google.protobuf.StringValue versionDesc_;
@@ -26825,19 +27337,19 @@ public final class Message {
     com.aiflow.proto.Message.RegisteredModelMetaOrBuilder getRegisteredModelOrBuilder();
 
     /**
-     * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
-     * @return Whether the modelVersion field is set.
+     * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
+     * @return Whether the latestModelVersion field is set.
      */
-    boolean hasModelVersion();
+    boolean hasLatestModelVersion();
     /**
-     * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
-     * @return The modelVersion.
+     * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
+     * @return The latestModelVersion.
      */
-    com.aiflow.proto.Message.ModelVersionMeta getModelVersion();
+    com.aiflow.proto.Message.ModelVersionMeta getLatestModelVersion();
     /**
-     * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+     * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
      */
-    com.aiflow.proto.Message.ModelVersionMetaOrBuilder getModelVersionOrBuilder();
+    com.aiflow.proto.Message.ModelVersionMetaOrBuilder getLatestModelVersionOrBuilder();
   }
   /**
    * Protobuf type {@code ai_flow.RegisteredModelDetail}
@@ -26899,13 +27411,13 @@ public final class Message {
             }
             case 18: {
               com.aiflow.proto.Message.ModelVersionMeta.Builder subBuilder = null;
-              if (modelVersion_ != null) {
-                subBuilder = modelVersion_.toBuilder();
+              if (latestModelVersion_ != null) {
+                subBuilder = latestModelVersion_.toBuilder();
               }
-              modelVersion_ = input.readMessage(com.aiflow.proto.Message.ModelVersionMeta.parser(), extensionRegistry);
+              latestModelVersion_ = input.readMessage(com.aiflow.proto.Message.ModelVersionMeta.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(modelVersion_);
-                modelVersion_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(latestModelVersion_);
+                latestModelVersion_ = subBuilder.buildPartial();
               }
 
               break;
@@ -26968,30 +27480,30 @@ public final class Message {
       return getRegisteredModel();
     }
 
-    public static final int MODEL_VERSION_FIELD_NUMBER = 2;
-    private com.aiflow.proto.Message.ModelVersionMeta modelVersion_;
+    public static final int LATEST_MODEL_VERSION_FIELD_NUMBER = 2;
+    private com.aiflow.proto.Message.ModelVersionMeta latestModelVersion_;
     /**
-     * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
-     * @return Whether the modelVersion field is set.
+     * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
+     * @return Whether the latestModelVersion field is set.
      */
     @java.lang.Override
-    public boolean hasModelVersion() {
-      return modelVersion_ != null;
+    public boolean hasLatestModelVersion() {
+      return latestModelVersion_ != null;
     }
     /**
-     * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
-     * @return The modelVersion.
+     * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
+     * @return The latestModelVersion.
      */
     @java.lang.Override
-    public com.aiflow.proto.Message.ModelVersionMeta getModelVersion() {
-      return modelVersion_ == null ? com.aiflow.proto.Message.ModelVersionMeta.getDefaultInstance() : modelVersion_;
+    public com.aiflow.proto.Message.ModelVersionMeta getLatestModelVersion() {
+      return latestModelVersion_ == null ? com.aiflow.proto.Message.ModelVersionMeta.getDefaultInstance() : latestModelVersion_;
     }
     /**
-     * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+     * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
      */
     @java.lang.Override
-    public com.aiflow.proto.Message.ModelVersionMetaOrBuilder getModelVersionOrBuilder() {
-      return getModelVersion();
+    public com.aiflow.proto.Message.ModelVersionMetaOrBuilder getLatestModelVersionOrBuilder() {
+      return getLatestModelVersion();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -27011,8 +27523,8 @@ public final class Message {
       if (registeredModel_ != null) {
         output.writeMessage(1, getRegisteredModel());
       }
-      if (modelVersion_ != null) {
-        output.writeMessage(2, getModelVersion());
+      if (latestModelVersion_ != null) {
+        output.writeMessage(2, getLatestModelVersion());
       }
       unknownFields.writeTo(output);
     }
@@ -27027,9 +27539,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getRegisteredModel());
       }
-      if (modelVersion_ != null) {
+      if (latestModelVersion_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getModelVersion());
+          .computeMessageSize(2, getLatestModelVersion());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -27051,10 +27563,10 @@ public final class Message {
         if (!getRegisteredModel()
             .equals(other.getRegisteredModel())) return false;
       }
-      if (hasModelVersion() != other.hasModelVersion()) return false;
-      if (hasModelVersion()) {
-        if (!getModelVersion()
-            .equals(other.getModelVersion())) return false;
+      if (hasLatestModelVersion() != other.hasLatestModelVersion()) return false;
+      if (hasLatestModelVersion()) {
+        if (!getLatestModelVersion()
+            .equals(other.getLatestModelVersion())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -27071,9 +27583,9 @@ public final class Message {
         hash = (37 * hash) + REGISTERED_MODEL_FIELD_NUMBER;
         hash = (53 * hash) + getRegisteredModel().hashCode();
       }
-      if (hasModelVersion()) {
-        hash = (37 * hash) + MODEL_VERSION_FIELD_NUMBER;
-        hash = (53 * hash) + getModelVersion().hashCode();
+      if (hasLatestModelVersion()) {
+        hash = (37 * hash) + LATEST_MODEL_VERSION_FIELD_NUMBER;
+        hash = (53 * hash) + getLatestModelVersion().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -27214,11 +27726,11 @@ public final class Message {
           registeredModel_ = null;
           registeredModelBuilder_ = null;
         }
-        if (modelVersionBuilder_ == null) {
-          modelVersion_ = null;
+        if (latestModelVersionBuilder_ == null) {
+          latestModelVersion_ = null;
         } else {
-          modelVersion_ = null;
-          modelVersionBuilder_ = null;
+          latestModelVersion_ = null;
+          latestModelVersionBuilder_ = null;
         }
         return this;
       }
@@ -27251,10 +27763,10 @@ public final class Message {
         } else {
           result.registeredModel_ = registeredModelBuilder_.build();
         }
-        if (modelVersionBuilder_ == null) {
-          result.modelVersion_ = modelVersion_;
+        if (latestModelVersionBuilder_ == null) {
+          result.latestModelVersion_ = latestModelVersion_;
         } else {
-          result.modelVersion_ = modelVersionBuilder_.build();
+          result.latestModelVersion_ = latestModelVersionBuilder_.build();
         }
         onBuilt();
         return result;
@@ -27307,8 +27819,8 @@ public final class Message {
         if (other.hasRegisteredModel()) {
           mergeRegisteredModel(other.getRegisteredModel());
         }
-        if (other.hasModelVersion()) {
-          mergeModelVersion(other.getModelVersion());
+        if (other.hasLatestModelVersion()) {
+          mergeLatestModelVersion(other.getLatestModelVersion());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -27458,123 +27970,123 @@ public final class Message {
         return registeredModelBuilder_;
       }
 
-      private com.aiflow.proto.Message.ModelVersionMeta modelVersion_;
+      private com.aiflow.proto.Message.ModelVersionMeta latestModelVersion_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.aiflow.proto.Message.ModelVersionMeta, com.aiflow.proto.Message.ModelVersionMeta.Builder, com.aiflow.proto.Message.ModelVersionMetaOrBuilder> modelVersionBuilder_;
+          com.aiflow.proto.Message.ModelVersionMeta, com.aiflow.proto.Message.ModelVersionMeta.Builder, com.aiflow.proto.Message.ModelVersionMetaOrBuilder> latestModelVersionBuilder_;
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
-       * @return Whether the modelVersion field is set.
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
+       * @return Whether the latestModelVersion field is set.
        */
-      public boolean hasModelVersion() {
-        return modelVersionBuilder_ != null || modelVersion_ != null;
+      public boolean hasLatestModelVersion() {
+        return latestModelVersionBuilder_ != null || latestModelVersion_ != null;
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
-       * @return The modelVersion.
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
+       * @return The latestModelVersion.
        */
-      public com.aiflow.proto.Message.ModelVersionMeta getModelVersion() {
-        if (modelVersionBuilder_ == null) {
-          return modelVersion_ == null ? com.aiflow.proto.Message.ModelVersionMeta.getDefaultInstance() : modelVersion_;
+      public com.aiflow.proto.Message.ModelVersionMeta getLatestModelVersion() {
+        if (latestModelVersionBuilder_ == null) {
+          return latestModelVersion_ == null ? com.aiflow.proto.Message.ModelVersionMeta.getDefaultInstance() : latestModelVersion_;
         } else {
-          return modelVersionBuilder_.getMessage();
+          return latestModelVersionBuilder_.getMessage();
         }
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
-      public Builder setModelVersion(com.aiflow.proto.Message.ModelVersionMeta value) {
-        if (modelVersionBuilder_ == null) {
+      public Builder setLatestModelVersion(com.aiflow.proto.Message.ModelVersionMeta value) {
+        if (latestModelVersionBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          modelVersion_ = value;
+          latestModelVersion_ = value;
           onChanged();
         } else {
-          modelVersionBuilder_.setMessage(value);
+          latestModelVersionBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
-      public Builder setModelVersion(
+      public Builder setLatestModelVersion(
           com.aiflow.proto.Message.ModelVersionMeta.Builder builderForValue) {
-        if (modelVersionBuilder_ == null) {
-          modelVersion_ = builderForValue.build();
+        if (latestModelVersionBuilder_ == null) {
+          latestModelVersion_ = builderForValue.build();
           onChanged();
         } else {
-          modelVersionBuilder_.setMessage(builderForValue.build());
+          latestModelVersionBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
-      public Builder mergeModelVersion(com.aiflow.proto.Message.ModelVersionMeta value) {
-        if (modelVersionBuilder_ == null) {
-          if (modelVersion_ != null) {
-            modelVersion_ =
-              com.aiflow.proto.Message.ModelVersionMeta.newBuilder(modelVersion_).mergeFrom(value).buildPartial();
+      public Builder mergeLatestModelVersion(com.aiflow.proto.Message.ModelVersionMeta value) {
+        if (latestModelVersionBuilder_ == null) {
+          if (latestModelVersion_ != null) {
+            latestModelVersion_ =
+              com.aiflow.proto.Message.ModelVersionMeta.newBuilder(latestModelVersion_).mergeFrom(value).buildPartial();
           } else {
-            modelVersion_ = value;
+            latestModelVersion_ = value;
           }
           onChanged();
         } else {
-          modelVersionBuilder_.mergeFrom(value);
+          latestModelVersionBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
-      public Builder clearModelVersion() {
-        if (modelVersionBuilder_ == null) {
-          modelVersion_ = null;
+      public Builder clearLatestModelVersion() {
+        if (latestModelVersionBuilder_ == null) {
+          latestModelVersion_ = null;
           onChanged();
         } else {
-          modelVersion_ = null;
-          modelVersionBuilder_ = null;
+          latestModelVersion_ = null;
+          latestModelVersionBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
-      public com.aiflow.proto.Message.ModelVersionMeta.Builder getModelVersionBuilder() {
+      public com.aiflow.proto.Message.ModelVersionMeta.Builder getLatestModelVersionBuilder() {
         
         onChanged();
-        return getModelVersionFieldBuilder().getBuilder();
+        return getLatestModelVersionFieldBuilder().getBuilder();
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
-      public com.aiflow.proto.Message.ModelVersionMetaOrBuilder getModelVersionOrBuilder() {
-        if (modelVersionBuilder_ != null) {
-          return modelVersionBuilder_.getMessageOrBuilder();
+      public com.aiflow.proto.Message.ModelVersionMetaOrBuilder getLatestModelVersionOrBuilder() {
+        if (latestModelVersionBuilder_ != null) {
+          return latestModelVersionBuilder_.getMessageOrBuilder();
         } else {
-          return modelVersion_ == null ?
-              com.aiflow.proto.Message.ModelVersionMeta.getDefaultInstance() : modelVersion_;
+          return latestModelVersion_ == null ?
+              com.aiflow.proto.Message.ModelVersionMeta.getDefaultInstance() : latestModelVersion_;
         }
       }
       /**
-       * <code>.ai_flow.ModelVersionMeta model_version = 2;</code>
+       * <code>.ai_flow.ModelVersionMeta latest_model_version = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.aiflow.proto.Message.ModelVersionMeta, com.aiflow.proto.Message.ModelVersionMeta.Builder, com.aiflow.proto.Message.ModelVersionMetaOrBuilder> 
-          getModelVersionFieldBuilder() {
-        if (modelVersionBuilder_ == null) {
-          modelVersionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getLatestModelVersionFieldBuilder() {
+        if (latestModelVersionBuilder_ == null) {
+          latestModelVersionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.aiflow.proto.Message.ModelVersionMeta, com.aiflow.proto.Message.ModelVersionMeta.Builder, com.aiflow.proto.Message.ModelVersionMetaOrBuilder>(
-                  getModelVersion(),
+                  getLatestModelVersion(),
                   getParentForChildren(),
                   isClean());
-          modelVersion_ = null;
+          latestModelVersion_ = null;
         }
-        return modelVersionBuilder_;
+        return latestModelVersionBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -29102,126 +29614,135 @@ public final class Message {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int64 uuid = 1;</code>
-     * @return The uuid.
+     * <code>.google.protobuf.StringValue metric_name = 1;</code>
+     * @return Whether the metricName field is set.
      */
-    long getUuid();
+    boolean hasMetricName();
+    /**
+     * <code>.google.protobuf.StringValue metric_name = 1;</code>
+     * @return The metricName.
+     */
+    com.google.protobuf.StringValue getMetricName();
+    /**
+     * <code>.google.protobuf.StringValue metric_name = 1;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getMetricNameOrBuilder();
 
     /**
-     * <code>.google.protobuf.StringValue name = 2;</code>
-     * @return Whether the name field is set.
-     */
-    boolean hasName();
-    /**
-     * <code>.google.protobuf.StringValue name = 2;</code>
-     * @return The name.
-     */
-    com.google.protobuf.StringValue getName();
-    /**
-     * <code>.google.protobuf.StringValue name = 2;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getNameOrBuilder();
-
-    /**
-     * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-     * @return Whether the datasetId field is set.
-     */
-    boolean hasDatasetId();
-    /**
-     * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-     * @return The datasetId.
-     */
-    com.google.protobuf.Int64Value getDatasetId();
-    /**
-     * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-     */
-    com.google.protobuf.Int64ValueOrBuilder getDatasetIdOrBuilder();
-
-    /**
-     * <code>.google.protobuf.StringValue model_name = 4;</code>
-     * @return Whether the modelName field is set.
-     */
-    boolean hasModelName();
-    /**
-     * <code>.google.protobuf.StringValue model_name = 4;</code>
-     * @return The modelName.
-     */
-    com.google.protobuf.StringValue getModelName();
-    /**
-     * <code>.google.protobuf.StringValue model_name = 4;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getModelNameOrBuilder();
-
-    /**
-     * <code>.google.protobuf.StringValue model_version = 5;</code>
-     * @return Whether the modelVersion field is set.
-     */
-    boolean hasModelVersion();
-    /**
-     * <code>.google.protobuf.StringValue model_version = 5;</code>
-     * @return The modelVersion.
-     */
-    com.google.protobuf.StringValue getModelVersion();
-    /**
-     * <code>.google.protobuf.StringValue model_version = 5;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getModelVersionOrBuilder();
-
-    /**
-     * <code>.google.protobuf.Int64Value job_id = 6;</code>
-     * @return Whether the jobId field is set.
-     */
-    boolean hasJobId();
-    /**
-     * <code>.google.protobuf.Int64Value job_id = 6;</code>
-     * @return The jobId.
-     */
-    com.google.protobuf.Int64Value getJobId();
-    /**
-     * <code>.google.protobuf.Int64Value job_id = 6;</code>
-     */
-    com.google.protobuf.Int64ValueOrBuilder getJobIdOrBuilder();
-
-    /**
-     * <code>.google.protobuf.Int64Value start_time = 7;</code>
-     * @return Whether the startTime field is set.
-     */
-    boolean hasStartTime();
-    /**
-     * <code>.google.protobuf.Int64Value start_time = 7;</code>
-     * @return The startTime.
-     */
-    com.google.protobuf.Int64Value getStartTime();
-    /**
-     * <code>.google.protobuf.Int64Value start_time = 7;</code>
-     */
-    com.google.protobuf.Int64ValueOrBuilder getStartTimeOrBuilder();
-
-    /**
-     * <code>.google.protobuf.Int64Value end_time = 8;</code>
-     * @return Whether the endTime field is set.
-     */
-    boolean hasEndTime();
-    /**
-     * <code>.google.protobuf.Int64Value end_time = 8;</code>
-     * @return The endTime.
-     */
-    com.google.protobuf.Int64Value getEndTime();
-    /**
-     * <code>.google.protobuf.Int64Value end_time = 8;</code>
-     */
-    com.google.protobuf.Int64ValueOrBuilder getEndTimeOrBuilder();
-
-    /**
-     * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
+     * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
      * @return The enum numeric value on the wire for metricType.
      */
     int getMetricTypeValue();
     /**
-     * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
+     * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
      * @return The metricType.
      */
     com.aiflow.proto.Message.MetricTypeProto getMetricType();
+
+    /**
+     * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+     * @return Whether the metricDesc field is set.
+     */
+    boolean hasMetricDesc();
+    /**
+     * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+     * @return The metricDesc.
+     */
+    com.google.protobuf.StringValue getMetricDesc();
+    /**
+     * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getMetricDescOrBuilder();
+
+    /**
+     * <code>.google.protobuf.StringValue project_name = 4;</code>
+     * @return Whether the projectName field is set.
+     */
+    boolean hasProjectName();
+    /**
+     * <code>.google.protobuf.StringValue project_name = 4;</code>
+     * @return The projectName.
+     */
+    com.google.protobuf.StringValue getProjectName();
+    /**
+     * <code>.google.protobuf.StringValue project_name = 4;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getProjectNameOrBuilder();
+
+    /**
+     * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+     * @return Whether the datasetName field is set.
+     */
+    boolean hasDatasetName();
+    /**
+     * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+     * @return The datasetName.
+     */
+    com.google.protobuf.StringValue getDatasetName();
+    /**
+     * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getDatasetNameOrBuilder();
+
+    /**
+     * <code>.google.protobuf.StringValue model_name = 6;</code>
+     * @return Whether the modelName field is set.
+     */
+    boolean hasModelName();
+    /**
+     * <code>.google.protobuf.StringValue model_name = 6;</code>
+     * @return The modelName.
+     */
+    com.google.protobuf.StringValue getModelName();
+    /**
+     * <code>.google.protobuf.StringValue model_name = 6;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getModelNameOrBuilder();
+
+    /**
+     * <code>.google.protobuf.StringValue job_name = 7;</code>
+     * @return Whether the jobName field is set.
+     */
+    boolean hasJobName();
+    /**
+     * <code>.google.protobuf.StringValue job_name = 7;</code>
+     * @return The jobName.
+     */
+    com.google.protobuf.StringValue getJobName();
+    /**
+     * <code>.google.protobuf.StringValue job_name = 7;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getJobNameOrBuilder();
+
+    /**
+     * <code>.google.protobuf.Int64Value start_time = 8;</code>
+     * @return Whether the startTime field is set.
+     */
+    boolean hasStartTime();
+    /**
+     * <code>.google.protobuf.Int64Value start_time = 8;</code>
+     * @return The startTime.
+     */
+    com.google.protobuf.Int64Value getStartTime();
+    /**
+     * <code>.google.protobuf.Int64Value start_time = 8;</code>
+     */
+    com.google.protobuf.Int64ValueOrBuilder getStartTimeOrBuilder();
+
+    /**
+     * <code>.google.protobuf.Int64Value end_time = 9;</code>
+     * @return Whether the endTime field is set.
+     */
+    boolean hasEndTime();
+    /**
+     * <code>.google.protobuf.Int64Value end_time = 9;</code>
+     * @return The endTime.
+     */
+    com.google.protobuf.Int64Value getEndTime();
+    /**
+     * <code>.google.protobuf.Int64Value end_time = 9;</code>
+     */
+    com.google.protobuf.Int64ValueOrBuilder getEndTimeOrBuilder();
 
     /**
      * <code>.google.protobuf.StringValue uri = 10;</code>
@@ -29254,26 +29775,11 @@ public final class Message {
     com.google.protobuf.StringValueOrBuilder getTagsOrBuilder();
 
     /**
-     * <code>.google.protobuf.StringValue metric_description = 12;</code>
-     * @return Whether the metricDescription field is set.
-     */
-    boolean hasMetricDescription();
-    /**
-     * <code>.google.protobuf.StringValue metric_description = 12;</code>
-     * @return The metricDescription.
-     */
-    com.google.protobuf.StringValue getMetricDescription();
-    /**
-     * <code>.google.protobuf.StringValue metric_description = 12;</code>
-     */
-    com.google.protobuf.StringValueOrBuilder getMetricDescriptionOrBuilder();
-
-    /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
     int getPropertiesCount();
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
     boolean containsProperties(
         java.lang.String key);
@@ -29284,19 +29790,19 @@ public final class Message {
     java.util.Map<java.lang.String, java.lang.String>
     getProperties();
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
     java.util.Map<java.lang.String, java.lang.String>
     getPropertiesMap();
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
 
     java.lang.String getPropertiesOrDefault(
         java.lang.String key,
         java.lang.String defaultValue);
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
 
     java.lang.String getPropertiesOrThrow(
@@ -29349,38 +29855,65 @@ public final class Message {
             case 0:
               done = true;
               break;
-            case 8: {
+            case 10: {
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (metricName_ != null) {
+                subBuilder = metricName_.toBuilder();
+              }
+              metricName_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(metricName_);
+                metricName_ = subBuilder.buildPartial();
+              }
 
-              uuid_ = input.readInt64();
               break;
             }
-            case 18: {
-              com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (name_ != null) {
-                subBuilder = name_.toBuilder();
-              }
-              name_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(name_);
-                name_ = subBuilder.buildPartial();
-              }
+            case 16: {
+              int rawValue = input.readEnum();
 
+              metricType_ = rawValue;
               break;
             }
             case 26: {
-              com.google.protobuf.Int64Value.Builder subBuilder = null;
-              if (datasetId_ != null) {
-                subBuilder = datasetId_.toBuilder();
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (metricDesc_ != null) {
+                subBuilder = metricDesc_.toBuilder();
               }
-              datasetId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              metricDesc_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(datasetId_);
-                datasetId_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(metricDesc_);
+                metricDesc_ = subBuilder.buildPartial();
               }
 
               break;
             }
             case 34: {
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (projectName_ != null) {
+                subBuilder = projectName_.toBuilder();
+              }
+              projectName_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(projectName_);
+                projectName_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 42: {
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (datasetName_ != null) {
+                subBuilder = datasetName_.toBuilder();
+              }
+              datasetName_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(datasetName_);
+                datasetName_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 50: {
               com.google.protobuf.StringValue.Builder subBuilder = null;
               if (modelName_ != null) {
                 subBuilder = modelName_.toBuilder();
@@ -29393,33 +29926,20 @@ public final class Message {
 
               break;
             }
-            case 42: {
-              com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (modelVersion_ != null) {
-                subBuilder = modelVersion_.toBuilder();
-              }
-              modelVersion_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(modelVersion_);
-                modelVersion_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 50: {
-              com.google.protobuf.Int64Value.Builder subBuilder = null;
-              if (jobId_ != null) {
-                subBuilder = jobId_.toBuilder();
-              }
-              jobId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(jobId_);
-                jobId_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
             case 58: {
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (jobName_ != null) {
+                subBuilder = jobName_.toBuilder();
+              }
+              jobName_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(jobName_);
+                jobName_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 66: {
               com.google.protobuf.Int64Value.Builder subBuilder = null;
               if (startTime_ != null) {
                 subBuilder = startTime_.toBuilder();
@@ -29432,7 +29952,7 @@ public final class Message {
 
               break;
             }
-            case 66: {
+            case 74: {
               com.google.protobuf.Int64Value.Builder subBuilder = null;
               if (endTime_ != null) {
                 subBuilder = endTime_.toBuilder();
@@ -29443,12 +29963,6 @@ public final class Message {
                 endTime_ = subBuilder.buildPartial();
               }
 
-              break;
-            }
-            case 72: {
-              int rawValue = input.readEnum();
-
-              metricType_ = rawValue;
               break;
             }
             case 82: {
@@ -29478,19 +29992,6 @@ public final class Message {
               break;
             }
             case 98: {
-              com.google.protobuf.StringValue.Builder subBuilder = null;
-              if (metricDescription_ != null) {
-                subBuilder = metricDescription_.toBuilder();
-              }
-              metricDescription_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(metricDescription_);
-                metricDescription_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 106: {
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 properties_ = com.google.protobuf.MapField.newMapField(
                     PropertiesDefaultEntryHolder.defaultEntry);
@@ -29532,7 +30033,7 @@ public final class Message {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 13:
+        case 12:
           return internalGetProperties();
         default:
           throw new RuntimeException(
@@ -29547,73 +30048,133 @@ public final class Message {
               com.aiflow.proto.Message.MetricMetaProto.class, com.aiflow.proto.Message.MetricMetaProto.Builder.class);
     }
 
-    public static final int UUID_FIELD_NUMBER = 1;
-    private long uuid_;
+    public static final int METRIC_NAME_FIELD_NUMBER = 1;
+    private com.google.protobuf.StringValue metricName_;
     /**
-     * <code>int64 uuid = 1;</code>
-     * @return The uuid.
+     * <code>.google.protobuf.StringValue metric_name = 1;</code>
+     * @return Whether the metricName field is set.
      */
     @java.lang.Override
-    public long getUuid() {
-      return uuid_;
+    public boolean hasMetricName() {
+      return metricName_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue metric_name = 1;</code>
+     * @return The metricName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValue getMetricName() {
+      return metricName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricName_;
+    }
+    /**
+     * <code>.google.protobuf.StringValue metric_name = 1;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValueOrBuilder getMetricNameOrBuilder() {
+      return getMetricName();
     }
 
-    public static final int NAME_FIELD_NUMBER = 2;
-    private com.google.protobuf.StringValue name_;
+    public static final int METRIC_TYPE_FIELD_NUMBER = 2;
+    private int metricType_;
     /**
-     * <code>.google.protobuf.StringValue name = 2;</code>
-     * @return Whether the name field is set.
+     * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+     * @return The enum numeric value on the wire for metricType.
      */
-    @java.lang.Override
-    public boolean hasName() {
-      return name_ != null;
+    @java.lang.Override public int getMetricTypeValue() {
+      return metricType_;
     }
     /**
-     * <code>.google.protobuf.StringValue name = 2;</code>
-     * @return The name.
+     * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+     * @return The metricType.
      */
-    @java.lang.Override
-    public com.google.protobuf.StringValue getName() {
-      return name_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : name_;
-    }
-    /**
-     * <code>.google.protobuf.StringValue name = 2;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getNameOrBuilder() {
-      return getName();
+    @java.lang.Override public com.aiflow.proto.Message.MetricTypeProto getMetricType() {
+      @SuppressWarnings("deprecation")
+      com.aiflow.proto.Message.MetricTypeProto result = com.aiflow.proto.Message.MetricTypeProto.valueOf(metricType_);
+      return result == null ? com.aiflow.proto.Message.MetricTypeProto.UNRECOGNIZED : result;
     }
 
-    public static final int DATASET_ID_FIELD_NUMBER = 3;
-    private com.google.protobuf.Int64Value datasetId_;
+    public static final int METRIC_DESC_FIELD_NUMBER = 3;
+    private com.google.protobuf.StringValue metricDesc_;
     /**
-     * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-     * @return Whether the datasetId field is set.
+     * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+     * @return Whether the metricDesc field is set.
      */
     @java.lang.Override
-    public boolean hasDatasetId() {
-      return datasetId_ != null;
+    public boolean hasMetricDesc() {
+      return metricDesc_ != null;
     }
     /**
-     * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-     * @return The datasetId.
+     * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+     * @return The metricDesc.
      */
     @java.lang.Override
-    public com.google.protobuf.Int64Value getDatasetId() {
-      return datasetId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : datasetId_;
+    public com.google.protobuf.StringValue getMetricDesc() {
+      return metricDesc_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricDesc_;
     }
     /**
-     * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+     * <code>.google.protobuf.StringValue metric_desc = 3;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.Int64ValueOrBuilder getDatasetIdOrBuilder() {
-      return getDatasetId();
+    public com.google.protobuf.StringValueOrBuilder getMetricDescOrBuilder() {
+      return getMetricDesc();
     }
 
-    public static final int MODEL_NAME_FIELD_NUMBER = 4;
+    public static final int PROJECT_NAME_FIELD_NUMBER = 4;
+    private com.google.protobuf.StringValue projectName_;
+    /**
+     * <code>.google.protobuf.StringValue project_name = 4;</code>
+     * @return Whether the projectName field is set.
+     */
+    @java.lang.Override
+    public boolean hasProjectName() {
+      return projectName_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue project_name = 4;</code>
+     * @return The projectName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValue getProjectName() {
+      return projectName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : projectName_;
+    }
+    /**
+     * <code>.google.protobuf.StringValue project_name = 4;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValueOrBuilder getProjectNameOrBuilder() {
+      return getProjectName();
+    }
+
+    public static final int DATASET_NAME_FIELD_NUMBER = 5;
+    private com.google.protobuf.StringValue datasetName_;
+    /**
+     * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+     * @return Whether the datasetName field is set.
+     */
+    @java.lang.Override
+    public boolean hasDatasetName() {
+      return datasetName_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+     * @return The datasetName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValue getDatasetName() {
+      return datasetName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : datasetName_;
+    }
+    /**
+     * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValueOrBuilder getDatasetNameOrBuilder() {
+      return getDatasetName();
+    }
+
+    public static final int MODEL_NAME_FIELD_NUMBER = 6;
     private com.google.protobuf.StringValue modelName_;
     /**
-     * <code>.google.protobuf.StringValue model_name = 4;</code>
+     * <code>.google.protobuf.StringValue model_name = 6;</code>
      * @return Whether the modelName field is set.
      */
     @java.lang.Override
@@ -29621,7 +30182,7 @@ public final class Message {
       return modelName_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_name = 4;</code>
+     * <code>.google.protobuf.StringValue model_name = 6;</code>
      * @return The modelName.
      */
     @java.lang.Override
@@ -29629,69 +30190,43 @@ public final class Message {
       return modelName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelName_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_name = 4;</code>
+     * <code>.google.protobuf.StringValue model_name = 6;</code>
      */
     @java.lang.Override
     public com.google.protobuf.StringValueOrBuilder getModelNameOrBuilder() {
       return getModelName();
     }
 
-    public static final int MODEL_VERSION_FIELD_NUMBER = 5;
-    private com.google.protobuf.StringValue modelVersion_;
+    public static final int JOB_NAME_FIELD_NUMBER = 7;
+    private com.google.protobuf.StringValue jobName_;
     /**
-     * <code>.google.protobuf.StringValue model_version = 5;</code>
-     * @return Whether the modelVersion field is set.
+     * <code>.google.protobuf.StringValue job_name = 7;</code>
+     * @return Whether the jobName field is set.
      */
     @java.lang.Override
-    public boolean hasModelVersion() {
-      return modelVersion_ != null;
+    public boolean hasJobName() {
+      return jobName_ != null;
     }
     /**
-     * <code>.google.protobuf.StringValue model_version = 5;</code>
-     * @return The modelVersion.
+     * <code>.google.protobuf.StringValue job_name = 7;</code>
+     * @return The jobName.
      */
     @java.lang.Override
-    public com.google.protobuf.StringValue getModelVersion() {
-      return modelVersion_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelVersion_;
+    public com.google.protobuf.StringValue getJobName() {
+      return jobName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : jobName_;
     }
     /**
-     * <code>.google.protobuf.StringValue model_version = 5;</code>
+     * <code>.google.protobuf.StringValue job_name = 7;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getModelVersionOrBuilder() {
-      return getModelVersion();
-    }
-
-    public static final int JOB_ID_FIELD_NUMBER = 6;
-    private com.google.protobuf.Int64Value jobId_;
-    /**
-     * <code>.google.protobuf.Int64Value job_id = 6;</code>
-     * @return Whether the jobId field is set.
-     */
-    @java.lang.Override
-    public boolean hasJobId() {
-      return jobId_ != null;
-    }
-    /**
-     * <code>.google.protobuf.Int64Value job_id = 6;</code>
-     * @return The jobId.
-     */
-    @java.lang.Override
-    public com.google.protobuf.Int64Value getJobId() {
-      return jobId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : jobId_;
-    }
-    /**
-     * <code>.google.protobuf.Int64Value job_id = 6;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.Int64ValueOrBuilder getJobIdOrBuilder() {
-      return getJobId();
+    public com.google.protobuf.StringValueOrBuilder getJobNameOrBuilder() {
+      return getJobName();
     }
 
-    public static final int START_TIME_FIELD_NUMBER = 7;
+    public static final int START_TIME_FIELD_NUMBER = 8;
     private com.google.protobuf.Int64Value startTime_;
     /**
-     * <code>.google.protobuf.Int64Value start_time = 7;</code>
+     * <code>.google.protobuf.Int64Value start_time = 8;</code>
      * @return Whether the startTime field is set.
      */
     @java.lang.Override
@@ -29699,7 +30234,7 @@ public final class Message {
       return startTime_ != null;
     }
     /**
-     * <code>.google.protobuf.Int64Value start_time = 7;</code>
+     * <code>.google.protobuf.Int64Value start_time = 8;</code>
      * @return The startTime.
      */
     @java.lang.Override
@@ -29707,17 +30242,17 @@ public final class Message {
       return startTime_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : startTime_;
     }
     /**
-     * <code>.google.protobuf.Int64Value start_time = 7;</code>
+     * <code>.google.protobuf.Int64Value start_time = 8;</code>
      */
     @java.lang.Override
     public com.google.protobuf.Int64ValueOrBuilder getStartTimeOrBuilder() {
       return getStartTime();
     }
 
-    public static final int END_TIME_FIELD_NUMBER = 8;
+    public static final int END_TIME_FIELD_NUMBER = 9;
     private com.google.protobuf.Int64Value endTime_;
     /**
-     * <code>.google.protobuf.Int64Value end_time = 8;</code>
+     * <code>.google.protobuf.Int64Value end_time = 9;</code>
      * @return Whether the endTime field is set.
      */
     @java.lang.Override
@@ -29725,7 +30260,7 @@ public final class Message {
       return endTime_ != null;
     }
     /**
-     * <code>.google.protobuf.Int64Value end_time = 8;</code>
+     * <code>.google.protobuf.Int64Value end_time = 9;</code>
      * @return The endTime.
      */
     @java.lang.Override
@@ -29733,30 +30268,11 @@ public final class Message {
       return endTime_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : endTime_;
     }
     /**
-     * <code>.google.protobuf.Int64Value end_time = 8;</code>
+     * <code>.google.protobuf.Int64Value end_time = 9;</code>
      */
     @java.lang.Override
     public com.google.protobuf.Int64ValueOrBuilder getEndTimeOrBuilder() {
       return getEndTime();
-    }
-
-    public static final int METRIC_TYPE_FIELD_NUMBER = 9;
-    private int metricType_;
-    /**
-     * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-     * @return The enum numeric value on the wire for metricType.
-     */
-    @java.lang.Override public int getMetricTypeValue() {
-      return metricType_;
-    }
-    /**
-     * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-     * @return The metricType.
-     */
-    @java.lang.Override public com.aiflow.proto.Message.MetricTypeProto getMetricType() {
-      @SuppressWarnings("deprecation")
-      com.aiflow.proto.Message.MetricTypeProto result = com.aiflow.proto.Message.MetricTypeProto.valueOf(metricType_);
-      return result == null ? com.aiflow.proto.Message.MetricTypeProto.UNRECOGNIZED : result;
     }
 
     public static final int URI_FIELD_NUMBER = 10;
@@ -29811,33 +30327,7 @@ public final class Message {
       return getTags();
     }
 
-    public static final int METRIC_DESCRIPTION_FIELD_NUMBER = 12;
-    private com.google.protobuf.StringValue metricDescription_;
-    /**
-     * <code>.google.protobuf.StringValue metric_description = 12;</code>
-     * @return Whether the metricDescription field is set.
-     */
-    @java.lang.Override
-    public boolean hasMetricDescription() {
-      return metricDescription_ != null;
-    }
-    /**
-     * <code>.google.protobuf.StringValue metric_description = 12;</code>
-     * @return The metricDescription.
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValue getMetricDescription() {
-      return metricDescription_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricDescription_;
-    }
-    /**
-     * <code>.google.protobuf.StringValue metric_description = 12;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.StringValueOrBuilder getMetricDescriptionOrBuilder() {
-      return getMetricDescription();
-    }
-
-    public static final int PROPERTIES_FIELD_NUMBER = 13;
+    public static final int PROPERTIES_FIELD_NUMBER = 12;
     private static final class PropertiesDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -29864,7 +30354,7 @@ public final class Message {
       return internalGetProperties().getMap().size();
     }
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
 
     @java.lang.Override
@@ -29882,7 +30372,7 @@ public final class Message {
       return getPropertiesMap();
     }
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
     @java.lang.Override
 
@@ -29890,7 +30380,7 @@ public final class Message {
       return internalGetProperties().getMap();
     }
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
     @java.lang.Override
 
@@ -29903,7 +30393,7 @@ public final class Message {
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
-     * <code>map&lt;string, string&gt; properties = 13;</code>
+     * <code>map&lt;string, string&gt; properties = 12;</code>
      */
     @java.lang.Override
 
@@ -29932,32 +30422,32 @@ public final class Message {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (uuid_ != 0L) {
-        output.writeInt64(1, uuid_);
-      }
-      if (name_ != null) {
-        output.writeMessage(2, getName());
-      }
-      if (datasetId_ != null) {
-        output.writeMessage(3, getDatasetId());
-      }
-      if (modelName_ != null) {
-        output.writeMessage(4, getModelName());
-      }
-      if (modelVersion_ != null) {
-        output.writeMessage(5, getModelVersion());
-      }
-      if (jobId_ != null) {
-        output.writeMessage(6, getJobId());
-      }
-      if (startTime_ != null) {
-        output.writeMessage(7, getStartTime());
-      }
-      if (endTime_ != null) {
-        output.writeMessage(8, getEndTime());
+      if (metricName_ != null) {
+        output.writeMessage(1, getMetricName());
       }
       if (metricType_ != com.aiflow.proto.Message.MetricTypeProto.DATASET.getNumber()) {
-        output.writeEnum(9, metricType_);
+        output.writeEnum(2, metricType_);
+      }
+      if (metricDesc_ != null) {
+        output.writeMessage(3, getMetricDesc());
+      }
+      if (projectName_ != null) {
+        output.writeMessage(4, getProjectName());
+      }
+      if (datasetName_ != null) {
+        output.writeMessage(5, getDatasetName());
+      }
+      if (modelName_ != null) {
+        output.writeMessage(6, getModelName());
+      }
+      if (jobName_ != null) {
+        output.writeMessage(7, getJobName());
+      }
+      if (startTime_ != null) {
+        output.writeMessage(8, getStartTime());
+      }
+      if (endTime_ != null) {
+        output.writeMessage(9, getEndTime());
       }
       if (uri_ != null) {
         output.writeMessage(10, getUri());
@@ -29965,15 +30455,12 @@ public final class Message {
       if (tags_ != null) {
         output.writeMessage(11, getTags());
       }
-      if (metricDescription_ != null) {
-        output.writeMessage(12, getMetricDescription());
-      }
       com.google.protobuf.GeneratedMessageV3
         .serializeStringMapTo(
           output,
           internalGetProperties(),
           PropertiesDefaultEntryHolder.defaultEntry,
-          13);
+          12);
       unknownFields.writeTo(output);
     }
 
@@ -29983,41 +30470,41 @@ public final class Message {
       if (size != -1) return size;
 
       size = 0;
-      if (uuid_ != 0L) {
+      if (metricName_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, uuid_);
-      }
-      if (name_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getName());
-      }
-      if (datasetId_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getDatasetId());
-      }
-      if (modelName_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getModelName());
-      }
-      if (modelVersion_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getModelVersion());
-      }
-      if (jobId_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getJobId());
-      }
-      if (startTime_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getStartTime());
-      }
-      if (endTime_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, getEndTime());
+          .computeMessageSize(1, getMetricName());
       }
       if (metricType_ != com.aiflow.proto.Message.MetricTypeProto.DATASET.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(9, metricType_);
+          .computeEnumSize(2, metricType_);
+      }
+      if (metricDesc_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getMetricDesc());
+      }
+      if (projectName_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getProjectName());
+      }
+      if (datasetName_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getDatasetName());
+      }
+      if (modelName_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getModelName());
+      }
+      if (jobName_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getJobName());
+      }
+      if (startTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, getStartTime());
+      }
+      if (endTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, getEndTime());
       }
       if (uri_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -30027,10 +30514,6 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(11, getTags());
       }
-      if (metricDescription_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, getMetricDescription());
-      }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetProperties().getMap().entrySet()) {
         com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
@@ -30039,7 +30522,7 @@ public final class Message {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(13, properties__);
+            .computeMessageSize(12, properties__);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -30056,32 +30539,36 @@ public final class Message {
       }
       com.aiflow.proto.Message.MetricMetaProto other = (com.aiflow.proto.Message.MetricMetaProto) obj;
 
-      if (getUuid()
-          != other.getUuid()) return false;
-      if (hasName() != other.hasName()) return false;
-      if (hasName()) {
-        if (!getName()
-            .equals(other.getName())) return false;
+      if (hasMetricName() != other.hasMetricName()) return false;
+      if (hasMetricName()) {
+        if (!getMetricName()
+            .equals(other.getMetricName())) return false;
       }
-      if (hasDatasetId() != other.hasDatasetId()) return false;
-      if (hasDatasetId()) {
-        if (!getDatasetId()
-            .equals(other.getDatasetId())) return false;
+      if (metricType_ != other.metricType_) return false;
+      if (hasMetricDesc() != other.hasMetricDesc()) return false;
+      if (hasMetricDesc()) {
+        if (!getMetricDesc()
+            .equals(other.getMetricDesc())) return false;
+      }
+      if (hasProjectName() != other.hasProjectName()) return false;
+      if (hasProjectName()) {
+        if (!getProjectName()
+            .equals(other.getProjectName())) return false;
+      }
+      if (hasDatasetName() != other.hasDatasetName()) return false;
+      if (hasDatasetName()) {
+        if (!getDatasetName()
+            .equals(other.getDatasetName())) return false;
       }
       if (hasModelName() != other.hasModelName()) return false;
       if (hasModelName()) {
         if (!getModelName()
             .equals(other.getModelName())) return false;
       }
-      if (hasModelVersion() != other.hasModelVersion()) return false;
-      if (hasModelVersion()) {
-        if (!getModelVersion()
-            .equals(other.getModelVersion())) return false;
-      }
-      if (hasJobId() != other.hasJobId()) return false;
-      if (hasJobId()) {
-        if (!getJobId()
-            .equals(other.getJobId())) return false;
+      if (hasJobName() != other.hasJobName()) return false;
+      if (hasJobName()) {
+        if (!getJobName()
+            .equals(other.getJobName())) return false;
       }
       if (hasStartTime() != other.hasStartTime()) return false;
       if (hasStartTime()) {
@@ -30093,7 +30580,6 @@ public final class Message {
         if (!getEndTime()
             .equals(other.getEndTime())) return false;
       }
-      if (metricType_ != other.metricType_) return false;
       if (hasUri() != other.hasUri()) return false;
       if (hasUri()) {
         if (!getUri()
@@ -30103,11 +30589,6 @@ public final class Message {
       if (hasTags()) {
         if (!getTags()
             .equals(other.getTags())) return false;
-      }
-      if (hasMetricDescription() != other.hasMetricDescription()) return false;
-      if (hasMetricDescription()) {
-        if (!getMetricDescription()
-            .equals(other.getMetricDescription())) return false;
       }
       if (!internalGetProperties().equals(
           other.internalGetProperties())) return false;
@@ -30122,28 +30603,31 @@ public final class Message {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + UUID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getUuid());
-      if (hasName()) {
-        hash = (37 * hash) + NAME_FIELD_NUMBER;
-        hash = (53 * hash) + getName().hashCode();
+      if (hasMetricName()) {
+        hash = (37 * hash) + METRIC_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getMetricName().hashCode();
       }
-      if (hasDatasetId()) {
-        hash = (37 * hash) + DATASET_ID_FIELD_NUMBER;
-        hash = (53 * hash) + getDatasetId().hashCode();
+      hash = (37 * hash) + METRIC_TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + metricType_;
+      if (hasMetricDesc()) {
+        hash = (37 * hash) + METRIC_DESC_FIELD_NUMBER;
+        hash = (53 * hash) + getMetricDesc().hashCode();
+      }
+      if (hasProjectName()) {
+        hash = (37 * hash) + PROJECT_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getProjectName().hashCode();
+      }
+      if (hasDatasetName()) {
+        hash = (37 * hash) + DATASET_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getDatasetName().hashCode();
       }
       if (hasModelName()) {
         hash = (37 * hash) + MODEL_NAME_FIELD_NUMBER;
         hash = (53 * hash) + getModelName().hashCode();
       }
-      if (hasModelVersion()) {
-        hash = (37 * hash) + MODEL_VERSION_FIELD_NUMBER;
-        hash = (53 * hash) + getModelVersion().hashCode();
-      }
-      if (hasJobId()) {
-        hash = (37 * hash) + JOB_ID_FIELD_NUMBER;
-        hash = (53 * hash) + getJobId().hashCode();
+      if (hasJobName()) {
+        hash = (37 * hash) + JOB_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getJobName().hashCode();
       }
       if (hasStartTime()) {
         hash = (37 * hash) + START_TIME_FIELD_NUMBER;
@@ -30153,8 +30637,6 @@ public final class Message {
         hash = (37 * hash) + END_TIME_FIELD_NUMBER;
         hash = (53 * hash) + getEndTime().hashCode();
       }
-      hash = (37 * hash) + METRIC_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + metricType_;
       if (hasUri()) {
         hash = (37 * hash) + URI_FIELD_NUMBER;
         hash = (53 * hash) + getUri().hashCode();
@@ -30162,10 +30644,6 @@ public final class Message {
       if (hasTags()) {
         hash = (37 * hash) + TAGS_FIELD_NUMBER;
         hash = (53 * hash) + getTags().hashCode();
-      }
-      if (hasMetricDescription()) {
-        hash = (37 * hash) + METRIC_DESCRIPTION_FIELD_NUMBER;
-        hash = (53 * hash) + getMetricDescription().hashCode();
       }
       if (!internalGetProperties().getMap().isEmpty()) {
         hash = (37 * hash) + PROPERTIES_FIELD_NUMBER;
@@ -30282,7 +30760,7 @@ public final class Message {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 13:
+          case 12:
             return internalGetProperties();
           default:
             throw new RuntimeException(
@@ -30293,7 +30771,7 @@ public final class Message {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 13:
+          case 12:
             return internalGetMutableProperties();
           default:
             throw new RuntimeException(
@@ -30326,19 +30804,31 @@ public final class Message {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        uuid_ = 0L;
-
-        if (nameBuilder_ == null) {
-          name_ = null;
+        if (metricNameBuilder_ == null) {
+          metricName_ = null;
         } else {
-          name_ = null;
-          nameBuilder_ = null;
+          metricName_ = null;
+          metricNameBuilder_ = null;
         }
-        if (datasetIdBuilder_ == null) {
-          datasetId_ = null;
+        metricType_ = 0;
+
+        if (metricDescBuilder_ == null) {
+          metricDesc_ = null;
         } else {
-          datasetId_ = null;
-          datasetIdBuilder_ = null;
+          metricDesc_ = null;
+          metricDescBuilder_ = null;
+        }
+        if (projectNameBuilder_ == null) {
+          projectName_ = null;
+        } else {
+          projectName_ = null;
+          projectNameBuilder_ = null;
+        }
+        if (datasetNameBuilder_ == null) {
+          datasetName_ = null;
+        } else {
+          datasetName_ = null;
+          datasetNameBuilder_ = null;
         }
         if (modelNameBuilder_ == null) {
           modelName_ = null;
@@ -30346,17 +30836,11 @@ public final class Message {
           modelName_ = null;
           modelNameBuilder_ = null;
         }
-        if (modelVersionBuilder_ == null) {
-          modelVersion_ = null;
+        if (jobNameBuilder_ == null) {
+          jobName_ = null;
         } else {
-          modelVersion_ = null;
-          modelVersionBuilder_ = null;
-        }
-        if (jobIdBuilder_ == null) {
-          jobId_ = null;
-        } else {
-          jobId_ = null;
-          jobIdBuilder_ = null;
+          jobName_ = null;
+          jobNameBuilder_ = null;
         }
         if (startTimeBuilder_ == null) {
           startTime_ = null;
@@ -30370,8 +30854,6 @@ public final class Message {
           endTime_ = null;
           endTimeBuilder_ = null;
         }
-        metricType_ = 0;
-
         if (uriBuilder_ == null) {
           uri_ = null;
         } else {
@@ -30383,12 +30865,6 @@ public final class Message {
         } else {
           tags_ = null;
           tagsBuilder_ = null;
-        }
-        if (metricDescriptionBuilder_ == null) {
-          metricDescription_ = null;
-        } else {
-          metricDescription_ = null;
-          metricDescriptionBuilder_ = null;
         }
         internalGetMutableProperties().clear();
         return this;
@@ -30418,31 +30894,36 @@ public final class Message {
       public com.aiflow.proto.Message.MetricMetaProto buildPartial() {
         com.aiflow.proto.Message.MetricMetaProto result = new com.aiflow.proto.Message.MetricMetaProto(this);
         int from_bitField0_ = bitField0_;
-        result.uuid_ = uuid_;
-        if (nameBuilder_ == null) {
-          result.name_ = name_;
+        if (metricNameBuilder_ == null) {
+          result.metricName_ = metricName_;
         } else {
-          result.name_ = nameBuilder_.build();
+          result.metricName_ = metricNameBuilder_.build();
         }
-        if (datasetIdBuilder_ == null) {
-          result.datasetId_ = datasetId_;
+        result.metricType_ = metricType_;
+        if (metricDescBuilder_ == null) {
+          result.metricDesc_ = metricDesc_;
         } else {
-          result.datasetId_ = datasetIdBuilder_.build();
+          result.metricDesc_ = metricDescBuilder_.build();
+        }
+        if (projectNameBuilder_ == null) {
+          result.projectName_ = projectName_;
+        } else {
+          result.projectName_ = projectNameBuilder_.build();
+        }
+        if (datasetNameBuilder_ == null) {
+          result.datasetName_ = datasetName_;
+        } else {
+          result.datasetName_ = datasetNameBuilder_.build();
         }
         if (modelNameBuilder_ == null) {
           result.modelName_ = modelName_;
         } else {
           result.modelName_ = modelNameBuilder_.build();
         }
-        if (modelVersionBuilder_ == null) {
-          result.modelVersion_ = modelVersion_;
+        if (jobNameBuilder_ == null) {
+          result.jobName_ = jobName_;
         } else {
-          result.modelVersion_ = modelVersionBuilder_.build();
-        }
-        if (jobIdBuilder_ == null) {
-          result.jobId_ = jobId_;
-        } else {
-          result.jobId_ = jobIdBuilder_.build();
+          result.jobName_ = jobNameBuilder_.build();
         }
         if (startTimeBuilder_ == null) {
           result.startTime_ = startTime_;
@@ -30454,7 +30935,6 @@ public final class Message {
         } else {
           result.endTime_ = endTimeBuilder_.build();
         }
-        result.metricType_ = metricType_;
         if (uriBuilder_ == null) {
           result.uri_ = uri_;
         } else {
@@ -30464,11 +30944,6 @@ public final class Message {
           result.tags_ = tags_;
         } else {
           result.tags_ = tagsBuilder_.build();
-        }
-        if (metricDescriptionBuilder_ == null) {
-          result.metricDescription_ = metricDescription_;
-        } else {
-          result.metricDescription_ = metricDescriptionBuilder_.build();
         }
         result.properties_ = internalGetProperties();
         result.properties_.makeImmutable();
@@ -30520,23 +30995,26 @@ public final class Message {
 
       public Builder mergeFrom(com.aiflow.proto.Message.MetricMetaProto other) {
         if (other == com.aiflow.proto.Message.MetricMetaProto.getDefaultInstance()) return this;
-        if (other.getUuid() != 0L) {
-          setUuid(other.getUuid());
+        if (other.hasMetricName()) {
+          mergeMetricName(other.getMetricName());
         }
-        if (other.hasName()) {
-          mergeName(other.getName());
+        if (other.metricType_ != 0) {
+          setMetricTypeValue(other.getMetricTypeValue());
         }
-        if (other.hasDatasetId()) {
-          mergeDatasetId(other.getDatasetId());
+        if (other.hasMetricDesc()) {
+          mergeMetricDesc(other.getMetricDesc());
+        }
+        if (other.hasProjectName()) {
+          mergeProjectName(other.getProjectName());
+        }
+        if (other.hasDatasetName()) {
+          mergeDatasetName(other.getDatasetName());
         }
         if (other.hasModelName()) {
           mergeModelName(other.getModelName());
         }
-        if (other.hasModelVersion()) {
-          mergeModelVersion(other.getModelVersion());
-        }
-        if (other.hasJobId()) {
-          mergeJobId(other.getJobId());
+        if (other.hasJobName()) {
+          mergeJobName(other.getJobName());
         }
         if (other.hasStartTime()) {
           mergeStartTime(other.getStartTime());
@@ -30544,17 +31022,11 @@ public final class Message {
         if (other.hasEndTime()) {
           mergeEndTime(other.getEndTime());
         }
-        if (other.metricType_ != 0) {
-          setMetricTypeValue(other.getMetricTypeValue());
-        }
         if (other.hasUri()) {
           mergeUri(other.getUri());
         }
         if (other.hasTags()) {
           mergeTags(other.getTags());
-        }
-        if (other.hasMetricDescription()) {
-          mergeMetricDescription(other.getMetricDescription());
         }
         internalGetMutableProperties().mergeFrom(
             other.internalGetProperties());
@@ -30588,287 +31060,548 @@ public final class Message {
       }
       private int bitField0_;
 
-      private long uuid_ ;
-      /**
-       * <code>int64 uuid = 1;</code>
-       * @return The uuid.
-       */
-      @java.lang.Override
-      public long getUuid() {
-        return uuid_;
-      }
-      /**
-       * <code>int64 uuid = 1;</code>
-       * @param value The uuid to set.
-       * @return This builder for chaining.
-       */
-      public Builder setUuid(long value) {
-        
-        uuid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 uuid = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearUuid() {
-        
-        uuid_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.StringValue name_;
+      private com.google.protobuf.StringValue metricName_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> nameBuilder_;
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> metricNameBuilder_;
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
-       * @return Whether the name field is set.
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
+       * @return Whether the metricName field is set.
        */
-      public boolean hasName() {
-        return nameBuilder_ != null || name_ != null;
+      public boolean hasMetricName() {
+        return metricNameBuilder_ != null || metricName_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
-       * @return The name.
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
+       * @return The metricName.
        */
-      public com.google.protobuf.StringValue getName() {
-        if (nameBuilder_ == null) {
-          return name_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : name_;
+      public com.google.protobuf.StringValue getMetricName() {
+        if (metricNameBuilder_ == null) {
+          return metricName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricName_;
         } else {
-          return nameBuilder_.getMessage();
+          return metricNameBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
-      public Builder setName(com.google.protobuf.StringValue value) {
-        if (nameBuilder_ == null) {
+      public Builder setMetricName(com.google.protobuf.StringValue value) {
+        if (metricNameBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          name_ = value;
+          metricName_ = value;
           onChanged();
         } else {
-          nameBuilder_.setMessage(value);
+          metricNameBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
-      public Builder setName(
+      public Builder setMetricName(
           com.google.protobuf.StringValue.Builder builderForValue) {
-        if (nameBuilder_ == null) {
-          name_ = builderForValue.build();
+        if (metricNameBuilder_ == null) {
+          metricName_ = builderForValue.build();
           onChanged();
         } else {
-          nameBuilder_.setMessage(builderForValue.build());
+          metricNameBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
-      public Builder mergeName(com.google.protobuf.StringValue value) {
-        if (nameBuilder_ == null) {
-          if (name_ != null) {
-            name_ =
-              com.google.protobuf.StringValue.newBuilder(name_).mergeFrom(value).buildPartial();
+      public Builder mergeMetricName(com.google.protobuf.StringValue value) {
+        if (metricNameBuilder_ == null) {
+          if (metricName_ != null) {
+            metricName_ =
+              com.google.protobuf.StringValue.newBuilder(metricName_).mergeFrom(value).buildPartial();
           } else {
-            name_ = value;
+            metricName_ = value;
           }
           onChanged();
         } else {
-          nameBuilder_.mergeFrom(value);
+          metricNameBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
-      public Builder clearName() {
-        if (nameBuilder_ == null) {
-          name_ = null;
+      public Builder clearMetricName() {
+        if (metricNameBuilder_ == null) {
+          metricName_ = null;
           onChanged();
         } else {
-          name_ = null;
-          nameBuilder_ = null;
+          metricName_ = null;
+          metricNameBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
-      public com.google.protobuf.StringValue.Builder getNameBuilder() {
+      public com.google.protobuf.StringValue.Builder getMetricNameBuilder() {
         
         onChanged();
-        return getNameFieldBuilder().getBuilder();
+        return getMetricNameFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
-      public com.google.protobuf.StringValueOrBuilder getNameOrBuilder() {
-        if (nameBuilder_ != null) {
-          return nameBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getMetricNameOrBuilder() {
+        if (metricNameBuilder_ != null) {
+          return metricNameBuilder_.getMessageOrBuilder();
         } else {
-          return name_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : name_;
+          return metricName_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : metricName_;
         }
       }
       /**
-       * <code>.google.protobuf.StringValue name = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getNameFieldBuilder() {
-        if (nameBuilder_ == null) {
-          nameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getMetricNameFieldBuilder() {
+        if (metricNameBuilder_ == null) {
+          metricNameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getName(),
+                  getMetricName(),
                   getParentForChildren(),
                   isClean());
-          name_ = null;
+          metricName_ = null;
         }
-        return nameBuilder_;
+        return metricNameBuilder_;
       }
 
-      private com.google.protobuf.Int64Value datasetId_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> datasetIdBuilder_;
+      private int metricType_ = 0;
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-       * @return Whether the datasetId field is set.
+       * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+       * @return The enum numeric value on the wire for metricType.
        */
-      public boolean hasDatasetId() {
-        return datasetIdBuilder_ != null || datasetId_ != null;
+      @java.lang.Override public int getMetricTypeValue() {
+        return metricType_;
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
-       * @return The datasetId.
+       * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+       * @param value The enum numeric value on the wire for metricType to set.
+       * @return This builder for chaining.
        */
-      public com.google.protobuf.Int64Value getDatasetId() {
-        if (datasetIdBuilder_ == null) {
-          return datasetId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : datasetId_;
+      public Builder setMetricTypeValue(int value) {
+        
+        metricType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+       * @return The metricType.
+       */
+      @java.lang.Override
+      public com.aiflow.proto.Message.MetricTypeProto getMetricType() {
+        @SuppressWarnings("deprecation")
+        com.aiflow.proto.Message.MetricTypeProto result = com.aiflow.proto.Message.MetricTypeProto.valueOf(metricType_);
+        return result == null ? com.aiflow.proto.Message.MetricTypeProto.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+       * @param value The metricType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMetricType(com.aiflow.proto.Message.MetricTypeProto value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        metricType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.ai_flow.MetricTypeProto metric_type = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMetricType() {
+        
+        metricType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.StringValue metricDesc_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> metricDescBuilder_;
+      /**
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+       * @return Whether the metricDesc field is set.
+       */
+      public boolean hasMetricDesc() {
+        return metricDescBuilder_ != null || metricDesc_ != null;
+      }
+      /**
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
+       * @return The metricDesc.
+       */
+      public com.google.protobuf.StringValue getMetricDesc() {
+        if (metricDescBuilder_ == null) {
+          return metricDesc_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricDesc_;
         } else {
-          return datasetIdBuilder_.getMessage();
+          return metricDescBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
-      public Builder setDatasetId(com.google.protobuf.Int64Value value) {
-        if (datasetIdBuilder_ == null) {
+      public Builder setMetricDesc(com.google.protobuf.StringValue value) {
+        if (metricDescBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          datasetId_ = value;
+          metricDesc_ = value;
           onChanged();
         } else {
-          datasetIdBuilder_.setMessage(value);
+          metricDescBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
-      public Builder setDatasetId(
-          com.google.protobuf.Int64Value.Builder builderForValue) {
-        if (datasetIdBuilder_ == null) {
-          datasetId_ = builderForValue.build();
+      public Builder setMetricDesc(
+          com.google.protobuf.StringValue.Builder builderForValue) {
+        if (metricDescBuilder_ == null) {
+          metricDesc_ = builderForValue.build();
           onChanged();
         } else {
-          datasetIdBuilder_.setMessage(builderForValue.build());
+          metricDescBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
-      public Builder mergeDatasetId(com.google.protobuf.Int64Value value) {
-        if (datasetIdBuilder_ == null) {
-          if (datasetId_ != null) {
-            datasetId_ =
-              com.google.protobuf.Int64Value.newBuilder(datasetId_).mergeFrom(value).buildPartial();
+      public Builder mergeMetricDesc(com.google.protobuf.StringValue value) {
+        if (metricDescBuilder_ == null) {
+          if (metricDesc_ != null) {
+            metricDesc_ =
+              com.google.protobuf.StringValue.newBuilder(metricDesc_).mergeFrom(value).buildPartial();
           } else {
-            datasetId_ = value;
+            metricDesc_ = value;
           }
           onChanged();
         } else {
-          datasetIdBuilder_.mergeFrom(value);
+          metricDescBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
-      public Builder clearDatasetId() {
-        if (datasetIdBuilder_ == null) {
-          datasetId_ = null;
+      public Builder clearMetricDesc() {
+        if (metricDescBuilder_ == null) {
+          metricDesc_ = null;
           onChanged();
         } else {
-          datasetId_ = null;
-          datasetIdBuilder_ = null;
+          metricDesc_ = null;
+          metricDescBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
-      public com.google.protobuf.Int64Value.Builder getDatasetIdBuilder() {
+      public com.google.protobuf.StringValue.Builder getMetricDescBuilder() {
         
         onChanged();
-        return getDatasetIdFieldBuilder().getBuilder();
+        return getMetricDescFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
-      public com.google.protobuf.Int64ValueOrBuilder getDatasetIdOrBuilder() {
-        if (datasetIdBuilder_ != null) {
-          return datasetIdBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getMetricDescOrBuilder() {
+        if (metricDescBuilder_ != null) {
+          return metricDescBuilder_.getMessageOrBuilder();
         } else {
-          return datasetId_ == null ?
-              com.google.protobuf.Int64Value.getDefaultInstance() : datasetId_;
+          return metricDesc_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : metricDesc_;
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value dataset_id = 3;</code>
+       * <code>.google.protobuf.StringValue metric_desc = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
-          getDatasetIdFieldBuilder() {
-        if (datasetIdBuilder_ == null) {
-          datasetIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
-                  getDatasetId(),
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+          getMetricDescFieldBuilder() {
+        if (metricDescBuilder_ == null) {
+          metricDescBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                  getMetricDesc(),
                   getParentForChildren(),
                   isClean());
-          datasetId_ = null;
+          metricDesc_ = null;
         }
-        return datasetIdBuilder_;
+        return metricDescBuilder_;
+      }
+
+      private com.google.protobuf.StringValue projectName_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> projectNameBuilder_;
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       * @return Whether the projectName field is set.
+       */
+      public boolean hasProjectName() {
+        return projectNameBuilder_ != null || projectName_ != null;
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       * @return The projectName.
+       */
+      public com.google.protobuf.StringValue getProjectName() {
+        if (projectNameBuilder_ == null) {
+          return projectName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : projectName_;
+        } else {
+          return projectNameBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      public Builder setProjectName(com.google.protobuf.StringValue value) {
+        if (projectNameBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          projectName_ = value;
+          onChanged();
+        } else {
+          projectNameBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      public Builder setProjectName(
+          com.google.protobuf.StringValue.Builder builderForValue) {
+        if (projectNameBuilder_ == null) {
+          projectName_ = builderForValue.build();
+          onChanged();
+        } else {
+          projectNameBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      public Builder mergeProjectName(com.google.protobuf.StringValue value) {
+        if (projectNameBuilder_ == null) {
+          if (projectName_ != null) {
+            projectName_ =
+              com.google.protobuf.StringValue.newBuilder(projectName_).mergeFrom(value).buildPartial();
+          } else {
+            projectName_ = value;
+          }
+          onChanged();
+        } else {
+          projectNameBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      public Builder clearProjectName() {
+        if (projectNameBuilder_ == null) {
+          projectName_ = null;
+          onChanged();
+        } else {
+          projectName_ = null;
+          projectNameBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      public com.google.protobuf.StringValue.Builder getProjectNameBuilder() {
+        
+        onChanged();
+        return getProjectNameFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      public com.google.protobuf.StringValueOrBuilder getProjectNameOrBuilder() {
+        if (projectNameBuilder_ != null) {
+          return projectNameBuilder_.getMessageOrBuilder();
+        } else {
+          return projectName_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : projectName_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue project_name = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+          getProjectNameFieldBuilder() {
+        if (projectNameBuilder_ == null) {
+          projectNameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                  getProjectName(),
+                  getParentForChildren(),
+                  isClean());
+          projectName_ = null;
+        }
+        return projectNameBuilder_;
+      }
+
+      private com.google.protobuf.StringValue datasetName_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> datasetNameBuilder_;
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       * @return Whether the datasetName field is set.
+       */
+      public boolean hasDatasetName() {
+        return datasetNameBuilder_ != null || datasetName_ != null;
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       * @return The datasetName.
+       */
+      public com.google.protobuf.StringValue getDatasetName() {
+        if (datasetNameBuilder_ == null) {
+          return datasetName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : datasetName_;
+        } else {
+          return datasetNameBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      public Builder setDatasetName(com.google.protobuf.StringValue value) {
+        if (datasetNameBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          datasetName_ = value;
+          onChanged();
+        } else {
+          datasetNameBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      public Builder setDatasetName(
+          com.google.protobuf.StringValue.Builder builderForValue) {
+        if (datasetNameBuilder_ == null) {
+          datasetName_ = builderForValue.build();
+          onChanged();
+        } else {
+          datasetNameBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      public Builder mergeDatasetName(com.google.protobuf.StringValue value) {
+        if (datasetNameBuilder_ == null) {
+          if (datasetName_ != null) {
+            datasetName_ =
+              com.google.protobuf.StringValue.newBuilder(datasetName_).mergeFrom(value).buildPartial();
+          } else {
+            datasetName_ = value;
+          }
+          onChanged();
+        } else {
+          datasetNameBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      public Builder clearDatasetName() {
+        if (datasetNameBuilder_ == null) {
+          datasetName_ = null;
+          onChanged();
+        } else {
+          datasetName_ = null;
+          datasetNameBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      public com.google.protobuf.StringValue.Builder getDatasetNameBuilder() {
+        
+        onChanged();
+        return getDatasetNameFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      public com.google.protobuf.StringValueOrBuilder getDatasetNameOrBuilder() {
+        if (datasetNameBuilder_ != null) {
+          return datasetNameBuilder_.getMessageOrBuilder();
+        } else {
+          return datasetName_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : datasetName_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue dataset_name = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+          getDatasetNameFieldBuilder() {
+        if (datasetNameBuilder_ == null) {
+          datasetNameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                  getDatasetName(),
+                  getParentForChildren(),
+                  isClean());
+          datasetName_ = null;
+        }
+        return datasetNameBuilder_;
       }
 
       private com.google.protobuf.StringValue modelName_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelNameBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        * @return Whether the modelName field is set.
        */
       public boolean hasModelName() {
         return modelNameBuilder_ != null || modelName_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        * @return The modelName.
        */
       public com.google.protobuf.StringValue getModelName() {
@@ -30879,7 +31612,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       public Builder setModelName(com.google.protobuf.StringValue value) {
         if (modelNameBuilder_ == null) {
@@ -30895,7 +31628,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       public Builder setModelName(
           com.google.protobuf.StringValue.Builder builderForValue) {
@@ -30909,7 +31642,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       public Builder mergeModelName(com.google.protobuf.StringValue value) {
         if (modelNameBuilder_ == null) {
@@ -30927,7 +31660,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       public Builder clearModelName() {
         if (modelNameBuilder_ == null) {
@@ -30941,7 +31674,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       public com.google.protobuf.StringValue.Builder getModelNameBuilder() {
         
@@ -30949,7 +31682,7 @@ public final class Message {
         return getModelNameFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       public com.google.protobuf.StringValueOrBuilder getModelNameOrBuilder() {
         if (modelNameBuilder_ != null) {
@@ -30960,7 +31693,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_name = 4;</code>
+       * <code>.google.protobuf.StringValue model_name = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
@@ -30976,256 +31709,137 @@ public final class Message {
         return modelNameBuilder_;
       }
 
-      private com.google.protobuf.StringValue modelVersion_;
+      private com.google.protobuf.StringValue jobName_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelVersionBuilder_;
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> jobNameBuilder_;
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
-       * @return Whether the modelVersion field is set.
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
+       * @return Whether the jobName field is set.
        */
-      public boolean hasModelVersion() {
-        return modelVersionBuilder_ != null || modelVersion_ != null;
+      public boolean hasJobName() {
+        return jobNameBuilder_ != null || jobName_ != null;
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
-       * @return The modelVersion.
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
+       * @return The jobName.
        */
-      public com.google.protobuf.StringValue getModelVersion() {
-        if (modelVersionBuilder_ == null) {
-          return modelVersion_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelVersion_;
+      public com.google.protobuf.StringValue getJobName() {
+        if (jobNameBuilder_ == null) {
+          return jobName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : jobName_;
         } else {
-          return modelVersionBuilder_.getMessage();
+          return jobNameBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
-      public Builder setModelVersion(com.google.protobuf.StringValue value) {
-        if (modelVersionBuilder_ == null) {
+      public Builder setJobName(com.google.protobuf.StringValue value) {
+        if (jobNameBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          modelVersion_ = value;
+          jobName_ = value;
           onChanged();
         } else {
-          modelVersionBuilder_.setMessage(value);
+          jobNameBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
-      public Builder setModelVersion(
+      public Builder setJobName(
           com.google.protobuf.StringValue.Builder builderForValue) {
-        if (modelVersionBuilder_ == null) {
-          modelVersion_ = builderForValue.build();
+        if (jobNameBuilder_ == null) {
+          jobName_ = builderForValue.build();
           onChanged();
         } else {
-          modelVersionBuilder_.setMessage(builderForValue.build());
+          jobNameBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
-      public Builder mergeModelVersion(com.google.protobuf.StringValue value) {
-        if (modelVersionBuilder_ == null) {
-          if (modelVersion_ != null) {
-            modelVersion_ =
-              com.google.protobuf.StringValue.newBuilder(modelVersion_).mergeFrom(value).buildPartial();
+      public Builder mergeJobName(com.google.protobuf.StringValue value) {
+        if (jobNameBuilder_ == null) {
+          if (jobName_ != null) {
+            jobName_ =
+              com.google.protobuf.StringValue.newBuilder(jobName_).mergeFrom(value).buildPartial();
           } else {
-            modelVersion_ = value;
+            jobName_ = value;
           }
           onChanged();
         } else {
-          modelVersionBuilder_.mergeFrom(value);
+          jobNameBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
-      public Builder clearModelVersion() {
-        if (modelVersionBuilder_ == null) {
-          modelVersion_ = null;
+      public Builder clearJobName() {
+        if (jobNameBuilder_ == null) {
+          jobName_ = null;
           onChanged();
         } else {
-          modelVersion_ = null;
-          modelVersionBuilder_ = null;
+          jobName_ = null;
+          jobNameBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
-      public com.google.protobuf.StringValue.Builder getModelVersionBuilder() {
+      public com.google.protobuf.StringValue.Builder getJobNameBuilder() {
         
         onChanged();
-        return getModelVersionFieldBuilder().getBuilder();
+        return getJobNameFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
-      public com.google.protobuf.StringValueOrBuilder getModelVersionOrBuilder() {
-        if (modelVersionBuilder_ != null) {
-          return modelVersionBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getJobNameOrBuilder() {
+        if (jobNameBuilder_ != null) {
+          return jobNameBuilder_.getMessageOrBuilder();
         } else {
-          return modelVersion_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : modelVersion_;
+          return jobName_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : jobName_;
         }
       }
       /**
-       * <code>.google.protobuf.StringValue model_version = 5;</code>
+       * <code>.google.protobuf.StringValue job_name = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getModelVersionFieldBuilder() {
-        if (modelVersionBuilder_ == null) {
-          modelVersionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getJobNameFieldBuilder() {
+        if (jobNameBuilder_ == null) {
+          jobNameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getModelVersion(),
+                  getJobName(),
                   getParentForChildren(),
                   isClean());
-          modelVersion_ = null;
+          jobName_ = null;
         }
-        return modelVersionBuilder_;
-      }
-
-      private com.google.protobuf.Int64Value jobId_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> jobIdBuilder_;
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       * @return Whether the jobId field is set.
-       */
-      public boolean hasJobId() {
-        return jobIdBuilder_ != null || jobId_ != null;
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       * @return The jobId.
-       */
-      public com.google.protobuf.Int64Value getJobId() {
-        if (jobIdBuilder_ == null) {
-          return jobId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : jobId_;
-        } else {
-          return jobIdBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      public Builder setJobId(com.google.protobuf.Int64Value value) {
-        if (jobIdBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          jobId_ = value;
-          onChanged();
-        } else {
-          jobIdBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      public Builder setJobId(
-          com.google.protobuf.Int64Value.Builder builderForValue) {
-        if (jobIdBuilder_ == null) {
-          jobId_ = builderForValue.build();
-          onChanged();
-        } else {
-          jobIdBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      public Builder mergeJobId(com.google.protobuf.Int64Value value) {
-        if (jobIdBuilder_ == null) {
-          if (jobId_ != null) {
-            jobId_ =
-              com.google.protobuf.Int64Value.newBuilder(jobId_).mergeFrom(value).buildPartial();
-          } else {
-            jobId_ = value;
-          }
-          onChanged();
-        } else {
-          jobIdBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      public Builder clearJobId() {
-        if (jobIdBuilder_ == null) {
-          jobId_ = null;
-          onChanged();
-        } else {
-          jobId_ = null;
-          jobIdBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      public com.google.protobuf.Int64Value.Builder getJobIdBuilder() {
-        
-        onChanged();
-        return getJobIdFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      public com.google.protobuf.Int64ValueOrBuilder getJobIdOrBuilder() {
-        if (jobIdBuilder_ != null) {
-          return jobIdBuilder_.getMessageOrBuilder();
-        } else {
-          return jobId_ == null ?
-              com.google.protobuf.Int64Value.getDefaultInstance() : jobId_;
-        }
-      }
-      /**
-       * <code>.google.protobuf.Int64Value job_id = 6;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
-          getJobIdFieldBuilder() {
-        if (jobIdBuilder_ == null) {
-          jobIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
-                  getJobId(),
-                  getParentForChildren(),
-                  isClean());
-          jobId_ = null;
-        }
-        return jobIdBuilder_;
+        return jobNameBuilder_;
       }
 
       private com.google.protobuf.Int64Value startTime_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> startTimeBuilder_;
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        * @return Whether the startTime field is set.
        */
       public boolean hasStartTime() {
         return startTimeBuilder_ != null || startTime_ != null;
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        * @return The startTime.
        */
       public com.google.protobuf.Int64Value getStartTime() {
@@ -31236,7 +31850,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       public Builder setStartTime(com.google.protobuf.Int64Value value) {
         if (startTimeBuilder_ == null) {
@@ -31252,7 +31866,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       public Builder setStartTime(
           com.google.protobuf.Int64Value.Builder builderForValue) {
@@ -31266,7 +31880,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       public Builder mergeStartTime(com.google.protobuf.Int64Value value) {
         if (startTimeBuilder_ == null) {
@@ -31284,7 +31898,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       public Builder clearStartTime() {
         if (startTimeBuilder_ == null) {
@@ -31298,7 +31912,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       public com.google.protobuf.Int64Value.Builder getStartTimeBuilder() {
         
@@ -31306,7 +31920,7 @@ public final class Message {
         return getStartTimeFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       public com.google.protobuf.Int64ValueOrBuilder getStartTimeOrBuilder() {
         if (startTimeBuilder_ != null) {
@@ -31317,7 +31931,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value start_time = 7;</code>
+       * <code>.google.protobuf.Int64Value start_time = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
@@ -31337,14 +31951,14 @@ public final class Message {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> endTimeBuilder_;
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        * @return Whether the endTime field is set.
        */
       public boolean hasEndTime() {
         return endTimeBuilder_ != null || endTime_ != null;
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        * @return The endTime.
        */
       public com.google.protobuf.Int64Value getEndTime() {
@@ -31355,7 +31969,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       public Builder setEndTime(com.google.protobuf.Int64Value value) {
         if (endTimeBuilder_ == null) {
@@ -31371,7 +31985,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       public Builder setEndTime(
           com.google.protobuf.Int64Value.Builder builderForValue) {
@@ -31385,7 +31999,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       public Builder mergeEndTime(com.google.protobuf.Int64Value value) {
         if (endTimeBuilder_ == null) {
@@ -31403,7 +32017,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       public Builder clearEndTime() {
         if (endTimeBuilder_ == null) {
@@ -31417,7 +32031,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       public com.google.protobuf.Int64Value.Builder getEndTimeBuilder() {
         
@@ -31425,7 +32039,7 @@ public final class Message {
         return getEndTimeFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       public com.google.protobuf.Int64ValueOrBuilder getEndTimeOrBuilder() {
         if (endTimeBuilder_ != null) {
@@ -31436,7 +32050,7 @@ public final class Message {
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value end_time = 8;</code>
+       * <code>.google.protobuf.Int64Value end_time = 9;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
@@ -31450,60 +32064,6 @@ public final class Message {
           endTime_ = null;
         }
         return endTimeBuilder_;
-      }
-
-      private int metricType_ = 0;
-      /**
-       * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-       * @return The enum numeric value on the wire for metricType.
-       */
-      @java.lang.Override public int getMetricTypeValue() {
-        return metricType_;
-      }
-      /**
-       * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-       * @param value The enum numeric value on the wire for metricType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMetricTypeValue(int value) {
-        
-        metricType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-       * @return The metricType.
-       */
-      @java.lang.Override
-      public com.aiflow.proto.Message.MetricTypeProto getMetricType() {
-        @SuppressWarnings("deprecation")
-        com.aiflow.proto.Message.MetricTypeProto result = com.aiflow.proto.Message.MetricTypeProto.valueOf(metricType_);
-        return result == null ? com.aiflow.proto.Message.MetricTypeProto.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-       * @param value The metricType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMetricType(com.aiflow.proto.Message.MetricTypeProto value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        metricType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ai_flow.MetricTypeProto metric_type = 9;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMetricType() {
-        
-        metricType_ = 0;
-        onChanged();
-        return this;
       }
 
       private com.google.protobuf.StringValue uri_;
@@ -31744,125 +32304,6 @@ public final class Message {
         return tagsBuilder_;
       }
 
-      private com.google.protobuf.StringValue metricDescription_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> metricDescriptionBuilder_;
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       * @return Whether the metricDescription field is set.
-       */
-      public boolean hasMetricDescription() {
-        return metricDescriptionBuilder_ != null || metricDescription_ != null;
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       * @return The metricDescription.
-       */
-      public com.google.protobuf.StringValue getMetricDescription() {
-        if (metricDescriptionBuilder_ == null) {
-          return metricDescription_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricDescription_;
-        } else {
-          return metricDescriptionBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      public Builder setMetricDescription(com.google.protobuf.StringValue value) {
-        if (metricDescriptionBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          metricDescription_ = value;
-          onChanged();
-        } else {
-          metricDescriptionBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      public Builder setMetricDescription(
-          com.google.protobuf.StringValue.Builder builderForValue) {
-        if (metricDescriptionBuilder_ == null) {
-          metricDescription_ = builderForValue.build();
-          onChanged();
-        } else {
-          metricDescriptionBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      public Builder mergeMetricDescription(com.google.protobuf.StringValue value) {
-        if (metricDescriptionBuilder_ == null) {
-          if (metricDescription_ != null) {
-            metricDescription_ =
-              com.google.protobuf.StringValue.newBuilder(metricDescription_).mergeFrom(value).buildPartial();
-          } else {
-            metricDescription_ = value;
-          }
-          onChanged();
-        } else {
-          metricDescriptionBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      public Builder clearMetricDescription() {
-        if (metricDescriptionBuilder_ == null) {
-          metricDescription_ = null;
-          onChanged();
-        } else {
-          metricDescription_ = null;
-          metricDescriptionBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      public com.google.protobuf.StringValue.Builder getMetricDescriptionBuilder() {
-        
-        onChanged();
-        return getMetricDescriptionFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      public com.google.protobuf.StringValueOrBuilder getMetricDescriptionOrBuilder() {
-        if (metricDescriptionBuilder_ != null) {
-          return metricDescriptionBuilder_.getMessageOrBuilder();
-        } else {
-          return metricDescription_ == null ?
-              com.google.protobuf.StringValue.getDefaultInstance() : metricDescription_;
-        }
-      }
-      /**
-       * <code>.google.protobuf.StringValue metric_description = 12;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
-          getMetricDescriptionFieldBuilder() {
-        if (metricDescriptionBuilder_ == null) {
-          metricDescriptionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
-                  getMetricDescription(),
-                  getParentForChildren(),
-                  isClean());
-          metricDescription_ = null;
-        }
-        return metricDescriptionBuilder_;
-      }
-
       private com.google.protobuf.MapField<
           java.lang.String, java.lang.String> properties_;
       private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -31890,7 +32331,7 @@ public final class Message {
         return internalGetProperties().getMap().size();
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
 
       @java.lang.Override
@@ -31908,7 +32349,7 @@ public final class Message {
         return getPropertiesMap();
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
       @java.lang.Override
 
@@ -31916,7 +32357,7 @@ public final class Message {
         return internalGetProperties().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
       @java.lang.Override
 
@@ -31929,7 +32370,7 @@ public final class Message {
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
       @java.lang.Override
 
@@ -31950,7 +32391,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
 
       public Builder removeProperties(
@@ -31969,7 +32410,7 @@ public final class Message {
         return internalGetMutableProperties().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
       public Builder putProperties(
           java.lang.String key,
@@ -31981,7 +32422,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>map&lt;string, string&gt; properties = 13;</code>
+       * <code>map&lt;string, string&gt; properties = 12;</code>
        */
 
       public Builder putAllProperties(
@@ -32054,19 +32495,19 @@ public final class Message {
     long getUuid();
 
     /**
-     * <code>.google.protobuf.Int64Value metric_id = 2;</code>
-     * @return Whether the metricId field is set.
+     * <code>.google.protobuf.StringValue metric_name = 2;</code>
+     * @return Whether the metricName field is set.
      */
-    boolean hasMetricId();
+    boolean hasMetricName();
     /**
-     * <code>.google.protobuf.Int64Value metric_id = 2;</code>
-     * @return The metricId.
+     * <code>.google.protobuf.StringValue metric_name = 2;</code>
+     * @return The metricName.
      */
-    com.google.protobuf.Int64Value getMetricId();
+    com.google.protobuf.StringValue getMetricName();
     /**
-     * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+     * <code>.google.protobuf.StringValue metric_name = 2;</code>
      */
-    com.google.protobuf.Int64ValueOrBuilder getMetricIdOrBuilder();
+    com.google.protobuf.StringValueOrBuilder getMetricNameOrBuilder();
 
     /**
      * <code>.google.protobuf.StringValue metric_key = 3;</code>
@@ -32097,6 +32538,51 @@ public final class Message {
      * <code>.google.protobuf.StringValue metric_value = 4;</code>
      */
     com.google.protobuf.StringValueOrBuilder getMetricValueOrBuilder();
+
+    /**
+     * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+     * @return Whether the metricTimestamp field is set.
+     */
+    boolean hasMetricTimestamp();
+    /**
+     * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+     * @return The metricTimestamp.
+     */
+    com.google.protobuf.Int64Value getMetricTimestamp();
+    /**
+     * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+     */
+    com.google.protobuf.Int64ValueOrBuilder getMetricTimestampOrBuilder();
+
+    /**
+     * <code>.google.protobuf.StringValue model_version = 6;</code>
+     * @return Whether the modelVersion field is set.
+     */
+    boolean hasModelVersion();
+    /**
+     * <code>.google.protobuf.StringValue model_version = 6;</code>
+     * @return The modelVersion.
+     */
+    com.google.protobuf.StringValue getModelVersion();
+    /**
+     * <code>.google.protobuf.StringValue model_version = 6;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getModelVersionOrBuilder();
+
+    /**
+     * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+     * @return Whether the jobExecutionId field is set.
+     */
+    boolean hasJobExecutionId();
+    /**
+     * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+     * @return The jobExecutionId.
+     */
+    com.google.protobuf.StringValue getJobExecutionId();
+    /**
+     * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+     */
+    com.google.protobuf.StringValueOrBuilder getJobExecutionIdOrBuilder();
   }
   /**
    * Protobuf type {@code ai_flow.MetricSummaryProto}
@@ -32149,14 +32635,14 @@ public final class Message {
               break;
             }
             case 18: {
-              com.google.protobuf.Int64Value.Builder subBuilder = null;
-              if (metricId_ != null) {
-                subBuilder = metricId_.toBuilder();
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (metricName_ != null) {
+                subBuilder = metricName_.toBuilder();
               }
-              metricId_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              metricName_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(metricId_);
-                metricId_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom(metricName_);
+                metricName_ = subBuilder.buildPartial();
               }
 
               break;
@@ -32183,6 +32669,45 @@ public final class Message {
               if (subBuilder != null) {
                 subBuilder.mergeFrom(metricValue_);
                 metricValue_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 42: {
+              com.google.protobuf.Int64Value.Builder subBuilder = null;
+              if (metricTimestamp_ != null) {
+                subBuilder = metricTimestamp_.toBuilder();
+              }
+              metricTimestamp_ = input.readMessage(com.google.protobuf.Int64Value.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(metricTimestamp_);
+                metricTimestamp_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 50: {
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (modelVersion_ != null) {
+                subBuilder = modelVersion_.toBuilder();
+              }
+              modelVersion_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(modelVersion_);
+                modelVersion_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 58: {
+              com.google.protobuf.StringValue.Builder subBuilder = null;
+              if (jobExecutionId_ != null) {
+                subBuilder = jobExecutionId_.toBuilder();
+              }
+              jobExecutionId_ = input.readMessage(com.google.protobuf.StringValue.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(jobExecutionId_);
+                jobExecutionId_ = subBuilder.buildPartial();
               }
 
               break;
@@ -32230,30 +32755,30 @@ public final class Message {
       return uuid_;
     }
 
-    public static final int METRIC_ID_FIELD_NUMBER = 2;
-    private com.google.protobuf.Int64Value metricId_;
+    public static final int METRIC_NAME_FIELD_NUMBER = 2;
+    private com.google.protobuf.StringValue metricName_;
     /**
-     * <code>.google.protobuf.Int64Value metric_id = 2;</code>
-     * @return Whether the metricId field is set.
+     * <code>.google.protobuf.StringValue metric_name = 2;</code>
+     * @return Whether the metricName field is set.
      */
     @java.lang.Override
-    public boolean hasMetricId() {
-      return metricId_ != null;
+    public boolean hasMetricName() {
+      return metricName_ != null;
     }
     /**
-     * <code>.google.protobuf.Int64Value metric_id = 2;</code>
-     * @return The metricId.
+     * <code>.google.protobuf.StringValue metric_name = 2;</code>
+     * @return The metricName.
      */
     @java.lang.Override
-    public com.google.protobuf.Int64Value getMetricId() {
-      return metricId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : metricId_;
+    public com.google.protobuf.StringValue getMetricName() {
+      return metricName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricName_;
     }
     /**
-     * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+     * <code>.google.protobuf.StringValue metric_name = 2;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.Int64ValueOrBuilder getMetricIdOrBuilder() {
-      return getMetricId();
+    public com.google.protobuf.StringValueOrBuilder getMetricNameOrBuilder() {
+      return getMetricName();
     }
 
     public static final int METRIC_KEY_FIELD_NUMBER = 3;
@@ -32308,6 +32833,84 @@ public final class Message {
       return getMetricValue();
     }
 
+    public static final int METRIC_TIMESTAMP_FIELD_NUMBER = 5;
+    private com.google.protobuf.Int64Value metricTimestamp_;
+    /**
+     * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+     * @return Whether the metricTimestamp field is set.
+     */
+    @java.lang.Override
+    public boolean hasMetricTimestamp() {
+      return metricTimestamp_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+     * @return The metricTimestamp.
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64Value getMetricTimestamp() {
+      return metricTimestamp_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : metricTimestamp_;
+    }
+    /**
+     * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.Int64ValueOrBuilder getMetricTimestampOrBuilder() {
+      return getMetricTimestamp();
+    }
+
+    public static final int MODEL_VERSION_FIELD_NUMBER = 6;
+    private com.google.protobuf.StringValue modelVersion_;
+    /**
+     * <code>.google.protobuf.StringValue model_version = 6;</code>
+     * @return Whether the modelVersion field is set.
+     */
+    @java.lang.Override
+    public boolean hasModelVersion() {
+      return modelVersion_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue model_version = 6;</code>
+     * @return The modelVersion.
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValue getModelVersion() {
+      return modelVersion_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelVersion_;
+    }
+    /**
+     * <code>.google.protobuf.StringValue model_version = 6;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValueOrBuilder getModelVersionOrBuilder() {
+      return getModelVersion();
+    }
+
+    public static final int JOB_EXECUTION_ID_FIELD_NUMBER = 7;
+    private com.google.protobuf.StringValue jobExecutionId_;
+    /**
+     * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+     * @return Whether the jobExecutionId field is set.
+     */
+    @java.lang.Override
+    public boolean hasJobExecutionId() {
+      return jobExecutionId_ != null;
+    }
+    /**
+     * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+     * @return The jobExecutionId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValue getJobExecutionId() {
+      return jobExecutionId_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : jobExecutionId_;
+    }
+    /**
+     * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.StringValueOrBuilder getJobExecutionIdOrBuilder() {
+      return getJobExecutionId();
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -32325,14 +32928,23 @@ public final class Message {
       if (uuid_ != 0L) {
         output.writeInt64(1, uuid_);
       }
-      if (metricId_ != null) {
-        output.writeMessage(2, getMetricId());
+      if (metricName_ != null) {
+        output.writeMessage(2, getMetricName());
       }
       if (metricKey_ != null) {
         output.writeMessage(3, getMetricKey());
       }
       if (metricValue_ != null) {
         output.writeMessage(4, getMetricValue());
+      }
+      if (metricTimestamp_ != null) {
+        output.writeMessage(5, getMetricTimestamp());
+      }
+      if (modelVersion_ != null) {
+        output.writeMessage(6, getModelVersion());
+      }
+      if (jobExecutionId_ != null) {
+        output.writeMessage(7, getJobExecutionId());
       }
       unknownFields.writeTo(output);
     }
@@ -32347,9 +32959,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, uuid_);
       }
-      if (metricId_ != null) {
+      if (metricName_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getMetricId());
+          .computeMessageSize(2, getMetricName());
       }
       if (metricKey_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -32358,6 +32970,18 @@ public final class Message {
       if (metricValue_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getMetricValue());
+      }
+      if (metricTimestamp_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getMetricTimestamp());
+      }
+      if (modelVersion_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getModelVersion());
+      }
+      if (jobExecutionId_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getJobExecutionId());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -32376,10 +33000,10 @@ public final class Message {
 
       if (getUuid()
           != other.getUuid()) return false;
-      if (hasMetricId() != other.hasMetricId()) return false;
-      if (hasMetricId()) {
-        if (!getMetricId()
-            .equals(other.getMetricId())) return false;
+      if (hasMetricName() != other.hasMetricName()) return false;
+      if (hasMetricName()) {
+        if (!getMetricName()
+            .equals(other.getMetricName())) return false;
       }
       if (hasMetricKey() != other.hasMetricKey()) return false;
       if (hasMetricKey()) {
@@ -32390,6 +33014,21 @@ public final class Message {
       if (hasMetricValue()) {
         if (!getMetricValue()
             .equals(other.getMetricValue())) return false;
+      }
+      if (hasMetricTimestamp() != other.hasMetricTimestamp()) return false;
+      if (hasMetricTimestamp()) {
+        if (!getMetricTimestamp()
+            .equals(other.getMetricTimestamp())) return false;
+      }
+      if (hasModelVersion() != other.hasModelVersion()) return false;
+      if (hasModelVersion()) {
+        if (!getModelVersion()
+            .equals(other.getModelVersion())) return false;
+      }
+      if (hasJobExecutionId() != other.hasJobExecutionId()) return false;
+      if (hasJobExecutionId()) {
+        if (!getJobExecutionId()
+            .equals(other.getJobExecutionId())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -32405,9 +33044,9 @@ public final class Message {
       hash = (37 * hash) + UUID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getUuid());
-      if (hasMetricId()) {
-        hash = (37 * hash) + METRIC_ID_FIELD_NUMBER;
-        hash = (53 * hash) + getMetricId().hashCode();
+      if (hasMetricName()) {
+        hash = (37 * hash) + METRIC_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getMetricName().hashCode();
       }
       if (hasMetricKey()) {
         hash = (37 * hash) + METRIC_KEY_FIELD_NUMBER;
@@ -32416,6 +33055,18 @@ public final class Message {
       if (hasMetricValue()) {
         hash = (37 * hash) + METRIC_VALUE_FIELD_NUMBER;
         hash = (53 * hash) + getMetricValue().hashCode();
+      }
+      if (hasMetricTimestamp()) {
+        hash = (37 * hash) + METRIC_TIMESTAMP_FIELD_NUMBER;
+        hash = (53 * hash) + getMetricTimestamp().hashCode();
+      }
+      if (hasModelVersion()) {
+        hash = (37 * hash) + MODEL_VERSION_FIELD_NUMBER;
+        hash = (53 * hash) + getModelVersion().hashCode();
+      }
+      if (hasJobExecutionId()) {
+        hash = (37 * hash) + JOB_EXECUTION_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getJobExecutionId().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -32552,11 +33203,11 @@ public final class Message {
         super.clear();
         uuid_ = 0L;
 
-        if (metricIdBuilder_ == null) {
-          metricId_ = null;
+        if (metricNameBuilder_ == null) {
+          metricName_ = null;
         } else {
-          metricId_ = null;
-          metricIdBuilder_ = null;
+          metricName_ = null;
+          metricNameBuilder_ = null;
         }
         if (metricKeyBuilder_ == null) {
           metricKey_ = null;
@@ -32569,6 +33220,24 @@ public final class Message {
         } else {
           metricValue_ = null;
           metricValueBuilder_ = null;
+        }
+        if (metricTimestampBuilder_ == null) {
+          metricTimestamp_ = null;
+        } else {
+          metricTimestamp_ = null;
+          metricTimestampBuilder_ = null;
+        }
+        if (modelVersionBuilder_ == null) {
+          modelVersion_ = null;
+        } else {
+          modelVersion_ = null;
+          modelVersionBuilder_ = null;
+        }
+        if (jobExecutionIdBuilder_ == null) {
+          jobExecutionId_ = null;
+        } else {
+          jobExecutionId_ = null;
+          jobExecutionIdBuilder_ = null;
         }
         return this;
       }
@@ -32597,10 +33266,10 @@ public final class Message {
       public com.aiflow.proto.Message.MetricSummaryProto buildPartial() {
         com.aiflow.proto.Message.MetricSummaryProto result = new com.aiflow.proto.Message.MetricSummaryProto(this);
         result.uuid_ = uuid_;
-        if (metricIdBuilder_ == null) {
-          result.metricId_ = metricId_;
+        if (metricNameBuilder_ == null) {
+          result.metricName_ = metricName_;
         } else {
-          result.metricId_ = metricIdBuilder_.build();
+          result.metricName_ = metricNameBuilder_.build();
         }
         if (metricKeyBuilder_ == null) {
           result.metricKey_ = metricKey_;
@@ -32611,6 +33280,21 @@ public final class Message {
           result.metricValue_ = metricValue_;
         } else {
           result.metricValue_ = metricValueBuilder_.build();
+        }
+        if (metricTimestampBuilder_ == null) {
+          result.metricTimestamp_ = metricTimestamp_;
+        } else {
+          result.metricTimestamp_ = metricTimestampBuilder_.build();
+        }
+        if (modelVersionBuilder_ == null) {
+          result.modelVersion_ = modelVersion_;
+        } else {
+          result.modelVersion_ = modelVersionBuilder_.build();
+        }
+        if (jobExecutionIdBuilder_ == null) {
+          result.jobExecutionId_ = jobExecutionId_;
+        } else {
+          result.jobExecutionId_ = jobExecutionIdBuilder_.build();
         }
         onBuilt();
         return result;
@@ -32663,14 +33347,23 @@ public final class Message {
         if (other.getUuid() != 0L) {
           setUuid(other.getUuid());
         }
-        if (other.hasMetricId()) {
-          mergeMetricId(other.getMetricId());
+        if (other.hasMetricName()) {
+          mergeMetricName(other.getMetricName());
         }
         if (other.hasMetricKey()) {
           mergeMetricKey(other.getMetricKey());
         }
         if (other.hasMetricValue()) {
           mergeMetricValue(other.getMetricValue());
+        }
+        if (other.hasMetricTimestamp()) {
+          mergeMetricTimestamp(other.getMetricTimestamp());
+        }
+        if (other.hasModelVersion()) {
+          mergeModelVersion(other.getModelVersion());
+        }
+        if (other.hasJobExecutionId()) {
+          mergeJobExecutionId(other.getJobExecutionId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -32732,123 +33425,123 @@ public final class Message {
         return this;
       }
 
-      private com.google.protobuf.Int64Value metricId_;
+      private com.google.protobuf.StringValue metricName_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> metricIdBuilder_;
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> metricNameBuilder_;
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
-       * @return Whether the metricId field is set.
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
+       * @return Whether the metricName field is set.
        */
-      public boolean hasMetricId() {
-        return metricIdBuilder_ != null || metricId_ != null;
+      public boolean hasMetricName() {
+        return metricNameBuilder_ != null || metricName_ != null;
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
-       * @return The metricId.
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
+       * @return The metricName.
        */
-      public com.google.protobuf.Int64Value getMetricId() {
-        if (metricIdBuilder_ == null) {
-          return metricId_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : metricId_;
+      public com.google.protobuf.StringValue getMetricName() {
+        if (metricNameBuilder_ == null) {
+          return metricName_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : metricName_;
         } else {
-          return metricIdBuilder_.getMessage();
+          return metricNameBuilder_.getMessage();
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
-      public Builder setMetricId(com.google.protobuf.Int64Value value) {
-        if (metricIdBuilder_ == null) {
+      public Builder setMetricName(com.google.protobuf.StringValue value) {
+        if (metricNameBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          metricId_ = value;
+          metricName_ = value;
           onChanged();
         } else {
-          metricIdBuilder_.setMessage(value);
+          metricNameBuilder_.setMessage(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
-      public Builder setMetricId(
-          com.google.protobuf.Int64Value.Builder builderForValue) {
-        if (metricIdBuilder_ == null) {
-          metricId_ = builderForValue.build();
+      public Builder setMetricName(
+          com.google.protobuf.StringValue.Builder builderForValue) {
+        if (metricNameBuilder_ == null) {
+          metricName_ = builderForValue.build();
           onChanged();
         } else {
-          metricIdBuilder_.setMessage(builderForValue.build());
+          metricNameBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
-      public Builder mergeMetricId(com.google.protobuf.Int64Value value) {
-        if (metricIdBuilder_ == null) {
-          if (metricId_ != null) {
-            metricId_ =
-              com.google.protobuf.Int64Value.newBuilder(metricId_).mergeFrom(value).buildPartial();
+      public Builder mergeMetricName(com.google.protobuf.StringValue value) {
+        if (metricNameBuilder_ == null) {
+          if (metricName_ != null) {
+            metricName_ =
+              com.google.protobuf.StringValue.newBuilder(metricName_).mergeFrom(value).buildPartial();
           } else {
-            metricId_ = value;
+            metricName_ = value;
           }
           onChanged();
         } else {
-          metricIdBuilder_.mergeFrom(value);
+          metricNameBuilder_.mergeFrom(value);
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
-      public Builder clearMetricId() {
-        if (metricIdBuilder_ == null) {
-          metricId_ = null;
+      public Builder clearMetricName() {
+        if (metricNameBuilder_ == null) {
+          metricName_ = null;
           onChanged();
         } else {
-          metricId_ = null;
-          metricIdBuilder_ = null;
+          metricName_ = null;
+          metricNameBuilder_ = null;
         }
 
         return this;
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
-      public com.google.protobuf.Int64Value.Builder getMetricIdBuilder() {
+      public com.google.protobuf.StringValue.Builder getMetricNameBuilder() {
         
         onChanged();
-        return getMetricIdFieldBuilder().getBuilder();
+        return getMetricNameFieldBuilder().getBuilder();
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
-      public com.google.protobuf.Int64ValueOrBuilder getMetricIdOrBuilder() {
-        if (metricIdBuilder_ != null) {
-          return metricIdBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.StringValueOrBuilder getMetricNameOrBuilder() {
+        if (metricNameBuilder_ != null) {
+          return metricNameBuilder_.getMessageOrBuilder();
         } else {
-          return metricId_ == null ?
-              com.google.protobuf.Int64Value.getDefaultInstance() : metricId_;
+          return metricName_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : metricName_;
         }
       }
       /**
-       * <code>.google.protobuf.Int64Value metric_id = 2;</code>
+       * <code>.google.protobuf.StringValue metric_name = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
-          getMetricIdFieldBuilder() {
-        if (metricIdBuilder_ == null) {
-          metricIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
-                  getMetricId(),
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+          getMetricNameFieldBuilder() {
+        if (metricNameBuilder_ == null) {
+          metricNameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                  getMetricName(),
                   getParentForChildren(),
                   isClean());
-          metricId_ = null;
+          metricName_ = null;
         }
-        return metricIdBuilder_;
+        return metricNameBuilder_;
       }
 
       private com.google.protobuf.StringValue metricKey_;
@@ -33088,6 +33781,363 @@ public final class Message {
         }
         return metricValueBuilder_;
       }
+
+      private com.google.protobuf.Int64Value metricTimestamp_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> metricTimestampBuilder_;
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       * @return Whether the metricTimestamp field is set.
+       */
+      public boolean hasMetricTimestamp() {
+        return metricTimestampBuilder_ != null || metricTimestamp_ != null;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       * @return The metricTimestamp.
+       */
+      public com.google.protobuf.Int64Value getMetricTimestamp() {
+        if (metricTimestampBuilder_ == null) {
+          return metricTimestamp_ == null ? com.google.protobuf.Int64Value.getDefaultInstance() : metricTimestamp_;
+        } else {
+          return metricTimestampBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      public Builder setMetricTimestamp(com.google.protobuf.Int64Value value) {
+        if (metricTimestampBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          metricTimestamp_ = value;
+          onChanged();
+        } else {
+          metricTimestampBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      public Builder setMetricTimestamp(
+          com.google.protobuf.Int64Value.Builder builderForValue) {
+        if (metricTimestampBuilder_ == null) {
+          metricTimestamp_ = builderForValue.build();
+          onChanged();
+        } else {
+          metricTimestampBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      public Builder mergeMetricTimestamp(com.google.protobuf.Int64Value value) {
+        if (metricTimestampBuilder_ == null) {
+          if (metricTimestamp_ != null) {
+            metricTimestamp_ =
+              com.google.protobuf.Int64Value.newBuilder(metricTimestamp_).mergeFrom(value).buildPartial();
+          } else {
+            metricTimestamp_ = value;
+          }
+          onChanged();
+        } else {
+          metricTimestampBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      public Builder clearMetricTimestamp() {
+        if (metricTimestampBuilder_ == null) {
+          metricTimestamp_ = null;
+          onChanged();
+        } else {
+          metricTimestamp_ = null;
+          metricTimestampBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      public com.google.protobuf.Int64Value.Builder getMetricTimestampBuilder() {
+        
+        onChanged();
+        return getMetricTimestampFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      public com.google.protobuf.Int64ValueOrBuilder getMetricTimestampOrBuilder() {
+        if (metricTimestampBuilder_ != null) {
+          return metricTimestampBuilder_.getMessageOrBuilder();
+        } else {
+          return metricTimestamp_ == null ?
+              com.google.protobuf.Int64Value.getDefaultInstance() : metricTimestamp_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Int64Value metric_timestamp = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder> 
+          getMetricTimestampFieldBuilder() {
+        if (metricTimestampBuilder_ == null) {
+          metricTimestampBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Int64Value, com.google.protobuf.Int64Value.Builder, com.google.protobuf.Int64ValueOrBuilder>(
+                  getMetricTimestamp(),
+                  getParentForChildren(),
+                  isClean());
+          metricTimestamp_ = null;
+        }
+        return metricTimestampBuilder_;
+      }
+
+      private com.google.protobuf.StringValue modelVersion_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> modelVersionBuilder_;
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       * @return Whether the modelVersion field is set.
+       */
+      public boolean hasModelVersion() {
+        return modelVersionBuilder_ != null || modelVersion_ != null;
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       * @return The modelVersion.
+       */
+      public com.google.protobuf.StringValue getModelVersion() {
+        if (modelVersionBuilder_ == null) {
+          return modelVersion_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : modelVersion_;
+        } else {
+          return modelVersionBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      public Builder setModelVersion(com.google.protobuf.StringValue value) {
+        if (modelVersionBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          modelVersion_ = value;
+          onChanged();
+        } else {
+          modelVersionBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      public Builder setModelVersion(
+          com.google.protobuf.StringValue.Builder builderForValue) {
+        if (modelVersionBuilder_ == null) {
+          modelVersion_ = builderForValue.build();
+          onChanged();
+        } else {
+          modelVersionBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      public Builder mergeModelVersion(com.google.protobuf.StringValue value) {
+        if (modelVersionBuilder_ == null) {
+          if (modelVersion_ != null) {
+            modelVersion_ =
+              com.google.protobuf.StringValue.newBuilder(modelVersion_).mergeFrom(value).buildPartial();
+          } else {
+            modelVersion_ = value;
+          }
+          onChanged();
+        } else {
+          modelVersionBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      public Builder clearModelVersion() {
+        if (modelVersionBuilder_ == null) {
+          modelVersion_ = null;
+          onChanged();
+        } else {
+          modelVersion_ = null;
+          modelVersionBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      public com.google.protobuf.StringValue.Builder getModelVersionBuilder() {
+        
+        onChanged();
+        return getModelVersionFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      public com.google.protobuf.StringValueOrBuilder getModelVersionOrBuilder() {
+        if (modelVersionBuilder_ != null) {
+          return modelVersionBuilder_.getMessageOrBuilder();
+        } else {
+          return modelVersion_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : modelVersion_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue model_version = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+          getModelVersionFieldBuilder() {
+        if (modelVersionBuilder_ == null) {
+          modelVersionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                  getModelVersion(),
+                  getParentForChildren(),
+                  isClean());
+          modelVersion_ = null;
+        }
+        return modelVersionBuilder_;
+      }
+
+      private com.google.protobuf.StringValue jobExecutionId_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> jobExecutionIdBuilder_;
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       * @return Whether the jobExecutionId field is set.
+       */
+      public boolean hasJobExecutionId() {
+        return jobExecutionIdBuilder_ != null || jobExecutionId_ != null;
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       * @return The jobExecutionId.
+       */
+      public com.google.protobuf.StringValue getJobExecutionId() {
+        if (jobExecutionIdBuilder_ == null) {
+          return jobExecutionId_ == null ? com.google.protobuf.StringValue.getDefaultInstance() : jobExecutionId_;
+        } else {
+          return jobExecutionIdBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      public Builder setJobExecutionId(com.google.protobuf.StringValue value) {
+        if (jobExecutionIdBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          jobExecutionId_ = value;
+          onChanged();
+        } else {
+          jobExecutionIdBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      public Builder setJobExecutionId(
+          com.google.protobuf.StringValue.Builder builderForValue) {
+        if (jobExecutionIdBuilder_ == null) {
+          jobExecutionId_ = builderForValue.build();
+          onChanged();
+        } else {
+          jobExecutionIdBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      public Builder mergeJobExecutionId(com.google.protobuf.StringValue value) {
+        if (jobExecutionIdBuilder_ == null) {
+          if (jobExecutionId_ != null) {
+            jobExecutionId_ =
+              com.google.protobuf.StringValue.newBuilder(jobExecutionId_).mergeFrom(value).buildPartial();
+          } else {
+            jobExecutionId_ = value;
+          }
+          onChanged();
+        } else {
+          jobExecutionIdBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      public Builder clearJobExecutionId() {
+        if (jobExecutionIdBuilder_ == null) {
+          jobExecutionId_ = null;
+          onChanged();
+        } else {
+          jobExecutionId_ = null;
+          jobExecutionIdBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      public com.google.protobuf.StringValue.Builder getJobExecutionIdBuilder() {
+        
+        onChanged();
+        return getJobExecutionIdFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      public com.google.protobuf.StringValueOrBuilder getJobExecutionIdOrBuilder() {
+        if (jobExecutionIdBuilder_ != null) {
+          return jobExecutionIdBuilder_.getMessageOrBuilder();
+        } else {
+          return jobExecutionId_ == null ?
+              com.google.protobuf.StringValue.getDefaultInstance() : jobExecutionId_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.StringValue job_execution_id = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder> 
+          getJobExecutionIdFieldBuilder() {
+        if (jobExecutionIdBuilder_ == null) {
+          jobExecutionIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.StringValue, com.google.protobuf.StringValue.Builder, com.google.protobuf.StringValueOrBuilder>(
+                  getJobExecutionId(),
+                  getParentForChildren(),
+                  isClean());
+          jobExecutionId_ = null;
+        }
+        return jobExecutionIdBuilder_;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -33217,6 +34267,16 @@ public final class Message {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ai_flow_ProjectProto_PropertiesEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ai_flow_WorkflowMetaProto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ai_flow_WorkflowMetaProto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ai_flow_WorkflowMetaProto_PropertiesEntry_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ai_flow_WorkflowMetaProto_PropertiesEntry_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ai_flow_ArtifactProto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -33318,165 +34378,168 @@ public final class Message {
       "ropertiesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001" +
       "(\t:\0028\001\"a\n\022ModelRelationProto\022\014\n\004uuid\030\001 \001" +
       "(\003\022\014\n\004name\030\002 \001(\t\022/\n\nproject_id\030\003 \001(\0132\033.g" +
-      "oogle.protobuf.Int64Value\"\263\001\n\nModelProto" +
+      "oogle.protobuf.Int64Value\"\213\001\n\nModelProto" +
       "\022\014\n\004uuid\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022/\n\nproject_" +
-      "id\030\003 \001(\0132\033.google.protobuf.Int64Value\022&\n" +
-      "\nmodel_type\030\004 \001(\0162\022.ai_flow.ModelType\0220\n" +
-      "\nmodel_desc\030\005 \001(\0132\034.google.protobuf.Stri" +
-      "ngValue\"\265\001\n\031ModelVersionRelationProto\022-\n" +
+      "id\030\003 \001(\0132\033.google.protobuf.Int64Value\0220\n" +
+      "\nmodel_desc\030\004 \001(\0132\034.google.protobuf.Stri" +
+      "ngValue\"\263\001\n\031ModelVersionRelationProto\022-\n" +
       "\007version\030\001 \001(\0132\034.google.protobuf.StringV" +
       "alue\022-\n\010model_id\030\002 \001(\0132\033.google.protobuf" +
-      ".Int64Value\022:\n\025workflow_execution_id\030\003 \001" +
-      "(\0132\033.google.protobuf.Int64Value\"\256\003\n\021Mode" +
-      "lVersionProto\022-\n\007version\030\001 \001(\0132\034.google." +
-      "protobuf.StringValue\022-\n\010model_id\030\002 \001(\0132\033" +
-      ".google.protobuf.Int64Value\022:\n\025workflow_" +
-      "execution_id\030\003 \001(\0132\033.google.protobuf.Int" +
-      "64Value\0220\n\nmodel_path\030\004 \001(\0132\034.google.pro" +
-      "tobuf.StringValue\0222\n\014model_metric\030\005 \001(\0132" +
-      "\034.google.protobuf.StringValue\0222\n\014model_f" +
-      "lavor\030\006 \001(\0132\034.google.protobuf.StringValu" +
-      "e\0222\n\014version_desc\030\007 \001(\0132\034.google.protobu" +
-      "f.StringValue\0221\n\rcurrent_stage\030\010 \001(\0162\032.a" +
-      "i_flow.ModelVersionStage\"\237\004\n\010JobProto\022\014\n" +
-      "\004uuid\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022:\n\025workflow_ex" +
-      "ecution_id\030\003 \001(\0132\033.google.protobuf.Int64" +
-      "Value\022&\n\tjob_state\030\004 \001(\0162\023.ai_flow.State" +
-      "Proto\0225\n\nproperties\030\005 \003(\0132!.ai_flow.JobP" +
-      "roto.PropertiesEntry\022,\n\006job_id\030\006 \001(\0132\034.g" +
-      "oogle.protobuf.StringValue\022/\n\nstart_time" +
-      "\030\007 \001(\0132\033.google.protobuf.Int64Value\022-\n\010e" +
-      "nd_time\030\010 \001(\0132\033.google.protobuf.Int64Val" +
-      "ue\022-\n\007log_uri\030\t \001(\0132\034.google.protobuf.St" +
-      "ringValue\022/\n\tsignature\030\n \001(\0132\034.google.pr" +
-      "otobuf.StringValue\022;\n\022workflow_execution" +
-      "\030\013 \001(\0132\037.ai_flow.WorkflowExecutionProto\032" +
-      "1\n\017PropertiesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value" +
-      "\030\002 \001(\t:\0028\001\"\342\001\n\rWorkflowProto\022\014\n\004uuid\030\001 \001" +
-      "(\003\022\014\n\004name\030\002 \001(\t\0223\n\rworkflow_json\030\003 \001(\0132" +
-      "\034.google.protobuf.StringValue\022:\n\npropert" +
-      "ies\030\004 \003(\0132&.ai_flow.WorkflowProto.Proper" +
-      "tiesEntry\022\021\n\tnamespace\030\005 \001(\t\0321\n\017Properti" +
-      "esEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"" +
-      "\300\004\n\026WorkflowExecutionProto\022\014\n\004uuid\030\001 \001(\003" +
-      "\022\014\n\004name\030\002 \001(\t\022/\n\nproject_id\030\003 \001(\0132\033.goo" +
-      "gle.protobuf.Int64Value\022,\n\017execution_sta" +
-      "te\030\004 \001(\0162\023.ai_flow.StateProto\022C\n\npropert" +
-      "ies\030\005 \003(\0132/.ai_flow.WorkflowExecutionPro" +
-      "to.PropertiesEntry\022/\n\nstart_time\030\006 \001(\0132\033" +
-      ".google.protobuf.Int64Value\022-\n\010end_time\030" +
-      "\007 \001(\0132\033.google.protobuf.Int64Value\022-\n\007lo" +
-      "g_uri\030\010 \001(\0132\034.google.protobuf.StringValu" +
-      "e\0223\n\rworkflow_json\030\t \001(\0132\034.google.protob" +
-      "uf.StringValue\022/\n\tsignature\030\n \001(\0132\034.goog" +
-      "le.protobuf.StringValue\022\024\n\014execution_id\030" +
-      "\013 \001(\t\022(\n\010workflow\030\014 \001(\0132\026.ai_flow.Workfl" +
-      "owProto\0321\n\017PropertiesEntry\022\013\n\003key\030\001 \001(\t\022" +
-      "\r\n\005value\030\002 \001(\t:\0028\001\"\303\001\n\014ProjectProto\022\014\n\004u" +
-      "uid\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\0229\n\nproperties\030\003 " +
-      "\003(\0132%.ai_flow.ProjectProto.PropertiesEnt" +
-      "ry\022)\n\003uri\030\004 \001(\0132\034.google.protobuf.String" +
-      "Value\0321\n\017PropertiesEntry\022\013\n\003key\030\001 \001(\t\022\r\n" +
-      "\005value\030\002 \001(\t:\0028\001\"\221\003\n\rArtifactProto\022\014\n\004uu" +
-      "id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022:\n\nproperties\030\003 \003" +
-      "(\0132&.ai_flow.ArtifactProto.PropertiesEnt" +
-      "ry\0223\n\rartifact_type\030\004 \001(\0132\034.google.proto" +
-      "buf.StringValue\022)\n\003uri\030\005 \001(\0132\034.google.pr" +
-      "otobuf.StringValue\0221\n\013description\030\006 \001(\0132" +
-      "\034.google.protobuf.StringValue\0220\n\013create_" +
-      "time\030\007 \001(\0132\033.google.protobuf.Int64Value\022" +
-      "0\n\013update_time\030\010 \001(\0132\033.google.protobuf.I" +
-      "nt64Value\0321\n\017PropertiesEntry\022\013\n\003key\030\001 \001(" +
-      "\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\242\001\n\024RegisteredModel" +
-      "Param\0220\n\nmodel_name\030\001 \001(\0132\034.google.proto" +
-      "buf.StringValue\022&\n\nmodel_type\030\002 \001(\0162\022.ai" +
-      "_flow.ModelType\0220\n\nmodel_desc\030\003 \001(\0132\034.go" +
-      "ogle.protobuf.StringValue\"\224\002\n\021ModelVersi" +
-      "onParam\0220\n\nmodel_path\030\001 \001(\0132\034.google.pro" +
-      "tobuf.StringValue\0222\n\014model_metric\030\002 \001(\0132" +
-      "\034.google.protobuf.StringValue\0222\n\014model_f" +
-      "lavor\030\003 \001(\0132\034.google.protobuf.StringValu" +
-      "e\0222\n\014version_desc\030\004 \001(\0132\034.google.protobu" +
-      "f.StringValue\0221\n\rcurrent_stage\030\005 \001(\0162\032.a" +
-      "i_flow.ModelVersionStage\"w\n\016ModelMetaPar" +
-      "am\0220\n\nmodel_name\030\001 \001(\0132\034.google.protobuf" +
-      ".StringValue\0223\n\rmodel_version\030\002 \001(\0132\034.go" +
-      "ogle.protobuf.StringValue\"A\n\010Response\022\023\n" +
-      "\013return_code\030\001 \001(\t\022\022\n\nreturn_msg\030\002 \001(\t\022\014" +
-      "\n\004data\030\003 \001(\t\"\203\001\n\023RegisteredModelMeta\022\022\n\n" +
-      "model_name\030\001 \001(\t\022&\n\nmodel_type\030\002 \001(\0162\022.a" +
-      "i_flow.ModelType\0220\n\nmodel_desc\030\003 \001(\0132\034.g" +
-      "oogle.protobuf.StringValue\"\363\002\n\020ModelVers" +
+      ".Int64Value\0228\n\023project_snapshot_id\030\003 \001(\013" +
+      "2\033.google.protobuf.Int64Value\"\366\002\n\021ModelV" +
+      "ersionProto\022-\n\007version\030\001 \001(\0132\034.google.pr" +
+      "otobuf.StringValue\022-\n\010model_id\030\002 \001(\0132\033.g" +
+      "oogle.protobuf.Int64Value\0228\n\023project_sna" +
+      "pshot_id\030\003 \001(\0132\033.google.protobuf.Int64Va" +
+      "lue\0220\n\nmodel_path\030\004 \001(\0132\034.google.protobu" +
+      "f.StringValue\0220\n\nmodel_type\030\006 \001(\0132\034.goog" +
+      "le.protobuf.StringValue\0222\n\014version_desc\030" +
+      "\007 \001(\0132\034.google.protobuf.StringValue\0221\n\rc" +
+      "urrent_stage\030\010 \001(\0162\032.ai_flow.ModelVersio" +
+      "nStage\"\237\004\n\010JobProto\022\014\n\004uuid\030\001 \001(\003\022\014\n\004nam" +
+      "e\030\002 \001(\t\022:\n\025workflow_execution_id\030\003 \001(\0132\033" +
+      ".google.protobuf.Int64Value\022&\n\tjob_state" +
+      "\030\004 \001(\0162\023.ai_flow.StateProto\0225\n\npropertie" +
+      "s\030\005 \003(\0132!.ai_flow.JobProto.PropertiesEnt" +
+      "ry\022,\n\006job_id\030\006 \001(\0132\034.google.protobuf.Str" +
+      "ingValue\022/\n\nstart_time\030\007 \001(\0132\033.google.pr" +
+      "otobuf.Int64Value\022-\n\010end_time\030\010 \001(\0132\033.go" +
+      "ogle.protobuf.Int64Value\022-\n\007log_uri\030\t \001(" +
+      "\0132\034.google.protobuf.StringValue\022/\n\tsigna" +
+      "ture\030\n \001(\0132\034.google.protobuf.StringValue" +
+      "\022;\n\022workflow_execution\030\013 \001(\0132\037.ai_flow.W" +
+      "orkflowExecutionProto\0321\n\017PropertiesEntry" +
+      "\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\342\001\n\rWor" +
+      "kflowProto\022\014\n\004uuid\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\0223" +
+      "\n\rworkflow_json\030\003 \001(\0132\034.google.protobuf." +
+      "StringValue\022:\n\nproperties\030\004 \003(\0132&.ai_flo" +
+      "w.WorkflowProto.PropertiesEntry\022\021\n\tnames" +
+      "pace\030\005 \001(\t\0321\n\017PropertiesEntry\022\013\n\003key\030\001 \001" +
+      "(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\300\004\n\026WorkflowExecut" +
+      "ionProto\022\014\n\004uuid\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022/\n\n" +
+      "project_id\030\003 \001(\0132\033.google.protobuf.Int64" +
+      "Value\022,\n\017execution_state\030\004 \001(\0162\023.ai_flow" +
+      ".StateProto\022C\n\nproperties\030\005 \003(\0132/.ai_flo" +
+      "w.WorkflowExecutionProto.PropertiesEntry" +
+      "\022/\n\nstart_time\030\006 \001(\0132\033.google.protobuf.I" +
+      "nt64Value\022-\n\010end_time\030\007 \001(\0132\033.google.pro" +
+      "tobuf.Int64Value\022-\n\007log_uri\030\010 \001(\0132\034.goog" +
+      "le.protobuf.StringValue\0223\n\rworkflow_json" +
+      "\030\t \001(\0132\034.google.protobuf.StringValue\022/\n\t" +
+      "signature\030\n \001(\0132\034.google.protobuf.String" +
+      "Value\022\024\n\014execution_id\030\013 \001(\t\022(\n\010workflow\030" +
+      "\014 \001(\0132\026.ai_flow.WorkflowProto\0321\n\017Propert" +
+      "iesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001" +
+      "\"\303\001\n\014ProjectProto\022\014\n\004uuid\030\001 \001(\003\022\014\n\004name\030" +
+      "\002 \001(\t\0229\n\nproperties\030\003 \003(\0132%.ai_flow.Proj" +
+      "ectProto.PropertiesEntry\022)\n\003uri\030\004 \001(\0132\034." +
+      "google.protobuf.StringValue\0321\n\017Propertie" +
+      "sEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\267" +
+      "\002\n\021WorkflowMetaProto\022\014\n\004uuid\030\001 \001(\003\022\014\n\004na" +
+      "me\030\002 \001(\t\022/\n\nproject_id\030\003 \001(\0132\033.google.pr" +
+      "otobuf.Int64Value\022>\n\nproperties\030\004 \003(\0132*." +
+      "ai_flow.WorkflowMetaProto.PropertiesEntr" +
+      "y\0220\n\013create_time\030\005 \001(\0132\033.google.protobuf" +
+      ".Int64Value\0220\n\013update_time\030\006 \001(\0132\033.googl" +
+      "e.protobuf.Int64Value\0321\n\017PropertiesEntry" +
+      "\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\221\003\n\rArt" +
+      "ifactProto\022\014\n\004uuid\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022:" +
+      "\n\nproperties\030\003 \003(\0132&.ai_flow.ArtifactPro" +
+      "to.PropertiesEntry\0223\n\rartifact_type\030\004 \001(" +
+      "\0132\034.google.protobuf.StringValue\022)\n\003uri\030\005" +
+      " \001(\0132\034.google.protobuf.StringValue\0221\n\013de" +
+      "scription\030\006 \001(\0132\034.google.protobuf.String" +
+      "Value\0220\n\013create_time\030\007 \001(\0132\033.google.prot" +
+      "obuf.Int64Value\0220\n\013update_time\030\010 \001(\0132\033.g" +
+      "oogle.protobuf.Int64Value\0321\n\017PropertiesE" +
+      "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"z\n\024" +
+      "RegisteredModelParam\0220\n\nmodel_name\030\001 \001(\013" +
+      "2\034.google.protobuf.StringValue\0220\n\nmodel_" +
+      "desc\030\002 \001(\0132\034.google.protobuf.StringValue" +
+      "\"\336\001\n\021ModelVersionParam\0220\n\nmodel_path\030\001 \001" +
+      "(\0132\034.google.protobuf.StringValue\0220\n\nmode" +
+      "l_type\030\002 \001(\0132\034.google.protobuf.StringVal" +
+      "ue\0222\n\014version_desc\030\003 \001(\0132\034.google.protob" +
+      "uf.StringValue\0221\n\rcurrent_stage\030\004 \001(\0162\032." +
+      "ai_flow.ModelVersionStage\"w\n\016ModelMetaPa" +
+      "ram\0220\n\nmodel_name\030\001 \001(\0132\034.google.protobu" +
+      "f.StringValue\0223\n\rmodel_version\030\002 \001(\0132\034.g" +
+      "oogle.protobuf.StringValue\"A\n\010Response\022\023" +
+      "\n\013return_code\030\001 \001(\t\022\022\n\nreturn_msg\030\002 \001(\t\022" +
+      "\014\n\004data\030\003 \001(\t\"[\n\023RegisteredModelMeta\022\022\n\n" +
+      "model_name\030\001 \001(\t\0220\n\nmodel_desc\030\002 \001(\0132\034.g" +
+      "oogle.protobuf.StringValue\"\275\002\n\020ModelVers" +
       "ionMeta\022\022\n\nmodel_name\030\001 \001(\t\022\025\n\rmodel_ver" +
       "sion\030\002 \001(\t\0220\n\nmodel_path\030\003 \001(\0132\034.google." +
-      "protobuf.StringValue\0222\n\014model_metric\030\004 \001" +
-      "(\0132\034.google.protobuf.StringValue\0222\n\014mode" +
-      "l_flavor\030\005 \001(\0132\034.google.protobuf.StringV" +
-      "alue\0222\n\014version_desc\030\006 \001(\0132\034.google.prot" +
-      "obuf.StringValue\0223\n\016version_status\030\007 \001(\016" +
-      "2\033.ai_flow.ModelVersionStatus\0221\n\rcurrent" +
-      "_stage\030\010 \001(\0162\032.ai_flow.ModelVersionStage" +
-      "\"\201\001\n\025RegisteredModelDetail\0226\n\020registered" +
-      "_model\030\001 \001(\0132\034.ai_flow.RegisteredModelMe" +
-      "ta\0220\n\rmodel_version\030\002 \001(\0132\031.ai_flow.Mode" +
-      "lVersionMeta\"O\n\024RegisteredModelMetas\0227\n\021" +
-      "registered_models\030\001 \003(\0132\034.ai_flow.Regist" +
-      "eredModelMeta\"J\n\013ResultProto\022$\n\006status\030\001" +
-      " \001(\0162\024.ai_flow.StatusProto\022\025\n\rerror_mess" +
-      "age\030\002 \001(\t\"\241\005\n\017MetricMetaProto\022\014\n\004uuid\030\001 " +
-      "\001(\003\022*\n\004name\030\002 \001(\0132\034.google.protobuf.Stri" +
-      "ngValue\022/\n\ndataset_id\030\003 \001(\0132\033.google.pro" +
-      "tobuf.Int64Value\0220\n\nmodel_name\030\004 \001(\0132\034.g" +
-      "oogle.protobuf.StringValue\0223\n\rmodel_vers" +
-      "ion\030\005 \001(\0132\034.google.protobuf.StringValue\022" +
-      "+\n\006job_id\030\006 \001(\0132\033.google.protobuf.Int64V" +
-      "alue\022/\n\nstart_time\030\007 \001(\0132\033.google.protob" +
-      "uf.Int64Value\022-\n\010end_time\030\010 \001(\0132\033.google" +
-      ".protobuf.Int64Value\022-\n\013metric_type\030\t \001(" +
-      "\0162\030.ai_flow.MetricTypeProto\022)\n\003uri\030\n \001(\013" +
-      "2\034.google.protobuf.StringValue\022*\n\004tags\030\013" +
-      " \001(\0132\034.google.protobuf.StringValue\0228\n\022me" +
-      "tric_description\030\014 \001(\0132\034.google.protobuf" +
-      ".StringValue\022<\n\nproperties\030\r \003(\0132(.ai_fl" +
-      "ow.MetricMetaProto.PropertiesEntry\0321\n\017Pr" +
-      "opertiesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(" +
-      "\t:\0028\001\"\270\001\n\022MetricSummaryProto\022\014\n\004uuid\030\001 \001" +
-      "(\003\022.\n\tmetric_id\030\002 \001(\0132\033.google.protobuf." +
-      "Int64Value\0220\n\nmetric_key\030\003 \001(\0132\034.google." +
-      "protobuf.StringValue\0222\n\014metric_value\030\004 \001" +
-      "(\0132\034.google.protobuf.StringValue*\300\003\n\nRet" +
-      "urnCode\022\013\n\007SUCCESS\020\000\022\022\n\016INTERNAL_ERROR\020\001" +
-      "\022\033\n\027TEMPORARILY_UNAVAILABLE\020\002\022\014\n\010IO_ERRO" +
-      "R\020\003\022\017\n\013BAD_REQUEST\020\004\022\034\n\027INVALID_PARAMETE" +
-      "R_VALUE\020\350\007\022\027\n\022ENDPOINT_NOT_FOUND\020\351\007\022\026\n\021M" +
-      "ALFORMED_REQUEST\020\352\007\022\022\n\rINVALID_STATE\020\353\007\022" +
-      "\026\n\021PERMISSION_DENIED\020\354\007\022\025\n\020FEATURE_DISAB" +
-      "LED\020\355\007\022\032\n\025CUSTOMER_UNAUTHORIZED\020\356\007\022\033\n\026RE" +
-      "QUEST_LIMIT_EXCEEDED\020\357\007\022\034\n\027RESOURCE_ALRE" +
-      "ADY_EXISTS\020\321\017\022\034\n\027RESOURCE_DOES_NOT_EXIST" +
-      "\020\322\017\022\023\n\016QUOTA_EXCEEDED\020\271\027\022\034\n\027MAX_BLOCK_SI" +
-      "ZE_EXCEEDED\020\272\027\022\033\n\026MAX_READ_SIZE_EXCEEDED" +
-      "\020\273\027* \n\013StatusProto\022\006\n\002OK\020\000\022\t\n\005ERROR\020\001*\326\001" +
-      "\n\rDataTypeProto\022\031\n\025DATA_TYPE_UNSPECIFIED" +
-      "\020\000\022\t\n\005INT32\020\001\022\t\n\005INT64\020\002\022\013\n\007FLOAT32\020\003\022\013\n" +
-      "\007FLOAT64\020\004\022\n\n\006STRING\020\005\022\016\n\nINT32ARRAY\020\006\022\016" +
-      "\n\nINT64ARRAY\020\007\022\020\n\014FlOAT32ARRAY\020\010\022\020\n\014FLOA" +
-      "T64ARRAY\020\t\022\017\n\013STRINGARRAY\020\n\022\t\n\005BYTES\020\013\022\016" +
-      "\n\nBYTESARRAY\020\014*{\n\nStateProto\022\025\n\021STATE_UN" +
-      "SPECIFIED\020\000\022\010\n\004INIT\020\001\022\014\n\010STARTING\020\002\022\013\n\007R" +
-      "UNNING\020\003\022\014\n\010FINISHED\020\004\022\n\n\006FAILED\020\005\022\013\n\007KI" +
-      "LLING\020\006\022\n\n\006KILLED\020\007*F\n\rExecutionMode\022\036\n\032" +
-      "EXECUTION_MODE_UNSPECIFIED\020\000\022\t\n\005BATCH\020\001\022" +
-      "\n\n\006STREAM\020\002*C\n\tModelType\022\r\n\tNONE_TYPE\020\000\022" +
-      "\016\n\nCHECKPOINT\020\001\022\017\n\013SAVED_MODEL\020\002\022\006\n\002H5\020\003" +
-      "*}\n\022ModelVersionStatus\022\030\n\024PENDING_REGIST" +
-      "RATION\020\000\022\027\n\023FAILED_REGISTRATION\020\001\022\t\n\005REA" +
-      "DY\020\003\022\024\n\020PENDING_DELETION\020\004\022\023\n\017FAILED_DEL" +
-      "ETION\020\005*\\\n\021ModelVersionStage\022\r\n\tGENERATE" +
-      "D\020\000\022\r\n\tVALIDATED\020\001\022\014\n\010DEPLOYED\020\002\022\016\n\nDEPR" +
-      "ECATED\020\003\022\013\n\007DELETED\020\004*)\n\017MetricTypeProto" +
-      "\022\013\n\007DATASET\020\000\022\t\n\005MODEL\020\001B\"\n\020com.aiflow.p" +
-      "rotoZ\010/ai_flow\210\001\001\220\001\001b\006proto3"
+      "protobuf.StringValue\0220\n\nmodel_type\030\005 \001(\013" +
+      "2\034.google.protobuf.StringValue\0222\n\014versio" +
+      "n_desc\030\006 \001(\0132\034.google.protobuf.StringVal" +
+      "ue\0223\n\016version_status\030\007 \001(\0162\033.ai_flow.Mod" +
+      "elVersionStatus\0221\n\rcurrent_stage\030\010 \001(\0162\032" +
+      ".ai_flow.ModelVersionStage\"\210\001\n\025Registere" +
+      "dModelDetail\0226\n\020registered_model\030\001 \001(\0132\034" +
+      ".ai_flow.RegisteredModelMeta\0227\n\024latest_m" +
+      "odel_version\030\002 \001(\0132\031.ai_flow.ModelVersio" +
+      "nMeta\"O\n\024RegisteredModelMetas\0227\n\021registe" +
+      "red_models\030\001 \003(\0132\034.ai_flow.RegisteredMod" +
+      "elMeta\"J\n\013ResultProto\022$\n\006status\030\001 \001(\0162\024." +
+      "ai_flow.StatusProto\022\025\n\rerror_message\030\002 \001" +
+      "(\t\"\230\005\n\017MetricMetaProto\0221\n\013metric_name\030\001 " +
+      "\001(\0132\034.google.protobuf.StringValue\022-\n\013met" +
+      "ric_type\030\002 \001(\0162\030.ai_flow.MetricTypeProto" +
+      "\0221\n\013metric_desc\030\003 \001(\0132\034.google.protobuf." +
+      "StringValue\0222\n\014project_name\030\004 \001(\0132\034.goog" +
+      "le.protobuf.StringValue\0222\n\014dataset_name\030" +
+      "\005 \001(\0132\034.google.protobuf.StringValue\0220\n\nm" +
+      "odel_name\030\006 \001(\0132\034.google.protobuf.String" +
+      "Value\022.\n\010job_name\030\007 \001(\0132\034.google.protobu" +
+      "f.StringValue\022/\n\nstart_time\030\010 \001(\0132\033.goog" +
+      "le.protobuf.Int64Value\022-\n\010end_time\030\t \001(\013" +
+      "2\033.google.protobuf.Int64Value\022)\n\003uri\030\n \001" +
+      "(\0132\034.google.protobuf.StringValue\022*\n\004tags" +
+      "\030\013 \001(\0132\034.google.protobuf.StringValue\022<\n\n" +
+      "properties\030\014 \003(\0132(.ai_flow.MetricMetaPro" +
+      "to.PropertiesEntry\0321\n\017PropertiesEntry\022\013\n" +
+      "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\337\002\n\022Metric" +
+      "SummaryProto\022\014\n\004uuid\030\001 \001(\003\0221\n\013metric_nam" +
+      "e\030\002 \001(\0132\034.google.protobuf.StringValue\0220\n" +
+      "\nmetric_key\030\003 \001(\0132\034.google.protobuf.Stri" +
+      "ngValue\0222\n\014metric_value\030\004 \001(\0132\034.google.p" +
+      "rotobuf.StringValue\0225\n\020metric_timestamp\030" +
+      "\005 \001(\0132\033.google.protobuf.Int64Value\0223\n\rmo" +
+      "del_version\030\006 \001(\0132\034.google.protobuf.Stri" +
+      "ngValue\0226\n\020job_execution_id\030\007 \001(\0132\034.goog" +
+      "le.protobuf.StringValue*\300\003\n\nReturnCode\022\013" +
+      "\n\007SUCCESS\020\000\022\022\n\016INTERNAL_ERROR\020\001\022\033\n\027TEMPO" +
+      "RARILY_UNAVAILABLE\020\002\022\014\n\010IO_ERROR\020\003\022\017\n\013BA" +
+      "D_REQUEST\020\004\022\034\n\027INVALID_PARAMETER_VALUE\020\350" +
+      "\007\022\027\n\022ENDPOINT_NOT_FOUND\020\351\007\022\026\n\021MALFORMED_" +
+      "REQUEST\020\352\007\022\022\n\rINVALID_STATE\020\353\007\022\026\n\021PERMIS" +
+      "SION_DENIED\020\354\007\022\025\n\020FEATURE_DISABLED\020\355\007\022\032\n" +
+      "\025CUSTOMER_UNAUTHORIZED\020\356\007\022\033\n\026REQUEST_LIM" +
+      "IT_EXCEEDED\020\357\007\022\034\n\027RESOURCE_ALREADY_EXIST" +
+      "S\020\321\017\022\034\n\027RESOURCE_DOES_NOT_EXIST\020\322\017\022\023\n\016QU" +
+      "OTA_EXCEEDED\020\271\027\022\034\n\027MAX_BLOCK_SIZE_EXCEED" +
+      "ED\020\272\027\022\033\n\026MAX_READ_SIZE_EXCEEDED\020\273\027* \n\013St" +
+      "atusProto\022\006\n\002OK\020\000\022\t\n\005ERROR\020\001*\326\001\n\rDataTyp" +
+      "eProto\022\031\n\025DATA_TYPE_UNSPECIFIED\020\000\022\t\n\005INT" +
+      "32\020\001\022\t\n\005INT64\020\002\022\013\n\007FLOAT32\020\003\022\013\n\007FLOAT64\020" +
+      "\004\022\n\n\006STRING\020\005\022\016\n\nINT32ARRAY\020\006\022\016\n\nINT64AR" +
+      "RAY\020\007\022\020\n\014FlOAT32ARRAY\020\010\022\020\n\014FLOAT64ARRAY\020" +
+      "\t\022\017\n\013STRINGARRAY\020\n\022\t\n\005BYTES\020\013\022\016\n\nBYTESAR" +
+      "RAY\020\014*{\n\nStateProto\022\025\n\021STATE_UNSPECIFIED" +
+      "\020\000\022\010\n\004INIT\020\001\022\014\n\010STARTING\020\002\022\013\n\007RUNNING\020\003\022" +
+      "\014\n\010FINISHED\020\004\022\n\n\006FAILED\020\005\022\013\n\007KILLING\020\006\022\n" +
+      "\n\006KILLED\020\007*F\n\rExecutionMode\022\036\n\032EXECUTION" +
+      "_MODE_UNSPECIFIED\020\000\022\t\n\005BATCH\020\001\022\n\n\006STREAM" +
+      "\020\002*}\n\022ModelVersionStatus\022\030\n\024PENDING_REGI" +
+      "STRATION\020\000\022\027\n\023FAILED_REGISTRATION\020\001\022\t\n\005R" +
+      "EADY\020\003\022\024\n\020PENDING_DELETION\020\004\022\023\n\017FAILED_D" +
+      "ELETION\020\005*\\\n\021ModelVersionStage\022\r\n\tGENERA" +
+      "TED\020\000\022\r\n\tVALIDATED\020\001\022\014\n\010DEPLOYED\020\002\022\016\n\nDE" +
+      "PRECATED\020\003\022\013\n\007DELETED\020\004*)\n\017MetricTypePro" +
+      "to\022\013\n\007DATASET\020\000\022\t\n\005MODEL\020\001B\"\n\020com.aiflow" +
+      ".protoZ\010/ai_flow\210\001\001\220\001\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -33512,19 +34575,19 @@ public final class Message {
     internal_static_ai_flow_ModelProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ModelProto_descriptor,
-        new java.lang.String[] { "Uuid", "Name", "ProjectId", "ModelType", "ModelDesc", });
+        new java.lang.String[] { "Uuid", "Name", "ProjectId", "ModelDesc", });
     internal_static_ai_flow_ModelVersionRelationProto_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_ai_flow_ModelVersionRelationProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ModelVersionRelationProto_descriptor,
-        new java.lang.String[] { "Version", "ModelId", "WorkflowExecutionId", });
+        new java.lang.String[] { "Version", "ModelId", "ProjectSnapshotId", });
     internal_static_ai_flow_ModelVersionProto_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_ai_flow_ModelVersionProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ModelVersionProto_descriptor,
-        new java.lang.String[] { "Version", "ModelId", "WorkflowExecutionId", "ModelPath", "ModelMetric", "ModelFlavor", "VersionDesc", "CurrentStage", });
+        new java.lang.String[] { "Version", "ModelId", "ProjectSnapshotId", "ModelPath", "ModelType", "VersionDesc", "CurrentStage", });
     internal_static_ai_flow_JobProto_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_ai_flow_JobProto_fieldAccessorTable = new
@@ -33573,8 +34636,20 @@ public final class Message {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ProjectProto_PropertiesEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_ai_flow_ArtifactProto_descriptor =
+    internal_static_ai_flow_WorkflowMetaProto_descriptor =
       getDescriptor().getMessageTypes().get(10);
+    internal_static_ai_flow_WorkflowMetaProto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ai_flow_WorkflowMetaProto_descriptor,
+        new java.lang.String[] { "Uuid", "Name", "ProjectId", "Properties", "CreateTime", "UpdateTime", });
+    internal_static_ai_flow_WorkflowMetaProto_PropertiesEntry_descriptor =
+      internal_static_ai_flow_WorkflowMetaProto_descriptor.getNestedTypes().get(0);
+    internal_static_ai_flow_WorkflowMetaProto_PropertiesEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ai_flow_WorkflowMetaProto_PropertiesEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_ai_flow_ArtifactProto_descriptor =
+      getDescriptor().getMessageTypes().get(11);
     internal_static_ai_flow_ArtifactProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ArtifactProto_descriptor,
@@ -33586,65 +34661,65 @@ public final class Message {
         internal_static_ai_flow_ArtifactProto_PropertiesEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_ai_flow_RegisteredModelParam_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_ai_flow_RegisteredModelParam_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_RegisteredModelParam_descriptor,
-        new java.lang.String[] { "ModelName", "ModelType", "ModelDesc", });
+        new java.lang.String[] { "ModelName", "ModelDesc", });
     internal_static_ai_flow_ModelVersionParam_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_ai_flow_ModelVersionParam_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ModelVersionParam_descriptor,
-        new java.lang.String[] { "ModelPath", "ModelMetric", "ModelFlavor", "VersionDesc", "CurrentStage", });
+        new java.lang.String[] { "ModelPath", "ModelType", "VersionDesc", "CurrentStage", });
     internal_static_ai_flow_ModelMetaParam_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_ai_flow_ModelMetaParam_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ModelMetaParam_descriptor,
         new java.lang.String[] { "ModelName", "ModelVersion", });
     internal_static_ai_flow_Response_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_ai_flow_Response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_Response_descriptor,
         new java.lang.String[] { "ReturnCode", "ReturnMsg", "Data", });
     internal_static_ai_flow_RegisteredModelMeta_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_ai_flow_RegisteredModelMeta_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_RegisteredModelMeta_descriptor,
-        new java.lang.String[] { "ModelName", "ModelType", "ModelDesc", });
+        new java.lang.String[] { "ModelName", "ModelDesc", });
     internal_static_ai_flow_ModelVersionMeta_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_ai_flow_ModelVersionMeta_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ModelVersionMeta_descriptor,
-        new java.lang.String[] { "ModelName", "ModelVersion", "ModelPath", "ModelMetric", "ModelFlavor", "VersionDesc", "VersionStatus", "CurrentStage", });
+        new java.lang.String[] { "ModelName", "ModelVersion", "ModelPath", "ModelType", "VersionDesc", "VersionStatus", "CurrentStage", });
     internal_static_ai_flow_RegisteredModelDetail_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_ai_flow_RegisteredModelDetail_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_RegisteredModelDetail_descriptor,
-        new java.lang.String[] { "RegisteredModel", "ModelVersion", });
+        new java.lang.String[] { "RegisteredModel", "LatestModelVersion", });
     internal_static_ai_flow_RegisteredModelMetas_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_ai_flow_RegisteredModelMetas_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_RegisteredModelMetas_descriptor,
         new java.lang.String[] { "RegisteredModels", });
     internal_static_ai_flow_ResultProto_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_ai_flow_ResultProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_ResultProto_descriptor,
         new java.lang.String[] { "Status", "ErrorMessage", });
     internal_static_ai_flow_MetricMetaProto_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_ai_flow_MetricMetaProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_MetricMetaProto_descriptor,
-        new java.lang.String[] { "Uuid", "Name", "DatasetId", "ModelName", "ModelVersion", "JobId", "StartTime", "EndTime", "MetricType", "Uri", "Tags", "MetricDescription", "Properties", });
+        new java.lang.String[] { "MetricName", "MetricType", "MetricDesc", "ProjectName", "DatasetName", "ModelName", "JobName", "StartTime", "EndTime", "Uri", "Tags", "Properties", });
     internal_static_ai_flow_MetricMetaProto_PropertiesEntry_descriptor =
       internal_static_ai_flow_MetricMetaProto_descriptor.getNestedTypes().get(0);
     internal_static_ai_flow_MetricMetaProto_PropertiesEntry_fieldAccessorTable = new
@@ -33652,11 +34727,11 @@ public final class Message {
         internal_static_ai_flow_MetricMetaProto_PropertiesEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_ai_flow_MetricSummaryProto_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_ai_flow_MetricSummaryProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ai_flow_MetricSummaryProto_descriptor,
-        new java.lang.String[] { "Uuid", "MetricId", "MetricKey", "MetricValue", });
+        new java.lang.String[] { "Uuid", "MetricName", "MetricKey", "MetricValue", "MetricTimestamp", "ModelVersion", "JobExecutionId", });
     com.google.protobuf.WrappersProto.getDescriptor();
   }
 
