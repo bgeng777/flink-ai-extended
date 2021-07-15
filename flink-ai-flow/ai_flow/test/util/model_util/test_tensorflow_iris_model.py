@@ -31,7 +31,6 @@ import tensorflow as tf
 from notification_service.base_notification import EventWatcher
 from tensorflow.python.saved_model import tag_constants
 
-from ai_flow import ModelType
 from ai_flow.util.model_util.model_util import load_tensorflow_saved_model
 from ai_flow.client.ai_flow_client import AIFlowClient
 from ai_flow.endpoint.server.server import AIFlowServer
@@ -144,7 +143,9 @@ class TestTensorFlowIrisModel(unittest.TestCase):
             def process(self, notifications):
                 for notification in notifications:
                     model_path = json.loads(notification.value).get('_model_path')
-                    model_flavor = json.loads(notification.value).get('_model_flavor')
+                    model_flavor = json.loads(notification.value).get('_model_type')
+                    print(json.loads(notification.value).keys())
+                    print(model_path)
                     signature_def = load_tensorflow_saved_model(model_uri=model_path,
                                                                 meta_graph_tags=json.loads(model_flavor).get(
                                                                     'meta_graph_tags'),
@@ -159,7 +160,7 @@ class TestTensorFlowIrisModel(unittest.TestCase):
                         assert t_output is not None
 
         self.client.start_listen_event(key=registered_model.model_name,
-                                              watcher=IrisWatcher())
+                                       watcher=IrisWatcher())
 
 
 if __name__ == '__main__':

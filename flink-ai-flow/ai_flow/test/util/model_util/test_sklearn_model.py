@@ -30,7 +30,6 @@ import sklearn.datasets as datasets
 import sklearn.neighbors as knn
 from notification_service.base_notification import EventWatcher
 
-from ai_flow import ModelType
 from ai_flow.util.model_util.model_util import load_scikit_learn_model
 from ai_flow.client.ai_flow_client import AIFlowClient
 from ai_flow.endpoint.server.server import AIFlowServer
