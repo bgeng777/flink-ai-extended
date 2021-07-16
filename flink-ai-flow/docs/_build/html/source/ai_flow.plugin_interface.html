@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.plugin_interface package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">ai_flow.plugin_interface package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ai_flow.plugin_interface.blob_manager_interface">ai_flow.plugin_interface.blob_manager_interface module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.plugin_interface.job_plugin_interface">ai_flow.plugin_interface.job_plugin_interface module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.plugin_interface.scheduler_interface">ai_flow.plugin_interface.scheduler_interface module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.plugin_interface">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ai_flow.plugin_interface package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source/ai_flow.plugin_interface.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ai-flow-plugin-interface-package">
+<h1>ai_flow.plugin_interface package<a class="headerlink" href="#ai-flow-plugin-interface-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow.plugin_interface.blob_manager_interface">
+<span id="ai-flow-plugin-interface-blob-manager-interface-module"></span><h2>ai_flow.plugin_interface.blob_manager_interface module<a class="headerlink" href="#module-ai_flow.plugin_interface.blob_manager_interface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.blob_manager_interface.BlobManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.blob_manager_interface.</span></span><span class="sig-name descname"><span class="pre">BlobManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/blob_manager_interface.html#BlobManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>A BlobManager is responsible for uploading and downloading files and resource for an execution of an ai flow project.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.blob_manager_interface.BlobManager.cleanup_project">
+<span class="sig-name descname"><span class="pre">cleanup_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_snapshot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/blob_manager_interface.html#BlobManager.cleanup_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManager.cleanup_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean up the project files downloaded or created during this execution.
+:param workflow_snapshot_id: It is the unique identifier for each workflow generation.
+:param remote_path: The project package uri.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.blob_manager_interface.BlobManager.download_project">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">download_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_snapshot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/blob_manager_interface.html#BlobManager.download_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManager.download_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>download the needed resource from remote blob server to local process for remote execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_snapshot_id</strong> – It is the unique identifier for each workflow generation.</p></li>
+<li><p><strong>remote_path</strong> – The project package uri.</p></li>
+<li><p><strong>local_path</strong> – Download file root path.</p></li>
+</ul>
+</dd>
+</dl>
+<p>:return Local project path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.blob_manager_interface.BlobManager.upload_project">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">upload_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_snapshot_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/blob_manager_interface.html#BlobManager.upload_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManager.upload_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>upload a given project to blob server for remote execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_snapshot_id</strong> – It is the unique identifier for each workflow generation.</p></li>
+<li><p><strong>project_path</strong> – the path of this project.</p></li>
+</ul>
+</dd>
+</dl>
+<p>:return the uri of the uploaded project file in blob server.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.blob_manager_interface.BlobManagerFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.blob_manager_interface.</span></span><span class="sig-name descname"><span class="pre">BlobManagerFactory</span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/blob_manager_interface.html#BlobManagerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManagerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.blob_manager_interface.BlobManagerFactory.get_blob_manager">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_blob_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManager" title="ai_flow.plugin_interface.blob_manager_interface.BlobManager"><span class="pre">ai_flow.plugin_interface.blob_manager_interface.BlobManager</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/blob_manager_interface.html#BlobManagerFactory.get_blob_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.blob_manager_interface.BlobManagerFactory.get_blob_manager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.plugin_interface.job_plugin_interface">
+<span id="ai-flow-plugin-interface-job-plugin-interface-module"></span><h2>ai_flow.plugin_interface.job_plugin_interface module<a class="headerlink" href="#module-ai_flow.plugin_interface.job_plugin_interface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">JobController</span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Used for control an executable job to specific platform when it’s scheduled to run in workflow scheduler.
+The controller is able to control the lifecycle of a workflow job. Users can also implement custom job controller
+with their own job type.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController.cleanup_job">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">cleanup_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobController.cleanup_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController.cleanup_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up temporary resources created during this execution.
+:param job_runtime_env: The job runtime environment. Type: ai_flow.runtime.job_runtime_env.JobRuntimeEnv
+:param job_handle: The job handle that contains the necessary information for an execution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController.get_job_status">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_job_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.status.Status" title="ai_flow.workflow.status.Status"><span class="pre">ai_flow.workflow.status.Status</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobController.get_job_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController.get_job_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the job status.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController.get_result">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocking</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobController.get_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the job result.
+:param job_handle: The job handle that contains the necessary information for an execution.
+:param blocking: blocking is true: Wait for the job to finish and return the result of the job.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>blocking is false: If the job is running, return None.</dt><dd><p>If the job is finish, return the result of job.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController.log">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">log</span></span><em class="property"><span class="pre">:</span> <span class="pre">logging.Logger</span></em><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a logger. This logger is used as a log for control jobs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController.stop_job">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">stop_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobController.stop_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController.stop_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop a ai flow job.
+:param job_runtime_env: The job runtime environment. Type: ai_flow.runtime.job_runtime_env.JobRuntimeEnv
+:param job_handle: The job handle that contains the necessary information for an execution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobController.submit_job">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">submit_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobController.submit_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobController.submit_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit an executable job to run.
+:param job_runtime_env: The job runtime environment. Type: ai_flow.runtime.job_runtime_env.JobRuntimeEnv
+:param job: A job object that contains the necessary information for an execution.
+:return job_handle: a job handle that maintain the handler of a job runtime.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobControllerManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">JobControllerManager</span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobControllerManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobControllerManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.common.html#ai_flow.common.registry.BaseRegistry" title="ai_flow.common.registry.BaseRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.common.registry.BaseRegistry</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.cleanup_job">
+<span class="sig-name descname"><span class="pre">cleanup_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobControllerManager.cleanup_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.cleanup_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.get_job_controller">
+<span class="sig-name descname"><span class="pre">get_job_controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobController" title="ai_flow.plugin_interface.job_plugin_interface.JobController"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobController</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobControllerManager.get_job_controller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.get_job_controller" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.stop_job">
+<span class="sig-name descname"><span class="pre">stop_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobControllerManager.stop_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.stop_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.submit_job">
+<span class="sig-name descname"><span class="pre">submit_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobControllerManager.submit_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobControllerManager.submit_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobHandle">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">JobHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_execution</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>JobHandle is created by JobController. When call submit_job function, then return a JobHandle.
+Using JobHandle, you can get the job information.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">JobPluginFactory</span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobPluginFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory.get_job_controller">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_job_controller</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobController" title="ai_flow.plugin_interface.job_plugin_interface.JobController"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobController</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobPluginFactory.get_job_controller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory.get_job_controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>:return a JobController which type is same with AbstractJobPluginFactory job_type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory.get_job_generator">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_job_generator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.translator.html#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><span class="pre">ai_flow.translator.translator.JobGenerator</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobPluginFactory.get_job_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory.get_job_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>:return a JobGenerator which type is same with AbstractJobPluginFactory job_type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory.job_type">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">job_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#JobPluginFactory.job_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory.job_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The job type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.get_job_controller_manager">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">get_job_controller_manager</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobControllerManager" title="ai_flow.plugin_interface.job_plugin_interface.JobControllerManager"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobControllerManager</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#get_job_controller_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.get_job_controller_manager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.get_registered_job_plugin_factory_list">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">get_registered_job_plugin_factory_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#get_registered_job_plugin_factory_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.get_registered_job_plugin_factory_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.register_job_controller">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">register_job_controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_controller</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobController" title="ai_flow.plugin_interface.job_plugin_interface.JobController"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobController</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#register_job_controller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.register_job_controller" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.job_plugin_interface.register_job_plugin_factory">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.</span></span><span class="sig-name descname"><span class="pre">register_job_plugin_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory" title="ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/job_plugin_interface.html#register_job_plugin_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.job_plugin_interface.register_job_plugin_factory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.plugin_interface.scheduler_interface">
+<span id="ai-flow-plugin-interface-scheduler-interface-module"></span><h2>ai_flow.plugin_interface.scheduler_interface module<a class="headerlink" href="#module-ai_flow.plugin_interface.scheduler_interface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.scheduler_interface.</span></span><span class="sig-name descname"><span class="pre">JobExecutionInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_execution</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#JobExecutionInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.end_date">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">end_date</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.end_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.job_execution_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">job_execution_id</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.job_execution_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.job_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">job_name</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.job_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.properties">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.start_date">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">start_date</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.start_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.status">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.workflow_execution">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">workflow_execution</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo.workflow_execution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.scheduler_interface.</span></span><span class="sig-name descname"><span class="pre">Scheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.config">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">config</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.delete_workflow">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">delete_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.delete_workflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.delete_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the workflow from scheduler.
+:param project_name: The project name.
+:param workflow_name: The workflow name.
+:return: The workflow information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.get_job_executions">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_job_executions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.get_job_executions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.get_job_executions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the job execution information by job name.
+:param job_name: The job name.
+:param workflow_execution_id: The workflow execution id.
+:return: The job execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.get_workflow_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_workflow_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.get_workflow_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.get_workflow_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the workflow execution information.
+:param workflow_execution_id: The workflow execution id.
+:return: The workflow execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.list_job_executions">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">list_job_executions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.list_job_executions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.list_job_executions" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the job execution information by the workflow execution id.
+:param workflow_execution_id: The workflow execution id.
+:return: The job execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.list_workflow_executions">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">list_workflow_executions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.list_workflow_executions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.list_workflow_executions" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all workflow executions by workflow name.
+:param project_name: The project name.
+:param workflow_name: The workflow name.
+:return: The workflow execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.pause_workflow_scheduling">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">pause_workflow_scheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.pause_workflow_scheduling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.pause_workflow_scheduling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the scheduler stop scheduling the workflow.
+:param project_name: The project name.
+:param workflow_name: The workflow name.
+:return: The workflow information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.restart_job_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">restart_job_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.restart_job_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.restart_job_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the scheduler restart a job execution. If job status is running, first stop the job and then start it.
+:param job_name: The job name.
+:param workflow_execution_id: The workflow execution id.
+:return: The job execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.resume_workflow_scheduling">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">resume_workflow_scheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.resume_workflow_scheduling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.resume_workflow_scheduling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the scheduler resume scheduling the workflow.
+:param project_name: The project name.
+:param workflow_name: The workflow name.
+:return: The workflow information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.start_job_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">start_job_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.start_job_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.start_job_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the scheduler start a new job execution.
+:param job_name: The job name.
+:param workflow_execution_id: The workflow execution id.
+:return: The job execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.start_new_workflow_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">start_new_workflow_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.start_new_workflow_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.start_new_workflow_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the scheduler new a workflow execution.
+:param project_name: The project name.
+:param workflow_name: The workflow name.
+:return: The workflow execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.stop_all_workflow_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">stop_all_workflow_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.stop_all_workflow_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.stop_all_workflow_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop all workflow execution of the workflow.
+:param project_name: The project name.
+:param workflow_name: The workflow name.
+:return: The workflow execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.stop_job_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">stop_job_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.stop_job_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.stop_job_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the scheduler stop the job execution.
+:param job_name: The job name.
+:param workflow_execution_id: The workflow execution id.
+:return: The job execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.stop_workflow_execution">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">stop_workflow_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.stop_workflow_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.stop_workflow_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the workflow execution by execution id.
+:param workflow_execution_id: The workflow execution id.
+:return: The workflow execution information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.Scheduler.submit_workflow">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">submit_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.workflow.Workflow" title="ai_flow.workflow.workflow.Workflow"><span class="pre">ai_flow.workflow.workflow.Workflow</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_context</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.context.html#ai_flow.context.project_context.ProjectContext" title="ai_flow.context.project_context.ProjectContext"><span class="pre">ai_flow.context.project_context.ProjectContext</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowInfo</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#Scheduler.submit_workflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.Scheduler.submit_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit the workflow to scheduler.
+:param workflow: ai_flow.workflow.workflow.Workflow type.
+:param project_context: ai_flow.context.project_context.ProjectContext type.
+:return: The workflow information.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.scheduler_interface.</span></span><span class="sig-name descname"><span class="pre">WorkflowExecutionInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_execution_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_info</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo" title="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.WorkflowInfo</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#WorkflowExecutionInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.end_date">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">end_date</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.end_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.properties">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.start_date">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">start_date</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.start_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.status">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.workflow_execution_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">workflow_execution_id</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.workflow_execution_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.workflow_info">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">workflow_info</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowExecutionInfo.workflow_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.plugin_interface.scheduler_interface.</span></span><span class="sig-name descname"><span class="pre">WorkflowInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/plugin_interface/scheduler_interface.html#WorkflowInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo.namespace">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">namespace</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo.namespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo.properties">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.plugin_interface.scheduler_interface.WorkflowInfo.workflow_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">workflow_name</span></span><a class="headerlink" href="#ai_flow.plugin_interface.scheduler_interface.WorkflowInfo.workflow_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.plugin_interface">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ai_flow.plugin_interface" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

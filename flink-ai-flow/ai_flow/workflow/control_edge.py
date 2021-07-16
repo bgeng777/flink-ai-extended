@@ -29,15 +29,21 @@ class ConditionType(str, Enum):
     NECESSARY: Necessary conditions, all conditions are met before the action is triggered.
     """
     SUFFICIENT = "SUFFICIENT"
+    """
+    SUFFICIENT: Sufficient conditions, as long as one condition is met, the action will be triggered.
+    """
     NECESSARY = "NECESSARY"
 
 
 class TaskAction(str, Enum):
-    """
-    START: Start the job.
+    """START: Start the job.
+
     RESTART: If the job is running, stop it first and then start it. If the job is not running,just start it.
+
     STOP: Stop the job.
+
     NONE: Do nothing.
+
     """
     START = "START"
     RESTART = "RESTART"

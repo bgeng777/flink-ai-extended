@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.metadata_store.utils package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">ai_flow.metadata_store.utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ai_flow.metadata_store.utils.MetaToProto">ai_flow.metadata_store.utils.MetaToProto module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.metadata_store.utils.MetaToTable">ai_flow.metadata_store.utils.MetaToTable module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.metadata_store.utils.ProtoToMeta">ai_flow.metadata_store.utils.ProtoToMeta module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.metadata_store.utils.ResultToMeta">ai_flow.metadata_store.utils.ResultToMeta module</a></li>
+<li><a class="reference internal" href="#module-ai_flow.metadata_store.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ai_flow.metadata_store.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source/ai_flow.metadata_store.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ai-flow-metadata-store-utils-package">
+<h1>ai_flow.metadata_store.utils package<a class="headerlink" href="#ai-flow-metadata-store-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow.metadata_store.utils.MetaToProto">
+<span id="ai-flow-metadata-store-utils-metatoproto-module"></span><h2>ai_flow.metadata_store.utils.MetaToProto module<a class="headerlink" href="#module-ai_flow.metadata_store.utils.MetaToProto" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.metadata_store.utils.MetaToProto.</span></span><span class="sig-name descname"><span class="pre">MetaToProto</span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.artifact_meta_list_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">artifact_meta_list_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifacts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.artifact_meta.ArtifactMeta" title="ai_flow.meta.artifact_meta.ArtifactMeta"><span class="pre">ai_flow.meta.artifact_meta.ArtifactMeta</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ArtifactProto</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.artifact_meta_list_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.artifact_meta_list_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.artifact_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">artifact_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.artifact_meta.ArtifactMeta" title="ai_flow.meta.artifact_meta.ArtifactMeta"><span class="pre">ai_flow.meta.artifact_meta.ArtifactMeta</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ArtifactProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.artifact_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.artifact_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.dataset_meta_list_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">dataset_meta_list_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta" title="ai_flow.meta.dataset_meta.DatasetMeta"><span class="pre">ai_flow.meta.dataset_meta.DatasetMeta</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.DatasetProto</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.dataset_meta_list_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.dataset_meta_list_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.dataset_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">dataset_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_mata</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta" title="ai_flow.meta.dataset_meta.DatasetMeta"><span class="pre">ai_flow.meta.dataset_meta.DatasetMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.dataset_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.dataset_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_center_detail</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ModelProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_relation_meta_list_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_relation_meta_list_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_relation_meta_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelRelationMeta" title="ai_flow.meta.model_relation_meta.ModelRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelRelationMeta</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ModelRelationProto</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_relation_meta_list_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_relation_meta_list_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_relation_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_relation_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_relation_meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelRelationMeta" title="ai_flow.meta.model_relation_meta.ModelRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelRelationMeta</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ModelRelationProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_relation_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_relation_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_version_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_center_detail</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ModelVersionProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_version_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_relation_meta_list_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_version_relation_meta_list_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_relation_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelVersionRelationMeta" title="ai_flow.meta.model_relation_meta.ModelVersionRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelVersionRelationMeta</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ModelVersionRelationProto</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_version_relation_meta_list_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_relation_meta_list_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_relation_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_version_relation_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_relation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelVersionRelationMeta" title="ai_flow.meta.model_relation_meta.ModelVersionRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelVersionRelationMeta</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ModelVersionRelationProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_version_relation_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_relation_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_store_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_version_store_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_center_detail</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ModelVersionProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.model_version_store_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.model_version_store_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.project_meta_list_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">project_meta_list_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projects</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.project_meta.ProjectMeta" title="ai_flow.meta.project_meta.ProjectMeta"><span class="pre">ai_flow.meta.project_meta.ProjectMeta</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ProjectProto</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.project_meta_list_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.project_meta_list_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.project_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">project_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.project_meta.ProjectMeta" title="ai_flow.meta.project_meta.ProjectMeta"><span class="pre">ai_flow.meta.project_meta.ProjectMeta</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.ProjectProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.project_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.project_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.workflow_meta_list_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">workflow_meta_list_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflows</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.workflow_meta.WorkflowMeta" title="ai_flow.meta.workflow_meta.WorkflowMeta"><span class="pre">ai_flow.meta.workflow_meta.WorkflowMeta</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.WorkflowMetaProto</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.workflow_meta_list_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.workflow_meta_list_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToProto.MetaToProto.workflow_meta_to_proto">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">workflow_meta_to_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.workflow_meta.WorkflowMeta" title="ai_flow.meta.workflow_meta.WorkflowMeta"><span class="pre">ai_flow.meta.workflow_meta.WorkflowMeta</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">message_pb2.WorkflowMetaProto</span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToProto.html#MetaToProto.workflow_meta_to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToProto.MetaToProto.workflow_meta_to_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.metadata_store.utils.MetaToTable">
+<span id="ai-flow-metadata-store-utils-metatotable-module"></span><h2>ai_flow.metadata_store.utils.MetaToTable module<a class="headerlink" href="#module-ai_flow.metadata_store.utils.MetaToTable" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.metadata_store.utils.MetaToTable.</span></span><span class="sig-name descname"><span class="pre">MetaToTable</span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.artifact_meta_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">artifact_meta_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.artifact_meta_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.artifact_meta_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.dataset_meta_list_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">dataset_meta_list_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_meta_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta" title="ai_flow.meta.dataset_meta.DatasetMeta"><span class="pre">ai_flow.meta.dataset_meta.DatasetMeta</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.dataset_meta_list_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.dataset_meta_list_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.dataset_meta_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">dataset_meta_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog_database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog_connection_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.dataset_meta_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.dataset_meta_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.model_relation_meta_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_relation_meta_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.model_relation_meta_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.model_relation_meta_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.model_version_relation_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">model_version_relation_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_snapshot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.model_version_relation_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.model_version_relation_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.project_meta_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">project_meta_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.project_meta_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.project_meta_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.MetaToTable.MetaToTable.workflow_to_table">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">workflow_to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SqlAlchemyStore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/MetaToTable.html#MetaToTable.workflow_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.MetaToTable.MetaToTable.workflow_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.metadata_store.utils.ProtoToMeta">
+<span id="ai-flow-metadata-store-utils-prototometa-module"></span><h2>ai_flow.metadata_store.utils.ProtoToMeta module<a class="headerlink" href="#module-ai_flow.metadata_store.utils.ProtoToMeta" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.metadata_store.utils.ProtoToMeta.</span></span><span class="sig-name descname"><span class="pre">ProtoToMeta</span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_artifact_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_artifact_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.ArtifactProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.artifact_meta.ArtifactMeta" title="ai_flow.meta.artifact_meta.ArtifactMeta"><span class="pre">ai_flow.meta.artifact_meta.ArtifactMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_artifact_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_artifact_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_artifact_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_artifact_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifacts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ArtifactProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.artifact_meta.ArtifactMeta" title="ai_flow.meta.artifact_meta.ArtifactMeta"><span class="pre">ai_flow.meta.artifact_meta.ArtifactMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_artifact_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_artifact_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_dataset_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_dataset_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.DatasetProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta" title="ai_flow.meta.dataset_meta.DatasetMeta"><span class="pre">ai_flow.meta.dataset_meta.DatasetMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_dataset_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_dataset_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_dataset_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_dataset_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_proto_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.DatasetProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta" title="ai_flow.meta.dataset_meta.DatasetMeta"><span class="pre">ai_flow.meta.dataset_meta.DatasetMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_dataset_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_dataset_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.ModelProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_meta.ModelMeta" title="ai_flow.meta.model_meta.ModelMeta"><span class="pre">ai_flow.meta.model_meta.ModelMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_proto_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ModelProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_meta.ModelMeta" title="ai_flow.meta.model_meta.ModelMeta"><span class="pre">ai_flow.meta.model_meta.ModelMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_relation_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_relation_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_relation_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.ModelRelationProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelRelationMeta" title="ai_flow.meta.model_relation_meta.ModelRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelRelationMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_relation_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_relation_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_relation_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_relation_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_proto_relation_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ModelRelationProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelRelationMeta" title="ai_flow.meta.model_relation_meta.ModelRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelRelationMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_relation_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_relation_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_version_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.ModelVersionProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_meta.ModelVersionMeta" title="ai_flow.meta.model_meta.ModelVersionMeta"><span class="pre">ai_flow.meta.model_meta.ModelVersionMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_version_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_version_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_proto_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ModelVersionProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_meta.ModelVersionMeta" title="ai_flow.meta.model_meta.ModelVersionMeta"><span class="pre">ai_flow.meta.model_meta.ModelVersionMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_version_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_relation_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_version_relation_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.ModelVersionRelationProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelVersionRelationMeta" title="ai_flow.meta.model_relation_meta.ModelVersionRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelVersionRelationMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_version_relation_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_relation_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_relation_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_model_version_relation_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_proto_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ModelVersionRelationProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelVersionRelationMeta" title="ai_flow.meta.model_relation_meta.ModelVersionRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelVersionRelationMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_model_version_relation_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_model_version_relation_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_project_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_project_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.ProjectProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.project_meta.ProjectMeta" title="ai_flow.meta.project_meta.ProjectMeta"><span class="pre">ai_flow.meta.project_meta.ProjectMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_project_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_project_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_project_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_project_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projects</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.ProjectProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.project_meta.ProjectMeta" title="ai_flow.meta.project_meta.ProjectMeta"><span class="pre">ai_flow.meta.project_meta.ProjectMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_project_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_project_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_state">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_workflow_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_workflow_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">message_pb2.WorkflowMetaProto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.workflow_meta.WorkflowMeta" title="ai_flow.meta.workflow_meta.WorkflowMeta"><span class="pre">ai_flow.meta.workflow_meta.WorkflowMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_workflow_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_workflow_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_workflow_meta_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">proto_to_workflow_meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflows</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">message_pb2.WorkflowMetaProto</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.workflow_meta.WorkflowMeta" title="ai_flow.meta.workflow_meta.WorkflowMeta"><span class="pre">ai_flow.meta.workflow_meta.WorkflowMeta</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ProtoToMeta.html#ProtoToMeta.proto_to_workflow_meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ProtoToMeta.ProtoToMeta.proto_to_workflow_meta_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.metadata_store.utils.ResultToMeta">
+<span id="ai-flow-metadata-store-utils-resulttometa-module"></span><h2>ai_flow.metadata_store.utils.ResultToMeta module<a class="headerlink" href="#module-ai_flow.metadata_store.utils.ResultToMeta" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.metadata_store.utils.ResultToMeta.</span></span><span class="sig-name descname"><span class="pre">ResultToMeta</span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_artifact_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">result_to_artifact_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_result</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.artifact_meta.ArtifactMeta" title="ai_flow.meta.artifact_meta.ArtifactMeta"><span class="pre">ai_flow.meta.artifact_meta.ArtifactMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta.result_to_artifact_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_artifact_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_dataset_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">result_to_dataset_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_result</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta" title="ai_flow.meta.dataset_meta.DatasetMeta"><span class="pre">ai_flow.meta.dataset_meta.DatasetMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta.result_to_dataset_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_dataset_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_model_relation_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">result_to_model_relation_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_result</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelRelationMeta" title="ai_flow.meta.model_relation_meta.ModelRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelRelationMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta.result_to_model_relation_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_model_relation_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_model_version_relation_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">result_to_model_version_relation_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version_result</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.model_relation_meta.ModelVersionRelationMeta" title="ai_flow.meta.model_relation_meta.ModelVersionRelationMeta"><span class="pre">ai_flow.meta.model_relation_meta.ModelVersionRelationMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta.result_to_model_version_relation_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_model_version_relation_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_project_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">result_to_project_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_result</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.project_meta.ProjectMeta" title="ai_flow.meta.project_meta.ProjectMeta"><span class="pre">ai_flow.meta.project_meta.ProjectMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta.result_to_project_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_project_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_workflow_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">result_to_workflow_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_result</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.meta.html#ai_flow.meta.workflow_meta.WorkflowMeta" title="ai_flow.meta.workflow_meta.WorkflowMeta"><span class="pre">ai_flow.meta.workflow_meta.WorkflowMeta</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/metadata_store/utils/ResultToMeta.html#ResultToMeta.result_to_workflow_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.metadata_store.utils.ResultToMeta.ResultToMeta.result_to_workflow_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.metadata_store.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ai_flow.metadata_store.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

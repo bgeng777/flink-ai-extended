@@ -1,0 +1,21 @@
+ai\_flow.metadata\_store.service package
+========================================
+
+Submodules
+----------
+
+ai\_flow.metadata\_store.service.service module
+-----------------------------------------------
+
+.. automodule:: ai_flow.metadata_store.service.service
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ai_flow.metadata_store.service
+   :members:
+   :undoc-members:
+   :show-inheritance:

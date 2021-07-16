@@ -1,0 +1,814 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.store.abstract_store &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.store.abstract_store</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.store.abstract_store</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABCMeta</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.meta.artifact_meta</span> <span class="kn">import</span> <span class="n">ArtifactMeta</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server.high_availability</span> <span class="kn">import</span> <span class="n">Member</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.meta.metric_meta</span> <span class="kn">import</span> <span class="n">MetricMeta</span><span class="p">,</span> <span class="n">MetricSummary</span>
+
+
+<div class="viewcode-block" id="AbstractStore"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore">[docs]</a><span class="k">class</span> <span class="nc">AbstractStore</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        model api</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AbstractStore.get_model_relation_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_model_relation_by_id">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_model_relation_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific model relation in metadata store by model id.</span>
+
+<span class="sd">        :param model_id: the model id</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelRelationMeta` object if the model relation</span>
+<span class="sd">                 exists, Otherwise, returns None if the model relation does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_model_relation_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_model_relation_by_name">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_model_relation_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific model relation in metadata store by model name.</span>
+
+<span class="sd">        :param model_name: the model name</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelRelationMeta` object if the model relation</span>
+<span class="sd">                 exists, Otherwise, returns None if the model relation does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_model_relation"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_model_relation">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_model_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_size</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List registered model relations in metadata store.</span>
+
+<span class="sd">        :param page_size: the limitation of the listed model relations.</span>
+<span class="sd">        :param offset: the offset of listed model relations.</span>
+<span class="sd">        :return: List of :py:class:`ai_flow.meta.model_relation_meta.ModelRelationMeta` objects,</span>
+<span class="sd">                 return None if no model relations to be listed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_model_relation"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_model_relation">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">register_model_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                <span class="n">project_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        register a model relation in metadata store</span>
+
+<span class="sd">        :param name: the name of the model</span>
+<span class="sd">        :param project_id: the project id which the model corresponded to.</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelRelationMeta` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_model_relation_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_model_relation_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model_relation_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered model by model id .</span>
+
+<span class="sd">        :param model_id: the model id</span>
+<span class="sd">        :return: Status.OK if the model is successfully deleted, Status.ERROR if the model does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_model_relation_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_model_relation_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model_relation_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered model by model name .</span>
+
+<span class="sd">        :param model_name: the model name</span>
+<span class="sd">        :return: Status.OK if the model is successfully deleted, Status.ERROR if the model does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        model version api</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AbstractStore.get_model_version_relation_by_version"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_model_version_relation_by_version">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_model_version_relation_by_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version_name</span><span class="p">,</span> <span class="n">model_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific model version relation in metadata store by the model version name.</span>
+
+<span class="sd">        :param version_name: the model version name</span>
+<span class="sd">        :param model_id: the model id corresponded to the model version</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelVersionRelationMeta` object</span>
+<span class="sd">                 if the model version exists, Otherwise, returns None if the model version does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_model_version_relation"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_model_version_relation">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">register_model_version_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">project_snapshot_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        register a model version relation in metadata store.</span>
+
+<span class="sd">        :param version: the specific model version</span>
+<span class="sd">        :param model_id: the model id corresponded to the model version</span>
+<span class="sd">        :param project_snapshot_id: the project snapshot id corresponded to the model version</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.model_relation_meta.ModelVersionRelationMeta` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_model_version_relation"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_model_version_relation">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_model_version_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">page_size</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List registered model version relations in metadata store.</span>
+
+<span class="sd">        :param model_id: the model id corresponded to the model version</span>
+<span class="sd">        :param page_size: the limitation of the listed model version relations.</span>
+<span class="sd">        :param offset: the offset of listed model version relations.</span>
+<span class="sd">        :return: List of :py:class:`ai_flow.meta.model_relation_meta.ModelRelationMeta` objects,</span>
+<span class="sd">                 return None if no model version relations to be listed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_model_version_relation_by_version"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_model_version_relation_by_version">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">delete_model_version_relation_by_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">model_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered model version by model version name .</span>
+
+<span class="sd">        :param version: the model version name</span>
+<span class="sd">        :param model_id: the model id corresponded to the model version</span>
+<span class="sd">        :return: Status.OK if the model version is successfully deleted,</span>
+<span class="sd">                 Status.ERROR if the model version does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        dataset api</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AbstractStore.get_dataset_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_dataset_by_id">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_dataset_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific dataset in metadata store by dataset id.</span>
+
+<span class="sd">        :param dataset_id: the dataset id</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.dataset_meta.DatasetMeta` object if the dataset exists,</span>
+<span class="sd">                 Otherwise, returns None if the dataset does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_dataset_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_dataset_by_name">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_dataset_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific dataset in metadata store by dataset name.</span>
+
+<span class="sd">        :param dataset_name: the dataset name</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.dataset_meta.DatasetMeta` object if the dataset exists,,</span>
+<span class="sd">                 Otherwise, returns None if the dataset does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_datasets"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_datasets">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_size</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List registered datasets in metadata store.</span>
+
+<span class="sd">        :param page_size: the limitation of the listed datasets.</span>
+<span class="sd">        :param offset: the offset of listed datasets.</span>
+<span class="sd">        :return: List of :py:class:`ai_flow.meta.dataset_meta.DatasetMeta` objects,</span>
+<span class="sd">                 return None if no datasets to be listed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_dataset"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_dataset">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">register_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data_format</span><span class="p">,</span>
+                         <span class="n">description</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span>
+                         <span class="n">properties</span><span class="p">,</span>
+                         <span class="n">name_list</span><span class="p">,</span> <span class="n">type_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        register an dataset in metadata store.</span>
+
+<span class="sd">        :param name: the name of the dataset</span>
+<span class="sd">        :param data_format: the data_format of the dataset</span>
+<span class="sd">        :param description: the description of the dataset</span>
+<span class="sd">        :param uri: the uri of the dataset</span>
+<span class="sd">        :param properties: the properties of the dataset</span>
+<span class="sd">        :param name_list: the name list of dataset&#39;s schema</span>
+<span class="sd">        :param type_list: the type list corresponded to the name list of dataset&#39;s schema</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.dataset_meta.DatasetMeta` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_dataset_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_dataset_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_dataset_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered dataset by dataset id .</span>
+
+<span class="sd">        :param dataset_id: the dataset id</span>
+<span class="sd">        :return: Status.OK if the dataset is successfully deleted, Status.ERROR if the dataset does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_dataset_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_dataset_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">delete_dataset_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered dataset by dataset name .</span>
+
+<span class="sd">        :param dataset_name: the dataset name</span>
+<span class="sd">        :return: Status.OK if the dataset is successfully deleted, Status.ERROR if the dataset does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        project api</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AbstractStore.get_project_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_project_by_id">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_project_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific project in metadata store by project id</span>
+
+<span class="sd">        :param project_id: the project id</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.project.ProjectMeta` object if the project exists,</span>
+<span class="sd">                 Otherwise, returns None if the project does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_project_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_project_by_name">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_project_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific project in metadata store by project name</span>
+<span class="sd">        :param project_name: the project name</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.project.ProjectMeta` object if the project exists,</span>
+<span class="sd">                 Otherwise, returns None if the project does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_project"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_project">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">register_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        register a project in metadata store.</span>
+
+<span class="sd">        :param name: the name of the project</span>
+<span class="sd">        :param uri: the uri of the project</span>
+<span class="sd">        :param properties: the properties of the project</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.project.ProjectMeta` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_project"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_project">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_size</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List registered projects in metadata store.</span>
+
+<span class="sd">        :param page_size: the limitation of the listed projects.</span>
+<span class="sd">        :param offset: the offset of listed projects.</span>
+<span class="sd">        :return: List of :py:class:`ai_flow.meta.project_meta.ProjectMeta` objects,</span>
+<span class="sd">                 return None if no projects to be listed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_project_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_project_by_id">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">delete_project_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered project by project id .</span>
+
+<span class="sd">        :param project_id: the project id</span>
+<span class="sd">        :return: Status.OK if the project is successfully deleted, Status.ERROR if the project does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_project_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_project_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">delete_project_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered project by project name .</span>
+
+<span class="sd">        :param project_name: the project name</span>
+<span class="sd">        :return: Status.OK if the project is successfully deleted, Status.ERROR if the project does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        workflow api</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AbstractStore.register_workflow"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">register_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a workflow in metadata store.</span>
+
+<span class="sd">        :param name: the workflow name</span>
+<span class="sd">        :param project_id: the id of project which contains the workflow</span>
+<span class="sd">        :param properties: the workflow properties</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_workflow_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_workflow_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a workflow by specific project name and workflow name</span>
+
+<span class="sd">        :param project_name: the name of project which contains the workflow</span>
+<span class="sd">        :param workflow_name: the workflow name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_workflow_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_workflow_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a workflow by specific uuid</span>
+
+<span class="sd">        :param workflow_id: the uuid of workflow</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_workflows"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_workflows">[docs]</a>    <span class="k">def</span> <span class="nf">list_workflows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List all workflows of the specific project</span>
+
+<span class="sd">        :param project_name: the name of project which contains the workflow</span>
+<span class="sd">        :param page_size     limitation of listed workflows.</span>
+<span class="sd">        :param offset        offset of listed workflows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_workflow_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_workflow_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">delete_workflow_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the workflow by specific project and workflow name</span>
+
+<span class="sd">        :param project_name: the name of project which contains the workflow</span>
+<span class="sd">        :param workflow_name: the workflow name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_workflow_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_workflow_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_workflow_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the workflow by specific id</span>
+
+<span class="sd">        :param workflow_id: the uuid of workflow</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_workflow"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">update_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the workflow</span>
+
+<span class="sd">        :param workflow_name: the workflow name</span>
+<span class="sd">        :param project_name: the name of project which contains the workflow</span>
+<span class="sd">        :param properties: (Optional) the properties need to be updated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        artifact api</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AbstractStore.get_artifact_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_artifact_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_artifact_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific artifact in metadata store by artifact id.</span>
+
+<span class="sd">        :param artifact_id: the artifact id</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.artifact_meta.ArtifactMeta` object</span>
+<span class="sd">                 if the artifact exists, Otherwise, returns None if the artifact does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_artifact_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_artifact_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_artifact_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a specific artifact in metadata store by artifact name.</span>
+
+<span class="sd">        :param artifact_name: the artifact name</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.artifact_meta.ArtifactMeta` object</span>
+<span class="sd">                 if the artifact exists, Otherwise, returns None if the artifact does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_artifact"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_artifact">[docs]</a>    <span class="k">def</span> <span class="nf">register_artifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span> <span class="n">artifact_type</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span>
+                          <span class="n">uri</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        register an artifact in metadata store.</span>
+
+<span class="sd">        :param name: the name of the artifact</span>
+<span class="sd">        :param artifact_type: the type of the artifact</span>
+<span class="sd">        :param description: the description of the artifact</span>
+<span class="sd">        :param uri: the uri of the artifact</span>
+<span class="sd">        :param properties: the properties of the artifact</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.artifact_meta.py.ArtifactMeta` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_artifact"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_artifact">[docs]</a>    <span class="k">def</span> <span class="nf">update_artifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span> <span class="n">artifact_type</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                        <span class="n">uri</span><span class="p">,</span> <span class="n">properties</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArtifactMeta</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update an artifact in metadata store.</span>
+
+<span class="sd">        :param name: the name of the artifact</span>
+<span class="sd">        :param artifact_type: the type of the artifact</span>
+<span class="sd">        :param description: the description of the artifact</span>
+<span class="sd">        :param uri: the uri of the artifact</span>
+<span class="sd">        :param properties: the properties of the artifact</span>
+<span class="sd">        :return: A single :py:class:`ai_flow.meta.artifact_meta.py.ArtifactMeta` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_artifact"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_artifact">[docs]</a>    <span class="k">def</span> <span class="nf">list_artifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_size</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List registered artifacts in metadata store.</span>
+
+<span class="sd">        :param page_size: the limitation of the listed artifacts.</span>
+<span class="sd">        :param offset: the offset of listed artifacts.</span>
+<span class="sd">        :return: List of :py:class:`ai_flow.meta.artifact_meta.py.ArtifactMeta` objects,</span>
+<span class="sd">                 return None if no artifacts to be listed.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_artifact_by_id"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_artifact_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_artifact_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered artifact by artifact id .</span>
+
+<span class="sd">        :param artifact_id: the artifact id</span>
+<span class="sd">        :return: Status.OK if the artifact is successfully deleted,</span>
+<span class="sd">                 Status.ERROR if the artifact does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_artifact_by_name"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_artifact_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">delete_artifact_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the registered artifact by artifact name .</span>
+
+<span class="sd">        :param artifact_name: the artifact name</span>
+<span class="sd">        :return: Status.OK if the artifact is successfully deleted,</span>
+<span class="sd">                 Status.ERROR if the artifact does not exist otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractStore.create_registered_model"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.create_registered_model">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create_registered_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new registered model in model repository.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param model_desc: (Optional) Description of registered model.</span>
+
+<span class="sd">        :return: A single object of :py:class:`ai_flow.model_center.entity.RegisteredModel` created in model</span>
+<span class="sd">        repository.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_registered_model"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_registered_model">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update_registered_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registered_model</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update metadata for RegisteredModel entity. Either ``model_name`` or ``model_desc``</span>
+<span class="sd">        should be non-None. Backend raises exception if a registered model with given name does not exist.</span>
+
+<span class="sd">        :param registered_model: :py:class:`ai_flow.model_center.entity.RegisteredModel` object.</span>
+<span class="sd">        :param model_name: (Optional) New proposed name for the registered model.</span>
+<span class="sd">        :param model_desc: (Optional) Description of registered model.</span>
+
+<span class="sd">        :return: A single updated :py:class:`ai_flow.model_center.entity.RegisteredModel` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_registered_model"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_registered_model">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">delete_registered_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registered_model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete registered model.</span>
+<span class="sd">        Backend raises exception if a registered model with given name does not exist.</span>
+
+<span class="sd">        :param registered_model: :py:class:`ai_flow.model_center.entity.RegisteredModel` object.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_registered_models"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_registered_models">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_registered_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List of all registered models in model repository.</span>
+
+<span class="sd">        :return: List of :py:class:`ai_flow.model_center.entity.RegisteredModel` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_registered_model_detail"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_registered_model_detail">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_registered_model_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registered_model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param registered_model: :py:class:`ai_flow.model_center.entity.RegisteredModel` object.</span>
+
+<span class="sd">        :return: A single :py:class:`ai_flow.model_center.entity.RegisteredModelDetail` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.create_model_version"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.create_model_version">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span>
+                             <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new model version from given model source and model metric.</span>
+
+<span class="sd">        :param model_name: Name for containing registered model.</span>
+<span class="sd">        :param model_version: User-defined version of registered model.</span>
+<span class="sd">        :param model_path: Source path where the AIFlow model is stored.</span>
+<span class="sd">        :param model_type: (Optional) Type of AIFlow model option.</span>
+<span class="sd">        :param version_desc: (Optional) Description of registered model version.</span>
+
+<span class="sd">        :return: A single object of :py:class:`ai_flow.model_center.entity.ModelVersion`</span>
+<span class="sd">        created in model repository.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_model_version"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_model_version">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_version</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">version_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version_stage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update metadata associated with a model version in model repository.</span>
+
+<span class="sd">        :param model_version: :py:class:`ai_flow.model_center.entity.ModelVersion` object.</span>
+<span class="sd">        :param model_path: (Optional) New Source path where AIFlow model is stored.</span>
+<span class="sd">        :param model_type: (Optional) Type of AIFlow registered model option.</span>
+<span class="sd">        :param version_desc: (Optional) New Description of registered model version.</span>
+<span class="sd">        :param version_stage: (Optional) New desired stage for this model version.</span>
+
+<span class="sd">        :return: A single updated :py:class:`ai_flow.model_center.entity.ModelVersion` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_model_version"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_model_version">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">delete_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_version</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete model version in model repository.</span>
+
+<span class="sd">        :param model_version: :py:class:`ai_flow.model_center.entity.ModelVersion` object.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_model_version_detail"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_model_version_detail">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_model_version_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_version</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param model_version: :py:class:`ai_flow.model_center.entity.ModelVersion` object.</span>
+
+<span class="sd">        :return: A single :py:class:`ai_flow.model_center.entity.ModelVersionDetail` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_metric_meta"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_metric_meta">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">register_metric_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_type</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">metric_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">model_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricMeta</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_metric_meta"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_metric_meta">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update_metric_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">model_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricMeta</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_metric_meta"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_metric_meta">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">delete_metric_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_metric_meta"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_metric_meta">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_metric_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">MetricMeta</span><span class="p">]:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_dataset_metric_metas"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_dataset_metric_metas">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_dataset_metric_metas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">MetricMeta</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">MetricMeta</span><span class="p">]]:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_model_metric_metas"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_model_metric_metas">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_model_metric_metas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">MetricMeta</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">MetricMeta</span><span class="p">]]:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.register_metric_summary"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.register_metric_summary">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">register_metric_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">metric_timestamp</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">job_execution_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricSummary</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_metric_summary"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_metric_summary">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update_metric_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">metric_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">model_version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">job_execution_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricSummary</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.delete_metric_summary"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.delete_metric_summary">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">delete_metric_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.get_metric_summary"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.get_metric_summary">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_metric_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">MetricSummary</span><span class="p">]:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.list_metric_summaries"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_metric_summaries">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_metric_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">MetricSummary</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">MetricSummary</span><span class="p">]]:</span>
+        <span class="k">pass</span></div>
+
+    <span class="sd">&quot;&quot;&quot;For high availability:&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AbstractStore.list_living_members"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.list_living_members">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_living_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ttl_ms</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Member&#39;</span><span class="p">]:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.update_member"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.update_member">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_uri</span><span class="p">,</span> <span class="n">server_uuid</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractStore.clear_dead_members"><a class="viewcode-back" href="../../../source/ai_flow.store.html#ai_flow.store.abstract_store.AbstractStore.clear_dead_members">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">clear_dead_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ttl_ms</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

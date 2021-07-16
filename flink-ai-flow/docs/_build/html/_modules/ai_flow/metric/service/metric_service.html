@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.metric.service.metric_service &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.metric.service.metric_service</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.metric.service.metric_service</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server.util</span> <span class="kn">import</span> <span class="n">catch_exception</span>
+<span class="kn">from</span> <span class="nn">ai_flow.metric.utils</span> <span class="kn">import</span> <span class="n">proto_to_metric_meta</span><span class="p">,</span> <span class="n">_warp_metric_meta_response</span><span class="p">,</span> <span class="n">_warp_list_metric_metas_response</span><span class="p">,</span> \
+    <span class="n">proto_to_metric_summary</span><span class="p">,</span> <span class="n">_warp_metric_summary_response</span><span class="p">,</span> <span class="n">_warp_list_metric_summaries_response</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.message_pb2</span> <span class="kn">import</span> <span class="n">Response</span><span class="p">,</span> <span class="n">ReturnCode</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.metric_service_pb2_grpc</span> <span class="kn">import</span> <span class="n">MetricServiceServicer</span>
+<span class="kn">from</span> <span class="nn">ai_flow.store.sqlalchemy_store</span> <span class="kn">import</span> <span class="n">SqlAlchemyStore</span>
+
+
+<div class="viewcode-block" id="MetricService"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService">[docs]</a><span class="k">class</span> <span class="nc">MetricService</span><span class="p">(</span><span class="n">MetricServiceServicer</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_uri</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_uri</span> <span class="o">=</span> <span class="n">db_uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">SqlAlchemyStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_uri</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MetricService.registerMetricMeta"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.registerMetricMeta">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerMetricMeta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_meta_proto</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_meta</span>
+        <span class="n">metric_meta</span> <span class="o">=</span> <span class="n">proto_to_metric_meta</span><span class="p">(</span><span class="n">metric_meta_proto</span><span class="p">)</span>
+        <span class="n">res_metric_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_metric_meta</span><span class="p">(</span><span class="n">metric_meta</span><span class="o">.</span><span class="n">metric_name</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">metric_type</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">metric_desc</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">end_time</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span>
+                                                          <span class="n">metric_meta</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_metric_meta_response</span><span class="p">(</span><span class="n">res_metric_meta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.updateMetricMeta"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.updateMetricMeta">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">updateMetricMeta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_meta_proto</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_meta</span>
+        <span class="n">metric_meta</span> <span class="o">=</span> <span class="n">proto_to_metric_meta</span><span class="p">(</span><span class="n">metric_meta_proto</span><span class="p">)</span>
+        <span class="n">res_metric_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_metric_meta</span><span class="p">(</span><span class="n">metric_meta</span><span class="o">.</span><span class="n">metric_name</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">metric_desc</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">end_time</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span>
+                                                        <span class="n">metric_meta</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_metric_meta_response</span><span class="p">(</span><span class="n">res_metric_meta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.deleteMetricMeta"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.deleteMetricMeta">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteMetricMeta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_name</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_metric_meta</span><span class="p">(</span><span class="n">metric_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">return_code</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ReturnCode</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">),</span> <span class="n">return_msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">return_code</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ReturnCode</span><span class="o">.</span><span class="n">INTERNAL_ERROR</span><span class="p">),</span> <span class="n">return_msg</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.getMetricMeta"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.getMetricMeta">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getMetricMeta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_name</span>
+        <span class="n">res_metric_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_metric_meta</span><span class="p">(</span><span class="n">metric_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_metric_meta_response</span><span class="p">(</span><span class="n">res_metric_meta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.listDatasetMetricMetas"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.listDatasetMetricMetas">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listDatasetMetricMetas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">dataset_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">dataset_name</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">project_name</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;project_name&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">metric_metas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_dataset_metric_metas</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_list_metric_metas_response</span><span class="p">(</span><span class="n">metric_metas</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.listModelMetricMetas"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.listModelMetricMetas">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listModelMetricMetas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">model_name</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">project_name</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;project_name&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">metric_metas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_model_metric_metas</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_list_metric_metas_response</span><span class="p">(</span><span class="n">metric_metas</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.registerMetricSummary"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.registerMetricSummary">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerMetricSummary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_summary_proto</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_summary</span>
+        <span class="n">metric_summary</span> <span class="o">=</span> <span class="n">proto_to_metric_summary</span><span class="p">(</span><span class="n">metric_summary_proto</span><span class="p">)</span>
+        <span class="n">res_metric_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_metric_summary</span><span class="p">(</span><span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_name</span><span class="p">,</span>
+                                                                <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_key</span><span class="p">,</span>
+                                                                <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_value</span><span class="p">,</span>
+                                                                <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_timestamp</span><span class="p">,</span>
+                                                                <span class="n">metric_summary</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                                                                <span class="n">metric_summary</span><span class="o">.</span><span class="n">job_execution_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_metric_summary_response</span><span class="p">(</span><span class="n">res_metric_summary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.updateMetricSummary"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.updateMetricSummary">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">updateMetricSummary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_summary_proto</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_summary</span>
+        <span class="n">metric_summary</span> <span class="o">=</span> <span class="n">proto_to_metric_summary</span><span class="p">(</span><span class="n">metric_summary_proto</span><span class="p">)</span>
+        <span class="n">res_metric_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_metric_summary</span><span class="p">(</span><span class="n">metric_summary</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
+                                                              <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_name</span><span class="p">,</span>
+                                                              <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_key</span><span class="p">,</span>
+                                                              <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_value</span><span class="p">,</span>
+                                                              <span class="n">metric_summary</span><span class="o">.</span><span class="n">metric_timestamp</span><span class="p">,</span>
+                                                              <span class="n">metric_summary</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                                                              <span class="n">metric_summary</span><span class="o">.</span><span class="n">job_execution_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_metric_summary_response</span><span class="p">(</span><span class="n">res_metric_summary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.deleteMetricSummary"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.deleteMetricSummary">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteMetricSummary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">uuid</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_metric_summary</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">return_code</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ReturnCode</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">),</span> <span class="n">return_msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">return_code</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ReturnCode</span><span class="o">.</span><span class="n">INTERNAL_ERROR</span><span class="p">),</span> <span class="n">return_msg</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.getMetricSummary"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.getMetricSummary">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getMetricSummary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">uuid</span>
+        <span class="n">metric_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_metric_summary</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_metric_summary_response</span><span class="p">(</span><span class="n">metric_summary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricService.listMetricSummaries"><a class="viewcode-back" href="../../../../source/ai_flow.metric.service.html#ai_flow.metric.service.metric_service.MetricService.listMetricSummaries">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listMetricSummaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_name</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;metric_name&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">metric_key</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">metric_key</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;metric_key&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">model_version</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">model_version</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;model_version&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;start_time&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">metric_summaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_metric_summaries</span><span class="p">(</span><span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">,</span> <span class="n">model_version</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span>
+                                                            <span class="n">end_time</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_list_metric_summaries_response</span><span class="p">(</span><span class="n">metric_summaries</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
