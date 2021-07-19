@@ -9,7 +9,10 @@ ai\_flow.metric.service package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.metric.service.metric\_service module
+----------------------------------------------
 
-   ai_flow.metric.service.metric_service
+.. automodule:: ai_flow.metric.service.metric_service
+   :members:
+   :undoc-members:
+   :show-inheritance:

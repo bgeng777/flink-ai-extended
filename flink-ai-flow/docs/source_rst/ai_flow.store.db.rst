@@ -9,10 +9,34 @@ ai\_flow.store.db package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.store.db.base\_model module
+------------------------------------
 
-   ai_flow.store.db.base_model
-   ai_flow.store.db.db_engine
-   ai_flow.store.db.db_model
-   ai_flow.store.db.db_util
+.. automodule:: ai_flow.store.db.base_model
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.store.db.db\_engine module
+-----------------------------------
+
+.. automodule:: ai_flow.store.db.db_engine
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.store.db.db\_model module
+----------------------------------
+
+.. automodule:: ai_flow.store.db.db_model
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.store.db.db\_util module
+---------------------------------
+
+.. automodule:: ai_flow.store.db.db_util
+   :members:
+   :undoc-members:
+   :show-inheritance:

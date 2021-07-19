@@ -40,8 +40,8 @@
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ai_flow.graph.channel module" href="ai_flow.graph.channel.html" />
-    <link rel="prev" title="ai_flow.exception.exceptions module" href="ai_flow.exception.exceptions.html" /> 
+    <link rel="next" title="ai_flow.log package" href="ai_flow.log.html" />
+    <link rel="prev" title="ai_flow.exception package" href="ai_flow.exception.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,6 +99,10 @@
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.exception.html">ai_flow.exception package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">ai_flow.graph package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.graph.channel">ai_flow.graph.channel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.graph.edge">ai_flow.graph.edge module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.graph.graph">ai_flow.graph.graph module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.graph.node">ai_flow.graph.node module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.log.html">ai_flow.log package</a></li>
@@ -193,14 +197,131 @@
 <span id="ai-flow-graph-package"></span><h1>ai_flow.graph package<a class="headerlink" href="#module-ai_flow.graph" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.graph.channel.html">ai_flow.graph.channel module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.graph.edge.html">ai_flow.graph.edge module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.graph.graph.html">ai_flow.graph.graph module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.graph.node.html">ai_flow.graph.node module</a></li>
-</ul>
 </div>
+<div class="section" id="module-ai_flow.graph.channel">
+<span id="ai-flow-graph-channel-module"></span><h2>ai_flow.graph.channel module<a class="headerlink" href="#module-ai_flow.graph.channel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.graph.channel.Channel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.graph.channel.</span></span><span class="sig-name descname"><span class="pre">Channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/graph/channel.html#Channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.channel.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>The output of the Nodes(ai_flow.graph.node.Node).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_id</strong> – node_id is the unique identifier of the node.</p></li>
+<li><p><strong>port</strong> – the index of the node outputs</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.graph.edge">
+<span id="ai-flow-graph-edge-module"></span><h2>ai_flow.graph.edge module<a class="headerlink" href="#module-ai_flow.graph.edge" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.graph.edge.Edge">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.graph.edge.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/graph/edge.html#Edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.edge.Edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>Edges are part of the graph(ai_flow.graph.graph.Graph),
+and there are edges connected between nodes(ai_flow.graph.node.Node).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> – source identifies the starting node’s node_id of the directed edge.</p></li>
+<li><p><strong>destination</strong> – destination identifies the ending node’s node_id of the directed edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.graph.graph">
+<span id="ai-flow-graph-graph-module"></span><h2>ai_flow.graph.graph module<a class="headerlink" href="#module-ai_flow.graph.graph" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.graph.graph.</span></span><span class="sig-name descname"><span class="pre">Graph</span></span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ai_flow.graph.node.Node" title="ai_flow.graph.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.graph.node.Node</span></code></a></p>
+<p>The graph is composed of nodes(ai_flow.graph.node.Node)
+and the nodes are connected by edges(ai_flow.graph.edge.Edge).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the name of Node</p></li>
+<li><p><strong>properties</strong> – node properties</p></li>
+<li><p><strong>output_num</strong> – each node has outputs, this represents the number of outputs</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.graph.edge.Edge" title="ai_flow.graph.edge.Edge"><span class="pre">ai_flow.graph.edge.Edge</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add edge to the graph</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.graph.node.Node" title="ai_flow.graph.node.Node"><span class="pre">ai_flow.graph.node.Node</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph.add_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add node to the graph</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph.clear_graph">
+<span class="sig-name descname"><span class="pre">clear_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph.clear_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph.clear_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all nodes and edges in the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph.get_node_by_id">
+<span class="sig-name descname"><span class="pre">get_node_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.graph.node.Node" title="ai_flow.graph.node.Node"><span class="pre">ai_flow.graph.node.Node</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph.get_node_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph.get_node_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the node which node_id field equals parameter node_id</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph.is_empty">
+<span class="sig-name descname"><span class="pre">is_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph.is_empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph.is_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return if the graph has nodes or edges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.Graph.is_in_graph">
+<span class="sig-name descname"><span class="pre">is_in_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#Graph.is_in_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.Graph.is_in_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the node is in the nods of the graph</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.graph.graph.load_graph">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.graph.graph.</span></span><span class="sig-name descname"><span class="pre">load_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.graph.graph.Graph" title="ai_flow.graph.graph.Graph"><span class="pre">ai_flow.graph.graph.Graph</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/graph/graph.html#load_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.graph.load_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the graph from the json string(json_text)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.graph.node">
+<span id="ai-flow-graph-node-module"></span><h2>ai_flow.graph.node module<a class="headerlink" href="#module-ai_flow.graph.node" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.graph.node.Node">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.graph.node.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.common.html#ai_flow.common.properties.Properties" title="ai_flow.common.properties.Properties"><span class="pre">ai_flow.common.properties.Properties</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_num</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/graph/node.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.node.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>Nodes are part of the graph(ai_flow.graph.graph.Graph),
+and there are edges(ai_flow.graph.edge.Edge) connected between nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the name of Node</p></li>
+<li><p><strong>properties</strong> – node properties</p></li>
+<li><p><strong>output_num</strong> – each node has outputs, this represents the number of outputs</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.graph.node.Node.outputs">
+<span class="sig-name descname"><span class="pre">outputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.graph.channel.Channel" title="ai_flow.graph.channel.Channel"><span class="pre">ai_flow.graph.channel.Channel</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/graph/node.html#Node.outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.graph.node.Node.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return: The outputs(ai_flow.graph.channel.Channel) of the node.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -210,8 +331,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ai_flow.graph.channel.html" class="btn btn-neutral float-right" title="ai_flow.graph.channel module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="ai_flow.exception.exceptions.html" class="btn btn-neutral float-left" title="ai_flow.exception.exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ai_flow.log.html" class="btn btn-neutral float-right" title="ai_flow.log package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.exception.html" class="btn btn-neutral float-left" title="ai_flow.exception package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

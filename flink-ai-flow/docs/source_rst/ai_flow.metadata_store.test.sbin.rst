@@ -9,7 +9,10 @@ ai\_flow.metadata\_store.test.sbin package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.metadata\_store.test.sbin.server\_for\_test module
+-----------------------------------------------------------
 
-   ai_flow.metadata_store.test.sbin.server_for_test
+.. automodule:: ai_flow.metadata_store.test.sbin.server_for_test
+   :members:
+   :undoc-members:
+   :show-inheritance:

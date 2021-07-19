@@ -40,8 +40,8 @@
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ai_flow.model_center.service.service module" href="ai_flow.model_center.service.service.html" />
-    <link rel="prev" title="ai_flow.model_center.entity.registered_model_param module" href="ai_flow.model_center.entity.registered_model_param.html" /> 
+    <link rel="next" title="ai_flow.plugin_interface package" href="ai_flow.plugin_interface.html" />
+    <link rel="prev" title="ai_flow.model_center.entity package" href="ai_flow.model_center.entity.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -195,11 +195,69 @@
 <span id="ai-flow-model-center-service-package"></span><h1>ai_flow.model_center.service package<a class="headerlink" href="#module-ai_flow.model_center.service" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.model_center.service.service.html">ai_flow.model_center.service.service module</a></li>
-</ul>
 </div>
+<div class="section" id="module-ai_flow.model_center.service.service">
+<span id="ai-flow-model-center-service-service-module"></span><h2>ai_flow.model_center.service.service module<a class="headerlink" href="#module-ai_flow.model_center.service.service" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.model_center.service.service.</span></span><span class="sig-name descname"><span class="pre">ModelCenterService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notification_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.protobuf.html#ai_flow.protobuf.model_center_service_pb2_grpc.ModelCenterServiceServicer" title="ai_flow.protobuf.model_center_service_pb2_grpc.ModelCenterServiceServicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.protobuf.model_center_service_pb2_grpc.ModelCenterServiceServicer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.createModelVersion">
+<span class="sig-name descname"><span class="pre">createModelVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.createModelVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.createModelVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create model version with metadata of ModelVersion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.createRegisteredModel">
+<span class="sig-name descname"><span class="pre">createRegisteredModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.createRegisteredModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.createRegisteredModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create registered model with metadata of RegisteredModel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.deleteModelVersion">
+<span class="sig-name descname"><span class="pre">deleteModelVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.deleteModelVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.deleteModelVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete model version with metadata of ModelVersion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.deleteRegisteredModel">
+<span class="sig-name descname"><span class="pre">deleteRegisteredModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.deleteRegisteredModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.deleteRegisteredModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete registered model with metadata of RegisteredModel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.getModelVersionDetail">
+<span class="sig-name descname"><span class="pre">getModelVersionDetail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.getModelVersionDetail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.getModelVersionDetail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get model version detail with metadata of ModelVersion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.getRegisteredModelDetail">
+<span class="sig-name descname"><span class="pre">getRegisteredModelDetail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.getRegisteredModelDetail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.getRegisteredModelDetail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get registered model detail including metadata of RegisteredModel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.listRegisteredModels">
+<span class="sig-name descname"><span class="pre">listRegisteredModels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.listRegisteredModels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.listRegisteredModels" title="Permalink to this definition">¶</a></dt>
+<dd><p>List registered models about metadata of RegisteredModel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.updateModelVersion">
+<span class="sig-name descname"><span class="pre">updateModelVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.updateModelVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.updateModelVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update model version with metadata of ModelVersion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.model_center.service.service.ModelCenterService.updateRegisteredModel">
+<span class="sig-name descname"><span class="pre">updateRegisteredModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/model_center/service/service.html#ModelCenterService.updateRegisteredModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.model_center.service.service.ModelCenterService.updateRegisteredModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update registered model with metadata of RegisteredModel.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -209,8 +267,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ai_flow.model_center.service.service.html" class="btn btn-neutral float-right" title="ai_flow.model_center.service.service module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="ai_flow.model_center.entity.registered_model_param.html" class="btn btn-neutral float-left" title="ai_flow.model_center.entity.registered_model_param module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ai_flow.plugin_interface.html" class="btn btn-neutral float-right" title="ai_flow.plugin_interface package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.model_center.entity.html" class="btn btn-neutral float-left" title="ai_flow.model_center.entity package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

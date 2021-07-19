@@ -9,7 +9,10 @@ ai\_flow.model\_center.service package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.model\_center.service.service module
+---------------------------------------------
 
-   ai_flow.model_center.service.service
+.. automodule:: ai_flow.model_center.service.service
+   :members:
+   :undoc-members:
+   :show-inheritance:

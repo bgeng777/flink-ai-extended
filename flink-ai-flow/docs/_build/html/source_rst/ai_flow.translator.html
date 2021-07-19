@@ -40,8 +40,8 @@
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ai_flow.translator.translator module" href="ai_flow.translator.translator.html" />
-    <link rel="prev" title="ai_flow.store.sqlalchemy_store module" href="ai_flow.store.sqlalchemy_store.html" /> 
+    <link rel="next" title="ai_flow.util package" href="ai_flow.util.html" />
+    <link rel="prev" title="ai_flow.store.db package" href="ai_flow.store.db.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -111,6 +111,7 @@
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.store.html">ai_flow.store package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">ai_flow.translator package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.translator.translator">ai_flow.translator.translator module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a></li>
@@ -193,11 +194,120 @@
 <span id="ai-flow-translator-package"></span><h1>ai_flow.translator package<a class="headerlink" href="#module-ai_flow.translator" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.translator.translator.html">ai_flow.translator.translator module</a></li>
-</ul>
 </div>
+<div class="section" id="module-ai_flow.translator.translator">
+<span id="ai-flow-translator-translator-module"></span><h2>ai_flow.translator.translator module<a class="headerlink" href="#module-ai_flow.translator.translator" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.GraphSplitter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">GraphSplitter</span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#GraphSplitter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.GraphSplitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.GraphSplitter.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AIGraph" title="ai_flow.ai_graph.ai_graph.AIGraph"><span class="pre">ai_flow.ai_graph.ai_graph.AIGraph</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.translator.translator.SplitGraph" title="ai_flow.translator.translator.SplitGraph"><span class="pre">ai_flow.translator.translator.SplitGraph</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#GraphSplitter.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.GraphSplitter.split" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.JobGenerator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">JobGenerator</span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#JobGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.JobGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>JobGenerator: Convert AISubGraph(ai_flow.ai_graph.ai_graph.AISubGraph) to Job(ai_flow.workflow.job.Job)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.JobGenerator.generate">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AISubGraph" title="ai_flow.ai_graph.ai_graph.AISubGraph"><span class="pre">ai_flow.ai_graph.ai_graph.AISubGraph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#JobGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.JobGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert AISubGraph(ai_flow.ai_graph.ai_graph.AISubGraph) to Job(ai_flow.workflow.job.Job)
+:param sub_graph: An executable Graph composed of AINode and data edges with the same job configuration.
+:param resource_dir: Store the executable files generated during the generation process.
+:return: Job(ai_flow.workflow.job.Job)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.SplitGraph">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">SplitGraph</span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#SplitGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.SplitGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AIGraph" title="ai_flow.ai_graph.ai_graph.AIGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.ai_graph.ai_graph.AIGraph</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the name of Node</p></li>
+<li><p><strong>properties</strong> – node properties</p></li>
+<li><p><strong>output_num</strong> – each node has outputs, this represents the number of outputs</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.SplitGraph.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AISubGraph" title="ai_flow.ai_graph.ai_graph.AISubGraph"><span class="pre">ai_flow.ai_graph.ai_graph.AISubGraph</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#SplitGraph.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.SplitGraph.add_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an ai node(ai_flow.ai_graph.ai_node.AINode) to AIGraph.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.Translator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">Translator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_splitter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.translator.translator.GraphSplitter" title="ai_flow.translator.translator.GraphSplitter"><span class="pre">ai_flow.translator.translator.GraphSplitter</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_constructor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.translator.translator.WorkflowConstructor" title="ai_flow.translator.translator.WorkflowConstructor"><span class="pre">ai_flow.translator.translator.WorkflowConstructor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#Translator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.Translator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Translator translates the user-defined program ai graph(ai_flow.ai_graph.ai_graph.AIGraph)
+into ai flow executable workflow(ai_flow.workflow.workflow.Workflow)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.Translator.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AIGraph" title="ai_flow.ai_graph.ai_graph.AIGraph"><span class="pre">ai_flow.ai_graph.ai_graph.AIGraph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_context</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.context.html#ai_flow.context.project_context.ProjectContext" title="ai_flow.context.project_context.ProjectContext"><span class="pre">ai_flow.context.project_context.ProjectContext</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.workflow.Workflow" title="ai_flow.workflow.workflow.Workflow"><span class="pre">ai_flow.workflow.workflow.Workflow</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#Translator.translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.Translator.translate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> – The ai graph(ai_flow.ai_graph.ai_graph.AIGraph)</p></li>
+<li><p><strong>project_context</strong> – The ai flow project context(ai_flow.context.project_context.ProjectContext)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.WorkflowConstructor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">WorkflowConstructor</span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#WorkflowConstructor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.WorkflowConstructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">JobGeneratorRegistry</span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#WorkflowConstructor.JobGeneratorRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry.get_object">
+<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><span class="pre">ai_flow.translator.translator.JobGenerator</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#WorkflowConstructor.JobGeneratorRegistry.get_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry.get_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><span class="pre">ai_flow.translator.translator.JobGenerator</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#WorkflowConstructor.JobGeneratorRegistry.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.WorkflowConstructor.build_workflow">
+<span class="sig-name descname"><span class="pre">build_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.translator.translator.SplitGraph" title="ai_flow.translator.translator.SplitGraph"><span class="pre">ai_flow.translator.translator.SplitGraph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_context</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.context.html#ai_flow.context.project_context.ProjectContext" title="ai_flow.context.project_context.ProjectContext"><span class="pre">ai_flow.context.project_context.ProjectContext</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.workflow.Workflow" title="ai_flow.workflow.workflow.Workflow"><span class="pre">ai_flow.workflow.workflow.Workflow</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#WorkflowConstructor.build_workflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.WorkflowConstructor.build_workflow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.WorkflowConstructor.register_job_generator">
+<span class="sig-name descname"><span class="pre">register_job_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><span class="pre">ai_flow.translator.translator.JobGenerator</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#WorkflowConstructor.register_job_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.WorkflowConstructor.register_job_generator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.get_translator">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">get_translator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.translator.translator.Translator" title="ai_flow.translator.translator.Translator"><span class="pre">ai_flow.translator.translator.Translator</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#get_translator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.get_translator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.translator.translator.register_job_generator">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.translator.translator.</span></span><span class="sig-name descname"><span class="pre">register_job_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><span class="pre">ai_flow.translator.translator.JobGenerator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/ai_flow/translator/translator.html#register_job_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.translator.translator.register_job_generator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 
@@ -207,8 +317,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ai_flow.translator.translator.html" class="btn btn-neutral float-right" title="ai_flow.translator.translator module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="ai_flow.store.sqlalchemy_store.html" class="btn btn-neutral float-left" title="ai_flow.store.sqlalchemy_store module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ai_flow.util.html" class="btn btn-neutral float-right" title="ai_flow.util package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.store.db.html" class="btn btn-neutral float-left" title="ai_flow.store.db package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

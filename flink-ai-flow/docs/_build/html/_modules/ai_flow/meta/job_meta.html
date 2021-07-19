@@ -175,24 +175,24 @@
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 
-<div class="viewcode-block" id="ExecutionMode"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.job_meta.html#ai_flow.meta.job_meta.ExecutionMode">[docs]</a><span class="k">class</span> <span class="nc">ExecutionMode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="ExecutionMode"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.job_meta.ExecutionMode">[docs]</a><span class="k">class</span> <span class="nc">ExecutionMode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execution mode of the specific job. Batch or Stream.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">BATCH</span> <span class="o">=</span> <span class="s1">&#39;BATCH&#39;</span>
     <span class="n">STREAM</span> <span class="o">=</span> <span class="s1">&#39;STREAM&#39;</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="ExecutionMode.value_of"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.job_meta.ExecutionMode.value_of">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">value_of</span><span class="p">(</span><span class="n">exec_type</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">exec_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;BATCH&#39;</span><span class="p">,</span> <span class="s1">&#39;batch&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">ExecutionMode</span><span class="o">.</span><span class="n">BATCH</span>
         <span class="k">elif</span> <span class="n">exec_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;STREAM&#39;</span><span class="p">,</span> <span class="s1">&#39;stream&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">ExecutionMode</span><span class="o">.</span><span class="n">STREAM</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 
-<div class="viewcode-block" id="State"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.job_meta.html#ai_flow.meta.job_meta.State">[docs]</a><span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="State"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.job_meta.State">[docs]</a><span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">INIT</span> <span class="o">=</span> <span class="s1">&#39;INIT&#39;</span>
     <span class="n">STARTING</span> <span class="o">=</span> <span class="s1">&#39;STARTING&#39;</span>
     <span class="n">RUNNING</span> <span class="o">=</span> <span class="s1">&#39;RUNNING&#39;</span>

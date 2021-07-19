@@ -9,7 +9,10 @@ ai\_flow.exception package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.exception.exceptions module
+------------------------------------
 
-   ai_flow.exception.exceptions
+.. automodule:: ai_flow.exception.exceptions
+   :members:
+   :undoc-members:
+   :show-inheritance:

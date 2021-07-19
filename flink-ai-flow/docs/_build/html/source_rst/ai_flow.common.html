@@ -40,8 +40,8 @@
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ai_flow.common.args module" href="ai_flow.common.args.html" />
-    <link rel="prev" title="ai_flow.client.ai_flow_client module" href="ai_flow.client.ai_flow_client.html" /> 
+    <link rel="next" title="ai_flow.context package" href="ai_flow.context.html" />
+    <link rel="prev" title="ai_flow.client package" href="ai_flow.client.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,6 +95,16 @@
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.client.html">ai_flow.client package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">ai_flow.common package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.args">ai_flow.common.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.configuration">ai_flow.common.configuration module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.entity">ai_flow.common.entity module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.message_queue">ai_flow.common.message_queue module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.module_load">ai_flow.common.module_load module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.properties">ai_flow.common.properties module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.registry">ai_flow.common.registry module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.result">ai_flow.common.result module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.scheduler_type">ai_flow.common.scheduler_type module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.common.status">ai_flow.common.status module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.context.html">ai_flow.context package</a></li>
@@ -193,20 +203,195 @@
 <span id="ai-flow-common-package"></span><h1>ai_flow.common package<a class="headerlink" href="#module-ai_flow.common" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.args.html">ai_flow.common.args module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.configuration.html">ai_flow.common.configuration module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.entity.html">ai_flow.common.entity module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.message_queue.html">ai_flow.common.message_queue module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.module_load.html">ai_flow.common.module_load module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.properties.html">ai_flow.common.properties module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.registry.html">ai_flow.common.registry module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.result.html">ai_flow.common.result module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.scheduler_type.html">ai_flow.common.scheduler_type module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.common.status.html">ai_flow.common.status module</a></li>
-</ul>
 </div>
+<div class="section" id="module-ai_flow.common.args">
+<span id="ai-flow-common-args-module"></span><h2>ai_flow.common.args module<a class="headerlink" href="#module-ai_flow.common.args" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow.common.configuration">
+<span id="ai-flow-common-configuration-module"></span><h2>ai_flow.common.configuration module<a class="headerlink" href="#module-ai_flow.common.configuration" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.configuration.AIFlowConfiguration">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.configuration.</span></span><span class="sig-name descname"><span class="pre">AIFlowConfiguration</span></span><a class="reference internal" href="../_modules/ai_flow/common/configuration.html#AIFlowConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.configuration.AIFlowConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.configuration.AIFlowConfiguration.dump_to_file">
+<span class="sig-name descname"><span class="pre">dump_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/configuration.html#AIFlowConfiguration.dump_to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.configuration.AIFlowConfiguration.dump_to_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.configuration.AIFlowConfiguration.load_from_file">
+<span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/configuration.html#AIFlowConfiguration.load_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.configuration.AIFlowConfiguration.load_from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.entity">
+<span id="ai-flow-common-entity-module"></span><h2>ai_flow.common.entity module<a class="headerlink" href="#module-ai_flow.common.entity" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.entity.Entity">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.entity.</span></span><span class="sig-name descname"><span class="pre">Entity</span></span><a class="reference internal" href="../_modules/ai_flow/common/entity.html#Entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.entity.Entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.entity.Entity.from_proto">
+<em class="property"><span class="pre">abstract</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/entity.html#Entity.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.entity.Entity.from_proto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.entity.EntityPrinter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.entity.</span></span><span class="sig-name descname"><span class="pre">EntityPrinter</span></span><a class="reference internal" href="../_modules/ai_flow/common/entity.html#EntityPrinter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.entity.EntityPrinter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.entity.EntityPrinter.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/entity.html#EntityPrinter.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.entity.EntityPrinter.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.common.entity.get_classname">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.common.entity.</span></span><span class="sig-name descname"><span class="pre">get_classname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/entity.html#get_classname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.entity.get_classname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.common.entity.to_string">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.common.entity.</span></span><span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/entity.html#to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.entity.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.message_queue">
+<span id="ai-flow-common-message-queue-module"></span><h2>ai_flow.common.message_queue module<a class="headerlink" href="#module-ai_flow.common.message_queue" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.message_queue.MessageQueue">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.message_queue.</span></span><span class="sig-name descname"><span class="pre">MessageQueue</span></span><a class="reference internal" href="../_modules/ai_flow/common/message_queue.html#MessageQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.message_queue.MessageQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.message_queue.MessageQueue.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/message_queue.html#MessageQueue.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.message_queue.MessageQueue.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.message_queue.MessageQueue.get_with_timeout">
+<span class="sig-name descname"><span class="pre">get_with_timeout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/message_queue.html#MessageQueue.get_with_timeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.message_queue.MessageQueue.get_with_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.message_queue.MessageQueue.length">
+<span class="sig-name descname"><span class="pre">length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/message_queue.html#MessageQueue.length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.message_queue.MessageQueue.length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.message_queue.MessageQueue.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/message_queue.html#MessageQueue.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.message_queue.MessageQueue.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.module_load">
+<span id="ai-flow-common-module-load-module"></span><h2>ai_flow.common.module_load module<a class="headerlink" href="#module-ai_flow.common.module_load" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.common.module_load.import_string">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.common.module_load.</span></span><span class="sig-name descname"><span class="pre">import_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dotted_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/module_load.html#import_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.module_load.import_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import a dotted module path and return the attribute/class designated by the
+last name in the path. Raise ImportError if the import failed.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.properties">
+<span id="ai-flow-common-properties-module"></span><h2>ai_flow.common.properties module<a class="headerlink" href="#module-ai_flow.common.properties" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.properties.ExecuteProperties">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.properties.</span></span><span class="sig-name descname"><span class="pre">ExecuteProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.common.properties.Properties" title="ai_flow.common.properties.Properties"><span class="pre">ai_flow.common.properties.Properties</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.common.properties.Properties" title="ai_flow.common.properties.Properties"><span class="pre">ai_flow.common.properties.Properties</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.common.properties.Properties" title="ai_flow.common.properties.Properties"><span class="pre">ai_flow.common.properties.Properties</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/properties.html#ExecuteProperties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.properties.ExecuteProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.properties.Properties">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.properties.</span></span><span class="sig-name descname"><span class="pre">Properties</span></span><a class="reference internal" href="../_modules/ai_flow/common/properties.html#Properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.properties.Properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a>]</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.registry">
+<span id="ai-flow-common-registry-module"></span><h2>ai_flow.common.registry module<a class="headerlink" href="#module-ai_flow.common.registry" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.registry.BaseRegistry">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.registry.</span></span><span class="sig-name descname"><span class="pre">BaseRegistry</span></span><a class="reference internal" href="../_modules/ai_flow/common/registry.html#BaseRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.registry.BaseRegistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.registry.BaseRegistry.get_object">
+<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="../_modules/ai_flow/common/registry.html#BaseRegistry.get_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.registry.BaseRegistry.get_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.common.registry.BaseRegistry.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/registry.html#BaseRegistry.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.registry.BaseRegistry.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.result">
+<span id="ai-flow-common-result-module"></span><h2>ai_flow.common.result module<a class="headerlink" href="#module-ai_flow.common.result" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.result.BaseResult">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.result.</span></span><span class="sig-name descname"><span class="pre">BaseResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.common.status.Status" title="ai_flow.common.status.Status"><span class="pre">ai_flow.common.status.Status</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">Status.OK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/result.html#BaseResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.result.BaseResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.common.result.BaseResult.error_message">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">error_message</span></span><a class="headerlink" href="#ai_flow.common.result.BaseResult.error_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.common.result.BaseResult.status">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#ai_flow.common.result.BaseResult.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.scheduler_type">
+<span id="ai-flow-common-scheduler-type-module"></span><h2>ai_flow.common.scheduler_type module<a class="headerlink" href="#module-ai_flow.common.scheduler_type" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.scheduler_type.SchedulerType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.scheduler_type.</span></span><span class="sig-name descname"><span class="pre">SchedulerType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/scheduler_type.html#SchedulerType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.scheduler_type.SchedulerType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.common.scheduler_type.SchedulerType.AIFLOW">
+<span class="sig-name descname"><span class="pre">AIFLOW</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(0,)</span></em><a class="headerlink" href="#ai_flow.common.scheduler_type.SchedulerType.AIFLOW" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.common.scheduler_type.SchedulerType.AIRFLOW">
+<span class="sig-name descname"><span class="pre">AIRFLOW</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#ai_flow.common.scheduler_type.SchedulerType.AIRFLOW" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.common.status">
+<span id="ai-flow-common-status-module"></span><h2>ai_flow.common.status module<a class="headerlink" href="#module-ai_flow.common.status" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.common.status.Status">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.common.status.</span></span><span class="sig-name descname"><span class="pre">Status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/common/status.html#Status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.common.status.Status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.common.status.Status.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(1,)</span></em><a class="headerlink" href="#ai_flow.common.status.Status.ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.common.status.Status.OK">
+<span class="sig-name descname"><span class="pre">OK</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(0,)</span></em><a class="headerlink" href="#ai_flow.common.status.Status.OK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -216,8 +401,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ai_flow.common.args.html" class="btn btn-neutral float-right" title="ai_flow.common.args module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="ai_flow.client.ai_flow_client.html" class="btn btn-neutral float-left" title="ai_flow.client.ai_flow_client module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ai_flow.context.html" class="btn btn-neutral float-right" title="ai_flow.context package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.client.html" class="btn btn-neutral float-left" title="ai_flow.client package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -9,8 +9,18 @@ ai\_flow.scheduler package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.scheduler.scheduler\_factory module
+--------------------------------------------
 
-   ai_flow.scheduler.scheduler_factory
-   ai_flow.scheduler.scheduler_service
+.. automodule:: ai_flow.scheduler.scheduler_factory
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.scheduler.scheduler\_service module
+--------------------------------------------
+
+.. automodule:: ai_flow.scheduler.scheduler_service
+   :members:
+   :undoc-members:
+   :show-inheritance:

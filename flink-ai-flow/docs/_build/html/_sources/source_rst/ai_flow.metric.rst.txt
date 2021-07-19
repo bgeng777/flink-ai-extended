@@ -17,7 +17,10 @@ Subpackages
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.metric.utils module
+----------------------------
 
-   ai_flow.metric.utils
+.. automodule:: ai_flow.metric.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -9,7 +9,10 @@ ai\_flow.util.file\_util package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.util.file\_util.zip\_file\_util module
+-----------------------------------------------
 
-   ai_flow.util.file_util.zip_file_util
+.. automodule:: ai_flow.util.file_util.zip_file_util
+   :members:
+   :undoc-members:
+   :show-inheritance:

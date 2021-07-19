@@ -9,10 +9,34 @@ ai\_flow\_plugins.scheduler\_plugins.airflow package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow\_plugins.scheduler\_plugins.airflow.ai\_flow\_operator module
+----------------------------------------------------------------------
 
-   ai_flow_plugins.scheduler_plugins.airflow.ai_flow_operator
-   ai_flow_plugins.scheduler_plugins.airflow.airflow_scheduler
-   ai_flow_plugins.scheduler_plugins.airflow.dag_generator
-   ai_flow_plugins.scheduler_plugins.airflow.event_handler
+.. automodule:: ai_flow_plugins.scheduler_plugins.airflow.ai_flow_operator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow\_plugins.scheduler\_plugins.airflow.airflow\_scheduler module
+----------------------------------------------------------------------
+
+.. automodule:: ai_flow_plugins.scheduler_plugins.airflow.airflow_scheduler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow\_plugins.scheduler\_plugins.airflow.dag\_generator module
+------------------------------------------------------------------
+
+.. automodule:: ai_flow_plugins.scheduler_plugins.airflow.dag_generator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow\_plugins.scheduler\_plugins.airflow.event\_handler module
+------------------------------------------------------------------
+
+.. automodule:: ai_flow_plugins.scheduler_plugins.airflow.event_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:

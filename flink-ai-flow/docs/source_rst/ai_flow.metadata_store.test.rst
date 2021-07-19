@@ -17,7 +17,10 @@ Subpackages
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.metadata\_store.test.test\_rest\_api module
+----------------------------------------------------
 
-   ai_flow.metadata_store.test.test_rest_api
+.. automodule:: ai_flow.metadata_store.test.test_rest_api
+   :members:
+   :undoc-members:
+   :show-inheritance:

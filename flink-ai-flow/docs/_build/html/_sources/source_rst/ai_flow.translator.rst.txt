@@ -9,7 +9,10 @@ ai\_flow.translator package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.translator.translator module
+-------------------------------------
 
-   ai_flow.translator.translator
+.. automodule:: ai_flow.translator.translator
+   :members:
+   :undoc-members:
+   :show-inheritance:

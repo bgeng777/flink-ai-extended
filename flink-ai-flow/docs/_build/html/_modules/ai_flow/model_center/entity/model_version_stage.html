@@ -188,15 +188,15 @@
 <span class="n">_CANONICAL_MAPPING</span> <span class="o">=</span> <span class="p">{</span><span class="n">stage</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="n">stage</span> <span class="k">for</span> <span class="n">stage</span> <span class="ow">in</span> <span class="n">ALL_STAGES</span><span class="p">}</span>
 
 
-<span class="k">def</span> <span class="nf">get_canonical_stage</span><span class="p">(</span><span class="n">stage</span><span class="p">):</span>
+<div class="viewcode-block" id="get_canonical_stage"><a class="viewcode-back" href="../../../../source_rst/ai_flow.model_center.entity.html#ai_flow.model_center.entity.model_version_stage.get_canonical_stage">[docs]</a><span class="k">def</span> <span class="nf">get_canonical_stage</span><span class="p">(</span><span class="n">stage</span><span class="p">):</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">stage</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_CANONICAL_MAPPING</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">AIFlowException</span><span class="p">(</span><span class="s2">&quot;Invalid Model Version stage </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stage</span><span class="p">),</span>
                               <span class="n">INVALID_PARAMETER_VALUE</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_CANONICAL_MAPPING</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_CANONICAL_MAPPING</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
 
-<span class="k">class</span> <span class="nc">ModelVersionStage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelVersionStage"><a class="viewcode-back" href="../../../../source_rst/ai_flow.model_center.entity.html#ai_flow.model_center.entity.model_version_stage.ModelVersionStage">[docs]</a><span class="k">class</span> <span class="nc">ModelVersionStage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Enum for stage of an :py:class:`ai_flow.model_center.model_repo.entity.ModelVersionDetail`.&quot;&quot;&quot;</span>
     <span class="n">GENERATED</span> <span class="o">=</span> <span class="n">ProtoModelVersionStage</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="s1">&#39;GENERATED&#39;</span><span class="p">)</span>
     <span class="n">VALIDATED</span> <span class="o">=</span> <span class="n">ProtoModelVersionStage</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="s1">&#39;VALIDATED&#39;</span><span class="p">)</span>
@@ -208,24 +208,24 @@
                         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ProtoModelVersionStage</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
     <span class="n">_STAGE_TO_STRING</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">_STRING_TO_STAGE</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="ModelVersionStage.from_string"><a class="viewcode-back" href="../../../../source_rst/ai_flow.model_center.entity.html#ai_flow.model_center.entity.model_version_stage.ModelVersionStage.from_string">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="n">stage_str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">stage_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STRING_TO_STAGE</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="s2">&quot;Could not get model version stage corresponding to string </span><span class="si">%s</span><span class="s2">. Valid status &quot;</span>
                 <span class="s2">&quot;strings: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stage_str</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STRING_TO_STAGE</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
-        <span class="k">return</span> <span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STRING_TO_STAGE</span><span class="p">[</span><span class="n">stage_str</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STRING_TO_STAGE</span><span class="p">[</span><span class="n">stage_str</span><span class="p">]</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="ModelVersionStage.to_string"><a class="viewcode-back" href="../../../../source_rst/ai_flow.model_center.entity.html#ai_flow.model_center.entity.model_version_stage.ModelVersionStage.to_string">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STAGE_TO_STRING</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Could not get string corresponding to model version stage </span><span class="si">%s</span><span class="s2">. Valid &quot;</span>
                             <span class="s2">&quot;stages: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span>
                                             <span class="nb">list</span><span class="p">(</span><span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STAGE_TO_STRING</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
-        <span class="k">return</span> <span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STAGE_TO_STRING</span><span class="p">[</span><span class="n">status</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">_STAGE_TO_STRING</span><span class="p">[</span><span class="n">status</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="ModelVersionEventType"><a class="viewcode-back" href="../../../../source_rst/ai_flow.model_center.entity.model_version_stage.html#ai_flow.model_center.entity.model_version_stage.ModelVersionEventType">[docs]</a><span class="k">class</span> <span class="nc">ModelVersionEventType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelVersionEventType"><a class="viewcode-back" href="../../../../source_rst/ai_flow.model_center.entity.html#ai_flow.model_center.entity.model_version_stage.ModelVersionEventType">[docs]</a><span class="k">class</span> <span class="nc">ModelVersionEventType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">MODEL_GENERATED</span> <span class="o">=</span> <span class="s1">&#39;MODEL_GENERATED&#39;</span>
     <span class="n">MODEL_VALIDATED</span> <span class="o">=</span> <span class="s1">&#39;MODEL_VALIDATED&#39;</span>
     <span class="n">MODEL_DEPLOYED</span> <span class="o">=</span> <span class="s1">&#39;MODEL_DEPLOYED&#39;</span>

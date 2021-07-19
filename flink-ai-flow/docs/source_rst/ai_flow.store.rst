@@ -17,9 +17,26 @@ Subpackages
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.store.abstract\_store module
+-------------------------------------
 
-   ai_flow.store.abstract_store
-   ai_flow.store.mongo_store
-   ai_flow.store.sqlalchemy_store
+.. automodule:: ai_flow.store.abstract_store
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.store.mongo\_store module
+----------------------------------
+
+.. automodule:: ai_flow.store.mongo_store
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.store.sqlalchemy\_store module
+---------------------------------------
+
+.. automodule:: ai_flow.store.sqlalchemy_store
+   :members:
+   :undoc-members:
+   :show-inheritance:

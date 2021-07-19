@@ -138,6 +138,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../server.html">ai_flow.endpoint.server</a> &raquo;</li>
+        
       <li>ai_flow.endpoint.server.server_config</li>
     
     
@@ -177,12 +179,12 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span>
 
 
-<div class="viewcode-block" id="DBType"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.server_config.html#ai_flow.endpoint.server.server_config.DBType">[docs]</a><span class="k">class</span> <span class="nc">DBType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="DBType"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.DBType">[docs]</a><span class="k">class</span> <span class="nc">DBType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">SQLITE</span> <span class="o">=</span> <span class="s2">&quot;sql_lite&quot;</span>
     <span class="n">MYSQL</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span>
     <span class="n">MONGODB</span> <span class="o">=</span> <span class="s2">&quot;mongodb&quot;</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DBType.value_of"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.DBType.value_of">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">value_of</span><span class="p">(</span><span class="n">db_type</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">db_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;SQL_LITE&#39;</span><span class="p">,</span> <span class="s1">&#39;sql_lite&#39;</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">DBType</span><span class="o">.</span><span class="n">SQLITE</span>
@@ -191,99 +193,99 @@
         <span class="k">elif</span> <span class="n">db_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;MONGODB&#39;</span><span class="p">,</span> <span class="s1">&#39;mongodb&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">DBType</span><span class="o">.</span><span class="n">MONGODB</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">AIFlowServerConfig</span><span class="p">(</span><span class="n">AIFlowConfiguration</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">get_sql_lite_db_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig">[docs]</a><span class="k">class</span> <span class="nc">AIFlowServerConfig</span><span class="p">(</span><span class="n">AIFlowConfiguration</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_sql_lite_db_file"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_sql_lite_db_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_sql_lite_db_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">db_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_uri</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">db_uri</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">db_uri</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span></div>
 
-    <span class="k">def</span> <span class="nf">get_server_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_ip&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_server_ip"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_server_ip">[docs]</a>    <span class="k">def</span> <span class="nf">get_server_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_ip&quot;</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">get_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_port&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_server_port"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_server_port">[docs]</a>    <span class="k">def</span> <span class="nf">get_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_port&quot;</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">get_db_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_uri&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_db_uri"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_db_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_db_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_uri&quot;</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">get_db_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DBType</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">DBType</span><span class="o">.</span><span class="n">value_of</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_type&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_db_type"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_db_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_db_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DBType</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">DBType</span><span class="o">.</span><span class="n">value_of</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_type&quot;</span><span class="p">])</span></div>
 
-    <span class="k">def</span> <span class="nf">get_enable_ha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_enable_ha"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_enable_ha">[docs]</a>    <span class="k">def</span> <span class="nf">get_enable_ha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;enable_ha&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enable_ha&quot;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">}</span>
             <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="k">def</span> <span class="nf">get_ha_ttl_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_ha_ttl_ms"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_ha_ttl_ms">[docs]</a>    <span class="k">def</span> <span class="nf">get_ha_ttl_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;ha_ttl_ms&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ha_ttl_ms&quot;</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">10000</span>
+            <span class="k">return</span> <span class="mi">10000</span></div>
 
-    <span class="k">def</span> <span class="nf">set_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_server_port"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_server_port">[docs]</a>    <span class="k">def</span> <span class="nf">set_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
-    <span class="k">def</span> <span class="nf">set_server_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_ip&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_server_ip"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_server_ip">[docs]</a>    <span class="k">def</span> <span class="nf">set_server_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;server_ip&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
-    <span class="k">def</span> <span class="nf">set_db_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_type</span><span class="p">:</span> <span class="n">DBType</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="n">Text</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_db_uri"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_db_uri">[docs]</a>    <span class="k">def</span> <span class="nf">set_db_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_type</span><span class="p">:</span> <span class="n">DBType</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="n">Text</span><span class="p">):</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_type</span><span class="o">.</span><span class="n">value</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_uri&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;db_uri&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uri</span></div>
 
-    <span class="k">def</span> <span class="nf">set_enable_ha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable_ha</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_enable_ha"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_enable_ha">[docs]</a>    <span class="k">def</span> <span class="nf">set_enable_ha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable_ha</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">enable_ha</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">}</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;enable_ha&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">enable_ha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;enable_ha&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">enable_ha</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">set_ha_ttl_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ha_ttl_ms</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_ha_ttl_ms"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_ha_ttl_ms">[docs]</a>    <span class="k">def</span> <span class="nf">set_ha_ttl_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ha_ttl_ms</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ha_ttl_ms</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ha_ttl_ms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ha_ttl_ms</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ha_ttl_ms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ha_ttl_ms</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">start_default_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="AIFlowServerConfig.start_default_notification"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.start_default_notification">[docs]</a>    <span class="k">def</span> <span class="nf">start_default_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">bool</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;start_default_notification&quot;</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;start_default_notification&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">set_notification_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notification_uri</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;notification_uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">notification_uri</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_notification_uri"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_notification_uri">[docs]</a>    <span class="k">def</span> <span class="nf">set_notification_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notification_uri</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;notification_uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">notification_uri</span></div>
 
-    <span class="k">def</span> <span class="nf">get_notification_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;notification_uri&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_notification_uri"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_notification_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_notification_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;notification_uri&#39;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">get_scheduler_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;scheduler&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="AIFlowServerConfig.get_scheduler_config"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.get_scheduler_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_scheduler_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;scheduler&#39;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">set_scheduler_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scheduler&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<div class="viewcode-block" id="AIFlowServerConfig.set_scheduler_config"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.set_scheduler_config">[docs]</a>    <span class="k">def</span> <span class="nf">set_scheduler_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scheduler&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
-    <span class="k">def</span> <span class="nf">start_meta_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.start_meta_service"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.start_meta_service">[docs]</a>    <span class="k">def</span> <span class="nf">start_meta_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;start_meta_service&quot;</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;start_meta_service&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">start_model_center_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.start_model_center_service"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.start_model_center_service">[docs]</a>    <span class="k">def</span> <span class="nf">start_model_center_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;start_model_center_service&quot;</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;start_model_center_service&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">start_metric_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.start_metric_service"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.start_metric_service">[docs]</a>    <span class="k">def</span> <span class="nf">start_metric_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;start_metric_service&quot;</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;start_metric_service&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">start_scheduler_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AIFlowServerConfig.start_scheduler_service"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.server_config.AIFlowServerConfig.start_scheduler_service">[docs]</a>    <span class="k">def</span> <span class="nf">start_scheduler_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;start_scheduler_service&quot;</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;start_scheduler_service&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span></div></div>
 </pre></div>
 
            </div>

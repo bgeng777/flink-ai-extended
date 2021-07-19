@@ -179,7 +179,7 @@
 <span class="kn">from</span> <span class="nn">ai_flow.util.json_utils</span> <span class="kn">import</span> <span class="n">Jsonable</span>
 
 
-<div class="viewcode-block" id="DataType"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.dataset_meta.html#ai_flow.meta.dataset_meta.DataType">[docs]</a><span class="k">class</span> <span class="nc">DataType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="DataType"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.dataset_meta.DataType">[docs]</a><span class="k">class</span> <span class="nc">DataType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">INT32</span> <span class="o">=</span> <span class="s1">&#39;INT32&#39;</span>
     <span class="n">INT64</span> <span class="o">=</span> <span class="s1">&#39;INT64&#39;</span>
     <span class="n">FLOAT32</span> <span class="o">=</span> <span class="s1">&#39;FLOAT32&#39;</span>
@@ -194,7 +194,7 @@
     <span class="n">BYTESARRAY</span> <span class="o">=</span> <span class="s1">&#39;BYTESARRAY&#39;</span></div>
 
 
-<span class="k">class</span> <span class="nc">Schema</span><span class="p">(</span><span class="n">Jsonable</span><span class="p">):</span>
+<div class="viewcode-block" id="Schema"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.dataset_meta.Schema">[docs]</a><span class="k">class</span> <span class="nc">Schema</span><span class="p">(</span><span class="n">Jsonable</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">name_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Text</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">type_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DataType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -206,10 +206,10 @@
                <span class="s1">&#39;Schema</span><span class="se">\n</span><span class="s1">&#39;</span> \
                <span class="s1">&#39;name_list:</span><span class="si">{}</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span> \
                <span class="s1">&#39;type_list:</span><span class="si">{}</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span> \
-               <span class="s1">&#39;&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_list</span><span class="p">)</span>
+               <span class="s1">&#39;&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_list</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">DatasetMeta</span><span class="p">(</span><span class="n">Jsonable</span><span class="p">):</span>
+<div class="viewcode-block" id="DatasetMeta"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.dataset_meta.DatasetMeta">[docs]</a><span class="k">class</span> <span class="nc">DatasetMeta</span><span class="p">(</span><span class="n">Jsonable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;define dataset meta &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -274,11 +274,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">catalog_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_database</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">catalog_connection_uri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_table</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">catalog_connection_uri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_table</span><span class="p">)</span></div>
 
 
 <span class="c1"># dataset api</span>
-<span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+<div class="viewcode-block" id="create_dataset"><a class="viewcode-back" href="../../../source_rst/ai_flow.meta.html#ai_flow.meta.dataset_meta.create_dataset">[docs]</a><span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
                    <span class="n">data_format</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                    <span class="n">description</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                    <span class="n">uri</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -299,7 +299,7 @@
                        <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span> <span class="n">catalog_name</span><span class="o">=</span><span class="n">catalog_name</span><span class="p">,</span> <span class="n">catalog_type</span><span class="o">=</span><span class="n">catalog_type</span><span class="p">,</span>
                        <span class="n">catalog_database</span><span class="o">=</span><span class="n">catalog_database</span><span class="p">,</span> <span class="n">catalog_connection_uri</span><span class="o">=</span><span class="n">catalog_connection_uri</span><span class="p">,</span>
                        <span class="n">catalog_table</span><span class="o">=</span><span class="n">catalog_table</span>
-                       <span class="p">)</span>
+                       <span class="p">)</span></div>
 </pre></div>
 
            </div>

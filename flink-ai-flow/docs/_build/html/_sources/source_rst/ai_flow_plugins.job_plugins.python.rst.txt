@@ -9,10 +9,34 @@ ai\_flow\_plugins.job\_plugins.python package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow\_plugins.job\_plugins.python.python\_job\_config module
+----------------------------------------------------------------
 
-   ai_flow_plugins.job_plugins.python.python_job_config
-   ai_flow_plugins.job_plugins.python.python_job_plugin
-   ai_flow_plugins.job_plugins.python.python_processor
-   ai_flow_plugins.job_plugins.python.python_run_main
+.. automodule:: ai_flow_plugins.job_plugins.python.python_job_config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow\_plugins.job\_plugins.python.python\_job\_plugin module
+----------------------------------------------------------------
+
+.. automodule:: ai_flow_plugins.job_plugins.python.python_job_plugin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow\_plugins.job\_plugins.python.python\_processor module
+--------------------------------------------------------------
+
+.. automodule:: ai_flow_plugins.job_plugins.python.python_processor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow\_plugins.job\_plugins.python.python\_run\_main module
+--------------------------------------------------------------
+
+.. automodule:: ai_flow_plugins.job_plugins.python.python_run_main
+   :members:
+   :undoc-members:
+   :show-inheritance:

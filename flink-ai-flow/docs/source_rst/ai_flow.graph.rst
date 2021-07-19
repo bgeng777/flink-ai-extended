@@ -9,10 +9,34 @@ ai\_flow.graph package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.graph.channel module
+-----------------------------
 
-   ai_flow.graph.channel
-   ai_flow.graph.edge
-   ai_flow.graph.graph
-   ai_flow.graph.node
+.. automodule:: ai_flow.graph.channel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.graph.edge module
+--------------------------
+
+.. automodule:: ai_flow.graph.edge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.graph.graph module
+---------------------------
+
+.. automodule:: ai_flow.graph.graph
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ai\_flow.graph.node module
+--------------------------
+
+.. automodule:: ai_flow.graph.node
+   :members:
+   :undoc-members:
+   :show-inheritance:

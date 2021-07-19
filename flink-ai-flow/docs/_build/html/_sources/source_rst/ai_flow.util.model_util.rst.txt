@@ -9,7 +9,10 @@ ai\_flow.util.model\_util package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.util.model\_util.model\_util module
+--------------------------------------------
 
-   ai_flow.util.model_util.model_util
+.. automodule:: ai_flow.util.model_util.model_util
+   :members:
+   :undoc-members:
+   :show-inheritance:

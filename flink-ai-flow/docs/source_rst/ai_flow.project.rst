@@ -9,7 +9,10 @@ ai\_flow.project package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.project.project\_config module
+---------------------------------------
 
-   ai_flow.project.project_config
+.. automodule:: ai_flow.project.project_config
+   :members:
+   :undoc-members:
+   :show-inheritance:

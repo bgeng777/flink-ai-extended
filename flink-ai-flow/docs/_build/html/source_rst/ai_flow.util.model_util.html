@@ -40,8 +40,8 @@
 
     
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ai_flow.util.model_util.model_util module" href="ai_flow.util.model_util.model_util.html" />
-    <link rel="prev" title="ai_flow.util.file_util.zip_file_util module" href="ai_flow.util.file_util.zip_file_util.html" /> 
+    <link rel="next" title="ai_flow.workflow package" href="ai_flow.workflow.html" />
+    <link rel="prev" title="ai_flow.util.file_util package" href="ai_flow.util.file_util.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -113,6 +113,14 @@
 <li class="toctree-l3 current"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="ai_flow.util.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.bool_util">ai_flow.util.bool_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.json_utils">ai_flow.util.json_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.kubernetes_util">ai_flow.util.kubernetes_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.path_util">ai_flow.util.path_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.process_utils">ai_flow.util.process_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.serialization_utils">ai_flow.util.serialization_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.time_utils">ai_flow.util.time_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.util.html#module-ai_flow.util.yaml_utils">ai_flow.util.yaml_utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ai_flow.workflow.html">ai_flow.workflow package</a></li>
@@ -196,11 +204,112 @@
 <span id="ai-flow-util-model-util-package"></span><h1>ai_flow.util.model_util package<a class="headerlink" href="#module-ai_flow.util.model_util" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ai_flow.util.model_util.model_util.html">ai_flow.util.model_util.model_util module</a></li>
-</ul>
 </div>
+<div class="section" id="module-ai_flow.util.model_util.model_util">
+<span id="ai-flow-util-model-util-model-util-module"></span><h2>ai_flow.util.model_util.model_util module<a class="headerlink" href="#module-ai_flow.util.model_util.model_util" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.ModelManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.util.model_util.model_util.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#ModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.ModelManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.ModelManager.download_model">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">download_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#ModelManager.download_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.ModelManager.download_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.ModelManager.save_model">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#ModelManager.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.ModelManager.save_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.OSSModelManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.util.model_util.model_util.</span></span><span class="sig-name descname"><span class="pre">OSSModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#OSSModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.OSSModelManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ai_flow.util.model_util.model_util.ModelManager" title="ai_flow.util.model_util.model_util.ModelManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.model_util.model_util.ModelManager</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.OSSModelManager.download_model">
+<span class="sig-name descname"><span class="pre">download_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#OSSModelManager.download_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.OSSModelManager.download_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>download an uploaded model in Aliyun OSS.
+:param remote_path: the object key of the file in oss.
+:param local_path: the user specified local path of the downloaded file. the local_path must be a directory
+:return: the downloaded file path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.OSSModelManager.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#OSSModelManager.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.OSSModelManager.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>save a local export model to remote storage(Aliyun OSS)
+:param local_path: the local path of the model, the oss storage only supports binary files, thus we have to
+make the local path file a zip.
+:param remote_path: the object_key of the uploaded file in oss with the pattern like abc/efg/123.jpg
+:return: the object_key of uploaded file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.load_scikit_learn_model">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.util.model_util.model_util.</span></span><span class="sig-name descname"><span class="pre">load_scikit_learn_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#load_scikit_learn_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.load_scikit_learn_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a scikit-learn model from a local file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model_uri</strong> – <p>The location, in URI format, of the aiflow model, for example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/Users/aiflow/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s3://my_bucket/path/to/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models:/&lt;model_name&gt;/&lt;model_version&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models:/&lt;model_name&gt;/&lt;stage&gt;</span></code></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A scikit-learn model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.util.model_util.model_util.load_tensorflow_saved_model">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.util.model_util.model_util.</span></span><span class="sig-name descname"><span class="pre">load_tensorflow_saved_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_graph_tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature_def_map_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tf_session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/util/model_util/model_util.html#load_tensorflow_saved_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.util.model_util.model_util.load_tensorflow_saved_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a tensorflow model from a specific path.</p>
+<p><em>With TensorFlow version &lt;2.0.0, this method must be called within a TensorFlow graph context.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_uri</strong> – <p>The location, in URI format, of the tensorflow model. For example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/Users/me/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative/path/to/local/model</span></code></p></li>
+</ul>
+</p></li>
+<li><p><strong>meta_graph_tags</strong> – A list of tags identifying the model’s metagraph within the
+serialized <code class="docutils literal notranslate"><span class="pre">SavedModel</span></code> object. For more information, see the
+<code class="docutils literal notranslate"><span class="pre">tags</span></code> parameter of the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/saved_model/builder/SavedModelBuilder#add_meta_graph">tf.saved_model.builder.SavedModelBuilder
+method</a>.</p></li>
+<li><p><strong>signature_def_map_key</strong> – A string identifying the input/output signature associated with the
+model. This is a key within the serialized <code class="docutils literal notranslate"><span class="pre">SavedModel</span></code>’s
+signature definition mapping. For more information, see the
+<code class="docutils literal notranslate"><span class="pre">signature_def_map</span></code> parameter of the
+<code class="docutils literal notranslate"><span class="pre">tf.saved_model.builder.SavedModelBuilder</span></code> method.</p></li>
+<li><p><strong>tf_session</strong> – The TensorFlow session in which to load the model. If using TensorFlow
+version &gt;= 2.0.0, this argument is ignored. If using TensorFlow &lt;2.0.0, if no
+session is passed to this function, aiflow will attempt to load the model using
+the default TensorFlow session.  If no default session is available, then the
+function raises an exception.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>For TensorFlow &lt; 2.0.0, a TensorFlow signature definition of type:
+<code class="docutils literal notranslate"><span class="pre">tensorflow.core.protobuf.meta_graph_pb2.SignatureDef</span></code>. This defines the input and
+output tensors for model inference.
+For TensorFlow &gt;= 2.0.0, A callable graph (tf.function) that takes inputs and
+returns inferences.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
@@ -210,8 +319,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ai_flow.util.model_util.model_util.html" class="btn btn-neutral float-right" title="ai_flow.util.model_util.model_util module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="ai_flow.util.file_util.zip_file_util.html" class="btn btn-neutral float-left" title="ai_flow.util.file_util.zip_file_util module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ai_flow.workflow.html" class="btn btn-neutral float-right" title="ai_flow.workflow package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.util.file_util.html" class="btn btn-neutral float-left" title="ai_flow.util.file_util package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

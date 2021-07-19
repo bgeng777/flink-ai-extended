@@ -9,7 +9,10 @@ ai\_flow.log package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.log.log\_path\_utils module
+------------------------------------
 
-   ai_flow.log.log_path_utils
+.. automodule:: ai_flow.log.log_path_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

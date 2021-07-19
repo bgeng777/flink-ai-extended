@@ -77,16 +77,3 @@ html_use_index = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'flinkaiflowdoc'
-
-# This is the expected signature of the handler for this event, cf doc
-def autodoc_skip_member_handler(app, what, name, obj, skip, options):
-    # Basic approach; you might want a regex instead
-    if "test" in obj or "test" in name:
-        print(obj)
-        return True
-    return False
-
-# Automatically called by sphinx at startup
-def setup(app):
-    # Connect the autodoc-skip-member event from apidoc to the callback
-    app.connect('autodoc-skip-member', autodoc_skip_member_handler)

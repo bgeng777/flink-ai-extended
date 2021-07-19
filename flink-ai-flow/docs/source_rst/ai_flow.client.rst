@@ -9,7 +9,10 @@ ai\_flow.client package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+ai\_flow.client.ai\_flow\_client module
+---------------------------------------
 
-   ai_flow.client.ai_flow_client
+.. automodule:: ai_flow.client.ai_flow_client
+   :members:
+   :undoc-members:
+   :show-inheritance:
