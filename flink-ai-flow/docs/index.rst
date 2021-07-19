@@ -10,8 +10,8 @@ Welcome to Flink AI Flow's Documentation!
    :maxdepth: 2
    :caption: Contents
    
-   source/ai_flow
-   source2/ai_flow_plugins
+   source_rst/ai_flow
+   source_rst/ai_flow_plugins
 
 ====================
 Core Classes/Modules

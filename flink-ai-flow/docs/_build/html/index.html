@@ -40,7 +40,7 @@
 
     
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ai_flow package" href="source/ai_flow.html" /> 
+    <link rel="next" title="ai_flow package" href="source_rst/ai_flow.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,8 +87,8 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="source/ai_flow.html">ai_flow package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="source2/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
 </ul>
 
             
@@ -161,14 +161,12 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="source/ai_flow.html">ai_flow package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source/ai_flow.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/ai_flow.html#module-ai_flow">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source_rst/ai_flow.html">ai_flow package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source_rst/ai_flow.html#subpackages">Subpackages</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="source2/ai_flow_plugins.html">ai_flow_plugins package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source2/ai_flow_plugins.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source2/ai_flow_plugins.html#module-ai_flow_plugins">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source_rst/ai_flow_plugins.html">ai_flow_plugins package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source_rst/ai_flow_plugins.html#subpackages">Subpackages</a></li>
 </ul>
 </li>
 </ul>
@@ -176,13 +174,13 @@
 <div class="section" id="core-classes-modules">
 <h2>Core Classes/Modules<a class="headerlink" href="#core-classes-modules" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AIGraph" title="ai_flow.ai_graph.ai_graph.AIGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.ai_graph.ai_graph.AIGraph</span></code></a></p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.ai_graph.ai_graph.AIGraph</span></code></p>
 <p>Core abstraction of Flink AI Flow. Workflows defined by users will be translated into AIGraph by the Flink AI Flow framework.
-AIGraph consists of AINode and edges. For edges, they are either the <a class="reference internal" href="source/ai_flow.ai_graph.html#ai_flow.ai_graph.data_edge.DataEdge" title="ai_flow.ai_graph.data_edge.DataEdge"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataEdge</span></code></a>  between AINodes in a job
-or the <a class="reference internal" href="source/ai_flow.workflow.html#ai_flow.workflow.control_edge.ControlEdge" title="ai_flow.workflow.control_edge.ControlEdge"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControlEdge</span></code></a> between jobs.</p>
-<p><a class="reference internal" href="source/ai_flow.api.html#module-ai_flow.api.ops" title="ai_flow.api.ops"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ai_flow.api.ops</span></code></a></p>
-<p>Main module for defining customized workflow. It provides users with a variety of methods(e.g. <a class="reference internal" href="source/ai_flow.api.html#ai_flow.api.ops.transform" title="ai_flow.api.ops.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transform()</span></code></a>, <a class="reference internal" href="source/ai_flow.api.html#ai_flow.api.ops.train" title="ai_flow.api.ops.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>) to define their own machine learning workflow.</p>
-<p><a class="reference internal" href="source/ai_flow.api.html#module-ai_flow.api.workflow_operation" title="ai_flow.api.workflow_operation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ai_flow.api.workflow_operation</span></code></a></p>
+AIGraph consists of AINode and edges. For edges, they are either the <code class="xref py py-class docutils literal notranslate"><span class="pre">DataEdge</span></code>  between AINodes in a job
+or the <code class="xref py py-class docutils literal notranslate"><span class="pre">ControlEdge</span></code> between jobs.</p>
+<p><a class="reference internal" href="source_rst/ai_flow.api.ops.html#module-ai_flow.api.ops" title="ai_flow.api.ops"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ai_flow.api.ops</span></code></a></p>
+<p>Main module for defining customized workflow. It provides users with a variety of methods(e.g. <code class="xref py py-meth docutils literal notranslate"><span class="pre">transform()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code>) to define their own machine learning workflow.</p>
+<p><a class="reference internal" href="source_rst/ai_flow.api.workflow_operation.html#module-ai_flow.api.workflow_operation" title="ai_flow.api.workflow_operation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ai_flow.api.workflow_operation</span></code></a></p>
 <p>Module for manipulating workflows including managing a workflow’s scheduling and execution.</p>
 </div></blockquote>
 </div>
@@ -194,7 +192,7 @@ or the <a class="reference internal" href="source/ai_flow.workflow.html#ai_flow.
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="source/ai_flow.html" class="btn btn-neutral float-right" title="ai_flow package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="source_rst/ai_flow.html" class="btn btn-neutral float-right" title="ai_flow package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

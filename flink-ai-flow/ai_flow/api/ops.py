@@ -39,7 +39,7 @@ def read_dataset(dataset_info: Union[DatasetMeta, Text, int],
     Read dataset from the dataset operator. It can read dataset from external system.
 
     :param dataset_info: Information about the dataset which will be read. Its type can be DatasetMeta
-                         of py:class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info
+                         of :class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info
                          means name in the metadata service when its type is Text and it means id when its type is int.
                          The ai flow will get the dataset from metadata service by name or id.
     :param read_dataset_processor: The python user defined function in read dataset operator. User can write their own logic here.
@@ -74,7 +74,7 @@ def write_dataset(input: Channel,
 
     :param input: Channel from the specific operator which generates data.
     :param dataset_info: Information about the dataset which will be read. Its type can be DataSetMeta
-                         of py:class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info
+                         of :py:class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info
                          means name in the metadata service when its type is Text and it means id when its type is int.
                          The ai flow will get the dataset from metadata service by name or id.
     :param write_dataset_processor: The python user defined function in write dataset operator. User can write their own logic here.
@@ -131,11 +131,11 @@ def train(input: Union[Channel, List[Channel]],
     :param input: List of Channel. It contains multiple channels from the operators which generate data.
     :param training_processor: The user defined function in train operator. User can write their own logic here.
     :param model_info: Information about the output model which is under training. Its type can be ModelMeta
-                              of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The output_model_info
+                              of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The output_model_info
                               means name in the metadata service when its type is Text and it means id when its type is
                               int. The ai flow will get the model meta from metadata service by name or id.
     :param base_model_info: Information about the base model which will be trained. Its type can be ModelMeta
-                            of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The base_model_info
+                            of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The base_model_info
                             means name in the metadata service when its type is Text and it means id when its type is
                             int. The ai flow will get the model meta from metadata service by name or id.
     :param output_num: The output number of the operator. The default value is 0.
@@ -179,12 +179,12 @@ def predict(input: Union[Channel, List[Channel]],
 
     :param input: List of Channel. It contains the dataset data used in prediction.
     :param model_info: Information about the model which is in prediction. Its type can be ModelMeta
-                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
+                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
                        means name in the metadata service when its type is Text and it means id when its type is
                        int. The ai flow will get the model meta from metadata service by name or id.
     :param prediction_processor: The user defined function in predict operator. User can write their own logic here.
     :param model_version_info: Information about the model version which is in prediction. Its type can be
-                               ModelVersionMeta of py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
+                               ModelVersionMeta of :py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
                                or Text. The model_version_info means version in the metadata service
                                when its type is Text. The ai flow will get the model meta from metadata
                                service by version.
@@ -227,7 +227,7 @@ def evaluate(input: Union[Channel, List[Channel]],
 
     :param input: List of Channel. It contains the dataset data used in prediction.
     :param model_info: Information about the model which is in prediction. Its type can be ModelMeta
-                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
+                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
                        means name in the metadata service when its type is Text and it means id when its type is
                        int. The ai flow will get the model meta from metadata service by name or id.
     :param evaluation_processor: The user defined function in evaluate operator. User can write their own logic here.
@@ -283,17 +283,17 @@ def model_validate(input: Union[Channel, List[Channel]],
 
     :param input: List of Channel. It contains the dataset data used in model validation.
     :param model_info: Information about the model which is in model validation. Its type can be ModelMeta
-                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
+                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
                        means name in the metadata service when its type is Text and it means id when its type is
                        int. The ai flow will get the model meta from metadata service by name or id.
     :param model_validation_processor: The user defined function in model validate operator. User can write their own logic here.
     :param model_version_info: Information about the model version which is in model validation. Its type can be
-                               ModelVersionMeta of py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
+                               ModelVersionMeta of :py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
                                or Text. The model_version_info means version in the metadata service
                                when its type is Text. The ai flow will get the model meta from metadata
                                service by version.
     :param base_model_version_info: Information about the model version which is in model validation. Its type can be
-                                    ModelVersionMeta of py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
+                                    ModelVersionMeta of :py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
                                     or Text. The model_version_info means version in the metadata service
                                     when its type is Text. The ai flow will get the model meta from metadata
                                     service by version.
@@ -346,12 +346,12 @@ def push_model(model_info: Union[ModelMeta, Text, int],
     a deployment target.
 
     :param model_info: Information about the model which is in pusher. Its type can be ModelMeta
-                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
+                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info
                        means name in the metadata service when its type is Text and it means id when its type is
                        int. The ai flow will get the model meta from metadata service by name or id.
     :param pushing_model_processor: The user defined function in pusher operator. User can write their own logic here.
     :param model_version_info: Information about the model version which is in push. Its type can be
-                               ModelVersionMeta of py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
+                               ModelVersionMeta of :py:class:`ai_flow.meta.model_meta.ModelVersionMeta`
                                or Text. The model_version_info means version in the metadata service
                                when its type is Text. The ai flow will get the model meta from metadata
                                service by version.
@@ -430,23 +430,24 @@ def action_on_event(job_name: Text,
                     value_condition: ValueCondition = ValueCondition.EQUALS
                     ):
     """
-       Add user defined control logic.
-       :param job_name: The job name identify the job.
-       :param namespace: The namespace of the event, which value uses the project name.
-       :param event_key: The key of the event.
-       :param event_value: The value of the event.
-       :param event_type: The type of the event.
-       :param sender: The event sender identity,which value uses the name of the job. If sender is None, the sender will be dependency.
-       :param condition_type: The condition type. Sufficient or Necessary.
-       :param action: The action act on the src channel. Start or Restart.
-       :param life: The life of the event. Once or Repeated.
-       :param value_condition: The event value condition. Equal or Update. Equal means the src channel will start or
-                               restart only when in the condition that the notification service updates a value which
-                               equals to the event value under the specific event key, while update means src channel
-                               will start or restart when in the the condition that the notification service has a update
-                               operation on the event key which event value belongs.
-       :return:None.
-       """
+    Add user defined control logic.
+
+    :param job_name: The job name identify the job.
+    :param namespace: The namespace of the event, which value uses the project name.
+    :param event_key: The key of the event.
+    :param event_value: The value of the event.
+    :param event_type: The type of the event.
+    :param sender: The event sender identity,which value uses the name of the job. If sender is None, the sender will be dependency.
+    :param condition_type: The condition type. Sufficient or Necessary.
+    :param action: The action act on the src channel. Start or Restart.
+    :param life: The life of the event. Once or Repeated.
+    :param value_condition: The event value condition. Equal or Update. Equal means the src channel will start or
+                           restart only when in the condition that the notification service updates a value which
+                           equals to the event value under the specific event key, while update means src channel
+                           will start or restart when in the the condition that the notification service has a update
+                           operation on the event key which event value belongs.
+    :return:None.
+    """
     control_edge = ControlEdge(destination=job_name,
                                condition_config=ConditionConfig(
                                    event_key=event_key,
@@ -499,6 +500,7 @@ def action_on_dataset_event(job_name: Text,
     """
     Add dataset control dependency. It means src channel will start when and only the an new dataset of the specific
     dataset is updated in notification service.
+
     :param namespace: the namespace of the dataset
     :param job_name: The job name
     :param dataset_name: Name of the dataset, refers to a specific dataset.
@@ -522,11 +524,12 @@ def action_on_job_status(job_name: Text,
                          condition_type: ConditionType = ConditionType.SUFFICIENT):
     """
     Trigger job by upstream job status changed.
+
     :param job_name: The job name
     :param upstream_job_name: The upstream job name
     :param upstream_job_status: The upstream job status, type: ai_flow.workflow.status.Status
     :param action: The ai_flow.workflow.control_edge.TaskAction type.
-    :param condition: The condition. Sufficient or Necessary.
+    :param condition_type: The type of condition. Sufficient or Necessary.
     :return:
     """
     event_key = '.'.join([current_workflow_config().workflow_name, upstream_job_name])

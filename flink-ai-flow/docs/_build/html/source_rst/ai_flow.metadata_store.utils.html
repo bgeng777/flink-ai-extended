@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.metadata_store.utils package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ai_flow.metadata_store.utils.MetaToProto module" href="ai_flow.metadata_store.utils.MetaToProto.html" />
+    <link rel="prev" title="ai_flow.metadata_store.service.service module" href="ai_flow.metadata_store.service.service.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="ai_flow.html">ai_flow package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ai_flow.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.ai_graph.html">ai_flow.ai_graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.api.html">ai_flow.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.client.html">ai_flow.client package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.common.html">ai_flow.common package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.context.html">ai_flow.context package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.endpoint.html">ai_flow.endpoint package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.exception.html">ai_flow.exception package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.graph.html">ai_flow.graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.log.html">ai_flow.log package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.meta.html">ai_flow.meta package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ai_flow.metadata_store.html">ai_flow.metadata_store package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="ai_flow.metadata_store.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metric.html">ai_flow.metric package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.model_center.html">ai_flow.model_center package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.plugin_interface.html">ai_flow.plugin_interface package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.project.html">ai_flow.project package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.protobuf.html">ai_flow.protobuf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.runtime.html">ai_flow.runtime package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.scheduler.html">ai_flow.scheduler package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.store.html">ai_flow.store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.translator.html">ai_flow.translator package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.workflow.html">ai_flow.workflow package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ai_flow.html">ai_flow package</a> &raquo;</li>
+        
+          <li><a href="ai_flow.metadata_store.html">ai_flow.metadata_store package</a> &raquo;</li>
+        
+      <li>ai_flow.metadata_store.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source_rst/ai_flow.metadata_store.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ai_flow.metadata_store.utils">
+<span id="ai-flow-metadata-store-utils-package"></span><h1>ai_flow.metadata_store.utils package<a class="headerlink" href="#module-ai_flow.metadata_store.utils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow.metadata_store.utils.MetaToProto.html">ai_flow.metadata_store.utils.MetaToProto module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow.metadata_store.utils.MetaToTable.html">ai_flow.metadata_store.utils.MetaToTable module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow.metadata_store.utils.ProtoToMeta.html">ai_flow.metadata_store.utils.ProtoToMeta module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow.metadata_store.utils.ResultToMeta.html">ai_flow.metadata_store.utils.ResultToMeta module</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ai_flow.metadata_store.utils.MetaToProto.html" class="btn btn-neutral float-right" title="ai_flow.metadata_store.utils.MetaToProto module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.metadata_store.service.service.html" class="btn btn-neutral float-left" title="ai_flow.metadata_store.service.service module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
