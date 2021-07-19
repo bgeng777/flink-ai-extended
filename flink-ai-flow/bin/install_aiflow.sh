@@ -28,7 +28,7 @@ workdir=$bin/..
 pip uninstall -y typing
 
 # Compile Web UI assets of airflow (yarn is required)
-bash "$workdir"/lib/airflow/airflow/www/compile_assets.sh
+#bash "$workdir"/lib/airflow/airflow/www/compile_assets.sh
 pip install "$workdir"/lib/notification_service
 pip install "$workdir"/lib/airflow
 pip install "$workdir"

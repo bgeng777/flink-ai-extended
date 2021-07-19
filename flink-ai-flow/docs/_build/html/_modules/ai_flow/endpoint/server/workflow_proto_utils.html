@@ -183,16 +183,12 @@
 <div class="viewcode-block" id="proto_to_state"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.server.html#ai_flow.endpoint.server.workflow_proto_utils.proto_to_state">[docs]</a><span class="k">def</span> <span class="nf">proto_to_state</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">INIT</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">INIT</span>
-    <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">STARTING</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">STARTING</span>
     <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">RUNNING</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">RUNNING</span>
     <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">FINISHED</span>
     <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">FAILED</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">FAILED</span>
-    <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">KILLING</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">KILLING</span>
     <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">StateProto</span><span class="o">.</span><span class="n">KILLED</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Status</span><span class="o">.</span><span class="n">KILLED</span></div>
 

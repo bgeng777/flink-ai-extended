@@ -231,24 +231,28 @@
 <dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">ProjectContext</span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
-<p>ProjectContext maintains the directory structure and information of an ai flow project.</p>
-<p>A common ai flow project would follow the directory structure as bellow:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SimpleProject
-    |- workflows # Directory for storing workflow definitions
-        |- workflow_name1 # Is a directory store workflow named workflow_name1.
-        |- workflow_name2 # Is a directory store workflow named workflow_name2.
-        |- workflow_name3 # Is a directory store workflow named workflow_name3.
-            |- workflow_name3.py # Workflow defined file.
-            |- workflow_name3.yaml # Workflow configuration file.
-    |- dependencies # Resource storage directory on which workflow execution depends.
-        |-python # Python file resource storage directory on which workflow execution depends.
-        |-jar # Jar resource storage directory on which workflow execution depends.
-        |-go #  Go resource storage directory on which workflow execution depends.
-    |- generated # The File storage directory generated in the process of translator generating workflow.
-    |- resources # Store the resource files of the project.
-    └─ project.yaml # The project configuration file.
-</pre></div>
-</div>
+<p>ProjectContext maintains the directory structure and information of an ai flow project.
+A common ai flow project would follow the directory structure as bellow.</p>
+<dl>
+<dt>SimpleProject</dt><dd><dl>
+<dt><a href="#id1"><span class="problematic" id="id2">|</span></a>- workflows # Directory for storing workflow definitions</dt><dd><p><a href="#id3"><span class="problematic" id="id4">|</span></a>- workflow_name1 # Is a directory store workflow named workflow_name1.
+<a href="#id5"><span class="problematic" id="id6">|</span></a>- workflow_name2 # Is a directory store workflow named workflow_name2.
+<a href="#id7"><span class="problematic" id="id8">|</span></a>- workflow_name3 # Is a directory store workflow named workflow_name3.</p>
+<blockquote>
+<div><p><a href="#id9"><span class="problematic" id="id10">|</span></a>- workflow_name3.py # Workflow defined file.
+<a href="#id11"><span class="problematic" id="id12">|</span></a>- workflow_name3.yaml # Workflow configuration file.</p>
+</div></blockquote>
+</dd>
+<dt><a href="#id13"><span class="problematic" id="id14">|</span></a>- dependencies # Resource storage directory on which workflow execution depends.</dt><dd><p><a href="#id15"><span class="problematic" id="id16">|</span></a>-python # Python file resource storage directory on which workflow execution depends.
+<a href="#id17"><span class="problematic" id="id18">|</span></a>-jar # Jar resource storage directory on which workflow execution depends.
+<a href="#id19"><span class="problematic" id="id20">|</span></a>-go #  Go resource storage directory on which workflow execution depends.</p>
+</dd>
+</dl>
+<p><a href="#id21"><span class="problematic" id="id22">|</span></a>- generated # The File storage directory generated in the process of translator generating workflow.
+<a href="#id23"><span class="problematic" id="id24">|</span></a>- resources # Store the resource files of the project.
+└─ project.yaml # The project configuration file.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_dependencies_path">
 <span class="sig-name descname"><span class="pre">get_dependencies_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_dependencies_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_dependencies_path" title="Permalink to this definition">¶</a></dt>

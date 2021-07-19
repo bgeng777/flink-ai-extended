@@ -186,16 +186,16 @@
                  <span class="n">trigger_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param trigger_config: Support two types of configuration:</span>
-<span class="sd">            1. cron config: {&#39;start_date&#39;: &#39;start_date_expression&#39;, &#39;cron&#39;: &#39;cron_expression&#39;}</span>
-<span class="sd">            start_date_expression:</span>
-<span class="sd">            year:int,month:int,day:int,hour:int,minute:int,second:int,Option[tzinfo: str]</span>
-<span class="sd">            cron_expression:</span>
-<span class="sd">            seconds minutes hours days months weeks years</span>
-<span class="sd">            2. interval config {&#39;start_date&#39;: &#39;start_date_expression&#39;, &#39;interval&#39;: &#39;interval_expression&#39;}</span>
-<span class="sd">            start_date_expression:</span>
-<span class="sd">            year:int,month:int,day:int,hour:int,minute:int,second:int,Option[tzinfo: str]</span>
-<span class="sd">            interval_expression:</span>
-<span class="sd">            days:int,hours:int,minutes:int,seconds:int</span>
+<span class="sd">        1. cron config: {&#39;start_date&#39;: &#39;start_date_expression&#39;, &#39;cron&#39;: &#39;cron_expression&#39;}</span>
+<span class="sd">        start_date_expression:</span>
+<span class="sd">        year:int,month:int,day:int,hour:int,minute:int,second:int,Option[tzinfo: str]</span>
+<span class="sd">        cron_expression:</span>
+<span class="sd">        seconds minutes hours days months weeks years</span>
+<span class="sd">        2. interval config {&#39;start_date&#39;: &#39;start_date_expression&#39;, &#39;interval&#39;: &#39;interval_expression&#39;}</span>
+<span class="sd">        start_date_expression:</span>
+<span class="sd">        year:int,month:int,day:int,hour:int,minute:int,second:int,Option[tzinfo: str]</span>
+<span class="sd">        interval_expression:</span>
+<span class="sd">        days:int,hours:int,minutes:int,seconds:int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trigger_config</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="n">trigger_config</span>

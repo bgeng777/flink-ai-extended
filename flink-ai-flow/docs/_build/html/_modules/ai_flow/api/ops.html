@@ -179,7 +179,8 @@
 <span class="kn">from</span> <span class="nn">ai_flow.ai_graph.ai_node</span> <span class="kn">import</span> <span class="n">AINode</span><span class="p">,</span> <span class="n">ReadDatasetNode</span><span class="p">,</span> <span class="n">WriteDatasetNode</span>
 <span class="kn">from</span> <span class="nn">ai_flow.graph.channel</span> <span class="kn">import</span> <span class="n">Channel</span>
 <span class="kn">from</span> <span class="nn">ai_flow.workflow.control_edge</span> <span class="kn">import</span> <span class="n">ControlEdge</span><span class="p">,</span> \
-    <span class="n">TaskAction</span><span class="p">,</span> <span class="n">EventLife</span><span class="p">,</span> <span class="n">ValueCondition</span><span class="p">,</span> <span class="n">ConditionType</span><span class="p">,</span> <span class="n">DEFAULT_NAMESPACE</span><span class="p">,</span> <span class="n">AIFlowInternalEventType</span><span class="p">,</span> <span class="n">ConditionConfig</span>
+    <span class="n">JobAction</span><span class="p">,</span> <span class="n">EventLife</span><span class="p">,</span> <span class="n">ValueCondition</span><span class="p">,</span> <span class="n">DEFAULT_NAMESPACE</span><span class="p">,</span> <span class="n">AIFlowInternalEventType</span><span class="p">,</span> \
+    <span class="n">EventCondition</span><span class="p">,</span> <span class="n">SchedulingRule</span><span class="p">,</span> <span class="n">MeetAnyEventCondition</span>
 <span class="kn">from</span> <span class="nn">ai_flow.ai_graph.ai_graph</span> <span class="kn">import</span> <span class="n">current_graph</span><span class="p">,</span> <span class="n">add_ai_node_to_graph</span>
 <span class="kn">from</span> <span class="nn">ai_flow.meta.dataset_meta</span> <span class="kn">import</span> <span class="n">DatasetMeta</span>
 <span class="kn">from</span> <span class="nn">ai_flow.meta.model_meta</span> <span class="kn">import</span> <span class="n">ModelMeta</span><span class="p">,</span> <span class="n">ModelVersionMeta</span>
@@ -195,12 +196,12 @@
 <span class="sd">    Read dataset from the dataset operator. It can read dataset from external system.</span>
 
 <span class="sd">    :param dataset_info: Information about the dataset which will be read. Its type can be DatasetMeta</span>
-<span class="sd">                         of :class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info</span>
+<span class="sd">                         of py:class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info</span>
 <span class="sd">                         means name in the metadata service when its type is Text and it means id when its type is int.</span>
 <span class="sd">                         The ai flow will get the dataset from metadata service by name or id.</span>
 <span class="sd">    :param read_dataset_processor: The python user defined function in read dataset operator. User can write their own logic here.</span>
 <span class="sd">    :param name: Name of the read_dataset operator.</span>
-<span class="sd">    :return: :class:`ai_flow.graph.channel`.</span>
+<span class="sd">    :return: Channel: data output channel.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_info</span><span class="p">,</span> <span class="n">DatasetMeta</span><span class="p">):</span>
         <span class="n">dataset_meta</span> <span class="o">=</span> <span class="n">dataset_info</span>
@@ -230,7 +231,7 @@
 
 <span class="sd">    :param input: Channel from the specific operator which generates data.</span>
 <span class="sd">    :param dataset_info: Information about the dataset which will be read. Its type can be DataSetMeta</span>
-<span class="sd">                         of :py:class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info</span>
+<span class="sd">                         of py:class:`ai_flow.meta.dataset_meta.DatasetMeta` or Text or int. The dataset_info</span>
 <span class="sd">                         means name in the metadata service when its type is Text and it means id when its type is int.</span>
 <span class="sd">                         The ai flow will get the dataset from metadata service by name or id.</span>
 <span class="sd">    :param write_dataset_processor: The python user defined function in write dataset operator. User can write their own logic here.</span>
@@ -287,7 +288,7 @@
 <span class="sd">    :param input: List of Channel. It contains multiple channels from the operators which generate data.</span>
 <span class="sd">    :param training_processor: The user defined function in train operator. User can write their own logic here.</span>
 <span class="sd">    :param model_info: Information about the output model which is under training. Its type can be ModelMeta</span>
-<span class="sd">                              of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The output_model_info</span>
+<span class="sd">                              of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The output_model_info</span>
 <span class="sd">                              means name in the metadata service when its type is Text and it means id when its type is</span>
 <span class="sd">                              int. The ai flow will get the model meta from metadata service by name or id.</span>
 <span class="sd">    :param base_model_info: Information about the base model which will be trained. Its type can be ModelMeta</span>
@@ -335,7 +336,7 @@
 
 <span class="sd">    :param input: List of Channel. It contains the dataset data used in prediction.</span>
 <span class="sd">    :param model_info: Information about the model which is in prediction. Its type can be ModelMeta</span>
-<span class="sd">                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info</span>
+<span class="sd">                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info</span>
 <span class="sd">                       means name in the metadata service when its type is Text and it means id when its type is</span>
 <span class="sd">                       int. The ai flow will get the model meta from metadata service by name or id.</span>
 <span class="sd">    :param prediction_processor: The user defined function in predict operator. User can write their own logic here.</span>
@@ -383,7 +384,7 @@
 
 <span class="sd">    :param input: List of Channel. It contains the dataset data used in prediction.</span>
 <span class="sd">    :param model_info: Information about the model which is in prediction. Its type can be ModelMeta</span>
-<span class="sd">                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info</span>
+<span class="sd">                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info</span>
 <span class="sd">                       means name in the metadata service when its type is Text and it means id when its type is</span>
 <span class="sd">                       int. The ai flow will get the model meta from metadata service by name or id.</span>
 <span class="sd">    :param evaluation_processor: The user defined function in evaluate operator. User can write their own logic here.</span>
@@ -439,7 +440,7 @@
 
 <span class="sd">    :param input: List of Channel. It contains the dataset data used in model validation.</span>
 <span class="sd">    :param model_info: Information about the model which is in model validation. Its type can be ModelMeta</span>
-<span class="sd">                       of :py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info</span>
+<span class="sd">                       of py:class:`ai_flow.meta.model_meta.ModelMeta` or Text or int. The model_info</span>
 <span class="sd">                       means name in the metadata service when its type is Text and it means id when its type is</span>
 <span class="sd">                       int. The ai flow will get the model meta from metadata service by name or id.</span>
 <span class="sd">    :param model_validation_processor: The user defined function in model validate operator. User can write their own logic here.</span>
@@ -580,41 +581,43 @@
                     <span class="n">event_type</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="n">UNDEFINED_EVENT_TYPE</span><span class="p">,</span>
                     <span class="n">sender</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="n">DEFAULT_NAMESPACE</span><span class="p">,</span>
-                    <span class="n">condition_type</span><span class="p">:</span> <span class="n">ConditionType</span> <span class="o">=</span> <span class="n">ConditionType</span><span class="o">.</span><span class="n">NECESSARY</span><span class="p">,</span>
-                    <span class="n">action</span><span class="p">:</span> <span class="n">TaskAction</span> <span class="o">=</span> <span class="n">TaskAction</span><span class="o">.</span><span class="n">START</span><span class="p">,</span>
-                    <span class="n">life</span><span class="p">:</span> <span class="n">EventLife</span> <span class="o">=</span> <span class="n">EventLife</span><span class="o">.</span><span class="n">ONCE</span><span class="p">,</span>
-                    <span class="n">value_condition</span><span class="p">:</span> <span class="n">ValueCondition</span> <span class="o">=</span> <span class="n">ValueCondition</span><span class="o">.</span><span class="n">EQUALS</span>
+                    <span class="n">value_condition</span><span class="p">:</span> <span class="n">ValueCondition</span> <span class="o">=</span> <span class="n">ValueCondition</span><span class="o">.</span><span class="n">EQUALS</span><span class="p">,</span>
+                    <span class="n">action</span><span class="p">:</span> <span class="n">JobAction</span> <span class="o">=</span> <span class="n">JobAction</span><span class="o">.</span><span class="n">START</span>
                     <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">       Add user defined control logic.</span>
+<span class="sd">        When the event is met, the JobAction will be triggered on the job with the job_name. It is a convenient method</span>
+<span class="sd">        to add a MetAnyCondition with one event to a job.</span>
 <span class="sd">       :param job_name: The job name identify the job.</span>
-<span class="sd">       :param namespace: The namespace of the event, which value uses the project name.</span>
 <span class="sd">       :param event_key: The key of the event.</span>
 <span class="sd">       :param event_value: The value of the event.</span>
 <span class="sd">       :param event_type: The type of the event.</span>
 <span class="sd">       :param sender: The event sender identity,which value uses the name of the job. If sender is None, the sender will be dependency.</span>
-<span class="sd">       :param condition_type: The condition type. Sufficient or Necessary.</span>
-<span class="sd">       :param action: The action act on the src channel. Start or Restart.</span>
-<span class="sd">       :param life: The life of the event. Once or Repeated.</span>
+<span class="sd">       :param namespace: The namespace of the event, which value uses the project name.</span>
 <span class="sd">       :param value_condition: The event value condition. Equal or Update. Equal means the src channel will start or</span>
 <span class="sd">                               restart only when in the condition that the notification service updates a value which</span>
 <span class="sd">                               equals to the event value under the specific event key, while update means src channel</span>
 <span class="sd">                               will start or restart when in the the condition that the notification service has a update</span>
 <span class="sd">                               operation on the event key which event value belongs.</span>
+<span class="sd">       :param action: The action act on the src channel. Start or Restart.</span>
 <span class="sd">       :return:None.</span>
 <span class="sd">       &quot;&quot;&quot;</span>
-    <span class="n">control_edge</span> <span class="o">=</span> <span class="n">ControlEdge</span><span class="p">(</span><span class="n">destination</span><span class="o">=</span><span class="n">job_name</span><span class="p">,</span>
-                               <span class="n">condition_config</span><span class="o">=</span><span class="n">ConditionConfig</span><span class="p">(</span>
-                                   <span class="n">event_key</span><span class="o">=</span><span class="n">event_key</span><span class="p">,</span>
-                                   <span class="n">event_value</span><span class="o">=</span><span class="n">event_value</span><span class="p">,</span>
-                                   <span class="n">event_type</span><span class="o">=</span><span class="n">event_type</span><span class="p">,</span>
-                                   <span class="n">condition_type</span><span class="o">=</span><span class="n">condition_type</span><span class="p">,</span>
-                                   <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
-                                   <span class="n">life</span><span class="o">=</span><span class="n">life</span><span class="p">,</span>
-                                   <span class="n">value_condition</span><span class="o">=</span><span class="n">value_condition</span><span class="p">,</span>
-                                   <span class="n">namespace</span><span class="o">=</span><span class="n">namespace</span><span class="p">,</span>
-                                   <span class="n">sender</span><span class="o">=</span><span class="n">sender</span><span class="p">)</span>
-                               <span class="p">)</span>
+    <span class="n">event_condition</span> <span class="o">=</span> <span class="n">MeetAnyEventCondition</span><span class="p">()</span>
+    <span class="n">event_condition</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="n">event_key</span><span class="p">,</span> <span class="n">event_value</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventLife</span><span class="o">.</span><span class="n">ONCE</span><span class="p">,</span> <span class="n">value_condition</span><span class="p">)</span>
+    <span class="n">action_on_events</span><span class="p">(</span><span class="n">job_name</span><span class="p">,</span> <span class="n">event_condition</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="action_on_events"><a class="viewcode-back" href="../../../source_rst/ai_flow.api.html#ai_flow.api.ops.action_on_events">[docs]</a><span class="k">def</span> <span class="nf">action_on_events</span><span class="p">(</span><span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span> <span class="n">event_condition</span><span class="p">:</span> <span class="n">EventCondition</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">JobAction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Define a rule, which is the combination of a EventCondition and JobAction, on the job with job_name. When the</span>
+<span class="sd">    EventCondition of a rule met, the corresponding JobAction will be trigger on the job. User can call this method</span>
+<span class="sd">    multiple times on the same job to add multiples rules, the rules will be checked according to the order of the</span>
+<span class="sd">    the method call.</span>
+<span class="sd">    :param job_name: The job_name of the job to add the rule.</span>
+<span class="sd">    :param event_condition: The EventCondition of the rule.</span>
+<span class="sd">    :param action: The JobAction to take when the EventCondition is met.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rule</span> <span class="o">=</span> <span class="n">SchedulingRule</span><span class="p">(</span><span class="n">event_condition</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+    <span class="n">control_edge</span> <span class="o">=</span> <span class="n">ControlEdge</span><span class="p">(</span><span class="n">destination</span><span class="o">=</span><span class="n">job_name</span><span class="p">,</span> <span class="n">scheduling_rule</span><span class="o">=</span><span class="n">rule</span><span class="p">)</span>
     <span class="n">current_graph</span><span class="p">()</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">job_name</span><span class="p">,</span> <span class="n">control_edge</span><span class="p">)</span></div>
 
 
@@ -622,7 +625,7 @@
                                   <span class="n">model_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
                                   <span class="n">model_version_event_type</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
                                   <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="n">DEFAULT_NAMESPACE</span><span class="p">,</span>
-                                  <span class="n">action</span><span class="p">:</span> <span class="n">TaskAction</span> <span class="o">=</span> <span class="n">TaskAction</span><span class="o">.</span><span class="n">RESTART</span><span class="p">,</span>
+                                  <span class="n">action</span><span class="p">:</span> <span class="n">JobAction</span> <span class="o">=</span> <span class="n">JobAction</span><span class="o">.</span><span class="n">RESTART</span><span class="p">,</span>
                                   <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add model version control dependency. It means src channel will start when and only a new model version of the</span>
@@ -640,16 +643,14 @@
                     <span class="n">event_value</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
                     <span class="n">event_type</span><span class="o">=</span><span class="n">model_version_event_type</span><span class="p">,</span>
                     <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
-                    <span class="n">life</span><span class="o">=</span><span class="n">EventLife</span><span class="o">.</span><span class="n">ONCE</span><span class="p">,</span>
                     <span class="n">value_condition</span><span class="o">=</span><span class="n">ValueCondition</span><span class="o">.</span><span class="n">UPDATED</span><span class="p">,</span>
-                    <span class="n">condition_type</span><span class="o">=</span><span class="n">ConditionType</span><span class="o">.</span><span class="n">SUFFICIENT</span><span class="p">,</span>
                     <span class="n">namespace</span><span class="o">=</span><span class="n">namespace</span><span class="p">,</span>
                     <span class="n">sender</span><span class="o">=</span><span class="n">ANY_CONDITION</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="action_on_dataset_event"><a class="viewcode-back" href="../../../source_rst/ai_flow.api.html#ai_flow.api.ops.action_on_dataset_event">[docs]</a><span class="k">def</span> <span class="nf">action_on_dataset_event</span><span class="p">(</span><span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
                             <span class="n">dataset_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
-                            <span class="n">action</span><span class="p">:</span> <span class="n">TaskAction</span> <span class="o">=</span> <span class="n">TaskAction</span><span class="o">.</span><span class="n">START</span><span class="p">,</span>
+                            <span class="n">action</span><span class="p">:</span> <span class="n">JobAction</span> <span class="o">=</span> <span class="n">JobAction</span><span class="o">.</span><span class="n">START</span><span class="p">,</span>
                             <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="n">DEFAULT_NAMESPACE</span>
                             <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -674,15 +675,13 @@
 <div class="viewcode-block" id="action_on_job_status"><a class="viewcode-back" href="../../../source_rst/ai_flow.api.html#ai_flow.api.ops.action_on_job_status">[docs]</a><span class="k">def</span> <span class="nf">action_on_job_status</span><span class="p">(</span><span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
                          <span class="n">upstream_job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
                          <span class="n">upstream_job_status</span><span class="p">:</span> <span class="n">Status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
-                         <span class="n">action</span><span class="p">:</span> <span class="n">TaskAction</span> <span class="o">=</span> <span class="n">TaskAction</span><span class="o">.</span><span class="n">START</span><span class="p">,</span>
-                         <span class="n">condition_type</span><span class="p">:</span> <span class="n">ConditionType</span> <span class="o">=</span> <span class="n">ConditionType</span><span class="o">.</span><span class="n">SUFFICIENT</span><span class="p">):</span>
+                         <span class="n">action</span><span class="p">:</span> <span class="n">JobAction</span> <span class="o">=</span> <span class="n">JobAction</span><span class="o">.</span><span class="n">START</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Trigger job by upstream job status changed.</span>
 <span class="sd">    :param job_name: The job name</span>
 <span class="sd">    :param upstream_job_name: The upstream job name</span>
 <span class="sd">    :param upstream_job_status: The upstream job status, type: ai_flow.workflow.status.Status</span>
 <span class="sd">    :param action: The ai_flow.workflow.control_edge.TaskAction type.</span>
-<span class="sd">    :param condition: The condition. Sufficient or Necessary.</span>
 <span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">event_key</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">current_workflow_config</span><span class="p">()</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">,</span> <span class="n">upstream_job_name</span><span class="p">])</span>
@@ -692,8 +691,7 @@
                     <span class="n">sender</span><span class="o">=</span><span class="n">upstream_job_name</span><span class="p">,</span>
                     <span class="n">event_value</span><span class="o">=</span><span class="n">upstream_job_status</span><span class="p">,</span>
                     <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
-                    <span class="n">namespace</span><span class="o">=</span><span class="n">current_project_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_project_name</span><span class="p">(),</span>
-                    <span class="n">condition_type</span><span class="o">=</span><span class="n">condition_type</span>
+                    <span class="n">namespace</span><span class="o">=</span><span class="n">current_project_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_project_name</span><span class="p">()</span>
                     <span class="p">)</span></div>
 </pre></div>
 

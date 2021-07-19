@@ -181,23 +181,22 @@
 <div class="viewcode-block" id="ProjectContext"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext">[docs]</a><span class="k">class</span> <span class="nc">ProjectContext</span><span class="p">(</span><span class="n">Jsonable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ProjectContext maintains the directory structure and information of an ai flow project.</span>
+<span class="sd">    A common ai flow project would follow the directory structure as bellow.</span>
 
-<span class="sd">    A common ai flow project would follow the directory structure as bellow::</span>
-
-<span class="sd">        SimpleProject</span>
-<span class="sd">            |- workflows # Directory for storing workflow definitions</span>
-<span class="sd">                |- workflow_name1 # Is a directory store workflow named workflow_name1.</span>
-<span class="sd">                |- workflow_name2 # Is a directory store workflow named workflow_name2.</span>
-<span class="sd">                |- workflow_name3 # Is a directory store workflow named workflow_name3.</span>
-<span class="sd">                    |- workflow_name3.py # Workflow defined file.</span>
-<span class="sd">                    |- workflow_name3.yaml # Workflow configuration file.</span>
-<span class="sd">            |- dependencies # Resource storage directory on which workflow execution depends.</span>
-<span class="sd">                |-python # Python file resource storage directory on which workflow execution depends.</span>
-<span class="sd">                |-jar # Jar resource storage directory on which workflow execution depends.</span>
-<span class="sd">                |-go #  Go resource storage directory on which workflow execution depends.</span>
-<span class="sd">            |- generated # The File storage directory generated in the process of translator generating workflow.</span>
-<span class="sd">            |- resources # Store the resource files of the project.</span>
-<span class="sd">            └─ project.yaml # The project configuration file.</span>
+<span class="sd">    SimpleProject</span>
+<span class="sd">        |- workflows # Directory for storing workflow definitions</span>
+<span class="sd">           |- workflow_name1 # Is a directory store workflow named workflow_name1.</span>
+<span class="sd">           |- workflow_name2 # Is a directory store workflow named workflow_name2.</span>
+<span class="sd">           |- workflow_name3 # Is a directory store workflow named workflow_name3.</span>
+<span class="sd">              |- workflow_name3.py # Workflow defined file.</span>
+<span class="sd">              |- workflow_name3.yaml # Workflow configuration file.</span>
+<span class="sd">        |- dependencies # Resource storage directory on which workflow execution depends.</span>
+<span class="sd">            |-python # Python file resource storage directory on which workflow execution depends.</span>
+<span class="sd">            |-jar # Jar resource storage directory on which workflow execution depends.</span>
+<span class="sd">            |-go #  Go resource storage directory on which workflow execution depends.</span>
+<span class="sd">        |- generated # The File storage directory generated in the process of translator generating workflow.</span>
+<span class="sd">        |- resources # Store the resource files of the project.</span>
+<span class="sd">        └─ project.yaml # The project configuration file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

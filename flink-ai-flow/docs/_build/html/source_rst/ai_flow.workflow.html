@@ -226,57 +226,57 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ConditionConfig">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">ConditionConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'UNDEFINED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.ConditionType" title="ai_flow.workflow.control_edge.ConditionType"><span class="pre">ai_flow.workflow.control_edge.ConditionType</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">ConditionType.NECESSARY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.TaskAction" title="ai_flow.workflow.control_edge.TaskAction"><span class="pre">ai_flow.workflow.control_edge.TaskAction</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">TaskAction.START</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">life</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.EventLife" title="ai_flow.workflow.control_edge.EventLife"><span class="pre">ai_flow.workflow.control_edge.EventLife</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">EventLife.ONCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_condition</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.ValueCondition" title="ai_flow.workflow.control_edge.ValueCondition"><span class="pre">ai_flow.workflow.control_edge.ValueCondition</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">ValueCondition.EQUALS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#ConditionConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.ConditionConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>event_key</strong> – The Key of the event(notification_service.base_notification.BaseEvent).</p></li>
-<li><p><strong>event_value</strong> – The value of the event(notification_service.base_notification.BaseEvent).</p></li>
-<li><p><strong>namespace</strong> – The namespace of the event(notification_service.base_notification.BaseEvent).</p></li>
-<li><p><strong>event_type</strong> – (Optional) Type of the event(notification_service.base_notification.BaseEvent).</p></li>
-<li><p><strong>sender</strong> – The sender of the event(notification_service.base_notification.BaseEvent).</p></li>
-<li><p><strong>condition_type</strong> – ai_flow.workflow.control_edge.ConditionType</p></li>
-<li><p><strong>action</strong> – ai_flow.workflow.control_edge.TaskAction</p></li>
-<li><p><strong>life</strong> – ai_flow.workflow.control_edge.EventLife</p></li>
-<li><p><strong>value_condition</strong> – ai_flow.workflow.control_edge.MetValueCondition</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ConditionType">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">ConditionType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#ConditionType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.ConditionType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
-<p>SUFFICIENT: Sufficient conditions, as long as one condition is met, the action will be triggered.
-NECESSARY: Necessary conditions, all conditions are met before the action is triggered.</p>
+<p>MEET_ALL: The action will be triggered when and only all the EventConditions are met.
+MEET_ANY: The action will be triggered when any of the EventConditions is met.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ConditionType.NECESSARY">
-<span class="sig-name descname"><span class="pre">NECESSARY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'NECESSARY'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.ConditionType.NECESSARY" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ConditionType.MEET_ALL">
+<span class="sig-name descname"><span class="pre">MEET_ALL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'MEET_ALL'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.ConditionType.MEET_ALL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ConditionType.SUFFICIENT">
-<span class="sig-name descname"><span class="pre">SUFFICIENT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'SUFFICIENT'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.ConditionType.SUFFICIENT" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ConditionType.MEET_ANY">
+<span class="sig-name descname"><span class="pre">MEET_ANY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'MEET_ANY'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.ConditionType.MEET_ANY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ai_flow.workflow.control_edge.ControlEdge">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">ControlEdge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.ConditionConfig" title="ai_flow.workflow.control_edge.ConditionConfig"><span class="pre">ai_flow.workflow.control_edge.ConditionConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#ControlEdge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.ControlEdge" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">ControlEdge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduling_rule</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.SchedulingRule" title="ai_flow.workflow.control_edge.SchedulingRule"><span class="pre">ai_flow.workflow.control_edge.SchedulingRule</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#ControlEdge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.ControlEdge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="ai_flow.graph.html#ai_flow.graph.edge.Edge" title="ai_flow.graph.edge.Edge"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.graph.edge.Edge</span></code></a></p>
 <p>ControlEdge defines event-based dependencies between jobs(ai_flow.workflow.job.Job).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>destination</strong> – The name of the job which depends on condition_config.</p></li>
-<li><p><strong>condition_config</strong> – ai_flow.workflow.control_edge.ConditionConfig</p></li>
+<li><p><strong>destination</strong> – The name of the job which depends on the scheduling rule</p></li>
+<li><p><strong>scheduling_rule</strong> – The scheduling rule of the job</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.EventCondition">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">EventCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.workflow.control_edge.EventMeetConfig" title="ai_flow.workflow.control_edge.EventMeetConfig"><span class="pre">ai_flow.workflow.control_edge.EventMeetConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.ConditionType" title="ai_flow.workflow.control_edge.ConditionType"><span class="pre">ai_flow.workflow.control_edge.ConditionType</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#EventCondition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.EventCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>EventCondition combines a list of EventMeetConfig and a ConditionType to defines when the condition is met
+based on the events we see.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events</strong> – A set of EventMeetConfig that the condition interested in.</p></li>
+<li><p><strong>condition_type</strong> – condition_type defines when the condition is met.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.EventCondition.add_event">
+<span class="sig-name descname"><span class="pre">add_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'UNDEFINED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">life</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.EventLife" title="ai_flow.workflow.control_edge.EventLife"><span class="pre">ai_flow.workflow.control_edge.EventLife</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">EventLife.ONCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_condition</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.ValueCondition" title="ai_flow.workflow.control_edge.ValueCondition"><span class="pre">ai_flow.workflow.control_edge.ValueCondition</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">ValueCondition.EQUALS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#EventCondition.add_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.EventCondition.add_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -298,35 +298,96 @@ REPEATED: The event value will be used repeated.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.TaskAction">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">TaskAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#TaskAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.TaskAction" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.EventMeetConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">EventMeetConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'UNDEFINED'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">life</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.EventLife" title="ai_flow.workflow.control_edge.EventLife"><span class="pre">ai_flow.workflow.control_edge.EventLife</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">EventLife.ONCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_condition</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.ValueCondition" title="ai_flow.workflow.control_edge.ValueCondition"><span class="pre">ai_flow.workflow.control_edge.ValueCondition</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">ValueCondition.EQUALS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#EventMeetConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.EventMeetConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>EventMeetConfig defines a set of criteria of the event we are interested in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event_key</strong> – The Key of the event(notification_service.base_notification.BaseEvent).</p></li>
+<li><p><strong>event_value</strong> – The value of the event(notification_service.base_notification.BaseEvent).</p></li>
+<li><p><strong>namespace</strong> – The namespace of the event(notification_service.base_notification.BaseEvent).</p></li>
+<li><p><strong>event_type</strong> – (Optional) Type of the event(notification_service.base_notification.BaseEvent).</p></li>
+<li><p><strong>sender</strong> – The sender of the event(notification_service.base_notification.BaseEvent).</p></li>
+<li><p><strong>life</strong> – ai_flow.workflow.control_edge.EventLife</p></li>
+<li><p><strong>value_condition</strong> – ai_flow.workflow.control_edge.MetValueCondition</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.JobAction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">JobAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#JobAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.JobAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
-<p>START: Start the job.</p>
-<p>RESTART: If the job is running, stop it first and then start it. If the job is not running,just start it.</p>
-<p>STOP: Stop the job.</p>
-<p>NONE: Do nothing.</p>
+<p>START: Start the job.
+RESTART: If the job is running, stop it first and then start it. If the job is not running,just start it.
+STOP: Stop the job.
+NONE: Do nothing.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.TaskAction.NONE">
-<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'NONE'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.TaskAction.NONE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.JobAction.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'NONE'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.JobAction.NONE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.TaskAction.RESTART">
-<span class="sig-name descname"><span class="pre">RESTART</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'RESTART'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.TaskAction.RESTART" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the job is running, stop it first and then start it. If the job is not running,just start it.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.TaskAction.START">
-<span class="sig-name descname"><span class="pre">START</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'START'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.TaskAction.START" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start the job.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.TaskAction.STOP">
-<span class="sig-name descname"><span class="pre">STOP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'STOP'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.TaskAction.STOP" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.JobAction.RESTART">
+<span class="sig-name descname"><span class="pre">RESTART</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'RESTART'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.JobAction.RESTART" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.JobAction.START">
+<span class="sig-name descname"><span class="pre">START</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'START'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.JobAction.START" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.JobAction.STOP">
+<span class="sig-name descname"><span class="pre">STOP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'STOP'</span></em><a class="headerlink" href="#ai_flow.workflow.control_edge.JobAction.STOP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.MeetAllEventCondition">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">MeetAllEventCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.workflow.control_edge.EventMeetConfig" title="ai_flow.workflow.control_edge.EventMeetConfig"><span class="pre">ai_flow.workflow.control_edge.EventMeetConfig</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#MeetAllEventCondition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.MeetAllEventCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ai_flow.workflow.control_edge.EventCondition" title="ai_flow.workflow.control_edge.EventCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.workflow.control_edge.EventCondition</span></code></a></p>
+<p>MeetAllEventCondition is met when all the events are met.</p>
+<p>EventCondition combines a list of EventMeetConfig and a ConditionType to defines when the condition is met
+based on the events we see.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events</strong> – A set of EventMeetConfig that the condition interested in.</p></li>
+<li><p><strong>condition_type</strong> – condition_type defines when the condition is met.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.MeetAnyEventCondition">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">MeetAnyEventCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.workflow.control_edge.EventMeetConfig" title="ai_flow.workflow.control_edge.EventMeetConfig"><span class="pre">ai_flow.workflow.control_edge.EventMeetConfig</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#MeetAnyEventCondition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.MeetAnyEventCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ai_flow.workflow.control_edge.EventCondition" title="ai_flow.workflow.control_edge.EventCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.workflow.control_edge.EventCondition</span></code></a></p>
+<p>MeetAnyEventCondition is met when any event is met.</p>
+<p>EventCondition combines a list of EventMeetConfig and a ConditionType to defines when the condition is met
+based on the events we see.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events</strong> – A set of EventMeetConfig that the condition interested in.</p></li>
+<li><p><strong>condition_type</strong> – condition_type defines when the condition is met.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.workflow.control_edge.SchedulingRule">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.workflow.control_edge.</span></span><span class="sig-name descname"><span class="pre">SchedulingRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_condition</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.EventCondition" title="ai_flow.workflow.control_edge.EventCondition"><span class="pre">ai_flow.workflow.control_edge.EventCondition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.workflow.control_edge.JobAction" title="ai_flow.workflow.control_edge.JobAction"><span class="pre">ai_flow.workflow.control_edge.JobAction</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/control_edge.html#SchedulingRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.control_edge.SchedulingRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>A SchedulingRule defines what TaskAction to take when the condition is met.
+:param event_condition: A config that defines the condition.
+:param action: The action to take when condition is met.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -416,8 +477,10 @@ The dict example:
 (ai_flow.workflow.job.Job and ai_flow.workflow.workflow.Workflow).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>trigger_config</strong> – Support two types of configuration:
-1. cron config: {‘start_date’: ‘start_date_expression’, ‘cron’: ‘cron_expression’}
+<dd class="field-odd"><p><strong>trigger_config</strong> – Support two types of configuration:</p>
+</dd>
+</dl>
+<p>1. cron config: {‘start_date’: ‘start_date_expression’, ‘cron’: ‘cron_expression’}
 start_date_expression:
 year:int,month:int,day:int,hour:int,minute:int,second:int,Option[tzinfo: str]
 cron_expression:
@@ -427,8 +490,6 @@ start_date_expression:
 year:int,month:int,day:int,hour:int,minute:int,second:int,Option[tzinfo: str]
 interval_expression:
 days:int,hours:int,minutes:int,seconds:int</p>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ai_flow.workflow.periodic_config.PeriodicConfig.from_dict">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.workflow.periodic_config.PeriodicConfig" title="ai_flow.workflow.periodic_config.PeriodicConfig"><span class="pre">ai_flow.workflow.periodic_config.PeriodicConfig</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/workflow/periodic_config.html#PeriodicConfig.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.periodic_config.PeriodicConfig.from_dict" title="Permalink to this definition">¶</a></dt>
@@ -475,10 +536,8 @@ days:int,hours:int,minutes:int,seconds:int</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
 <p>INIT: INIT is the execution unit creation status.
 STARTING: STARTING is the execution unit starting status.
-RUNNING: RUNNING is the execution unit running status.
 FINISHED: FINISHED is the successful state of the execution unit.
 FAILED: FAILED is the failed state of the execution unit.
-KILLING: KILLING means the execution unit is being stopped.
 KILLED: KILLED is the state of the execution unit being stopped.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ai_flow.workflow.status.Status.FAILED">
@@ -501,18 +560,8 @@ KILLED: KILLED is the state of the execution unit being stopped.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.status.Status.KILLING">
-<span class="sig-name descname"><span class="pre">KILLING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'KILLING'</span></em><a class="headerlink" href="#ai_flow.workflow.status.Status.KILLING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="ai_flow.workflow.status.Status.RUNNING">
 <span class="sig-name descname"><span class="pre">RUNNING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'RUNNING'</span></em><a class="headerlink" href="#ai_flow.workflow.status.Status.RUNNING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ai_flow.workflow.status.Status.STARTING">
-<span class="sig-name descname"><span class="pre">STARTING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'STARTING'</span></em><a class="headerlink" href="#ai_flow.workflow.status.Status.STARTING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -546,15 +595,9 @@ Workflow is composed of jobs(ai_flow.workflow.job.Job) and control edges(ai_flow
 <dl class="py method">
 <dt class="sig sig-object py" id="ai_flow.workflow.workflow.Workflow.add_edges">
 <span class="sig-name descname"><span class="pre">add_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ai_flow.workflow.control_edge.ControlEdge" title="ai_flow.workflow.control_edge.ControlEdge"><span class="pre">ai_flow.workflow.control_edge.ControlEdge</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/workflow/workflow.html#Workflow.add_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.workflow.workflow.Workflow.add_edges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add control edges to workflow.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>job_name</strong> – The name of the job that depends on edges.</p></li>
-<li><p><strong>edges</strong> – A list of control edges that the job depends on.</p></li>
-</ul>
-</dd>
-</dl>
+<dd><p>Add control edges to workflow.
+:param job_name: The name of the job that depends on edges.
+:param edges: A list of control edges that the job depends on.</p>
 </dd></dl>
 
 <dl class="py method">
