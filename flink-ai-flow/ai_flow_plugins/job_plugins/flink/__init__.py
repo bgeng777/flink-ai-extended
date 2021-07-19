@@ -14,19 +14,11 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-from enum import Enum
+from ai_flow.plugin_interface import register_job_plugin_factory
+from ai_flow_plugins.job_plugins.flink.flink_job_plugin import FlinkJobPluginFactory
+from ai_flow_plugins.job_plugins.flink.flink_processor import FlinkPythonProcessor, FlinkJavaProcessor, ExecutionContext
+from ai_flow_plugins.job_plugins.flink.flink_job_config import FlinkJobConfig
+from ai_flow_plugins.job_plugins.flink.flink_env import get_flink_env, set_flink_env, FlinkEnv, \
+    FlinkBatchEnv, FlinkStreamEnv
 
-
-class Status(str, Enum):
-    """
-    INIT: INIT is the execution unit creation status.
-    STARTING: STARTING is the execution unit starting status.
-    FINISHED: FINISHED is the successful state of the execution unit.
-    FAILED: FAILED is the failed state of the execution unit.
-    KILLED: KILLED is the state of the execution unit being stopped.
-    """
-    INIT = 'INIT'
-    RUNNING = 'RUNNING'
-    FINISHED = 'FINISHED'
-    FAILED = 'FAILED'
-    KILLED = 'KILLED'
+register_job_plugin_factory(FlinkJobPluginFactory())

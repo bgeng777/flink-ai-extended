@@ -14,19 +14,29 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-from enum import Enum
+from typing import Dict, Text, Optional
+
+from ai_flow import ExecutionMode, Jsonable
+from ai_flow.workflow.job_config import JobConfig
 
 
-class Status(str, Enum):
+class PythonJobConfig(JobConfig):
     """
-    INIT: INIT is the execution unit creation status.
-    STARTING: STARTING is the execution unit starting status.
-    FINISHED: FINISHED is the successful state of the execution unit.
-    FAILED: FAILED is the failed state of the execution unit.
-    KILLED: KILLED is the state of the execution unit being stopped.
+    PythonJobConfig is the configuration of the python job.
+    It has a configuration item env, which represents the environment variables of the python job.
+    Job config example:
+        job_name:
+            job_type: python
+            properties:
+                python_executable_path: /usr/bin/python3
+                env:
+                    a: a
+                    b: b
     """
-    INIT = 'INIT'
-    RUNNING = 'RUNNING'
-    FINISHED = 'FINISHED'
-    FAILED = 'FAILED'
-    KILLED = 'KILLED'
+    def __init__(self, job_name: Text = None,
+                 properties: Dict[Text, Jsonable] = None) -> None:
+        super().__init__(job_name, 'python', properties)
+
+    @property
+    def env(self):
+        return self.properties.get('env')

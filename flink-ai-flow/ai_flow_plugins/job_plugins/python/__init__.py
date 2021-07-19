@@ -14,19 +14,9 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-from enum import Enum
+from ai_flow.plugin_interface import register_job_plugin_factory
+from ai_flow_plugins.job_plugins.python.python_job_plugin import PythonJobPluginFactory
+from ai_flow_plugins.job_plugins.python.python_processor import PythonProcessor
+from ai_flow_plugins.job_plugins.python.python_job_config import PythonJobConfig
 
-
-class Status(str, Enum):
-    """
-    INIT: INIT is the execution unit creation status.
-    STARTING: STARTING is the execution unit starting status.
-    FINISHED: FINISHED is the successful state of the execution unit.
-    FAILED: FAILED is the failed state of the execution unit.
-    KILLED: KILLED is the state of the execution unit being stopped.
-    """
-    INIT = 'INIT'
-    RUNNING = 'RUNNING'
-    FINISHED = 'FINISHED'
-    FAILED = 'FAILED'
-    KILLED = 'KILLED'
+register_job_plugin_factory(PythonJobPluginFactory())
