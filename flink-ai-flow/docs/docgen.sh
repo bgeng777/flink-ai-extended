@@ -25,7 +25,7 @@ docs=$(cd "docs"; pwd)
 workdir=$docs
 tmpdir="$workdir"/__tmp
 cd "$workdir"
-rm -r "$workdir"/source_rst/
+[ -e "$workdir"/source_rst ] && rm -r "$workdir"/source_rst/
 mkdir "$workdir"/source_rst/
 mkdir "$tmpdir"
 sphinx-apidoc -f -M -o "$tmpdir"/ "$workdir"/../ai_flow "$workdir"/../ai_flow/*test*
