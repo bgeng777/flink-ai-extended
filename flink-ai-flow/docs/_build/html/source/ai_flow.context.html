@@ -39,8 +39,9 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ai_flow.endpoint package" href="ai_flow.endpoint.html" />
+    <link rel="prev" title="ai_flow.common package" href="ai_flow.common.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,18 +86,47 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">ai_flow.context package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-ai_flow.context.job_context">ai_flow.context.job_context module</a></li>
-<li><a class="reference internal" href="#module-ai_flow.context.project_context">ai_flow.context.project_context module</a></li>
-<li><a class="reference internal" href="#module-ai_flow.context.workflow_config_loader">ai_flow.context.workflow_config_loader module</a></li>
-<li><a class="reference internal" href="#module-ai_flow.context">Module contents</a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="ai_flow.html">ai_flow package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ai_flow.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.ai_graph.html">ai_flow.ai_graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.api.html">ai_flow.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.client.html">ai_flow.client package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.common.html">ai_flow.common package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ai_flow.context package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context.job_context">ai_flow.context.job_context module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context.project_context">ai_flow.context.project_context module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context.workflow_config_loader">ai_flow.context.workflow_config_loader module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.endpoint.html">ai_flow.endpoint package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.exception.html">ai_flow.exception package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.graph.html">ai_flow.graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.log.html">ai_flow.log package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.meta.html">ai_flow.meta package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metadata_store.html">ai_flow.metadata_store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metric.html">ai_flow.metric package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.model_center.html">ai_flow.model_center package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.plugin_interface.html">ai_flow.plugin_interface package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.project.html">ai_flow.project package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.protobuf.html">ai_flow.protobuf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.runtime.html">ai_flow.runtime package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.scheduler.html">ai_flow.scheduler package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.store.html">ai_flow.store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.translator.html">ai_flow.translator package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.workflow.html">ai_flow.workflow package</a></li>
 </ul>
-</div>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ai_flow.html#module-ai_flow">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../source2/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
             
           
         </div>
@@ -142,6 +172,8 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ai_flow.html">ai_flow package</a> &raquo;</li>
         
       <li>ai_flow.context package</li>
     
@@ -201,28 +233,24 @@
 <dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">ProjectContext</span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
-<p>ProjectContext maintains the directory structure and information of an ai flow project.
-A common ai flow project would follow the directory structure as bellow.</p>
-<dl>
-<dt>SimpleProject</dt><dd><dl>
-<dt><a href="#id1"><span class="problematic" id="id2">|</span></a>- workflows # Directory for storing workflow definitions</dt><dd><p><a href="#id3"><span class="problematic" id="id4">|</span></a>- workflow_name1 # Is a directory store workflow named workflow_name1.
-<a href="#id5"><span class="problematic" id="id6">|</span></a>- workflow_name2 # Is a directory store workflow named workflow_name2.
-<a href="#id7"><span class="problematic" id="id8">|</span></a>- workflow_name3 # Is a directory store workflow named workflow_name3.</p>
-<blockquote>
-<div><p><a href="#id9"><span class="problematic" id="id10">|</span></a>- workflow_name3.py # Workflow defined file.
-<a href="#id11"><span class="problematic" id="id12">|</span></a>- workflow_name3.yaml # Workflow configuration file.</p>
-</div></blockquote>
-</dd>
-<dt><a href="#id13"><span class="problematic" id="id14">|</span></a>- dependencies # Resource storage directory on which workflow execution depends.</dt><dd><p><a href="#id15"><span class="problematic" id="id16">|</span></a>-python # Python file resource storage directory on which workflow execution depends.
-<a href="#id17"><span class="problematic" id="id18">|</span></a>-jar # Jar resource storage directory on which workflow execution depends.
-<a href="#id19"><span class="problematic" id="id20">|</span></a>-go #  Go resource storage directory on which workflow execution depends.</p>
-</dd>
-</dl>
-<p><a href="#id21"><span class="problematic" id="id22">|</span></a>- generated # The File storage directory generated in the process of translator generating workflow.
-<a href="#id23"><span class="problematic" id="id24">|</span></a>- resources # Store the resource files of the project.
-└─ project.yaml # The project configuration file.</p>
-</dd>
-</dl>
+<p>ProjectContext maintains the directory structure and information of an ai flow project.</p>
+<p>A common ai flow project would follow the directory structure as bellow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SimpleProject
+    |- workflows # Directory for storing workflow definitions
+        |- workflow_name1 # Is a directory store workflow named workflow_name1.
+        |- workflow_name2 # Is a directory store workflow named workflow_name2.
+        |- workflow_name3 # Is a directory store workflow named workflow_name3.
+            |- workflow_name3.py # Workflow defined file.
+            |- workflow_name3.yaml # Workflow configuration file.
+    |- dependencies # Resource storage directory on which workflow execution depends.
+        |-python # Python file resource storage directory on which workflow execution depends.
+        |-jar # Jar resource storage directory on which workflow execution depends.
+        |-go #  Go resource storage directory on which workflow execution depends.
+    |- generated # The File storage directory generated in the process of translator generating workflow.
+    |- resources # Store the resource files of the project.
+    └─ project.yaml # The project configuration file.
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_dependencies_path">
 <span class="sig-name descname"><span class="pre">get_dependencies_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_dependencies_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_dependencies_path" title="Permalink to this definition">¶</a></dt>
@@ -372,6 +400,10 @@ A common ai flow project would follow the directory structure as bellow.</p>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ai_flow.endpoint.html" class="btn btn-neutral float-right" title="ai_flow.endpoint package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.common.html" class="btn btn-neutral float-left" title="ai_flow.common package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

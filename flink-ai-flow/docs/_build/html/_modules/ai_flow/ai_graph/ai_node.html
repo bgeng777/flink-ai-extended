@@ -39,7 +39,6 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
@@ -85,8 +84,12 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source2/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
             
           
         </div>
@@ -179,7 +182,7 @@
 <span class="kn">from</span> <span class="nn">ai_flow.graph.channel</span> <span class="kn">import</span> <span class="n">Channel</span>
 
 
-<div class="viewcode-block" id="AINode"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.AINode">[docs]</a><span class="k">class</span> <span class="nc">AINode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<div class="viewcode-block" id="AINode"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.AINode">[docs]</a><span class="k">class</span> <span class="nc">AINode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    AINodes are part of the ai graph(ai_flow.ai_graph.ai_graph.AIGraph),</span>
 <span class="sd">    and there are edges(ai_flow.ai_graph.data_edge.DataEdge) connected between AINodes</span>
@@ -210,7 +213,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="p">[</span><span class="s1">&#39;node_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_type</span>
 
-<div class="viewcode-block" id="AINode.outputs"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.AINode.outputs">[docs]</a>    <span class="k">def</span> <span class="nf">outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Channel</span><span class="p">]:</span>
+<div class="viewcode-block" id="AINode.outputs"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.AINode.outputs">[docs]</a>    <span class="k">def</span> <span class="nf">outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Channel</span><span class="p">]:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_num</span><span class="p">):</span>
@@ -219,20 +222,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="AINode.get_processor"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.AINode.get_processor">[docs]</a>    <span class="k">def</span> <span class="nf">get_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<div class="viewcode-block" id="AINode.get_processor"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.AINode.get_processor">[docs]</a>    <span class="k">def</span> <span class="nf">get_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">processor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">serialization_utils</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processor</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AINode.node_type"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.AINode.node_type">[docs]</a>    <span class="k">def</span> <span class="nf">node_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AINode.node_type"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.AINode.node_type">[docs]</a>    <span class="k">def</span> <span class="nf">node_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;node_type&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AINode.name"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.AINode.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AINode.name"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.AINode.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ReadDatasetNode"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.ReadDatasetNode">[docs]</a><span class="k">class</span> <span class="nc">ReadDatasetNode</span><span class="p">(</span><span class="n">AINode</span><span class="p">):</span>
+<div class="viewcode-block" id="ReadDatasetNode"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.ReadDatasetNode">[docs]</a><span class="k">class</span> <span class="nc">ReadDatasetNode</span><span class="p">(</span><span class="n">AINode</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the AINode that reads the dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -255,11 +258,11 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;dataset can not be None!&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span>
 
-<div class="viewcode-block" id="ReadDatasetNode.dataset"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.ReadDatasetNode.dataset">[docs]</a>    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ReadDatasetNode.dataset"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.ReadDatasetNode.dataset">[docs]</a>    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dataset&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="WriteDatasetNode"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.WriteDatasetNode">[docs]</a><span class="k">class</span> <span class="nc">WriteDatasetNode</span><span class="p">(</span><span class="n">AINode</span><span class="p">):</span>
+<div class="viewcode-block" id="WriteDatasetNode"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.WriteDatasetNode">[docs]</a><span class="k">class</span> <span class="nc">WriteDatasetNode</span><span class="p">(</span><span class="n">AINode</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the AINode that write the dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -282,7 +285,7 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;dataset can not be None!&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span>
 
-<div class="viewcode-block" id="WriteDatasetNode.dataset"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.ai_graph.ai_node.WriteDatasetNode.dataset">[docs]</a>    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WriteDatasetNode.dataset"><a class="viewcode-back" href="../../../source/ai_flow.ai_graph.html#ai_flow.api.ops.WriteDatasetNode.dataset">[docs]</a>    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dataset&#39;</span><span class="p">)</span></div></div>
 
 </pre></div>

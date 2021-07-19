@@ -26,7 +26,6 @@ Subpackages
    ai_flow.runtime
    ai_flow.scheduler
    ai_flow.store
-   ai_flow.test
    ai_flow.translator
    ai_flow.util
    ai_flow.workflow

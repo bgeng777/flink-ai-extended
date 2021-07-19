@@ -25,22 +25,22 @@ from ai_flow.util.json_utils import Jsonable
 class ProjectContext(Jsonable):
     """
     ProjectContext maintains the directory structure and information of an ai flow project.
-    A common ai flow project would follow the directory structure as bellow.
+    A common ai flow project would follow the directory structure as bellow::
 
-    SimpleProject
-        |- workflows # Directory for storing workflow definitions
-           |- workflow_name1 # Is a directory store workflow named workflow_name1.
-           |- workflow_name2 # Is a directory store workflow named workflow_name2.
-           |- workflow_name3 # Is a directory store workflow named workflow_name3.
-              |- workflow_name3.py # Workflow defined file.
-              |- workflow_name3.yaml # Workflow configuration file.
-        |- dependencies # Resource storage directory on which workflow execution depends.
-            |-python # Python file resource storage directory on which workflow execution depends.
-            |-jar # Jar resource storage directory on which workflow execution depends.
-            |-go #  Go resource storage directory on which workflow execution depends.
-        |- generated # The File storage directory generated in the process of translator generating workflow.
-        |- resources # Store the resource files of the project.
-        └─ project.yaml # The project configuration file.
+        SimpleProject
+            |- workflows # Directory for storing workflow definitions
+               |- workflow_name1 # Is a directory store workflow named workflow_name1.
+               |- workflow_name2 # Is a directory store workflow named workflow_name2.
+               |- workflow_name3 # Is a directory store workflow named workflow_name3.
+                  |- workflow_name3.py # Workflow defined file.
+                  |- workflow_name3.yaml # Workflow configuration file.
+            |- dependencies # Resource storage directory on which workflow execution depends.
+                |-python # Python file resource storage directory on which workflow execution depends.
+                |-jar # Jar resource storage directory on which workflow execution depends.
+                |-go #  Go resource storage directory on which workflow execution depends.
+            |- generated # The File storage directory generated in the process of translator generating workflow.
+            |- resources # Store the resource files of the project.
+            └─ project.yaml # The project configuration file.
     """
 
     def __init__(self) -> None:
@@ -101,6 +101,7 @@ class ProjectContext(Jsonable):
 def build_project_context(project_path: Text) -> ProjectContext:
     """
     Load a project context for a given project path.
+
     :param project_path: the path of a ai flow project.
     :return: a ProjectContext object that contains the structure information of this project.
     """

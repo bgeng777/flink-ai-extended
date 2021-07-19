@@ -37,6 +37,7 @@ class SchedulerClient(BaseClient):
                                      args: Dict = None) -> WorkflowProto:
         """
         Submit the ai flow workflow to the scheduler.
+
         :param workflow_json:
         :param namespace:
         :param workflow_name: The ai flow workflow identify.
@@ -60,6 +61,7 @@ class SchedulerClient(BaseClient):
                         workflow_name: Text = None) -> WorkflowProto:
         """
         Delete the ai flow workflow from the scheduler.
+
         :param namespace:
         :param workflow_name: The ai flow workflow identify.
         :return: The result of the action.
@@ -77,6 +79,7 @@ class SchedulerClient(BaseClient):
                                   workflow_name: Text = None) -> WorkflowProto:
         """
         Pause the ai flow workflow from the scheduler.
+
         :param namespace:
         :param workflow_name: The ai flow workflow identify.
         :return: The result of the action.
