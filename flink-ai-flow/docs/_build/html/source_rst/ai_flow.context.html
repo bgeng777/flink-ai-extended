@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.context package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ai_flow.endpoint package" href="ai_flow.endpoint.html" />
+    <link rel="prev" title="ai_flow.common package" href="ai_flow.common.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="ai_flow.html">ai_flow package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ai_flow.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.ai_graph.html">ai_flow.ai_graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.api.html">ai_flow.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.client.html">ai_flow.client package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.common.html">ai_flow.common package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ai_flow.context package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context.job_context">ai_flow.context.job_context module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context.project_context">ai_flow.context.project_context module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.context.workflow_config_loader">ai_flow.context.workflow_config_loader module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.endpoint.html">ai_flow.endpoint package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.exception.html">ai_flow.exception package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.graph.html">ai_flow.graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.log.html">ai_flow.log package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.meta.html">ai_flow.meta package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metadata_store.html">ai_flow.metadata_store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metric.html">ai_flow.metric package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.model_center.html">ai_flow.model_center package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.plugin_interface.html">ai_flow.plugin_interface package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.project.html">ai_flow.project package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.protobuf.html">ai_flow.protobuf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.runtime.html">ai_flow.runtime package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.scheduler.html">ai_flow.scheduler package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.store.html">ai_flow.store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.translator.html">ai_flow.translator package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.workflow.html">ai_flow.workflow package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ai_flow.html">ai_flow package</a> &raquo;</li>
+        
+      <li>ai_flow.context package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source_rst/ai_flow.context.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ai_flow.context">
+<span id="ai-flow-context-package"></span><h1>ai_flow.context package<a class="headerlink" href="#module-ai_flow.context" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow.context.job_context">
+<span id="ai-flow-context-job-context-module"></span><h2>ai_flow.context.job_context module<a class="headerlink" href="#module-ai_flow.context.job_context" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.context.job_context.JobContext">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.context.job_context.</span></span><span class="sig-name descname"><span class="pre">JobContext</span></span><a class="reference internal" href="../_modules/ai_flow/context/job_context.html#JobContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.job_context.JobContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Store the job name of job(ai_flow.workflow.job.Job) in the current context.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.job_context.current_job_name">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.job_context.</span></span><span class="sig-name descname"><span class="pre">current_job_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/job_context.html#current_job_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.job_context.current_job_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the job name of the current job.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.job_context.job_config">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.job_context.</span></span><span class="sig-name descname"><span class="pre">job_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/context/job_context.html#job_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.job_context.job_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the job config by job_name.
+:param job_name: The name of the Job.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.job_context.set_current_job_name">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.job_context.</span></span><span class="sig-name descname"><span class="pre">set_current_job_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/context/job_context.html#set_current_job_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.job_context.set_current_job_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.context.project_context">
+<span id="ai-flow-context-project-context-module"></span><h2>ai_flow.context.project_context module<a class="headerlink" href="#module-ai_flow.context.project_context" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">ProjectContext</span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.util.json_utils.Jsonable</span></code></a></p>
+<p>ProjectContext maintains the directory structure and information of an ai flow project.</p>
+<p>A common ai flow project would follow the directory structure as bellow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SimpleProject
+    |- workflows # Directory for storing workflow definitions
+        |- workflow_name1 # Is a directory store workflow named workflow_name1.
+        |- workflow_name2 # Is a directory store workflow named workflow_name2.
+        |- workflow_name3 # Is a directory store workflow named workflow_name3.
+            |- workflow_name3.py # Workflow defined file.
+            |- workflow_name3.yaml # Workflow configuration file.
+    |- dependencies # Resource storage directory on which workflow execution depends.
+        |-python # Python file resource storage directory on which workflow execution depends.
+        |-jar # Jar resource storage directory on which workflow execution depends.
+        |-go #  Go resource storage directory on which workflow execution depends.
+    |- generated # The File storage directory generated in the process of translator generating workflow.
+    |- resources # Store the resource files of the project.
+    └─ project.yaml # The project configuration file.
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_dependencies_path">
+<span class="sig-name descname"><span class="pre">get_dependencies_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_dependencies_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_dependencies_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_generated_path">
+<span class="sig-name descname"><span class="pre">get_generated_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_generated_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_generated_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_go_dependencies_path">
+<span class="sig-name descname"><span class="pre">get_go_dependencies_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_go_dependencies_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_go_dependencies_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_jar_dependencies_path">
+<span class="sig-name descname"><span class="pre">get_jar_dependencies_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_jar_dependencies_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_jar_dependencies_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_project_config_file">
+<span class="sig-name descname"><span class="pre">get_project_config_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_project_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_project_config_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_python_dependencies_path">
+<span class="sig-name descname"><span class="pre">get_python_dependencies_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_python_dependencies_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_python_dependencies_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_resources_path">
+<span class="sig-name descname"><span class="pre">get_resources_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_resources_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_resources_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_workflow_config_file">
+<span class="sig-name descname"><span class="pre">get_workflow_config_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_workflow_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_workflow_config_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_workflow_entry_file">
+<span class="sig-name descname"><span class="pre">get_workflow_entry_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_workflow_entry_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_workflow_entry_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_workflow_entry_module">
+<span class="sig-name descname"><span class="pre">get_workflow_entry_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_workflow_entry_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_workflow_entry_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_workflow_path">
+<span class="sig-name descname"><span class="pre">get_workflow_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_workflow_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_workflow_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.get_workflows_path">
+<span class="sig-name descname"><span class="pre">get_workflows_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.get_workflows_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.get_workflows_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.list_jar_paths">
+<span class="sig-name descname"><span class="pre">list_jar_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.list_jar_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.list_jar_paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.list_resources_paths">
+<span class="sig-name descname"><span class="pre">list_resources_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.list_resources_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.list_resources_paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.list_workflows">
+<span class="sig-name descname"><span class="pre">list_workflows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#ProjectContext.list_workflows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.list_workflows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.ProjectContext.project_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#ai_flow.context.project_context.ProjectContext.project_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.build_project_context">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">build_project_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.context.project_context.ProjectContext" title="ai_flow.context.project_context.ProjectContext"><span class="pre">ai_flow.context.project_context.ProjectContext</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#build_project_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.build_project_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a project context for a given project path.
+:param project_path: the path of a ai flow project.
+:return: a ProjectContext object that contains the structure information of this project.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.current_project_config">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">current_project_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.project.html#ai_flow.project.project_config.ProjectConfig" title="ai_flow.project.project_config.ProjectConfig"><span class="pre">ai_flow.project.project_config.ProjectConfig</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#current_project_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.current_project_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current project configuration(ai_flow.project.project_config.ProjectConfig)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.current_project_context">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">current_project_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ai_flow.context.project_context.ProjectContext" title="ai_flow.context.project_context.ProjectContext"><span class="pre">ai_flow.context.project_context.ProjectContext</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#current_project_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.current_project_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>return: The current project context(ai_flow.context.project_context.ProjectContext).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.init_project_config">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">init_project_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#init_project_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.init_project_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load project configuration of the ai flow project.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.project_context.init_project_context">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.project_context.</span></span><span class="sig-name descname"><span class="pre">init_project_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/context/project_context.html#init_project_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.project_context.init_project_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load project configuration and project context of the ai flow project.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.context.workflow_config_loader">
+<span id="ai-flow-context-workflow-config-loader-module"></span><h2>ai_flow.context.workflow_config_loader module<a class="headerlink" href="#module-ai_flow.context.workflow_config_loader" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.workflow_config_loader.current_workflow_config">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.workflow_config_loader.</span></span><span class="sig-name descname"><span class="pre">current_workflow_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.workflow_config.WorkflowConfig" title="ai_flow.workflow.workflow_config.WorkflowConfig"><span class="pre">ai_flow.workflow.workflow_config.WorkflowConfig</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/context/workflow_config_loader.html#current_workflow_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.workflow_config_loader.current_workflow_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>return: the workflow configuration of the current workflow.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.workflow_config_loader.init_workflow_config">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.workflow_config_loader.</span></span><span class="sig-name descname"><span class="pre">init_workflow_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_config_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/context/workflow_config_loader.html#init_workflow_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.workflow_config_loader.init_workflow_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the workflow configuration(ai_flow.workflow.workflow_config.WorkflowConfig) of the current workflow.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.context.workflow_config_loader.set_current_workflow_config">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.context.workflow_config_loader.</span></span><span class="sig-name descname"><span class="pre">set_current_workflow_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/context/workflow_config_loader.html#set_current_workflow_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.context.workflow_config_loader.set_current_workflow_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ai_flow.endpoint.html" class="btn btn-neutral float-right" title="ai_flow.endpoint package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.common.html" class="btn btn-neutral float-left" title="ai_flow.common package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

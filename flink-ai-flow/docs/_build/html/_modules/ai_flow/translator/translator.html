@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.translator.translator &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.translator.translator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.translator.translator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">ai_flow.ai_graph.ai_node</span> <span class="kn">import</span> <span class="n">ReadDatasetNode</span><span class="p">,</span> <span class="n">WriteDatasetNode</span>
+<span class="kn">from</span> <span class="nn">ai_flow.context.workflow_config_loader</span> <span class="kn">import</span> <span class="n">current_workflow_config</span>
+<span class="kn">from</span> <span class="nn">ai_flow.workflow.workflow</span> <span class="kn">import</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">ai_flow.workflow.job</span> <span class="kn">import</span> <span class="n">Job</span>
+<span class="kn">from</span> <span class="nn">ai_flow.ai_graph.ai_graph</span> <span class="kn">import</span> <span class="n">AIGraph</span><span class="p">,</span> <span class="n">AISubGraph</span>
+<span class="kn">from</span> <span class="nn">ai_flow.ai_graph.data_edge</span> <span class="kn">import</span> <span class="n">DataEdge</span>
+<span class="kn">from</span> <span class="nn">ai_flow.workflow.control_edge</span> <span class="kn">import</span> <span class="n">ControlEdge</span>
+<span class="kn">from</span> <span class="nn">ai_flow.context.project_context</span> <span class="kn">import</span> <span class="n">ProjectContext</span>
+
+
+<div class="viewcode-block" id="JobGenerator"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.JobGenerator">[docs]</a><span class="k">class</span> <span class="nc">JobGenerator</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    JobGenerator: Convert AISubGraph(ai_flow.ai_graph.ai_graph.AISubGraph) to Job(ai_flow.workflow.job.Job)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="JobGenerator.generate"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.JobGenerator.generate">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_graph</span><span class="p">:</span> <span class="n">AISubGraph</span><span class="p">,</span> <span class="n">resource_dir</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Job</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert AISubGraph(ai_flow.ai_graph.ai_graph.AISubGraph) to Job(ai_flow.workflow.job.Job)</span>
+<span class="sd">        :param sub_graph: An executable Graph composed of AINode and data edges with the same job configuration.</span>
+<span class="sd">        :param resource_dir: Store the executable files generated during the generation process.</span>
+<span class="sd">        :return: Job(ai_flow.workflow.job.Job)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="SplitGraph"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.SplitGraph">[docs]</a><span class="k">class</span> <span class="nc">SplitGraph</span><span class="p">(</span><span class="n">AIGraph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">AISubGraph</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ControlEdge</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="SplitGraph.add_node"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.SplitGraph.add_node">[docs]</a>    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">AISubGraph</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">job_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span></div></div>
+
+
+<div class="viewcode-block" id="GraphSplitter"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.GraphSplitter">[docs]</a><span class="k">class</span> <span class="nc">GraphSplitter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="GraphSplitter.split"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.GraphSplitter.split">[docs]</a>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">AIGraph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplitGraph</span><span class="p">:</span>
+
+        <span class="n">split_graph</span> <span class="o">=</span> <span class="n">SplitGraph</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">job_name</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">job_name</span>
+            <span class="k">if</span> <span class="n">job_name</span> <span class="ow">in</span> <span class="n">split_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+                <span class="n">sub_graph</span> <span class="o">=</span> <span class="n">split_graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">job_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sub_graph</span> <span class="o">=</span> <span class="n">AISubGraph</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">n</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">split_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">sub_graph</span><span class="p">)</span>
+            <span class="n">sub_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+        <span class="c1"># add data edge to sub graph</span>
+        <span class="k">for</span> <span class="n">sub_graph</span> <span class="ow">in</span> <span class="n">split_graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">sub_graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">node_id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">node_id</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">DataEdge</span><span class="p">):</span>
+                            <span class="n">sub_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">node_id</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ee</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">e</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">ControlEdge</span><span class="p">):</span>
+                    <span class="n">split_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span> <span class="n">ee</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">split_graph</span></div></div>
+
+
+<div class="viewcode-block" id="WorkflowConstructor"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.WorkflowConstructor">[docs]</a><span class="k">class</span> <span class="nc">WorkflowConstructor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="WorkflowConstructor.JobGeneratorRegistry"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry">[docs]</a>    <span class="k">class</span> <span class="nc">JobGeneratorRegistry</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">JobGenerator</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="WorkflowConstructor.JobGeneratorRegistry.register"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry.register">[docs]</a>        <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">JobGenerator</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="WorkflowConstructor.JobGeneratorRegistry.get_object"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.WorkflowConstructor.JobGeneratorRegistry.get_object">[docs]</a>        <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobGenerator</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_generator_registry</span><span class="p">:</span> <span class="n">WorkflowConstructor</span><span class="o">.</span><span class="n">JobGeneratorRegistry</span> \
+            <span class="o">=</span> <span class="n">WorkflowConstructor</span><span class="o">.</span><span class="n">JobGeneratorRegistry</span><span class="p">()</span>
+
+<div class="viewcode-block" id="WorkflowConstructor.register_job_generator"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.WorkflowConstructor.register_job_generator">[docs]</a>    <span class="k">def</span> <span class="nf">register_job_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">generator</span><span class="p">:</span> <span class="n">JobGenerator</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_generator_registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">generator</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkflowConstructor.build_workflow"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.WorkflowConstructor.build_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">build_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split_graph</span><span class="p">:</span> <span class="n">SplitGraph</span><span class="p">,</span> <span class="n">project_context</span><span class="p">:</span> <span class="n">ProjectContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">()</span>
+        <span class="n">workflow</span><span class="o">.</span><span class="n">workflow_config</span> <span class="o">=</span> <span class="n">current_workflow_config</span><span class="p">()</span>
+        <span class="n">workflow</span><span class="o">.</span><span class="n">workflow_snapshot_id</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_context</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">workflow</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">,</span>
+                                                          <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+        <span class="c1"># add ai_nodes to workflow</span>
+        <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">split_graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">job_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">job_generator_registry</span><span class="o">.</span><span class="n">object_dict</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;job generator not support job_type </span><span class="si">{}</span><span class="s2">&quot;</span>
+                                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">job_type</span><span class="p">))</span>
+            <span class="n">generator</span><span class="p">:</span> <span class="n">JobGenerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">job_generator_registry</span> \
+                <span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">job_type</span><span class="p">)</span>
+
+            <span class="c1"># set job resource dir</span>
+            <span class="n">job_resource_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_context</span><span class="o">.</span><span class="n">get_generated_path</span><span class="p">(),</span>
+                                            <span class="n">workflow</span><span class="o">.</span><span class="n">workflow_snapshot_id</span><span class="p">,</span>
+                                            <span class="n">sub</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">job_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">job_resource_dir</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">job_resource_dir</span><span class="p">)</span>
+
+            <span class="n">job</span><span class="p">:</span> <span class="n">Job</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">sub_graph</span><span class="o">=</span><span class="n">sub</span><span class="p">,</span> <span class="n">resource_dir</span><span class="o">=</span><span class="n">job_resource_dir</span><span class="p">)</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">resource_dir</span> <span class="o">=</span> <span class="n">job_resource_dir</span>
+
+            <span class="c1"># set input output dataset</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sub</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ReadDatasetNode</span><span class="p">):</span>
+                    <span class="n">job</span><span class="o">.</span><span class="n">input_dataset_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">dataset</span><span class="p">())</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">WriteDatasetNode</span><span class="p">):</span>
+                    <span class="n">job</span><span class="o">.</span><span class="n">output_dataset_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">dataset</span><span class="p">())</span>
+
+            <span class="n">workflow</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">validate_edge</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">head</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">workflow</span><span class="o">.</span><span class="n">jobs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;job: </span><span class="si">{}</span><span class="s1"> is not defined in workflow!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">head</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">tail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tail</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">tail</span> <span class="o">!=</span> <span class="s1">&#39;*&#39;</span> <span class="ow">and</span> <span class="n">tail</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">workflow</span><span class="o">.</span><span class="n">jobs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;job: </span><span class="si">{}</span><span class="s1"> is not defined in workflow!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tail</span><span class="p">))</span>
+        <span class="c1"># add edges to workflow</span>
+        <span class="k">for</span> <span class="n">edges</span> <span class="ow">in</span> <span class="n">split_graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+                <span class="n">control_edge</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="n">validate_edge</span><span class="p">(</span><span class="n">control_edge</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span> <span class="n">control_edge</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+                <span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">control_edge</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span> <span class="n">control_edge</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">workflow</span></div></div>
+
+
+<div class="viewcode-block" id="Translator"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.Translator">[docs]</a><span class="k">class</span> <span class="nc">Translator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Translator translates the user-defined program ai graph(ai_flow.ai_graph.ai_graph.AIGraph)</span>
+<span class="sd">    into ai flow executable workflow(ai_flow.workflow.workflow.Workflow)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">graph_splitter</span><span class="p">:</span> <span class="n">GraphSplitter</span><span class="p">,</span>
+                 <span class="n">workflow_constructor</span><span class="p">:</span> <span class="n">WorkflowConstructor</span>
+                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_splitter</span> <span class="o">=</span> <span class="n">graph_splitter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow_constructor</span> <span class="o">=</span> <span class="n">workflow_constructor</span>
+
+<div class="viewcode-block" id="Translator.translate"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.Translator.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">AIGraph</span><span class="p">,</span> <span class="n">project_context</span><span class="p">:</span> <span class="n">ProjectContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param graph: The ai graph(ai_flow.ai_graph.ai_graph.AIGraph)</span>
+<span class="sd">        :param project_context: The ai flow project context(ai_flow.context.project_context.ProjectContext)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">split_graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_splitter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">)</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow_constructor</span><span class="o">.</span><span class="n">build_workflow</span><span class="p">(</span><span class="n">split_graph</span><span class="o">=</span><span class="n">split_graph</span><span class="p">,</span>
+                                                            <span class="n">project_context</span><span class="o">=</span><span class="n">project_context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">workflow</span></div></div>
+
+
+<span class="n">__current_translator__</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">(</span><span class="n">graph_splitter</span><span class="o">=</span><span class="n">GraphSplitter</span><span class="p">(),</span>
+                                    <span class="n">workflow_constructor</span><span class="o">=</span><span class="n">WorkflowConstructor</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="get_translator"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.get_translator">[docs]</a><span class="k">def</span> <span class="nf">get_translator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Translator</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">__current_translator__</span></div>
+
+
+<div class="viewcode-block" id="register_job_generator"><a class="viewcode-back" href="../../../source_rst/ai_flow.translator.html#ai_flow.translator.translator.register_job_generator">[docs]</a><span class="k">def</span> <span class="nf">register_job_generator</span><span class="p">(</span><span class="n">job_type</span><span class="p">,</span> <span class="n">generator</span><span class="p">:</span> <span class="n">JobGenerator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">__current_translator__</span><span class="o">.</span><span class="n">workflow_constructor</span><span class="o">.</span><span class="n">register_job_generator</span><span class="p">(</span><span class="n">job_type</span><span class="p">,</span> <span class="n">generator</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

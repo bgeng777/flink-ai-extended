@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.context.project_context &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.context.project_context</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.context.project_context</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Text</span>
+<span class="kn">from</span> <span class="nn">ai_flow.project.project_config</span> <span class="kn">import</span> <span class="n">ProjectConfig</span>
+<span class="kn">from</span> <span class="nn">ai_flow.util.json_utils</span> <span class="kn">import</span> <span class="n">Jsonable</span>
+
+
+<div class="viewcode-block" id="ProjectContext"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext">[docs]</a><span class="k">class</span> <span class="nc">ProjectContext</span><span class="p">(</span><span class="n">Jsonable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ProjectContext maintains the directory structure and information of an ai flow project.</span>
+
+<span class="sd">    A common ai flow project would follow the directory structure as bellow::</span>
+
+<span class="sd">        SimpleProject</span>
+<span class="sd">            |- workflows # Directory for storing workflow definitions</span>
+<span class="sd">                |- workflow_name1 # Is a directory store workflow named workflow_name1.</span>
+<span class="sd">                |- workflow_name2 # Is a directory store workflow named workflow_name2.</span>
+<span class="sd">                |- workflow_name3 # Is a directory store workflow named workflow_name3.</span>
+<span class="sd">                    |- workflow_name3.py # Workflow defined file.</span>
+<span class="sd">                    |- workflow_name3.yaml # Workflow configuration file.</span>
+<span class="sd">            |- dependencies # Resource storage directory on which workflow execution depends.</span>
+<span class="sd">                |-python # Python file resource storage directory on which workflow execution depends.</span>
+<span class="sd">                |-jar # Jar resource storage directory on which workflow execution depends.</span>
+<span class="sd">                |-go #  Go resource storage directory on which workflow execution depends.</span>
+<span class="sd">            |- generated # The File storage directory generated in the process of translator generating workflow.</span>
+<span class="sd">            |- resources # Store the resource files of the project.</span>
+<span class="sd">            └─ project.yaml # The project configuration file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_path</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_config</span><span class="p">:</span> <span class="n">ProjectConfig</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">project_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_config</span><span class="o">.</span><span class="n">get_project_name</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ProjectContext.get_resources_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_resources_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_resources_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span> <span class="s1">&#39;resources&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_generated_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_generated_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_generated_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span> <span class="s1">&#39;generated&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.list_resources_paths"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.list_resources_paths">[docs]</a>    <span class="k">def</span> <span class="nf">list_resources_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_resources_path</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_dependencies_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_dependencies_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_dependencies_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span> <span class="s1">&#39;dependencies&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_project_config_file"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_project_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_project_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span> <span class="s1">&#39;project.yaml&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_python_dependencies_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_python_dependencies_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_python_dependencies_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dependencies_path</span><span class="p">(),</span> <span class="s1">&#39;python&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_jar_dependencies_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_jar_dependencies_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_jar_dependencies_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dependencies_path</span><span class="p">(),</span> <span class="s1">&#39;jar&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.list_jar_paths"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.list_jar_paths">[docs]</a>    <span class="k">def</span> <span class="nf">list_jar_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_jar_dependencies_path</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_go_dependencies_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_go_dependencies_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_go_dependencies_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dependencies_path</span><span class="p">(),</span> <span class="s1">&#39;go&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_workflows_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_workflows_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflows_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span> <span class="s1">&#39;workflows&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.list_workflows"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.list_workflows">[docs]</a>    <span class="k">def</span> <span class="nf">list_workflows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Text</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_workflows_path</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_workflow_path"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_workflow_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_workflows_path</span><span class="p">(),</span> <span class="n">workflow_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_workflow_config_file"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_workflow_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_workflow_path</span><span class="p">(</span><span class="n">workflow_name</span><span class="p">),</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.yaml&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">workflow_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_workflow_entry_file"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_workflow_entry_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_entry_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_workflow_path</span><span class="p">(</span><span class="n">workflow_name</span><span class="p">),</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.py&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">workflow_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ProjectContext.get_workflow_entry_module"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.ProjectContext.get_workflow_entry_module">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_entry_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">workflow_name</span></div></div>
+
+
+<div class="viewcode-block" id="build_project_context"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.build_project_context">[docs]</a><span class="k">def</span> <span class="nf">build_project_context</span><span class="p">(</span><span class="n">project_path</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProjectContext</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load a project context for a given project path.</span>
+<span class="sd">    :param project_path: the path of a ai flow project.</span>
+<span class="sd">    :return: a ProjectContext object that contains the structure information of this project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">project_context</span> <span class="o">=</span> <span class="n">ProjectContext</span><span class="p">()</span>
+    <span class="n">project_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
+    <span class="n">project_context</span><span class="o">.</span><span class="n">project_path</span> <span class="o">=</span> <span class="n">project_path</span>
+    <span class="n">project_context</span><span class="o">.</span><span class="n">project_config</span> <span class="o">=</span> <span class="n">ProjectConfig</span><span class="p">()</span>
+    <span class="n">project_context</span><span class="o">.</span><span class="n">project_config</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">project_context</span><span class="o">.</span><span class="n">get_project_config_file</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">project_context</span></div>
+
+
+<span class="n">__current_project_context__</span> <span class="o">=</span> <span class="n">ProjectContext</span><span class="p">()</span>
+
+<span class="n">__current_project_config__</span> <span class="o">=</span> <span class="n">ProjectConfig</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="init_project_config"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.init_project_config">[docs]</a><span class="k">def</span> <span class="nf">init_project_config</span><span class="p">(</span><span class="n">project_config_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load project configuration of the ai flow project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__current_project_config__</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">project_config_file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="init_project_context"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.init_project_context">[docs]</a><span class="k">def</span> <span class="nf">init_project_context</span><span class="p">(</span><span class="n">project_path</span><span class="p">:</span> <span class="n">Text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load project configuration and project context of the ai flow project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">__current_project_context__</span><span class="p">,</span> <span class="n">__current_project_config__</span>
+    <span class="n">project_context</span> <span class="o">=</span> <span class="n">build_project_context</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
+    <span class="n">__current_project_context__</span> <span class="o">=</span> <span class="n">project_context</span>
+    <span class="n">init_project_config</span><span class="p">(</span><span class="n">project_context</span><span class="o">.</span><span class="n">get_project_config_file</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="current_project_context"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.current_project_context">[docs]</a><span class="k">def</span> <span class="nf">current_project_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ProjectContext</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    return: The current project context(ai_flow.context.project_context.ProjectContext).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">__current_project_context__</span></div>
+
+
+<div class="viewcode-block" id="current_project_config"><a class="viewcode-back" href="../../../source_rst/ai_flow.context.html#ai_flow.context.project_context.current_project_config">[docs]</a><span class="k">def</span> <span class="nf">current_project_config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ProjectConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :return: The current project configuration(ai_flow.project.project_config.ProjectConfig)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">__current_project_config__</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

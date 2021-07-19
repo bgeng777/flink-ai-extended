@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.scheduler.scheduler_service &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.scheduler.scheduler_service</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.scheduler.scheduler_service</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.common.configuration</span> <span class="kn">import</span> <span class="n">AIFlowConfiguration</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.plugin_interface.blob_manager_interface</span> <span class="kn">import</span> <span class="n">BlobManagerFactory</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.util</span> <span class="kn">import</span> <span class="n">json_utils</span>
+<span class="kn">from</span> <span class="nn">ai_flow.context.project_context</span> <span class="kn">import</span> <span class="n">ProjectContext</span><span class="p">,</span> <span class="n">build_project_context</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.message_pb2</span> <span class="kn">import</span> <span class="n">ResultProto</span><span class="p">,</span> <span class="n">StatusProto</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.scheduling_service_pb2_grpc</span> <span class="kn">import</span> <span class="n">SchedulingServiceServicer</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.scheduling_service_pb2</span> <span class="kn">import</span> \
+    <span class="p">(</span><span class="n">ScheduleWorkflowRequest</span><span class="p">,</span>
+     <span class="n">WorkflowInfoResponse</span><span class="p">,</span>
+     <span class="n">ListWorkflowInfoResponse</span><span class="p">,</span>
+     <span class="n">WorkflowExecutionRequest</span><span class="p">,</span>
+     <span class="n">WorkflowExecutionResponse</span><span class="p">,</span>
+     <span class="n">ListWorkflowExecutionResponse</span><span class="p">,</span>
+     <span class="n">ScheduleJobRequest</span><span class="p">,</span>
+     <span class="n">JobInfoResponse</span><span class="p">,</span>
+     <span class="n">ListJobInfoResponse</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ai_flow.scheduler.scheduler_factory</span> <span class="kn">import</span> <span class="n">SchedulerFactory</span>
+<span class="kn">from</span> <span class="nn">ai_flow.plugin_interface.scheduler_interface</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+<span class="kn">from</span> <span class="nn">ai_flow.workflow.workflow</span> <span class="kn">import</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server.workflow_proto_utils</span> <span class="kn">import</span> <span class="n">workflow_to_proto</span><span class="p">,</span> <span class="n">workflow_list_to_proto</span><span class="p">,</span> \
+    <span class="n">workflow_execution_to_proto</span><span class="p">,</span> <span class="n">workflow_execution_list_to_proto</span><span class="p">,</span> <span class="n">job_to_proto</span><span class="p">,</span> <span class="n">job_list_to_proto</span>
+
+
+<div class="viewcode-block" id="SchedulerServiceConfig"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig">[docs]</a><span class="k">class</span> <span class="nc">SchedulerServiceConfig</span><span class="p">(</span><span class="n">AIFlowConfiguration</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scheduler_config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="SchedulerServiceConfig.repository"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.repository">[docs]</a>    <span class="k">def</span> <span class="nf">repository</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;repository&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;/tmp&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;repository&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SchedulerServiceConfig.set_repository"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_repository">[docs]</a>    <span class="k">def</span> <span class="nf">set_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;repository&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="SchedulerServiceConfig.scheduler_class_name"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.scheduler_class_name">[docs]</a>    <span class="k">def</span> <span class="nf">scheduler_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;scheduler_class_name&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;scheduler_class_name&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SchedulerServiceConfig.set_scheduler_class_name"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_scheduler_class_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_scheduler_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scheduler_class_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="SchedulerServiceConfig.scheduler_config"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.scheduler_config">[docs]</a>    <span class="k">def</span> <span class="nf">scheduler_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;scheduler_config&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scheduler_config&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SchedulerServiceConfig.set_scheduler_config"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_scheduler_config">[docs]</a>    <span class="k">def</span> <span class="nf">set_scheduler_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scheduler_config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div></div>
+
+
+<div class="viewcode-block" id="SchedulerService"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService">[docs]</a><span class="k">class</span> <span class="nc">SchedulerService</span><span class="p">(</span><span class="n">SchedulingServiceServicer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">scheduler_service_config</span><span class="p">:</span> <span class="n">SchedulerServiceConfig</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler_service_config</span> <span class="o">=</span> <span class="n">scheduler_service_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="p">:</span> <span class="n">Scheduler</span> \
+            <span class="o">=</span> <span class="n">SchedulerFactory</span><span class="o">.</span><span class="n">create_scheduler</span><span class="p">(</span><span class="n">scheduler_service_config</span><span class="o">.</span><span class="n">scheduler_class_name</span><span class="p">(),</span>
+                                                <span class="n">scheduler_service_config</span><span class="o">.</span><span class="n">scheduler_config</span><span class="p">())</span>
+
+    <span class="c1"># workflow interface</span>
+<div class="viewcode-block" id="SchedulerService.submitWorkflow"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.submitWorkflow">[docs]</a>    <span class="k">def</span> <span class="nf">submitWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleWorkflowRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="k">if</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_json</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span> <span class="o">==</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_json</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                               <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;workflow json is empty!&#39;</span><span class="p">))</span>
+            <span class="n">workflow</span><span class="p">:</span> <span class="n">Workflow</span> <span class="o">=</span> <span class="n">json_utils</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">workflow_json</span><span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">workflow</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;blob&#39;</span><span class="p">])</span>
+            <span class="n">blob_manager</span> <span class="o">=</span> <span class="n">BlobManagerFactory</span><span class="o">.</span><span class="n">get_blob_manager</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">project_path</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="n">blob_manager</span>\
+                <span class="o">.</span><span class="n">download_project</span><span class="p">(</span><span class="n">workflow_snapshot_id</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">workflow_snapshot_id</span><span class="p">,</span>
+                                  <span class="n">remote_path</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">project_uri</span><span class="p">,</span>
+                                  <span class="n">local_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_scheduler_service_config</span><span class="o">.</span><span class="n">repository</span><span class="p">())</span>
+
+            <span class="n">project_context</span><span class="p">:</span> <span class="n">ProjectContext</span> <span class="o">=</span> <span class="n">build_project_context</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
+            <span class="n">project_name</span> <span class="o">=</span> <span class="n">project_context</span><span class="o">.</span><span class="n">project_name</span>
+
+            <span class="n">workflow_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">submit_workflow</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">project_context</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_name</span><span class="p">,</span>
+                                                                                   <span class="n">workflow</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                        <span class="n">workflow</span><span class="o">=</span><span class="n">workflow_to_proto</span><span class="p">(</span><span class="n">workflow_info</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                           <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.deleteWorkflow"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.deleteWorkflow">[docs]</a>    <span class="k">def</span> <span class="nf">deleteWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleWorkflowRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">delete_workflow</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                        <span class="n">workflow</span><span class="o">=</span><span class="n">workflow_to_proto</span><span class="p">(</span><span class="n">workflow_info</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                           <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.pauseWorkflowScheduling"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.pauseWorkflowScheduling">[docs]</a>    <span class="k">def</span> <span class="nf">pauseWorkflowScheduling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleWorkflowRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">pause_workflow_scheduling</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                        <span class="n">workflow</span><span class="o">=</span><span class="n">workflow_to_proto</span><span class="p">(</span><span class="n">workflow_info</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                           <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.resumeWorkflowScheduling"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.resumeWorkflowScheduling">[docs]</a>    <span class="k">def</span> <span class="nf">resumeWorkflowScheduling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleWorkflowRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">resume_workflow_scheduling</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                        <span class="n">workflow</span><span class="o">=</span><span class="n">workflow_to_proto</span><span class="p">(</span><span class="n">workflow_info</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                           <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.getWorkflow"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.getWorkflow">[docs]</a>    <span class="k">def</span> <span class="nf">getWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;Do not support getWorkflow&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.listWorkflows"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.listWorkflows">[docs]</a>    <span class="k">def</span> <span class="nf">listWorkflows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;Do not support listWorkflows&#39;</span><span class="p">))</span></div>
+
+    <span class="c1"># workflow execution interface</span>
+
+<div class="viewcode-block" id="SchedulerService.startNewWorkflowExecution"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.startNewWorkflowExecution">[docs]</a>    <span class="k">def</span> <span class="nf">startNewWorkflowExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">WorkflowExecutionRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_execution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">start_new_workflow_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_execution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                             <span class="n">workflow_execution</span><span class="o">=</span><span class="n">workflow_execution_to_proto</span><span class="p">(</span><span class="n">workflow_execution</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                                <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.killAllWorkflowExecutions"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.killAllWorkflowExecutions">[docs]</a>    <span class="k">def</span> <span class="nf">killAllWorkflowExecutions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">WorkflowExecutionRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_execution_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">stop_all_workflow_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ListWorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">))</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">workflow_execution_list_to_proto</span><span class="p">(</span><span class="n">workflow_execution_list</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ListWorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                                    <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.killWorkflowExecution"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.killWorkflowExecution">[docs]</a>    <span class="k">def</span> <span class="nf">killWorkflowExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">WorkflowExecutionRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_execution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">stop_workflow_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_execution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                             <span class="n">workflow_execution</span><span class="o">=</span><span class="n">workflow_execution_to_proto</span><span class="p">(</span><span class="n">workflow_execution</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                                <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.getWorkflowExecution"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.getWorkflowExecution">[docs]</a>    <span class="k">def</span> <span class="nf">getWorkflowExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">WorkflowExecutionRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_execution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">get_workflow_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">workflow_execution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span>
+                                             <span class="n">workflow_execution</span><span class="o">=</span><span class="n">workflow_execution_to_proto</span><span class="p">(</span><span class="n">workflow_execution</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                                <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.listWorkflowExecutions"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.listWorkflowExecutions">[docs]</a>    <span class="k">def</span> <span class="nf">listWorkflowExecutions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">WorkflowExecutionRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">workflow_execution_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">list_workflow_executions</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ListWorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">))</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">workflow_execution_list_to_proto</span><span class="p">(</span><span class="n">workflow_execution_list</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ListWorkflowExecutionResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                                    <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+    <span class="c1"># job interface</span>
+<div class="viewcode-block" id="SchedulerService.startJob"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.startJob">[docs]</a>    <span class="k">def</span> <span class="nf">startJob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleJobRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">start_job_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">job</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span> <span class="n">job</span><span class="o">=</span><span class="n">job_to_proto</span><span class="p">(</span><span class="n">job</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                      <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.stopJob"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.stopJob">[docs]</a>    <span class="k">def</span> <span class="nf">stopJob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleJobRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">stop_job_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">job</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span> <span class="n">job</span><span class="o">=</span><span class="n">job_to_proto</span><span class="p">(</span><span class="n">job</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                      <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.restartJob"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.restartJob">[docs]</a>    <span class="k">def</span> <span class="nf">restartJob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleJobRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">restart_job_execution</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">job</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span> <span class="n">job</span><span class="o">=</span><span class="n">job_to_proto</span><span class="p">(</span><span class="n">job</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                      <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.getJob"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.getJob">[docs]</a>    <span class="k">def</span> <span class="nf">getJob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleJobRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">get_job_executions</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span> <span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">jobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span>
+                    <span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                       <span class="n">error_message</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> do not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">job_name</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">),</span> <span class="n">job</span><span class="o">=</span><span class="n">job_to_proto</span><span class="p">(</span><span class="n">jobs</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                      <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SchedulerService.listJobs"><a class="viewcode-back" href="../../../source_rst/ai_flow.scheduler.html#ai_flow.scheduler.scheduler_service.SchedulerService.listJobs">[docs]</a>    <span class="k">def</span> <span class="nf">listJobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rq</span><span class="p">:</span> <span class="n">ScheduleJobRequest</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">job_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">list_job_executions</span><span class="p">(</span><span class="n">rq</span><span class="o">.</span><span class="n">execution_id</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ListJobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">))</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">job_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">job_list_to_proto</span><span class="p">(</span><span class="n">job_list</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ListJobInfoResponse</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">ResultProto</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">StatusProto</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                                          <span class="n">error_message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

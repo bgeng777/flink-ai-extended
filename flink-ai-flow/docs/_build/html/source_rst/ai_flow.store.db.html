@@ -1,0 +1,2429 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.store.db package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ai_flow.translator package" href="ai_flow.translator.html" />
+    <link rel="prev" title="ai_flow.store package" href="ai_flow.store.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="ai_flow.html">ai_flow package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ai_flow.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.ai_graph.html">ai_flow.ai_graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.api.html">ai_flow.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.client.html">ai_flow.client package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.common.html">ai_flow.common package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.context.html">ai_flow.context package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.endpoint.html">ai_flow.endpoint package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.exception.html">ai_flow.exception package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.graph.html">ai_flow.graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.log.html">ai_flow.log package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.meta.html">ai_flow.meta package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metadata_store.html">ai_flow.metadata_store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metric.html">ai_flow.metric package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.model_center.html">ai_flow.model_center package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.plugin_interface.html">ai_flow.plugin_interface package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.project.html">ai_flow.project package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.protobuf.html">ai_flow.protobuf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.runtime.html">ai_flow.runtime package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.scheduler.html">ai_flow.scheduler package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ai_flow.store.html">ai_flow.store package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="ai_flow.store.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.store.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.store.html#module-ai_flow.store.abstract_store">ai_flow.store.abstract_store module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.store.html#module-ai_flow.store.mongo_store">ai_flow.store.mongo_store module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ai_flow.store.html#module-ai_flow.store.sqlalchemy_store">ai_flow.store.sqlalchemy_store module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.translator.html">ai_flow.translator package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.workflow.html">ai_flow.workflow package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ai_flow.html">ai_flow package</a> &raquo;</li>
+        
+          <li><a href="ai_flow.store.html">ai_flow.store package</a> &raquo;</li>
+        
+      <li>ai_flow.store.db package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source_rst/ai_flow.store.db.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ai_flow.store.db">
+<span id="ai-flow-store-db-package"></span><h1>ai_flow.store.db package<a class="headerlink" href="#module-ai_flow.store.db" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow.store.db.base_model">
+<span id="ai-flow-store-db-base-model-module"></span><h2>ai_flow.store.db.base_model module<a class="headerlink" href="#module-ai_flow.store.db.base_model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.base_model.Base">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.base_model.</span></span><span class="sig-name descname"><span class="pre">Base</span></span><a class="reference internal" href="../_modules/ai_flow/store/db/base_model.html#Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.base_model.Base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.base_model.Base.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Column(None,</span> <span class="pre">BigInteger(),</span> <span class="pre">table=None,</span> <span class="pre">primary_key=True,</span> <span class="pre">nullable=False)</span></em><a class="headerlink" href="#ai_flow.store.db.base_model.Base.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.store.db.base_model.bi_c">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.base_model.</span></span><span class="sig-name descname"><span class="pre">bi_c</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compiler</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/base_model.html#bi_c"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.base_model.bi_c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.store.db.db_engine">
+<span id="ai-flow-store-db-db-engine-module"></span><h2>ai_flow.store.db.db_engine module<a class="headerlink" href="#module-ai_flow.store.db.db_engine" title="Permalink to this headline">¶</a></h2>
+<p>List of SQLAlchemy database engines for Rest Endpoint of AIFlow backend storage.</p>
+</div>
+<div class="section" id="module-ai_flow.store.db.db_model">
+<span id="ai-flow-store-db-db-model-module"></span><h2>ai_flow.store.db.db_model module<a class="headerlink" href="#module-ai_flow.store.db.db_model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoArtifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoArtifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of artifact in metadata backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.artifact_type">
+<span class="sig-name descname"><span class="pre">artifact_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.artifact_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.create_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.update_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoArtifact.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoArtifact.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of dataset in metadata backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.catalog_connection_uri">
+<span class="sig-name descname"><span class="pre">catalog_connection_uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.catalog_connection_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.catalog_database">
+<span class="sig-name descname"><span class="pre">catalog_database</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.catalog_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.catalog_name">
+<span class="sig-name descname"><span class="pre">catalog_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.catalog_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.catalog_table">
+<span class="sig-name descname"><span class="pre">catalog_table</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.catalog_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.catalog_type">
+<span class="sig-name descname"><span class="pre">catalog_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.catalog_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.create_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.name_list">
+<span class="sig-name descname"><span class="pre">name_list</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.name_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.type_list">
+<span class="sig-name descname"><span class="pre">type_list</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.type_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.update_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoDataset.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoDataset.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoMember</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoMember"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of cluster member.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.server_uri">
+<span class="sig-name descname"><span class="pre">server_uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.server_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.update_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMember.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMember.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoMetricMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoMetricMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of metric meta</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.dataset_name">
+<span class="sig-name descname"><span class="pre">dataset_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.dataset_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.end_time">
+<span class="sig-name descname"><span class="pre">end_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.end_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.job_name">
+<span class="sig-name descname"><span class="pre">job_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.job_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.metric_desc">
+<span class="sig-name descname"><span class="pre">metric_desc</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.metric_desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.metric_name">
+<span class="sig-name descname"><span class="pre">metric_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.metric_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.metric_type">
+<span class="sig-name descname"><span class="pre">metric_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.metric_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.model_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.start_time">
+<span class="sig-name descname"><span class="pre">start_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.start_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricMeta.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricMeta.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoMetricSummary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoMetricSummary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of metric summary</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.job_execution_id">
+<span class="sig-name descname"><span class="pre">job_execution_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.job_execution_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.metric_key">
+<span class="sig-name descname"><span class="pre">metric_key</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.metric_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.metric_name">
+<span class="sig-name descname"><span class="pre">metric_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.metric_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.metric_timestamp">
+<span class="sig-name descname"><span class="pre">metric_timestamp</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.metric_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.metric_value">
+<span class="sig-name descname"><span class="pre">metric_value</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.metric_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.model_version">
+<span class="sig-name descname"><span class="pre">model_version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.model_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoMetricSummary.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoMetricSummary.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoModelRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoModelRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of model relation in metadata backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.model_version_relation">
+<span class="sig-name descname"><span class="pre">model_version_relation</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.model_version_relation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list field that wraps a standard field, allowing multiple instances
+of the field to be used as a list in the database.</p>
+<p>If using with ReferenceFields see: <span class="xref std std-ref">one-to-many-with-listfields</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Required means it cannot be empty - as the default for ListFields is []</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.project_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelRelation.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelRelation.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoModelVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoModelVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of model version in Model Center backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.current_stage">
+<span class="sig-name descname"><span class="pre">current_stage</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.current_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.model_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.model_path">
+<span class="sig-name descname"><span class="pre">model_path</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.model_type">
+<span class="sig-name descname"><span class="pre">model_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.model_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.model_version">
+<span class="sig-name descname"><span class="pre">model_version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.model_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.name_version_current_stage_unique">
+<span class="sig-name descname"><span class="pre">name_version_current_stage_unique</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.name_version_current_stage_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.to_meta_entity">
+<span class="sig-name descname"><span class="pre">to_meta_entity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoModelVersion.to_meta_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.to_meta_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.version_desc">
+<span class="sig-name descname"><span class="pre">version_desc</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.version_desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersion.version_status">
+<span class="sig-name descname"><span class="pre">version_status</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersion.version_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoModelVersionRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoModelVersionRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of model version relation in metadata backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.model_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.project_snapshot_id">
+<span class="sig-name descname"><span class="pre">project_snapshot_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.project_snapshot_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoModelVersionRelation.version_model_id_unique">
+<span class="sig-name descname"><span class="pre">version_model_id_unique</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoModelVersionRelation.version_model_id_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoProject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoProject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of project in metadata backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.model_relation">
+<span class="sig-name descname"><span class="pre">model_relation</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.model_relation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list field that wraps a standard field, allowing multiple instances
+of the field to be used as a list in the database.</p>
+<p>If using with ReferenceFields see: <span class="xref std std-ref">one-to-many-with-listfields</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Required means it cannot be empty - as the default for ListFields is []</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProject.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProject.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoProjectSnapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoProjectSnapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of project snapshot in metadata backend storage</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.create_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>64-bit integer field. (Equivalent to IntField since the support to Python2 was dropped)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.model_version_relation">
+<span class="sig-name descname"><span class="pre">model_version_relation</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.model_version_relation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list field that wraps a standard field, allowing multiple instances
+of the field to be used as a list in the database.</p>
+<p>If using with ReferenceFields see: <span class="xref std std-ref">one-to-many-with-listfields</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Required means it cannot be empty - as the default for ListFields is []</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.project_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.signature">
+<span class="sig-name descname"><span class="pre">signature</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoProjectSnapshot.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoProjectSnapshot.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoRegisteredModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoRegisteredModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of registered model in Model Center backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.model_desc">
+<span class="sig-name descname"><span class="pre">model_desc</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.model_desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.model_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.model_version">
+<span class="sig-name descname"><span class="pre">model_version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.model_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list field that wraps a standard field, allowing multiple instances
+of the field to be used as a list in the database.</p>
+<p>If using with ReferenceFields see: <span class="xref std std-ref">one-to-many-with-listfields</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Required means it cannot be empty - as the default for ListFields is []</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.to_detail_entity">
+<span class="sig-name descname"><span class="pre">to_detail_entity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoRegisteredModel.to_detail_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.to_detail_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoRegisteredModel.to_meta_entity">
+<span class="sig-name descname"><span class="pre">to_meta_entity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoRegisteredModel.to_meta_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoRegisteredModel.to_meta_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">MongoWorkflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#MongoWorkflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.document.Document</span></code></p>
+<p>Document of workflow in metadata backend storage.</p>
+<p>Initialise a document or an embedded document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – A dictionary of keys and values for the document.
+It may contain additional reserved keywords, e.g. “__auto_convert”.</p></li>
+<li><p><strong>__auto_convert</strong> – If True, supplied values will be converted
+to Python-type values via each field’s <cite>to_python</cite> method.</p></li>
+<li><p><strong>_created</strong> – Indicates whether this is a brand new document
+or whether it’s already been persisted before. Defaults to true.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.DoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">mongoengine.errors.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Column(None,</span> <span class="pre">BigInteger(),</span> <span class="pre">table=None)</span></em><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.create_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field wrapper around MongoDB’s ObjectIds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean field type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default QuerySet Manager.</p>
+<p>Custom QuerySet Manager functions can extend this class and users can
+add extra queryset functionality.  Any custom manager methods must accept a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> class as its first argument, and a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code> as its second argument.</p>
+<p>The method function should return a <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code>
+, probably the same one that was passed in, but modified in some way.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.project_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>32-bit integer field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unicode string field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Column(None,</span> <span class="pre">BigInteger(),</span> <span class="pre">table=None)</span></em><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.update_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.MongoWorkflow.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.MongoWorkflow.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Provides a sequential counter see:</dt><dd><p><a class="reference external" href="https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers">https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectIDs-SequenceNumbers</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although traditional databases often use increasing sequence
+numbers for primary keys. In MongoDB, the preferred approach is to
+use Object IDs instead.  The concept is that in a very large
+cluster of machines, it is easier to create an object ID than have
+global, uniformly increasing sequence numbers.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – Name of the counter collection (default ‘mongoengine.counters’)</p></li>
+<li><p><strong>sequence_name</strong> – Name of the sequence in the collection (default ‘ClassName.counter’)</p></li>
+<li><p><strong>value_decorator</strong> – Any callable to use as a counter (default int)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Use any callable as <cite>value_decorator</cite> to transform calculated counter into
+any value suitable for your needs, e.g. string or hexadecimal
+representation of the default integer counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the counter is defined in the abstract document, it will be
+common to all inherited documents and the default sequence name will
+be the class name of the abstract document.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlArtifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlArtifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL table of artifact in metadata backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.artifact_type">
+<span class="sig-name descname"><span class="pre">artifact_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.artifact_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.create_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.update_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlArtifact.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlArtifact.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL table of dataset in metadata backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.catalog_connection_uri">
+<span class="sig-name descname"><span class="pre">catalog_connection_uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.catalog_connection_uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.catalog_database">
+<span class="sig-name descname"><span class="pre">catalog_database</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.catalog_database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.catalog_name">
+<span class="sig-name descname"><span class="pre">catalog_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.catalog_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.catalog_table">
+<span class="sig-name descname"><span class="pre">catalog_table</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.catalog_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.catalog_type">
+<span class="sig-name descname"><span class="pre">catalog_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.catalog_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.create_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.name_list">
+<span class="sig-name descname"><span class="pre">name_list</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.name_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.type_list">
+<span class="sig-name descname"><span class="pre">type_list</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.type_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.update_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlDataset.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlDataset.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<p>SQL model of event in Notification Service backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.create_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.event_type">
+<span class="sig-name descname"><span class="pre">event_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.event_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.key">
+<span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.to_event">
+<span class="sig-name descname"><span class="pre">to_event</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlEvent.to_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.to_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlEvent.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlEvent.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMember">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlMember</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlMember"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMember" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<p>SQL model of cluster member.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMember.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMember.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMember.server_uri">
+<span class="sig-name descname"><span class="pre">server_uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMember.server_uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMember.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMember.update_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMember.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMember.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMember.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMember.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlMetricMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlMetricMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL model of metric meta</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.dataset_name">
+<span class="sig-name descname"><span class="pre">dataset_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.dataset_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.end_time">
+<span class="sig-name descname"><span class="pre">end_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.end_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.job_name">
+<span class="sig-name descname"><span class="pre">job_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.job_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.metric_desc">
+<span class="sig-name descname"><span class="pre">metric_desc</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.metric_desc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.metric_name">
+<span class="sig-name descname"><span class="pre">metric_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.metric_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.metric_summary">
+<span class="sig-name descname"><span class="pre">metric_summary</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.metric_summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.metric_type">
+<span class="sig-name descname"><span class="pre">metric_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.metric_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.project_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.start_time">
+<span class="sig-name descname"><span class="pre">start_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.start_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricMeta.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricMeta.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlMetricSummary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlMetricSummary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL model of metric summary</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.job_execution_id">
+<span class="sig-name descname"><span class="pre">job_execution_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.job_execution_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.metric_key">
+<span class="sig-name descname"><span class="pre">metric_key</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.metric_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.metric_name">
+<span class="sig-name descname"><span class="pre">metric_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.metric_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.metric_summary">
+<span class="sig-name descname"><span class="pre">metric_summary</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.metric_summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.metric_timestamp">
+<span class="sig-name descname"><span class="pre">metric_timestamp</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.metric_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.metric_value">
+<span class="sig-name descname"><span class="pre">metric_value</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.metric_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.model_version">
+<span class="sig-name descname"><span class="pre">model_version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.model_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlMetricSummary.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlMetricSummary.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlModelRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlModelRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL table of model relation in metadata backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation.model_version_relation">
+<span class="sig-name descname"><span class="pre">model_version_relation</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation.model_version_relation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation.project">
+<span class="sig-name descname"><span class="pre">project</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation.project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation.project_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelRelation.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelRelation.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlModelVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlModelVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<p>SQL model of model version in Model Center backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.current_stage">
+<span class="sig-name descname"><span class="pre">current_stage</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.current_stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.model_path">
+<span class="sig-name descname"><span class="pre">model_path</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.model_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.model_type">
+<span class="sig-name descname"><span class="pre">model_type</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.model_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.model_version">
+<span class="sig-name descname"><span class="pre">model_version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.model_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.registered_model">
+<span class="sig-name descname"><span class="pre">registered_model</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.registered_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.to_meta_entity">
+<span class="sig-name descname"><span class="pre">to_meta_entity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlModelVersion.to_meta_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.to_meta_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.version_desc">
+<span class="sig-name descname"><span class="pre">version_desc</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.version_desc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersion.version_status">
+<span class="sig-name descname"><span class="pre">version_status</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersion.version_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlModelVersionRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlModelVersionRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<p>SQL table of model version relation in metadata backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation.model_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation.model_relation">
+<span class="sig-name descname"><span class="pre">model_relation</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation.model_relation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation.project_snapshot">
+<span class="sig-name descname"><span class="pre">project_snapshot</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation.project_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation.project_snapshot_id">
+<span class="sig-name descname"><span class="pre">project_snapshot_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation.project_snapshot_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlModelVersionRelation.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlModelVersionRelation.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlProject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlProject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL table of project in metadata backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.model_relation">
+<span class="sig-name descname"><span class="pre">model_relation</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.model_relation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.project_snapshot">
+<span class="sig-name descname"><span class="pre">project_snapshot</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.project_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.uri">
+<span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProject.workflow">
+<span class="sig-name descname"><span class="pre">workflow</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProject.workflow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlProjectSnapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlProjectSnapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL table of project snapshot in metadata backend storage</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot.create_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot.project">
+<span class="sig-name descname"><span class="pre">project</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot.project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot.project_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot.project_snapshot">
+<span class="sig-name descname"><span class="pre">project_snapshot</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot.project_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot.signature">
+<span class="sig-name descname"><span class="pre">signature</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot.signature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlProjectSnapshot.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlProjectSnapshot.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlRegisteredModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlRegisteredModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlRegisteredModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlRegisteredModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<p>SQL model of registered model in Model Center backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlRegisteredModel.model_desc">
+<span class="sig-name descname"><span class="pre">model_desc</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlRegisteredModel.model_desc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlRegisteredModel.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlRegisteredModel.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlRegisteredModel.model_version">
+<span class="sig-name descname"><span class="pre">model_version</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlRegisteredModel.model_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlRegisteredModel.to_detail_entity">
+<span class="sig-name descname"><span class="pre">to_detail_entity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlRegisteredModel.to_detail_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlRegisteredModel.to_detail_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlRegisteredModel.to_meta_entity">
+<span class="sig-name descname"><span class="pre">to_meta_entity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlRegisteredModel.to_meta_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlRegisteredModel.to_meta_entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_model.</span></span><span class="sig-name descname"><span class="pre">SqlWorkflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_model.html#SqlWorkflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code>, <a class="reference internal" href="#ai_flow.store.db.base_model.Base" title="ai_flow.store.db.base_model.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.store.db.base_model.Base</span></code></a></p>
+<p>SQL table of workflow in metadata backend storage.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<p>Only keys that are present as
+attributes of the instance’s class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.create_time">
+<span class="sig-name descname"><span class="pre">create_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.create_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.is_deleted">
+<span class="sig-name descname"><span class="pre">is_deleted</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.is_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.project">
+<span class="sig-name descname"><span class="pre">project</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.project_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.update_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_model.SqlWorkflow.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#ai_flow.store.db.db_model.SqlWorkflow.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.store.db.db_util">
+<span id="ai-flow-store-db-db-util-module"></span><h2>ai_flow.store.db.db_util module<a class="headerlink" href="#module-ai_flow.store.db.db_util" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_util.create_sqlalchemy_engine">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_util.</span></span><span class="sig-name descname"><span class="pre">create_sqlalchemy_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_util.html#create_sqlalchemy_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_util.create_sqlalchemy_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create SQLAlchemy engine with specified database URI to support AIFlow entities backend storage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_util.extract_db_engine_from_uri">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_util.</span></span><span class="sig-name descname"><span class="pre">extract_db_engine_from_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_util.html#extract_db_engine_from_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_util.extract_db_engine_from_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse specified database URI to extract database type. Confirm extracted database engine is
+supported. If database driver is specified, confirm driver passes a plausible regex.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ai_flow.store.db.db_util.parse_mongo_uri">
+<span class="sig-prename descclassname"><span class="pre">ai_flow.store.db.db_util.</span></span><span class="sig-name descname"><span class="pre">parse_mongo_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/store/db/db_util.html#parse_mongo_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.store.db.db_util.parse_mongo_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse MongoDB URI-style string to split up and return credentials</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>db_uri (string): MongoDB URI-style string</p>
+</dd>
+</dl>
+<p>Return:</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ai_flow.translator.html" class="btn btn-neutral float-right" title="ai_flow.translator package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.store.html" class="btn btn-neutral float-left" title="ai_flow.store package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

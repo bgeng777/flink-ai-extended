@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow_plugins.job_plugins.bash package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ai_flow_plugins.job_plugins.flink package" href="ai_flow_plugins.job_plugins.flink.html" />
+    <link rel="prev" title="ai_flow_plugins.job_plugins package" href="ai_flow_plugins.job_plugins.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="ai_flow_plugins.html">ai_flow_plugins package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ai_flow_plugins.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ai_flow_plugins.blob_manager_plugins.html">ai_flow_plugins.blob_manager_plugins package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ai_flow_plugins.job_plugins.html">ai_flow_plugins.job_plugins package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="ai_flow_plugins.job_plugins.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow_plugins.scheduler_plugins.html">ai_flow_plugins.scheduler_plugins package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ai_flow_plugins.html">ai_flow_plugins package</a> &raquo;</li>
+        
+          <li><a href="ai_flow_plugins.job_plugins.html">ai_flow_plugins.job_plugins package</a> &raquo;</li>
+        
+      <li>ai_flow_plugins.job_plugins.bash package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source_rst/ai_flow_plugins.job_plugins.bash.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ai_flow_plugins.job_plugins.bash">
+<span id="ai-flow-plugins-job-plugins-bash-package"></span><h1>ai_flow_plugins.job_plugins.bash package<a class="headerlink" href="#module-ai_flow_plugins.job_plugins.bash" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow_plugins.job_plugins.bash.bash_job_config">
+<span id="ai-flow-plugins-job-plugins-bash-bash-job-config-module"></span><h2>ai_flow_plugins.job_plugins.bash.bash_job_config module<a class="headerlink" href="#module-ai_flow_plugins.job_plugins.bash.bash_job_config" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_config.BashJobConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_job_config.</span></span><span class="sig-name descname"><span class="pre">BashJobConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="ai_flow.util.html#ai_flow.util.json_utils.Jsonable" title="ai_flow.util.json_utils.Jsonable"><span class="pre">ai_flow.util.json_utils.Jsonable</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_config.html#BashJobConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_config.BashJobConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job_config.JobConfig" title="ai_flow.workflow.job_config.JobConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.workflow.job_config.JobConfig</span></code></a></p>
+<p>BashJobConfig is the configuration of the bash job.
+It has a configuration item env, which represents the environment variables of the bash job.
+Example:</p>
+<blockquote>
+<div><dl>
+<dt>job_name:</dt><dd><p>job_type: bash
+properties:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>env:</dt><dd><p>a: a
+b: b</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_name</strong> – Name of the configured job.</p></li>
+<li><p><strong>job_type</strong> – The job type of the job, such as bash python etc..</p></li>
+<li><p><strong>properties</strong> – Properties of the configured job.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_config.BashJobConfig.env">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">env</span></span><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_config.BashJobConfig.env" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow_plugins.job_plugins.bash.bash_job_plugin">
+<span id="ai-flow-plugins-job-plugins-bash-bash-job-plugin-module"></span><h2>ai_flow_plugins.job_plugins.bash.bash_job_plugin module<a class="headerlink" href="#module-ai_flow_plugins.job_plugins.bash.bash_job_plugin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJob">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_job_plugin.</span></span><span class="sig-name descname"><span class="pre">BashJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job_config.JobConfig" title="ai_flow.workflow.job_config.JobConfig"><span class="pre">ai_flow.workflow.job_config.JobConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.workflow.job.Job</span></code></a></p>
+<p>BashJob is the description of bash type job.
+The processors_file field stores the serialized file of the BashProcessor
+(ai_flow_plugins.job_plugins.bash.bash_processor.BashProcessor).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>job_config</strong> – Job configuration information(ai_flow.workflow.job_config.JobConfig).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_job_plugin.</span></span><span class="sig-name descname"><span class="pre">BashJobController</span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobController" title="ai_flow.plugin_interface.job_plugin_interface.JobController"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobController</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.cleanup_job">
+<span class="sig-name descname"><span class="pre">cleanup_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController.cleanup_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.cleanup_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up temporary resources created during this execution.
+:param job_runtime_env: The job runtime environment. Type: ai_flow.runtime.job_runtime_env.JobRuntimeEnv
+:param job_handle: The job handle that contains the necessary information for an execution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.get_job_status">
+<span class="sig-name descname"><span class="pre">get_job_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.status.Status" title="ai_flow.workflow.status.Status"><span class="pre">ai_flow.workflow.status.Status</span></a></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController.get_job_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.get_job_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the job status.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.get_result">
+<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocking</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController.get_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the job result.
+:param job_handle: The job handle that contains the necessary information for an execution.
+:param blocking: blocking is true: Wait for the job to finish and return the result of the job.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>blocking is false: If the job is running, return None.</dt><dd><p>If the job is finish, return the result of job.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.stop_job">
+<span class="sig-name descname"><span class="pre">stop_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_handle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController.stop_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.stop_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop a ai flow job.
+:param job_runtime_env: The job runtime environment. Type: ai_flow.runtime.job_runtime_env.JobRuntimeEnv
+:param job_handle: The job handle that contains the necessary information for an execution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.submit_job">
+<span class="sig-name descname"><span class="pre">submit_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_runtime_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.runtime.html#ai_flow.runtime.job_runtime_env.JobRuntimeEnv" title="ai_flow.runtime.job_runtime_env.JobRuntimeEnv"><span class="pre">ai_flow.runtime.job_runtime_env.JobRuntimeEnv</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></a></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController.submit_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.submit_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit an executable job to run.
+:param job_runtime_env: The job runtime environment. Type: ai_flow.runtime.job_runtime_env.JobRuntimeEnv
+:param job: A job object that contains the necessary information for an execution.
+:return job_handle: a job handle that maintain the handler of a job runtime.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.submit_one_process">
+<span class="sig-name descname"><span class="pre">submit_one_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow_plugins.job_plugins.bash.bash_processor.BashProcessor" title="ai_flow_plugins.job_plugins.bash.bash_processor.BashProcessor"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_processor.BashProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">working_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobController.submit_one_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobController.submit_one_process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobGenerator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_job_plugin.</span></span><span class="sig-name descname"><span class="pre">BashJobGenerator</span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.translator.html#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.translator.translator.JobGenerator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobGenerator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.ai_graph.html#ai_flow.ai_graph.ai_graph.AISubGraph" title="ai_flow.ai_graph.ai_graph.AISubGraph"><span class="pre">ai_flow.ai_graph.ai_graph.AISubGraph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert AISubGraph(ai_flow.ai_graph.ai_graph.AISubGraph) to Job(ai_flow.workflow.job.Job)
+:param sub_graph: An executable Graph composed of AINode and data edges with the same job configuration.
+:param resource_dir: Store the executable files generated during the generation process.
+:return: Job(ai_flow.workflow.job.Job)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobHandle">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_job_plugin.</span></span><span class="sig-name descname"><span class="pre">BashJobHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.workflow.html#ai_flow.workflow.job.Job" title="ai_flow.workflow.job.Job"><span class="pre">ai_flow.workflow.job.Job</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_execution</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo" title="ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo"><span class="pre">ai_flow.plugin_interface.scheduler_interface.JobExecutionInfo</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobHandle" title="ai_flow.plugin_interface.job_plugin_interface.JobHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobHandle</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobHandle.processors_file">
+<span class="sig-name descname"><span class="pre">processors_file</span></span><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobHandle.processors_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>It saves the result dict of the bash child process.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobHandle.sub_process">
+<span class="sig-name descname"><span class="pre">sub_process</span></span><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobHandle.sub_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>It represents the serialized file of the processor.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_job_plugin.</span></span><span class="sig-name descname"><span class="pre">BashJobPluginFactory</span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobPluginFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory" title="ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobPluginFactory</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory.get_job_controller">
+<span class="sig-name descname"><span class="pre">get_job_controller</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.job_plugin_interface.JobController" title="ai_flow.plugin_interface.job_plugin_interface.JobController"><span class="pre">ai_flow.plugin_interface.job_plugin_interface.JobController</span></a></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobPluginFactory.get_job_controller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory.get_job_controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>:return a JobController which type is same with AbstractJobPluginFactory job_type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory.get_job_generator">
+<span class="sig-name descname"><span class="pre">get_job_generator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.translator.html#ai_flow.translator.translator.JobGenerator" title="ai_flow.translator.translator.JobGenerator"><span class="pre">ai_flow.translator.translator.JobGenerator</span></a></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobPluginFactory.get_job_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory.get_job_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>:return a JobGenerator which type is same with AbstractJobPluginFactory job_type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory.job_type">
+<span class="sig-name descname"><span class="pre">job_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_job_plugin.html#BashJobPluginFactory.job_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_job_plugin.BashJobPluginFactory.job_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The job type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow_plugins.job_plugins.bash.bash_processor">
+<span id="ai-flow-plugins-job-plugins-bash-bash-processor-module"></span><h2>ai_flow_plugins.job_plugins.bash.bash_processor module<a class="headerlink" href="#module-ai_flow_plugins.job_plugins.bash.bash_processor" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow_plugins.job_plugins.bash.bash_processor.BashProcessor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow_plugins.job_plugins.bash.bash_processor.</span></span><span class="sig-name descname"><span class="pre">BashProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bash_command</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_encoding</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow_plugins/job_plugins/bash/bash_processor.html#BashProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow_plugins.job_plugins.bash.bash_processor.BashProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>BashProcessor is the processor corresponding to the bash job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bash_command</strong> – The command of the bash job.</p></li>
+<li><p><strong>output_encoding</strong> – The bash job output encoding type.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ai_flow_plugins.job_plugins.flink.html" class="btn btn-neutral float-right" title="ai_flow_plugins.job_plugins.flink package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow_plugins.job_plugins.html" class="btn btn-neutral float-left" title="ai_flow_plugins.job_plugins package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
