@@ -84,3 +84,7 @@ html_use_index = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'flinkaiflowdoc'
+
+
+import subprocess
+subprocess.run(["bash", "./flink-ai-flow/docs/docgen.sh"])

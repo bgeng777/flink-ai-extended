@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.endpoint.client.model_center_client &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.endpoint.client.model_center_client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.endpoint.client.model_center_client</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">grpc</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.model_center.entity.model_version</span> <span class="kn">import</span> <span class="n">ModelVersion</span>
+<span class="kn">from</span> <span class="nn">ai_flow.model_center.entity.model_version_detail</span> <span class="kn">import</span> <span class="n">ModelVersionDetail</span>
+<span class="kn">from</span> <span class="nn">ai_flow.model_center.entity.model_version_stage</span> <span class="kn">import</span> <span class="n">ModelVersionStage</span>
+<span class="kn">from</span> <span class="nn">ai_flow.model_center.entity.registered_model</span> <span class="kn">import</span> <span class="n">RegisteredModel</span>
+<span class="kn">from</span> <span class="nn">ai_flow.model_center.entity.registered_model_detail</span> <span class="kn">import</span> <span class="n">RegisteredModelDetail</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf</span> <span class="kn">import</span> <span class="n">model_center_service_pb2_grpc</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.message_pb2</span> <span class="kn">import</span> <span class="n">ModelMetaParam</span><span class="p">,</span> <span class="n">RegisteredModelParam</span><span class="p">,</span> \
+    <span class="n">ModelVersionParam</span><span class="p">,</span> <span class="n">RegisteredModelDetail</span> <span class="k">as</span> <span class="n">ProtoModelDetail</span><span class="p">,</span> <span class="n">RegisteredModelMeta</span><span class="p">,</span> <span class="n">RegisteredModelMetas</span><span class="p">,</span> \
+    <span class="n">ModelVersionMeta</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.model_center_service_pb2</span> <span class="kn">import</span> <span class="n">CreateRegisteredModelRequest</span><span class="p">,</span> \
+    <span class="n">UpdateRegisteredModelRequest</span><span class="p">,</span> <span class="n">DeleteRegisteredModelRequest</span><span class="p">,</span> <span class="n">ListRegisteredModelsRequest</span><span class="p">,</span> \
+    <span class="n">GetRegisteredModelDetailRequest</span><span class="p">,</span> <span class="n">CreateModelVersionRequest</span><span class="p">,</span> <span class="n">UpdateModelVersionRequest</span><span class="p">,</span> <span class="n">DeleteModelVersionRequest</span><span class="p">,</span> \
+    <span class="n">GetModelVersionDetailRequest</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server</span> <span class="kn">import</span> <span class="n">stringValue</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.client.base_client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server.util</span> <span class="kn">import</span> <span class="n">_parse_response</span>
+
+
+<div class="viewcode-block" id="ModelCenterClient"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient">[docs]</a><span class="k">class</span> <span class="nc">ModelCenterClient</span><span class="p">(</span><span class="n">BaseClient</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_uri</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ModelCenterClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">server_uri</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="n">server_uri</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span> <span class="o">=</span> <span class="n">model_center_service_pb2_grpc</span><span class="o">.</span><span class="n">ModelCenterServiceStub</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ModelCenterClient.create_registered_model"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.create_registered_model">[docs]</a>    <span class="k">def</span> <span class="nf">create_registered_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RegisteredModelDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new registered model from given type in Model Center.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param model_desc: (Optional) Description of registered model.</span>
+
+<span class="sd">        :return: A single object of :py:class:`ai_flow.model_center.entity.RegisteredModelDetail` created in</span>
+<span class="sd">        Model Center.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">CreateRegisteredModelRequest</span><span class="p">(</span>
+            <span class="n">registered_model</span><span class="o">=</span><span class="n">RegisteredModelParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span>
+                                                  <span class="n">model_desc</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_desc</span><span class="p">)))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">createRegisteredModel</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">RegisteredModelDetail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">RegisteredModelMeta</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.update_registered_model"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.update_registered_model">[docs]</a>    <span class="k">def</span> <span class="nf">update_registered_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">new_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">model_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RegisteredModelDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update metadata for RegisteredModel entity backend. Either ``model_name`` or ``model_desc``</span>
+<span class="sd">        should be non-None. Backend raises exception if a registered model with given name does not exist.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param new_name: (Optional) New proposed name for the registered model.</span>
+<span class="sd">        :param model_desc: (Optional) Description of registered model.</span>
+
+<span class="sd">        :return: A single updated :py:class:`ai_flow.model_center.entity.RegisteredModelDetail` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">UpdateRegisteredModelRequest</span><span class="p">(</span>
+            <span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">)),</span>
+            <span class="n">registered_model</span><span class="o">=</span><span class="n">RegisteredModelParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">new_name</span><span class="p">),</span>
+                                                  <span class="n">model_desc</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_desc</span><span class="p">)))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">updateRegisteredModel</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">RegisteredModelDetail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">RegisteredModelMeta</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.delete_registered_model"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.delete_registered_model">[docs]</a>    <span class="k">def</span> <span class="nf">delete_registered_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RegisteredModelDetail</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete registered model by model name in Model Center backend.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+
+<span class="sd">        :return: A single :py:class:`ai_flow.entities.model_registry.RegisteredModel` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">DeleteRegisteredModelRequest</span><span class="p">(</span><span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">)))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">deleteRegisteredModel</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">RegisteredModel</span><span class="o">.</span><span class="n">from_resp_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">ModelMetaParam</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.list_registered_models"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.list_registered_models">[docs]</a>    <span class="k">def</span> <span class="nf">list_registered_models</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RegisteredModelDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List of all registered models in Model Center backend.</span>
+
+<span class="sd">        :return: List of :py:class:`ai_flow.model_center.entity.RegisteredModel` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">ListRegisteredModelsRequest</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">listRegisteredModels</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">registered_model_details</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">registered_model_detail</span> <span class="ow">in</span> <span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">RegisteredModelMetas</span><span class="p">())</span><span class="o">.</span><span class="n">registered_models</span><span class="p">:</span>
+            <span class="n">registered_model_details</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RegisteredModelDetail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">registered_model_detail</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">registered_model_details</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.get_registered_model_detail"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.get_registered_model_detail">[docs]</a>    <span class="k">def</span> <span class="nf">get_registered_model_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RegisteredModelDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get registered model detail filter by model name for Model Center.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+
+<span class="sd">        :return: A single :py:class:`ai_flow.entities.model_registry.RegisteredModelDetail` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">GetRegisteredModelDetailRequest</span><span class="p">(</span><span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">)))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">getRegisteredModelDetail</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">RegisteredModelDetail</span><span class="o">.</span><span class="n">from_detail_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">ProtoModelDetail</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.create_model_version"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.create_model_version">[docs]</a>    <span class="k">def</span> <span class="nf">create_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">current_stage</span><span class="o">=</span><span class="n">ModelVersionStage</span><span class="o">.</span><span class="n">GENERATED</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelVersionDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new model version from given source and metric in Model Center.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param model_path: Source path where the AIFlow model is stored.</span>
+<span class="sd">        :param model_type: (Optional) Type of AIFlow registered model option.</span>
+<span class="sd">        :param version_desc: (Optional) Description of registered model version.</span>
+<span class="sd">        :param current_stage: (Optional) Stage of registered model version.</span>
+
+<span class="sd">        :return: A single object of :py:class:`ai_flow.model_center.entity.ModelVersionDetail` created in</span>
+<span class="sd">        model repository.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">CreateModelVersionRequest</span><span class="p">(</span><span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">)),</span>
+                                            <span class="n">model_version</span><span class="o">=</span><span class="n">ModelVersionParam</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_path</span><span class="p">),</span>
+                                                                            <span class="n">model_type</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_type</span><span class="p">),</span>
+                                                                            <span class="n">version_desc</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">version_desc</span><span class="p">),</span>
+                                                                            <span class="n">current_stage</span><span class="o">=</span><span class="n">current_stage</span><span class="p">))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">createModelVersion</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ModelVersionDetail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">ModelVersionMeta</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.update_model_version"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.update_model_version">[docs]</a>    <span class="k">def</span> <span class="nf">update_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">version_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">current_stage</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelVersionDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update metadata for ModelVersion entity and metadata associated with a model version in backend.</span>
+<span class="sd">        Either ``model_path`` or ``model_type`` or ``version_desc`` should be non-None.</span>
+<span class="sd">        Backend raises exception if a registered model with given name does not exist.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param model_version: User-defined version of registered model.</span>
+<span class="sd">        :param model_path: (Optional) Source path where the AIFlow model is stored.</span>
+<span class="sd">        :param model_type: (Optional) Type of AIFlow registered model option.</span>
+<span class="sd">        :param version_desc: (Optional) Description of registered model version.</span>
+<span class="sd">        :param current_stage: (Optional) Current stage of registered model version.</span>
+
+<span class="sd">        :return: A single updated :py:class:`ai_flow.model_center.entity.ModelVersionDetail` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">UpdateModelVersionRequest</span><span class="p">(</span>
+            <span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span> <span class="n">model_version</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_version</span><span class="p">)),</span>
+            <span class="n">model_version</span><span class="o">=</span><span class="n">ModelVersionParam</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_path</span><span class="p">),</span>
+                                            <span class="n">model_type</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_type</span><span class="p">),</span>
+                                            <span class="n">version_desc</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">version_desc</span><span class="p">),</span>
+                                            <span class="n">current_stage</span><span class="o">=</span><span class="n">current_stage</span><span class="p">))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">updateModelVersion</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ModelVersionDetail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">ModelVersionMeta</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.delete_model_version"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.delete_model_version">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelVersion</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete model version by model name and version in Model Center backend.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param model_version: User-defined version of registered model.</span>
+
+<span class="sd">        :return: A single :py:class:`ai_flow.entities.model_registry.ModelVersion` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">DeleteModelVersionRequest</span><span class="p">(</span><span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span>
+                                                                      <span class="n">model_version</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_version</span><span class="p">)))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">deleteModelVersion</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ModelVersion</span><span class="o">.</span><span class="n">from_resp_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">ModelMetaParam</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="ModelCenterClient.get_model_version_detail"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.model_center_client.ModelCenterClient.get_model_version_detail">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_version_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelVersionDetail</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get model version detail filter by model name and model version for Model Center.</span>
+
+<span class="sd">        :param model_name: Name of registered model. This is expected to be unique in the backend store.</span>
+<span class="sd">        :param model_version: User-defined version of registered model.</span>
+
+<span class="sd">        :return: A single :py:class:`ai_flow.entities.model_registry.ModelVersionDetail` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">GetModelVersionDetailRequest</span><span class="p">(</span><span class="n">model_meta</span><span class="o">=</span><span class="n">ModelMetaParam</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span>
+                                                                         <span class="n">model_version</span><span class="o">=</span><span class="n">stringValue</span><span class="p">(</span><span class="n">model_version</span><span class="p">)))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_stub</span><span class="o">.</span><span class="n">getModelVersionDetail</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ModelVersionDetail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">ModelVersionMeta</span><span class="p">()))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

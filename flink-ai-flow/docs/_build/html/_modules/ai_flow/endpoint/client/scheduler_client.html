@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.endpoint.client.scheduler_client &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.endpoint.client.scheduler_client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.endpoint.client.scheduler_client</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">grpc</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf</span> <span class="kn">import</span> <span class="n">scheduling_service_pb2_grpc</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf</span> <span class="kn">import</span> <span class="n">scheduling_service_pb2</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.message_pb2</span> <span class="kn">import</span> <span class="n">WorkflowProto</span><span class="p">,</span> <span class="n">WorkflowExecutionProto</span><span class="p">,</span> <span class="n">JobProto</span><span class="p">,</span> <span class="n">StatusProto</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.client.base_client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+
+
+<div class="viewcode-block" id="SchedulerClient"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient">[docs]</a><span class="k">class</span> <span class="nc">SchedulerClient</span><span class="p">(</span><span class="n">BaseClient</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_uri</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SchedulerClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">server_uri</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="n">server_uri</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span> <span class="o">=</span> <span class="n">scheduling_service_pb2_grpc</span><span class="o">.</span><span class="n">SchedulingServiceStub</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SchedulerClient.submit_workflow_to_scheduler"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.submit_workflow_to_scheduler">[docs]</a>    <span class="k">def</span> <span class="nf">submit_workflow_to_scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                     <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                     <span class="n">workflow_json</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                     <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                     <span class="n">args</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Submit the ai flow workflow to the scheduler.</span>
+<span class="sd">        :param workflow_json:</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :param args: The arguments of the submit action.</span>
+<span class="sd">        :return: The result of the submit action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleWorkflowRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_json</span> <span class="o">=</span> <span class="n">workflow_json</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">submitWorkflow</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.delete_workflow"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.delete_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">delete_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                        <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                        <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the ai flow workflow from the scheduler.</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleWorkflowRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">deleteWorkflow</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.pause_workflow_scheduling"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.pause_workflow_scheduling">[docs]</a>    <span class="k">def</span> <span class="nf">pause_workflow_scheduling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                  <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                  <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pause the ai flow workflow from the scheduler.</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleWorkflowRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">pauseWorkflowScheduling</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.resume_workflow_scheduling"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.resume_workflow_scheduling">[docs]</a>    <span class="k">def</span> <span class="nf">resume_workflow_scheduling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                   <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                   <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resume the ai flow workflow from the scheduler.</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleWorkflowRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">resumeWorkflowScheduling</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.get_workflow"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.get_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                     <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                     <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the workflow information.</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: the workflow information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleWorkflowRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">getWorkflow</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.list_workflows"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.list_workflows">[docs]</a>    <span class="k">def</span> <span class="nf">list_workflows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowProto</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: All workflow information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleWorkflowRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">listWorkflows</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow_list</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.start_new_workflow_execution"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.start_new_workflow_execution">[docs]</a>    <span class="k">def</span> <span class="nf">start_new_workflow_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                     <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                     <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowExecutionProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the project under the current project path.</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: The result of the run action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">WorkflowExecutionRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">startNewWorkflowExecution</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.kill_all_workflow_executions"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.kill_all_workflow_executions">[docs]</a>    <span class="k">def</span> <span class="nf">kill_all_workflow_executions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                     <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                     <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowExecutionProto</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop all instances of the workflow.</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">WorkflowExecutionRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">killAllWorkflowExecutions</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution_list</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.kill_workflow_execution"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.kill_workflow_execution">[docs]</a>    <span class="k">def</span> <span class="nf">kill_workflow_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowExecutionProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop the instance of the workflow.</span>
+<span class="sd">        :param execution_id: The ai flow workflow execution identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">WorkflowExecutionRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">killWorkflowExecution</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.get_workflow_execution"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.get_workflow_execution">[docs]</a>    <span class="k">def</span> <span class="nf">get_workflow_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                               <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowExecutionProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the WorkflowExecutionInfo from scheduler.</span>
+<span class="sd">        :param execution_id:</span>
+<span class="sd">        :return: WorkflowExecutionInfo</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">WorkflowExecutionRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">getWorkflowExecution</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.list_workflow_executions"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.list_workflow_executions">[docs]</a>    <span class="k">def</span> <span class="nf">list_workflow_executions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                 <span class="n">namespace</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                                 <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowExecutionProto</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param namespace:</span>
+<span class="sd">        :param workflow_name: The ai flow workflow identify.</span>
+<span class="sd">        :return: All workflow executions of the workflow.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">WorkflowExecutionRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">listWorkflowExecutions</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">workflow_execution_list</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.start_job"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.start_job">[docs]</a>    <span class="k">def</span> <span class="nf">start_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                  <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start a job defined in the ai flow workflow.</span>
+<span class="sd">        :param job_name: The job name which task defined in workflow.</span>
+<span class="sd">        :param execution_id: The ai flow workflow execution identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleJobRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">job_name</span> <span class="o">=</span> <span class="n">job_name</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">startJob</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">job</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.stop_job"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.stop_job">[docs]</a>    <span class="k">def</span> <span class="nf">stop_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                 <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop a job defined in the ai flow workflow.</span>
+<span class="sd">        :param job_name: The job name which task defined in workflow.</span>
+<span class="sd">        :param execution_id: The ai flow workflow execution identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleJobRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">job_name</span> <span class="o">=</span> <span class="n">job_name</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">stopJob</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">job</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.restart_job"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.restart_job">[docs]</a>    <span class="k">def</span> <span class="nf">restart_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                    <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restart a task defined in the ai flow workflow.</span>
+<span class="sd">        :param job_name: The job name which task defined in workflow.</span>
+<span class="sd">        :param execution_id: The ai flow workflow execution identify.</span>
+<span class="sd">        :return: The result of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleJobRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">job_name</span> <span class="o">=</span> <span class="n">job_name</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">restartJob</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">job</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.get_job"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.get_job">[docs]</a>    <span class="k">def</span> <span class="nf">get_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">:</span> <span class="n">Text</span><span class="p">,</span>
+                <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobProto</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get job information by job name.</span>
+<span class="sd">        :param job_name:</span>
+<span class="sd">        :param execution_id:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleJobRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">job_name</span> <span class="o">=</span> <span class="n">job_name</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">getJob</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">job</span></div>
+
+<div class="viewcode-block" id="SchedulerClient.list_jobs"><a class="viewcode-back" href="../../../../source_rst/ai_flow.endpoint.client.html#ai_flow.endpoint.client.scheduler_client.SchedulerClient.list_jobs">[docs]</a>    <span class="k">def</span> <span class="nf">list_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">execution_id</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">JobProto</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List the jobs of the workflow execution.</span>
+<span class="sd">        :param execution_id:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">scheduling_service_pb2</span><span class="o">.</span><span class="n">ScheduleJobRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">execution_id</span> <span class="o">=</span> <span class="n">execution_id</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduling_stub</span><span class="o">.</span><span class="n">listJobs</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">StatusProto</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">job_list</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
