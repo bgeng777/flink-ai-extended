@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.scheduler package &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ai_flow.store package" href="ai_flow.store.html" />
+    <link rel="prev" title="ai_flow.runtime package" href="ai_flow.runtime.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="ai_flow.html">ai_flow package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ai_flow.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.ai_graph.html">ai_flow.ai_graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.api.html">ai_flow.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.client.html">ai_flow.client package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.common.html">ai_flow.common package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.context.html">ai_flow.context package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.endpoint.html">ai_flow.endpoint package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.exception.html">ai_flow.exception package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.graph.html">ai_flow.graph package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.log.html">ai_flow.log package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.meta.html">ai_flow.meta package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metadata_store.html">ai_flow.metadata_store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.metric.html">ai_flow.metric package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.model_center.html">ai_flow.model_center package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.plugin_interface.html">ai_flow.plugin_interface package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.project.html">ai_flow.project package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.protobuf.html">ai_flow.protobuf package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.runtime.html">ai_flow.runtime package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ai_flow.scheduler package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.scheduler.scheduler_factory">ai_flow.scheduler.scheduler_factory module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ai_flow.scheduler.scheduler_service">ai_flow.scheduler.scheduler_service module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.store.html">ai_flow.store package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.translator.html">ai_flow.translator package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.util.html">ai_flow.util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ai_flow.workflow.html">ai_flow.workflow package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ai_flow.html">ai_flow package</a> &raquo;</li>
+        
+      <li>ai_flow.scheduler package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source_rst/ai_flow.scheduler.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ai_flow.scheduler">
+<span id="ai-flow-scheduler-package"></span><h1>ai_flow.scheduler package<a class="headerlink" href="#module-ai_flow.scheduler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ai_flow.scheduler.scheduler_factory">
+<span id="ai-flow-scheduler-scheduler-factory-module"></span><h2>ai_flow.scheduler.scheduler_factory module<a class="headerlink" href="#module-ai_flow.scheduler.scheduler_factory" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_factory.SchedulerFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.scheduler.scheduler_factory.</span></span><span class="sig-name descname"><span class="pre">SchedulerFactory</span></span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_factory.html#SchedulerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_factory.SchedulerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>SchedulerFactory creates scheduler() based on configuration information.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_factory.SchedulerFactory.create_scheduler">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">create_scheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ai_flow.plugin_interface.html#ai_flow.plugin_interface.scheduler_interface.Scheduler" title="ai_flow.plugin_interface.scheduler_interface.Scheduler"><span class="pre">ai_flow.plugin_interface.scheduler_interface.Scheduler</span></a></span></span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_factory.html#SchedulerFactory.create_scheduler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_factory.SchedulerFactory.create_scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> – The class name of a scheduler(ai_flow.plugin_interface.scheduler_interface.Scheduler)</p></li>
+<li><p><strong>config</strong> – The configuration of the scheduler.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ai_flow.scheduler.scheduler_service">
+<span id="ai-flow-scheduler-scheduler-service-module"></span><h2>ai_flow.scheduler.scheduler_service module<a class="headerlink" href="#module-ai_flow.scheduler.scheduler_service" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.scheduler.scheduler_service.</span></span><span class="sig-name descname"><span class="pre">SchedulerService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler_service_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig" title="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig"><span class="pre">ai_flow.scheduler.scheduler_service.SchedulerServiceConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ai_flow.protobuf.html#ai_flow.protobuf.scheduling_service_pb2_grpc.SchedulingServiceServicer" title="ai_flow.protobuf.scheduling_service_pb2_grpc.SchedulingServiceServicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ai_flow.protobuf.scheduling_service_pb2_grpc.SchedulingServiceServicer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.deleteWorkflow">
+<span class="sig-name descname"><span class="pre">deleteWorkflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.deleteWorkflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.deleteWorkflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.getJob">
+<span class="sig-name descname"><span class="pre">getJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.getJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.getJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.getWorkflow">
+<span class="sig-name descname"><span class="pre">getWorkflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.getWorkflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.getWorkflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.getWorkflowExecution">
+<span class="sig-name descname"><span class="pre">getWorkflowExecution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.getWorkflowExecution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.getWorkflowExecution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.killAllWorkflowExecutions">
+<span class="sig-name descname"><span class="pre">killAllWorkflowExecutions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.killAllWorkflowExecutions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.killAllWorkflowExecutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.killWorkflowExecution">
+<span class="sig-name descname"><span class="pre">killWorkflowExecution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.killWorkflowExecution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.killWorkflowExecution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.listJobs">
+<span class="sig-name descname"><span class="pre">listJobs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.listJobs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.listJobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.listWorkflowExecutions">
+<span class="sig-name descname"><span class="pre">listWorkflowExecutions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.listWorkflowExecutions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.listWorkflowExecutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.listWorkflows">
+<span class="sig-name descname"><span class="pre">listWorkflows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.listWorkflows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.listWorkflows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.pauseWorkflowScheduling">
+<span class="sig-name descname"><span class="pre">pauseWorkflowScheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.pauseWorkflowScheduling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.pauseWorkflowScheduling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.restartJob">
+<span class="sig-name descname"><span class="pre">restartJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.restartJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.restartJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.resumeWorkflowScheduling">
+<span class="sig-name descname"><span class="pre">resumeWorkflowScheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.resumeWorkflowScheduling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.resumeWorkflowScheduling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.startJob">
+<span class="sig-name descname"><span class="pre">startJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.startJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.startJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>job api</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.startNewWorkflowExecution">
+<span class="sig-name descname"><span class="pre">startNewWorkflowExecution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.startNewWorkflowExecution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.startNewWorkflowExecution" title="Permalink to this definition">¶</a></dt>
+<dd><p>workflow execution api</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.stopJob">
+<span class="sig-name descname"><span class="pre">stopJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.stopJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.stopJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing associated documentation comment in .proto file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerService.submitWorkflow">
+<span class="sig-name descname"><span class="pre">submitWorkflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerService.submitWorkflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerService.submitWorkflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>workflow api</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ai_flow.scheduler.scheduler_service.</span></span><span class="sig-name descname"><span class="pre">SchedulerServiceConfig</span></span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.repository">
+<span class="sig-name descname"><span class="pre">repository</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig.repository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.repository" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.scheduler_class_name">
+<span class="sig-name descname"><span class="pre">scheduler_class_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig.scheduler_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.scheduler_class_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.scheduler_config">
+<span class="sig-name descname"><span class="pre">scheduler_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig.scheduler_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.scheduler_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_repository">
+<span class="sig-name descname"><span class="pre">set_repository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig.set_repository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_repository" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_scheduler_class_name">
+<span class="sig-name descname"><span class="pre">set_scheduler_class_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig.set_scheduler_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_scheduler_class_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_scheduler_config">
+<span class="sig-name descname"><span class="pre">set_scheduler_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ai_flow/scheduler/scheduler_service.html#SchedulerServiceConfig.set_scheduler_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ai_flow.scheduler.scheduler_service.SchedulerServiceConfig.set_scheduler_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ai_flow.store.html" class="btn btn-neutral float-right" title="ai_flow.store package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ai_flow.runtime.html" class="btn btn-neutral float-left" title="ai_flow.runtime package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

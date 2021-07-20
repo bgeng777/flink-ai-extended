@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ai_flow.metadata_store.service.service &mdash; Flink AI Flow 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Flink AI Flow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source_rst/ai_flow.html">ai_flow package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source_rst/ai_flow_plugins.html">ai_flow_plugins package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Flink AI Flow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ai_flow.metadata_store.service.service</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ai_flow.metadata_store.service.service</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Licensed to the Apache Software Foundation (ASF) under one</span>
+<span class="c1"># or more contributor license agreements.  See the NOTICE file</span>
+<span class="c1"># distributed with this work for additional information</span>
+<span class="c1"># regarding copyright ownership.  The ASF licenses this file</span>
+<span class="c1"># to you under the Apache License, Version 2.0 (the</span>
+<span class="c1"># &quot;License&quot;); you may not use this file except in compliance</span>
+<span class="c1"># with the License.  You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span>
+<span class="c1"># KIND, either express or implied.  See the License for the</span>
+<span class="c1"># specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">ai_flow.common.status</span> <span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">ai_flow.meta.dataset_meta</span> <span class="kn">import</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">ai_flow.metadata_store.utils.MetaToProto</span> <span class="kn">import</span> <span class="n">MetaToProto</span>
+<span class="kn">from</span> <span class="nn">ai_flow.metadata_store.utils.ProtoToMeta</span> <span class="kn">import</span> <span class="n">ProtoToMeta</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf</span> <span class="kn">import</span> <span class="n">metadata_service_pb2_grpc</span>
+<span class="kn">from</span> <span class="nn">ai_flow.protobuf.message_pb2</span> <span class="kn">import</span> <span class="n">DataTypeProto</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.client.model_center_client</span> <span class="kn">import</span> <span class="n">ModelCenterClient</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server.util</span> <span class="kn">import</span> <span class="n">_wrap_meta_response</span><span class="p">,</span> <span class="n">transform_dataset_meta</span><span class="p">,</span> \
+    <span class="n">_warp_dataset_list_response</span><span class="p">,</span> <span class="n">_wrap_delete_response</span><span class="p">,</span> <span class="n">transform_model_relation_meta</span><span class="p">,</span> \
+    <span class="n">_warp_model_relation_list_response</span><span class="p">,</span> <span class="n">_warp_model_version_relation_list_response</span><span class="p">,</span> \
+    <span class="n">transform_model_version_relation_meta</span><span class="p">,</span> <span class="n">_warp_project_list_response</span><span class="p">,</span> <span class="n">transform_project_meta</span><span class="p">,</span> <span class="n">catch_exception</span><span class="p">,</span> \
+    <span class="n">transform_model_meta</span><span class="p">,</span> <span class="n">transform_model_version_meta</span><span class="p">,</span> <span class="n">transform_artifact_meta</span><span class="p">,</span> <span class="n">_warp_artifact_list_response</span><span class="p">,</span> \
+    <span class="n">transform_workflow_meta</span><span class="p">,</span> <span class="n">_wrap_workflow_list_response</span>
+<span class="kn">from</span> <span class="nn">ai_flow.store.sqlalchemy_store</span> <span class="kn">import</span> <span class="n">SqlAlchemyStore</span>
+<span class="kn">from</span> <span class="nn">ai_flow.store.mongo_store</span> <span class="kn">import</span> <span class="n">MongoStore</span>
+<span class="kn">from</span> <span class="nn">ai_flow.store.db.db_util</span> <span class="kn">import</span> <span class="n">extract_db_engine_from_uri</span><span class="p">,</span> <span class="n">parse_mongo_uri</span>
+<span class="kn">from</span> <span class="nn">ai_flow.endpoint.server.server_config</span> <span class="kn">import</span> <span class="n">DBType</span>
+
+
+<div class="viewcode-block" id="MetadataService"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService">[docs]</a><span class="k">class</span> <span class="nc">MetadataService</span><span class="p">(</span><span class="n">metadata_service_pb2_grpc</span><span class="o">.</span><span class="n">MetadataServiceServicer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_uri</span><span class="p">,</span> <span class="n">server_uri</span><span class="p">):</span>
+        <span class="n">db_engine</span> <span class="o">=</span> <span class="n">extract_db_engine_from_uri</span><span class="p">(</span><span class="n">db_uri</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">DBType</span><span class="o">.</span><span class="n">value_of</span><span class="p">(</span><span class="n">db_engine</span><span class="p">)</span> <span class="o">==</span> <span class="n">DBType</span><span class="o">.</span><span class="n">MONGODB</span><span class="p">:</span>
+            <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">parse_mongo_uri</span><span class="p">(</span><span class="n">db_uri</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">MongoStore</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span>
+                                    <span class="n">port</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">),</span>
+                                    <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
+                                    <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+                                    <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">SqlAlchemyStore</span><span class="p">(</span><span class="n">db_uri</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span> <span class="o">=</span> <span class="n">ModelCenterClient</span><span class="p">(</span><span class="n">server_uri</span><span class="p">)</span>
+
+    <span class="sd">&#39;&#39;&#39;dataset api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getDatasetById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getDatasetById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getDatasetById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_dataset_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">dataset_meta_to_proto</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getDatasetByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getDatasetByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getDatasetByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_dataset_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">dataset_meta_to_proto</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerDataset"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerDataset">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">transform_dataset_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="n">dataset_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                   <span class="n">data_format</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
+                                                   <span class="n">description</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                                                   <span class="n">uri</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                                                   <span class="n">properties</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span>
+                                                   <span class="n">name_list</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name_list</span><span class="p">,</span>
+                                                   <span class="n">type_list</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">type_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">dataset_meta_to_proto</span><span class="p">(</span><span class="n">dataset_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerDatasetWithCatalog"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerDatasetWithCatalog">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerDatasetWithCatalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">transform_dataset_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="n">dataset_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_dataset_with_catalog</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                                <span class="n">catalog_name</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">catalog_name</span><span class="p">,</span>
+                                                                <span class="n">catalog_type</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">catalog_type</span><span class="p">,</span>
+                                                                <span class="n">catalog_database</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">catalog_database</span><span class="p">,</span>
+                                                                <span class="n">catalog_connection_uri</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">catalog_connection_uri</span><span class="p">,</span>
+                                                                <span class="n">catalog_table</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">catalog_table</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">dataset_meta_to_proto</span><span class="p">(</span><span class="n">dataset_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerDatasets"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerDatasets">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerDatasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">_datasets</span> <span class="o">=</span> <span class="n">ProtoToMeta</span><span class="o">.</span><span class="n">proto_to_dataset_meta_list</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">datasets</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_datasets</span><span class="p">(</span><span class="n">_datasets</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_dataset_list_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.updateDataset"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.updateDataset">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">updateDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span> <span class="o">==</span> <span class="p">{}</span> <span class="k">else</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span>
+        <span class="n">name_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">name_list</span>
+        <span class="n">type_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">type_list</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name_list</span><span class="p">:</span>
+            <span class="n">name_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">type_list</span><span class="p">:</span>
+            <span class="n">data_type_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_type_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">data_type</span> <span class="ow">in</span> <span class="n">type_list</span><span class="p">:</span>
+                <span class="n">data_type_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataType</span><span class="p">(</span><span class="n">DataTypeProto</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">data_type</span><span class="p">)))</span>
+        <span class="n">dataset_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                 <span class="n">data_format</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data_format</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                     <span class="s1">&#39;data_format&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">description</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                     <span class="s1">&#39;description&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">uri</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
+                                                 <span class="n">name_list</span><span class="o">=</span><span class="n">name_list</span><span class="p">,</span>
+                                                 <span class="n">type_list</span><span class="o">=</span><span class="n">data_type_list</span><span class="p">,</span>
+                                                 <span class="n">catalog_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">catalog_name</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                     <span class="s1">&#39;catalog_name&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">catalog_type</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">catalog_type</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                     <span class="s1">&#39;catalog_type&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">catalog_database</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">catalog_database</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                     <span class="s1">&#39;catalog_database&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">catalog_connection_uri</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">catalog_connection_uri</span><span class="o">.</span><span class="n">value</span> \
+                                                     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;catalog_connection_uri&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">catalog_table</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">catalog_table</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                     <span class="s1">&#39;catalog_table&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">dataset_meta_to_proto</span><span class="p">(</span><span class="n">dataset_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.listDatasets"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.listDatasets">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listDatasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">dataset_meta_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_datasets</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_dataset_list_response</span><span class="p">(</span><span class="n">dataset_meta_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteDatasetById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteDatasetById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteDatasetById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_dataset_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteDatasetByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteDatasetByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteDatasetByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_dataset_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+    <span class="sd">&#39;&#39;&#39;model relation api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getModelRelationById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getModelRelationById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getModelRelationById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_relation_meta_to_proto</span><span class="p">(</span><span class="n">model_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getModelRelationByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getModelRelationByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getModelRelationByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_relation_meta_to_proto</span><span class="p">(</span><span class="n">model_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerModelRelation"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerModelRelation">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerModelRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">transform_model_relation_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">model_relation</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_model_relation</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_relation_meta_to_proto</span><span class="p">(</span><span class="n">response</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.listModelRelation"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.listModelRelation">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listModelRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_model_relation</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_model_relation_list_response</span><span class="p">(</span><span class="n">model_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteModelRelationById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteModelRelationById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteModelRelationById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_model_relation_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteModelRelationByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteModelRelationByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteModelRelationByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+    <span class="sd">&#39;&#39;&#39;model api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getModelById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getModelById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getModelById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_relation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_detail</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">get_registered_model_detail</span><span class="p">(</span><span class="n">model_relation</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_meta_to_proto</span><span class="p">(</span><span class="n">model_relation</span><span class="p">,</span> <span class="n">model_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getModelByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getModelByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getModelByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">model_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">get_registered_model_detail</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_meta_to_proto</span><span class="p">(</span><span class="n">model_relation</span><span class="p">,</span> <span class="n">model_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerModel"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerModel">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">transform_model_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">model_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">create_registered_model</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                                        <span class="n">model</span><span class="o">.</span><span class="n">model_desc</span><span class="p">)</span>
+        <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_model_relation</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_meta_to_proto</span><span class="p">(</span><span class="n">model_relation</span><span class="p">,</span> <span class="n">model_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteModelById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteModelById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteModelById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_relation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">Status</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_relation_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_model_relation_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">delete_registered_model</span><span class="p">(</span><span class="n">model_relation</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">model_relation_status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteModelByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteModelByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteModelByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_relation_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">delete_registered_model</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">model_relation_status</span><span class="p">)</span></div>
+
+    <span class="sd">&#39;&#39;&#39;model version relation api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getModelVersionRelationByVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getModelVersionRelationByVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getModelVersionRelationByVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_version_relation_by_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_relation_meta_to_proto</span><span class="p">(</span><span class="n">model_version_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.listModelVersionRelation"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.listModelVersionRelation">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listModelVersionRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_meta_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_model_version_relation</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span>
+                                                                         <span class="n">request</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_model_version_relation_list_response</span><span class="p">(</span><span class="n">model_version_meta_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerModelVersionRelation"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerModelVersionRelation">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerModelVersionRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version</span> <span class="o">=</span> <span class="n">transform_model_version_relation_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">model_version_relation</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_model_version_relation</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">model_version</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                                                              <span class="n">model_id</span><span class="o">=</span><span class="n">model_version</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
+                                                              <span class="n">project_snapshot_id</span><span class="o">=</span><span class="n">model_version</span><span class="o">.</span><span class="n">project_snapshot_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_relation_meta_to_proto</span><span class="p">(</span><span class="n">response</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteModelVersionRelationByVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteModelVersionRelationByVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteModelVersionRelationByVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_model_version_relation_by_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+    <span class="sd">&#39;&#39;&#39;model version api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getModelVersionByVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getModelVersionByVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getModelVersionByVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_version_relation_by_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_version_relation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_version_detail</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_id</span><span class="p">(</span><span class="n">model_version_relation</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+            <span class="n">model_version_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">get_model_version_detail</span><span class="p">(</span><span class="n">model_relation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span>
+            <span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_meta_to_proto</span><span class="p">(</span><span class="n">model_version_relation</span><span class="p">,</span> <span class="n">model_version_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerModelVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerModelVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerModelVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version</span> <span class="o">=</span> <span class="n">transform_model_version_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">model_version</span><span class="p">)</span>
+        <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_id</span><span class="p">(</span><span class="n">model_version</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+        <span class="n">model_version_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">create_model_version</span><span class="p">(</span><span class="n">model_relation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                                             <span class="n">model_version</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span>
+                                                                             <span class="n">model_version</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+                                                                             <span class="n">model_version</span><span class="o">.</span><span class="n">version_desc</span><span class="p">,</span>
+                                                                             <span class="n">request</span><span class="o">.</span><span class="n">model_version</span><span class="o">.</span><span class="n">current_stage</span><span class="p">)</span>
+        <span class="n">model_version_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_model_version_relation</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">model_version_detail</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                                                                            <span class="n">model_id</span><span class="o">=</span><span class="n">model_version</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
+                                                                            <span class="n">project_snapshot_id</span><span class="o">=</span>
+                                                                            <span class="n">model_version</span><span class="o">.</span><span class="n">project_snapshot_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span>
+            <span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_meta_to_proto</span><span class="p">(</span><span class="n">model_version_relation</span><span class="p">,</span> <span class="n">model_version_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteModelVersionByVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteModelVersionByVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteModelVersionByVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_version_relation_by_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_version_relation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">Status</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_version__status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_model_version_relation_by_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+            <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_id</span><span class="p">(</span><span class="n">model_version_relation</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">model_relation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model_center_client</span><span class="o">.</span><span class="n">delete_model_version</span><span class="p">(</span><span class="n">model_relation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">model_version__status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.getDeployedModelVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getDeployedModelVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getDeployedModelVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_deployed_model_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_version_detail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_version_relation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">model_version_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_version_relation_by_version</span><span class="p">(</span>
+                <span class="n">model_version_detail</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                <span class="n">model_relation</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span>
+            <span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_store_to_proto</span><span class="p">(</span><span class="n">model_version_relation</span><span class="p">,</span> <span class="n">model_version_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getLatestValidatedModelVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getLatestValidatedModelVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getLatestValidatedModelVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_latest_validated_model_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_version_detail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_version_relation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">model_version_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_version_relation_by_version</span><span class="p">(</span>
+                <span class="n">model_version_detail</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                <span class="n">model_relation</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span>
+            <span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_store_to_proto</span><span class="p">(</span><span class="n">model_version_relation</span><span class="p">,</span> <span class="n">model_version_detail</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getLatestGeneratedModelVersion"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getLatestGeneratedModelVersion">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getLatestGeneratedModelVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">model_version_detail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_latest_generated_model_version</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_version_detail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_version_relation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_relation_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">model_version_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_model_version_relation_by_version</span><span class="p">(</span>
+                <span class="n">model_version_detail</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                <span class="n">model_relation</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span>
+            <span class="n">MetaToProto</span><span class="o">.</span><span class="n">model_version_store_to_proto</span><span class="p">(</span><span class="n">model_version_relation</span><span class="p">,</span> <span class="n">model_version_detail</span><span class="p">))</span></div>
+
+    <span class="sd">&#39;&#39;&#39;project api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getProjectById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getProjectById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getProjectById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">project_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_project_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">project_meta_to_proto</span><span class="p">(</span><span class="n">project_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getProjectByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getProjectByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getProjectByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">project_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_project_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">project_meta_to_proto</span><span class="p">(</span><span class="n">project_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.listProject"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.listProject">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">project_meta_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_project</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_project_list_response</span><span class="p">(</span><span class="n">project_meta_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerProject"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerProject">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">transform_project_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">project</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_project</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">project_meta_to_proto</span><span class="p">(</span><span class="n">response</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.updateProject"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.updateProject">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">updateProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span> <span class="o">==</span> <span class="p">{}</span> <span class="k">else</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_project</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                            <span class="n">uri</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">project_meta_to_proto</span><span class="p">(</span><span class="n">project</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteProjectById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteProjectById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteProjectById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_project_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteProjectByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteProjectByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteProjectByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_project_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+    <span class="sd">&#39;&#39;&#39;artifact api&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="MetadataService.getArtifactById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getArtifactById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getArtifactById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">artifact_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_artifact_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">artifact_meta_to_proto</span><span class="p">(</span><span class="n">artifact_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getArtifactByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getArtifactByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">getArtifactByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">artifact_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_artifact_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">artifact_meta_to_proto</span><span class="p">(</span><span class="n">artifact_meta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerArtifact"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerArtifact">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerArtifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">artifact</span> <span class="o">=</span> <span class="n">transform_artifact_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">artifact</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_artifact</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">artifact_type</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">artifact_type</span><span class="p">,</span>
+                                                <span class="n">description</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                                                <span class="n">properties</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">artifact_meta_to_proto</span><span class="p">(</span><span class="n">response</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.updateArtifact"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.updateArtifact">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">updateArtifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span> <span class="o">==</span> <span class="p">{}</span> <span class="k">else</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span>
+        <span class="n">artifact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_artifact</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                              <span class="n">artifact_type</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">artifact_type</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                  <span class="s1">&#39;artifact_type&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                              <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
+                                              <span class="n">description</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span>
+                                                  <span class="s1">&#39;description&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                              <span class="n">uri</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                              <span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">artifact_meta_to_proto</span><span class="p">(</span><span class="n">artifact</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.listArtifact"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.listArtifact">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">listArtifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">artifact_meta_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_artifact</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_warp_artifact_list_response</span><span class="p">(</span><span class="n">artifact_meta_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteArtifactById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteArtifactById">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteArtifactById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_artifact_by_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteArtifactByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteArtifactByName">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">deleteArtifactByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_artifact_by_name</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.registerWorkflow"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.registerWorkflow">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">registerWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="n">transform_workflow_meta</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">workflow</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">register_workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                <span class="n">project_id</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span>
+                                                <span class="n">properties</span><span class="o">=</span><span class="n">workflow</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">workflow_meta_to_proto</span><span class="p">(</span><span class="n">response</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.updateWorkflow"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.updateWorkflow">[docs]</a>    <span class="nd">@catch_exception</span>
+    <span class="k">def</span> <span class="nf">updateWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span> <span class="o">==</span> <span class="p">{}</span> <span class="k">else</span> <span class="n">request</span><span class="o">.</span><span class="n">properties</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_workflow</span><span class="p">(</span><span class="n">workflow_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">,</span>
+                                              <span class="n">project_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                                              <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">workflow_meta_to_proto</span><span class="p">(</span><span class="n">workflow</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getWorkflowById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getWorkflowById">[docs]</a>    <span class="k">def</span> <span class="nf">getWorkflowById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_workflow_by_id</span><span class="p">(</span><span class="n">workflow_id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">workflow_meta_to_proto</span><span class="p">(</span><span class="n">workflow</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.getWorkflowByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.getWorkflowByName">[docs]</a>    <span class="k">def</span> <span class="nf">getWorkflowByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_workflow_by_name</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                                                   <span class="n">workflow_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_meta_response</span><span class="p">(</span><span class="n">MetaToProto</span><span class="o">.</span><span class="n">workflow_meta_to_proto</span><span class="p">(</span><span class="n">workflow</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteWorkflowById"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteWorkflowById">[docs]</a>    <span class="k">def</span> <span class="nf">deleteWorkflowById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_workflow_by_id</span><span class="p">(</span><span class="n">workflow_id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.deleteWorkflowByName"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.deleteWorkflowByName">[docs]</a>    <span class="k">def</span> <span class="nf">deleteWorkflowByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_workflow_by_name</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                                                    <span class="n">workflow_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_delete_response</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetadataService.listWorkflows"><a class="viewcode-back" href="../../../../source_rst/ai_flow.metadata_store.service.html#ai_flow.metadata_store.service.service.MetadataService.listWorkflows">[docs]</a>    <span class="k">def</span> <span class="nf">listWorkflows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">workflow_meta_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">list_workflows</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                                                       <span class="n">page_size</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span>
+                                                       <span class="n">offset</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_wrap_workflow_list_response</span><span class="p">(</span><span class="n">workflow_meta_list</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, alibaba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

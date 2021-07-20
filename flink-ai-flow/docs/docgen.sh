@@ -20,7 +20,7 @@
 set -e
 
 docs=$(dirname "${BASH_SOURCE[0]}")
-docs=$(cd "docs"; pwd)
+docs=$(cd "$docs"; pwd)
 workdir=$docs
 tmpdir="$workdir"/__tmp
 cd "$workdir"
