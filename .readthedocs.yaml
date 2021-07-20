@@ -2,7 +2,7 @@ version: 2
 formats: all
 sphinx:
   configuration: flink-ai-flow/docs/conf.py
-  fail_on_warning: true
+  fail_on_warning: false
 
 build:
   image: latest
