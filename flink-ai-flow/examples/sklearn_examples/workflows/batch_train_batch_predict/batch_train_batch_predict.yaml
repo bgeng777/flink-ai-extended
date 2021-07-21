@@ -17,26 +17,17 @@
 ## under the License.
 ##
 
-train_job:
-  platform: local
-  engine: python
-  job_name: Train
-  periodic_config:
-    periodic_type: interval # 'interval' or 'cron'
-    args:
-      seconds: 60
+train:
+  job_type: python
 
-validate_job:
-  platform: local
-  engine: python
-  job_name: Validate
+evaluate:
+  job_type: python
 
-push_job:
-  platform: local
-  engine: python
-  job_name: Push
+validate:
+  job_type: python
 
-predict_job:
-  platform: local
-  engine: python
-  job_name: Predict
+push:
+  job_type: python
+
+predict:
+  job_type: python

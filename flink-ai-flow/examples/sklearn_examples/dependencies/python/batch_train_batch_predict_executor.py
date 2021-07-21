@@ -20,16 +20,18 @@ import os
 import shutil
 import time
 from typing import List
+
 import numpy as np
 from joblib import dump, load
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils import check_random_state
+
 import ai_flow as af
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
-from python_ai_flow import FunctionContext, Executor, ExampleExecutor
 from ai_flow.util.path_util import get_file_dir
+from ai_flow_plugins.job_plugins.python.python_processor import ExecutionContext, PythonProcessor
 
 
 def preprocess_data(x_data, y_data=None):
@@ -41,26 +43,28 @@ def preprocess_data(x_data, y_data=None):
         return x_data[permutation], y_data[permutation]
 
 
-class ExampleReader(ExampleExecutor):
+class ExampleReader(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
+        with np.load(dataset_meta.uri) as f:
             x_train, y_train = f['x_train'], f['y_train']
         return [[x_train, y_train]]
 
 
-class ExampleTransformer(Executor):
+class ExampleTransformer(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         x_train, y_train = preprocess_data(input_list[0][0], input_list[0][1])
         x_train = x_train.reshape((x_train.shape[0], -1))
         return [[StandardScaler().fit_transform(x_train), y_train]]
 
 
-class ModelTrainer(Executor):
+class ModelTrainer(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         # https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html
+        model_meta: af.ModelMeta = execution_context.config.get('model_info')
         clf = LogisticRegression(C=50. / 5000, penalty='l1', solver='saga', tol=0.1)
         x_train, y_train = input_list[0][0], input_list[0][1]
         clf.fit(x_train, y_train)
@@ -70,28 +74,29 @@ class ModelTrainer(Executor):
         model_timestamp = time.strftime("%Y%m%d%H%M%S", time.localtime())
         model_path = model_path + '/' + model_timestamp
         dump(clf, model_path)
-        af.register_model_version(model=function_context.node_spec.output_model, model_path=model_path)
+        af.register_model_version(model=model_meta, model_path=model_path)
 
         return []
 
 
-class EvaluateExampleReader(ExampleExecutor):
+class EvaluateExampleReader(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
+        with np.load(dataset_meta.uri) as f:
             x_test, y_test = f['x_test'], f['y_test']
         return [[x_test, y_test]]
 
 
-class EvaluateTransformer(Executor):
+class EvaluateTransformer(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         x_test, y_test = preprocess_data(input_list[0][0], input_list[0][1])
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test), y_test]]
 
 
-class ModelEvaluator(Executor):
+class ModelEvaluator(PythonProcessor):
 
     def __init__(self, artifact):
         super().__init__()
@@ -99,40 +104,41 @@ class ModelEvaluator(Executor):
         self.model_version = None
         self.artifact = artifact
 
-    def setup(self, function_context: FunctionContext):
-        print(function_context.node_spec.model.name)
-        model = af.get_latest_generated_model_version(function_context.node_spec.model.name)
+    def setup(self, execution_context: ExecutionContext):
+        model_meta: af.ModelMeta = execution_context.config.get('model_info')
+        model = af.get_latest_generated_model_version(model_meta.name)
         self.model_path = model.model_path
         self.model_version = model.version
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         x_evaluate, y_evaluate = input_list[0][0], input_list[0][1]
         clf = load(self.model_path)
         scores = cross_val_score(clf, x_evaluate, y_evaluate, cv=5)
-        evaluate_artifact = af.get_artifact_by_name(self.artifact).batch_uri
+        evaluate_artifact = af.get_artifact_by_name(self.artifact).uri
         with open(evaluate_artifact, 'a') as f:
             f.write('model version[{}] scores: {}\n'.format(self.model_version, scores))
 
         return []
 
 
-class ValidateExampleReader(ExampleExecutor):
+class ValidateExampleReader(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
+        with np.load(dataset_meta.uri) as f:
             x_test, y_test = f['x_test'], f['y_test']
         return [[x_test, y_test]]
 
 
-class ValidateTransformer(Executor):
+class ValidateTransformer(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         x_test, y_test = preprocess_data(input_list[0][0], input_list[0][1])
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test), y_test]]
 
 
-class ModelValidator(Executor):
+class ModelValidator(PythonProcessor):
 
     def __init__(self, artifact):
         super().__init__()
@@ -141,13 +147,14 @@ class ModelValidator(Executor):
         self.model_version = None
         self.artifact = artifact
 
-    def setup(self, function_context: FunctionContext):
-        self.model_name = function_context.node_spec.model.name
+    def setup(self, execution_context: ExecutionContext):
+        model_meta: af.ModelMeta = execution_context.config.get('model_info')
+        self.model_name = model_meta.name
         model = af.get_latest_generated_model_version(self.model_name)
         self.model_path = model.model_path
         self.model_version = model.version
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         deployed_model_version = af.get_deployed_model_version(model_name=self.model_name)
 
         if deployed_model_version is None:
@@ -162,7 +169,7 @@ class ModelValidator(Executor):
             deployed_clf = load(deployed_model_version.model_path)
             deployed_scores = cross_val_score(deployed_clf, x_validate, y_validate, scoring='precision_macro')
 
-            batch_uri = af.get_artifact_by_name(self.artifact).batch_uri
+            batch_uri = af.get_artifact_by_name(self.artifact).uri
             if np.mean(scores) > np.mean(deployed_scores):
                 af.update_model_version(model_name=self.model_name,
                                         model_version=self.model_version,
@@ -174,13 +181,14 @@ class ModelValidator(Executor):
         return []
 
 
-class ModelPusher(Executor):
+class ModelPusher(PythonProcessor):
     def __init__(self, artifact):
         super().__init__()
         self.artifact = artifact
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        model_name = function_context.node_spec.model.name
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        model_meta: af.ModelMeta = execution_context.config.get('model_info')
+        model_name = model_meta.name
         validated_model = af.get_latest_validated_model_version(model_name)
 
         cur_deployed_model = af.get_deployed_model_version(model_name=model_name)
@@ -193,7 +201,7 @@ class ModelPusher(Executor):
                                 current_stage=ModelVersionStage.DEPLOYED)
 
         # Copy deployed model to deploy_model_dir
-        deployed_model_dir = af.get_artifact_by_name(self.artifact).batch_uri
+        deployed_model_dir = af.get_artifact_by_name(self.artifact).uri
         if not os.path.exists(deployed_model_dir):
             os.makedirs(deployed_model_dir)
         for file in os.listdir(deployed_model_dir):
@@ -206,35 +214,38 @@ class ModelPusher(Executor):
         return []
 
 
-class PredictExampleReader(ExampleExecutor):
+class PredictExampleReader(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        with np.load(function_context.node_spec.example_meta.batch_uri) as f:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
+        with np.load(dataset_meta.uri) as f:
             x_test = f['x_test']
         return [[x_test]]
 
 
-class PredictTransformer(Executor):
+class PredictTransformer(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
         x_test = preprocess_data(input_list[0][0], None)
         x_test = x_test.reshape((x_test.shape[0], -1))
         return [[StandardScaler().fit_transform(x_test)]]
 
 
-class ModelPredictor(Executor):
+class ModelPredictor(PythonProcessor):
     def __init__(self):
         super().__init__()
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        model_name = function_context.node_spec.model.name
-        model_meta = af.get_deployed_model_version(model_name)
-        clf = load(model_meta.model_path)
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        model_meta: af.ModelMeta = execution_context.config.get('model_info')
+        model_name = model_meta.name
+        model_version_meta = af.get_deployed_model_version(model_name)
+        clf = load(model_version_meta.model_path)
         return [clf.predict(input_list[0][0])]
 
 
-class ExampleWriter(ExampleExecutor):
+class ExampleWriter(PythonProcessor):
 
-    def execute(self, function_context: FunctionContext, input_list: List) -> List:
-        np.savetxt(function_context.node_spec.example_meta.batch_uri, input_list[0])
+    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
+        dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
+        np.savetxt(dataset_meta.uri, input_list[0])
         return []
