@@ -2,13 +2,14 @@
 
 ### Requirement
 1. Python3.7
-2. Sphinx (You can install it via `pip install -U sphinx`)
+2. Sphinx (You can install it via `pip install -U sphinx sphinx_rtd_theme`)
 3. Flink AI Flow
 
 ### Build
 ```
 cd flink-ai-flow/docs/
 bash docgen.sh
+make clean html
 ```
 
 After building, you can view the local document in your browser by typing `open ./_build/html/index.html` in your terminal.

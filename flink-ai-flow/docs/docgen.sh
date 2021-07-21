@@ -33,4 +33,3 @@ rm "$tmpdir"/*
 sphinx-apidoc -f -M -o "$tmpdir"/ "$workdir"/../ai_flow_plugins "$workdir"/../ai_flow_plugins/*test*
 cp -a "$tmpdir"/. "$workdir"/source_rst/
 rm -r "$tmpdir"
-make clean html
