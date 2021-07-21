@@ -14,8 +14,6 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
-
 import os
 import sys
 import sphinx_rtd_theme
@@ -125,9 +123,6 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
     # return True if (skip or exclude) else None  # Can interfere with subsequent skip functions.
     return True if exclude else None
  
-    
-
-
 def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
     dir=os.path.dirname(os.path.abspath(__file__))
