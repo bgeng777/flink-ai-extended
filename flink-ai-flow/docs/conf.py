@@ -32,7 +32,7 @@ sys.path.insert(0, os.path.abspath('../ai_flow_plugins'))
 # -- Project information -----------------------------------------------------
 
 project = 'Flink AI Flow'
-author = 'alibaba'
+author = 'Alibaba'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0'
@@ -53,7 +53,6 @@ templates_path = ['_templates']
 
 # Following modules will be excluded as they are not public API
 exclude_rst = [
-    
     '**ai_flow.metadata_store.test.rst', 
     '**ai_flow.runtime.rst', 
     '**ai_flow.metric.service.rst', 
