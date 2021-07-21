@@ -16,19 +16,10 @@
 # under the License.
 
 
-
-# ai_flow.meta
-from ai_flow.meta import *
-from ai_flow.meta.artifact_meta import *
-from ai_flow.meta.dataset_meta import *
-from ai_flow.meta.job_meta import *
-from ai_flow.meta.model_meta import *
-from ai_flow.meta.model_meta import *
-from ai_flow.meta.project_meta import *
-
-
 import os
 import sys
+import sphinx_rtd_theme
+import subprocess
 
 sys.path.insert(0, os.path.abspath('../ai_flow/api'))
 sys.path.insert(0, os.path.abspath('../ai_flow/context'))
@@ -114,8 +105,6 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-import sphinx_rtd_theme
-
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 autodoc_mock_imports = ['bs4', 'requests']
@@ -137,8 +126,7 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
     return True if exclude else None
  
     
-import subprocess
-import os
+
 
 def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
