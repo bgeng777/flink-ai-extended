@@ -20,7 +20,7 @@ import os
 import ai_flow as af
 from ai_flow.util.path_util import get_file_dir
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from tutorial_executor import DatasetReader, ModelTrainer, ValidateDatasetReader, ModelValidator, Source, Sink, \
+from tutorial_processors import DatasetReader, ModelTrainer, ValidateDatasetReader, ModelValidator, Source, Sink, \
     Predictor
 
 DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../")) + '/resources/iris_{}.csv'
@@ -48,9 +48,10 @@ def run_workflow():
 
     # Validation of model
     with af.job_config('validate'):
-        # Read validation dataset and validate model before it is used to predict
+        # Read validation dataset
         validate_dataset = af.register_dataset(name=artifact_prefix + 'validate_dataset',
                                                uri=DATASET_URI.format('test'))
+        # Validate model before it is used to predict
         validate_read_dataset = af.read_dataset(dataset_info=validate_dataset,
                                                 read_dataset_processor=ValidateDatasetReader())
         validate_artifact_name = artifact_prefix + 'validate_artifact'

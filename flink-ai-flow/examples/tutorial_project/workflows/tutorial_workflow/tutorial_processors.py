@@ -41,8 +41,11 @@ class DatasetReader(PythonProcessor):
         """
         Read dataset using pandas
         """
+        # Gets the registered dataset meta info
         dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
+        # Read the file using pandas
         train_data = pd.read_csv(dataset_meta.uri, header=0, names=EXAMPLE_COLUMNS)
+        # Prepare dataset
         y_train = train_data.pop(EXAMPLE_COLUMNS[4])
         return [[train_data.values, y_train.values]]
 
