@@ -188,7 +188,7 @@ In the example, AINode N0 has 3 outputs(i.e., 3 channels whose source node is N0
 
 
 
-Currently, the only puzzle left is how do we implement the processors including `DatasetReader()` and `ModelTrainer()`. We will introduce them later in [Implementing custom processor Processors](##Implementing custom processors) section. Next, let's pay attention to defining the Validation and Prediction jobs.
+Currently, the only puzzle left is how do we implement the processors including `DatasetReader()` and `ModelTrainer()`. We will introduce them later in [Implementing custom processor Processors](#implementing-custom-processors) section. Next, let's pay attention to defining the Validation and Prediction jobs.
 
 ###  Defining the Validation Job and the Prediction Job
 
