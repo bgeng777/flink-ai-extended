@@ -28,7 +28,7 @@ from ai_flow.graph.channel import Channel
 
 class AINode(Node):
     """
-    AINodes are part of the ai graph(ai_flow.ai_graph.ai_graph.AIGraph),
+    AINodes are part of the ai graph(:class:`~ai_flow.ai_graph.ai_graph.AIGraph`),
     and there are edges(ai_flow.ai_graph.data_edge.DataEdge) connected between AINodes
     """
     def __init__(self,
@@ -43,8 +43,8 @@ class AINode(Node):
                           Different job types define different types of processors.
                           The user needs to implement the corresponding processor according to the specific job type.
         :param name: The name of the AINode.
-        :param output_num: The output number of the AINode.
-        :param config: The job config(ai_flow.workflow.job_config.JobConfig) of the AINode.
+        :param output_num: The number of output `:class:`~ai_flow.graph.channel.Channel` of the AINode
+        :param config: The job config(:class:`~ai_flow.workflow.job_config.JobConfig`) of the AINode.
         :param node_type: User-defined node type.
         :param kwargs: User-defined variable parameters.
         """
@@ -90,11 +90,11 @@ class ReadDatasetNode(AINode):
                  config: JobConfig = None,
                  node_type: Text = 'ReadDataNode', **kwargs) -> None:
         """
-        :param dateset: Need to read dataset meta information.
+        :param dateset: Meta information of the dataset that will be read.
         :param processor: The user defined function. Users can implement their own logic.
         :param name: The name of the ReadDatasetNode.
-        :param config: The job config(ai_flow.workflow.job_config.JobConfig) of the AINode.
-        :param node_type: User-defined node type.
+        :param config: The job config(:class:`~ai_flow.workflow.job_config.JobConfig`) of the AINode.
+        :param node_type: User-defined node type. Default value is 'ReadDataNode'
         :param kwargs: User-defined variable parameters.
         """
         super().__init__(processor, name, 1, config, node_type, **kwargs)
@@ -117,11 +117,11 @@ class WriteDatasetNode(AINode):
                  config: JobConfig = None,
                  node_type: Text = 'WriteDataNode', **kwargs) -> None:
         """
-        :param dateset: Need to write dataset meta information.
+        :param dateset: Meta information of the dataset that will be written.
         :param processor: The user defined function. Users can implement their own logic.
         :param name: The name of the WriteDatasetNode.
-        :param config: The job config(ai_flow.workflow.job_config.JobConfig) of the AINode.
-        :param node_type: User-defined node type.
+        :param config: The job config(:class:`~ai_flow.workflow.job_config.JobConfig`) of the AINode.
+        :param node_type: User-defined node type. Default value is 'WriteDataNode'
         :param kwargs: User-defined variable parameters.
         """
         super().__init__(processor, name, 0, config, node_type, **kwargs)
