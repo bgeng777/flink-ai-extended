@@ -23,9 +23,8 @@ from typing import List
 from joblib import dump, load
 
 import ai_flow as af
-from pyflink.table.descriptors import Schema, OldCsv, FileSystem
 from pyflink.table.udf import udf
-from pyflink.table import Table, ScalarFunction, DataTypes, CsvTableSink, WriteMode
+from pyflink.table import Table, ScalarFunction, DataTypes
 from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from ai_flow.util.path_util import get_file_dir
 from ai_flow_plugins.job_plugins.python.python_processor import ExecutionContext, PythonProcessor
@@ -33,6 +32,7 @@ from ai_flow_plugins.job_plugins import flink
 from sklearn.neighbors import KNeighborsClassifier
 
 EXAMPLE_COLUMNS = ['sl', 'sw', 'pl', 'pw', 'type']
+flink.set_flink_env(flink.FlinkStreamEnv())
 
 
 class DatasetReader(PythonProcessor):
@@ -139,20 +139,22 @@ class Source(flink.FlinkPythonProcessor):
         """
         data_meta = execution_context.config['dataset']
         t_env = execution_context.table_env
-        t_env.connect(FileSystem().path(data_meta.uri)) \
-            .with_format(OldCsv()
-                         .ignore_first_line()
-                         .field(EXAMPLE_COLUMNS[0], DataTypes.FLOAT())
-                         .field(EXAMPLE_COLUMNS[1], DataTypes.FLOAT())
-                         .field(EXAMPLE_COLUMNS[2], DataTypes.FLOAT())
-                         .field(EXAMPLE_COLUMNS[3], DataTypes.FLOAT())) \
-            .with_schema(Schema()
-                         .field(EXAMPLE_COLUMNS[0], DataTypes.FLOAT())
-                         .field(EXAMPLE_COLUMNS[1], DataTypes.FLOAT())
-                         .field(EXAMPLE_COLUMNS[2], DataTypes.FLOAT())
-                         .field(EXAMPLE_COLUMNS[3], DataTypes.FLOAT())) \
-            .create_temporary_table('mySource')
-        return [t_env.from_path('mySource')]
+        t_env.execute_sql('''
+            CREATE TABLE predict_source (
+                sl FLOAT,
+                sw FLOAT,
+                pl FLOAT,
+                pw FLOAT,
+                type FLOAT
+            ) WITH (
+                'connector' = 'filesystem',
+                'path' = '{uri}',
+                'format' = 'csv',
+                'csv.ignore-parse-errors' = 'true'
+            )
+        '''.format(uri=data_meta.uri))
+        table = t_env.from_path('predict_source')
+        return [table]
 
 
 class Predictor(flink.FlinkPythonProcessor):
@@ -171,12 +173,15 @@ class Predictor(flink.FlinkPythonProcessor):
         model_path = model_meta.model_path
         clf = load(model_path)
 
+        # Define the python udf
+
         class Predict(ScalarFunction):
             def eval(self, sl, sw, pl, pw):
                 records = [[sl, sw, pl, pw]]
                 df = pd.DataFrame.from_records(records, columns=['sl', 'sw', 'pl', 'pw'])
                 return clf.predict(df)[0]
 
+        # Register the udf in flink table env, so we can call it later in SQL statement
         execution_context.table_env.register_function('mypred',
                                                       udf(f=Predict(),
                                                           input_types=[DataTypes.FLOAT(), DataTypes.FLOAT(),
@@ -192,10 +197,14 @@ class Sink(flink.FlinkPythonProcessor):
         Sink Flink Table produced by Predictor to local file
         """
         table_env = execution_context.table_env
-        table_env.register_table_sink("write_example", CsvTableSink(
-            ['a'],
-            [DataTypes.FLOAT()],
-            execution_context.config.get('dataset').uri,
-            write_mode=WriteMode.OVERWRITE
-        ))
-        execution_context.statement_set.add_insert("write_example", input_list[0])
+        table_env.execute_sql('''
+           CREATE TABLE predict_sink (
+               prediction FLOAT 
+           ) WITH (
+               'connector' = 'filesystem',
+               'path' = '{uri}',
+               'format' = 'csv',
+               'csv.ignore-parse-errors' = 'true'
+           )
+       '''.format(uri=execution_context.config['dataset'].uri))
+        execution_context.statement_set.add_insert("predict_sink", input_list[0])

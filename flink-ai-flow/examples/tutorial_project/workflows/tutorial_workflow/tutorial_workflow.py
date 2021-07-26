@@ -23,6 +23,7 @@ from ai_flow.model_center.entity.model_version_stage import ModelVersionEventTyp
 from tutorial_processors import DatasetReader, ModelTrainer, ValidateDatasetReader, ModelValidator, Source, Sink, \
     Predictor
 
+
 DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../")) + '/resources/iris_{}.csv'
 
 
@@ -85,8 +86,9 @@ def run_workflow():
     af.action_on_model_version_event(job_name='predict',
                                      model_version_event_type=ModelVersionEventType.MODEL_VALIDATED,
                                      model_name=train_model.name)
-    # Submit and run workflow
+    # Submit workflow
     af.workflow_operation.submit_workflow(af.current_workflow_config().workflow_name)
+    # Run workflow
     af.workflow_operation.start_new_workflow_execution(af.current_workflow_config().workflow_name)
 
 
