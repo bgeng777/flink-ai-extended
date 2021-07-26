@@ -29,7 +29,7 @@ from ai_flow.graph.channel import Channel
 class AINode(Node):
     """
     AINodes are part of the ai graph(:class:`~ai_flow.ai_graph.ai_graph.AIGraph`),
-    and there are edges(ai_flow.ai_graph.data_edge.DataEdge) connected between AINodes
+    and there are edges(:class:`ai_flow.ai_graph.data_edge.DataEdge`) connected between AINodes
     """
     def __init__(self,
                  processor: object = None,
@@ -67,15 +67,30 @@ class AINode(Node):
             return None
 
     def get_processor(self) -> object:
+        """
+        Return the processor object of the node
+
+        :return: processor object
+        """
         if self.processor is None:
             return None
         else:
             return serialization_utils.deserialize(self.processor)
 
     def node_type(self):
+        """
+        Return the type of the node
+
+        :return: type string
+        """
         return self.node_config.get('node_type')
 
     def name(self):
+        """
+        Return the name of the node
+
+        :return: name string
+        """
         return self.node_config.get('name')
 
 
@@ -130,5 +145,10 @@ class WriteDatasetNode(AINode):
         self.node_config['dataset'] = dataset
 
     def dataset(self):
+        """
+        Return metadata of the dataset
+
+        :return: :class:`ai_flow.meta.dataset_meta.DatasetMeta` of the WriteDatasetNode
+        """
         return self.node_config.get('dataset')
 

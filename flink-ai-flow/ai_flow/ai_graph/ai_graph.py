@@ -34,15 +34,14 @@ class AIGraph(Graph):
     """
 
     def __init__(self) -> None:
-        """
-        :param nodes: :class:`~ai_flow.ai_graph.ai_node.AINode`s in this graph
-        """
         super().__init__()
         self.nodes: Dict[Text, AINode] = {}
 
     def add_node(self, node: AINode):
         """
         Add an :class:`~ai_flow.ai_graph.ai_node.AINode` to AIGraph.
+
+        :param node: :class:`~ai_flow.ai_graph.ai_node.AINode` to add in the graph
         """
         if current_workflow_config() is not None \
                 and current_job_name() is not None \
@@ -53,6 +52,9 @@ class AIGraph(Graph):
     def get_node_by_id(self, node_id: Text) -> Optional[AINode]:
         """
         Return the node whose `node_id` field is node_id.
+
+        :param node_id: id of the :class:`~ai_flow.ai_graph.ai_node.AINode`
+        :return :class:`~ai_flow.ai_graph.ai_node.AINode`
         """
         if node_id in self.nodes:
             return self.nodes[node_id]
@@ -76,6 +78,8 @@ __current_ai_graph__ = AIGraph()
 def current_graph() -> AIGraph:
     """
     Return the current AIGraph.
+
+    :return :class:`~ai_flow.ai_graph.ai_graph.AIGraph`
     """
     return __current_ai_graph__
 
@@ -95,12 +99,21 @@ class AISubGraph(AIGraph):
     It consists of a set of ai nodes(:class:`~ai_flow.ai_graph.ai_node.AINode`),
     all ai nodes in sub-graph have the same job configuration(:class:`~ai_flow.workflow.job_config.JobConfig`)
     """
+
     def __init__(self,
                  config: JobConfig,
                  ) -> None:
+        """
+        :param config: :class:`~ai_flow.workflow.job_config.JobConfig` of the job represented by the sub-graph
+        """
         super().__init__()
         self.config: JobConfig = config
         self.edges: Dict[Text, List[DataEdge]] = {}
 
     def add_node(self, node: AINode):
+        """
+        Add an :class:`~ai_flow.ai_graph.ai_node.AINode` to AISubGraph.
+
+        :param node: :class:`~ai_flow.ai_graph.ai_node.AINode` to add in the sub-graph
+        """
         self.nodes[node.node_id] = node
