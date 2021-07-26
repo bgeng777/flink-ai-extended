@@ -42,7 +42,7 @@ scheduler:
 ```
 
 ## Prepare Project Directory
-Before writing the workflow, we should prepare a project directory whose structure is as follows:
+Before writing the workflow, we should prepare a project directory as follows:
 
 ```
 tutorial_project/
@@ -80,13 +80,13 @@ In `project_name`, we define the project name, which will be the default namespa
 
 > Namespace in Flink AI Flow is used for isolation. Each workflow can only send events to its own namespace while it can listen on multiple namespaces. The reason for enabling listening on multiple namespaces is that the workflow could be triggered by external events from notification service.
 
-For `server_ip` and `server_port`,  they tell where the `AIFlowServer` will starts on.
+For `server_ip` and `server_port`,  they tell where the `AIFlowServer` is running on.
 
-Then, we configure the `blob` property which tells Flink AI Flow which manages the execution environment(i.e., local or remote env) of workflows in this project.
+Then, we configure the `blob` property which tells Flink AI Flow where to execute workflows in this project(i.e., local or remote env).
 
 Here we choose to use `LocalBlobManager` and as a result, the project will run locally. 
 
-We currently also provide `OssBlobManager` which allows users to run their workflow remotely.
+We currently also provide `OssBlobManager` which allows users to submit and run their workflow remotely.
 
 ### tutorial_workflow.yaml 
 Next, we will introduce how to write the workflow configuration yaml file.
@@ -94,7 +94,7 @@ Next, we will introduce how to write the workflow configuration yaml file.
 train:
   job_type: python
   periodic_config:
-    interval: '0,0,0,60' # The train job will be executed 60s
+    interval: '0,0,0,60' # The train job will be executed every 60s
 
 validate:
   job_type: python
@@ -120,7 +120,7 @@ For `predict` job, we set its job type to be `flink`, which means this job is a 
 Now, let's start coding to implement workflow described in Target section
 
 ### Importing Modules
-A workflow Flink AI Flow is just a Python script. Let’s create `tutorial_workflow.py` and start by importing the libraries we will need.
+In Flink AI Flow, a workflow is just a Python script. Let’s create `tutorial_workflow.py` and start by importing the libraries we will need.
 
 
 ```python
@@ -139,10 +139,13 @@ from ai_flow.util.path_util import get_file_dir
 from tutorial_processors import DatasetReader, ModelTrainer, ValidateDatasetReader, ModelValidator, Source, Sink, \
     Predictor
 
+# Declare the location of dataset
+DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../")) + '/resources/iris_{}.csv'
+
 ```
 
 ###  Defining a Training Job
-In our design, the workflow in Flink AI Flow is a DAG(Directed Acyclic Graph) or to be more specifically, it is a [AIGraph](). Each node in the graph is an [AINode](), which contains a processor. Users should write their custom logic in the processor. 
+In our design, the workflow in Flink AI Flow is a DAG(Directed Acyclic Graph) or to be more specific, it is a [AIGraph](). Each node in the graph is an [AINode](), which contains a processor. Users should write their custom logic in the processor. 
 
 In the AIGraph, nodes are connected by 2 types of edges. The first one is named as `DataEdge` which means the destination node depends on the output of the source node. The other is `ControlEdge` which means the destination node depends on the control conditions from source node. We will dive deeper into this kind of edges later.
 
@@ -159,7 +162,7 @@ In the following codes, we define a training job of our workflow:
     with af.job_config('train'):
         # Register metadata of training data(dataset), `uri` refers to the file path
         train_dataset = af.register_dataset(name=artifact_prefix + 'train_dataset',
-        																		uri=DATASET_URI.format('train'))
+                                            uri=DATASET_URI.format('train'))
         # Read data from the registered dataset with user-defined read_dataset_processor
         train_read_dataset = af.read_dataset(dataset_info=train_dataset,
                                              read_dataset_processor=DatasetReader())
@@ -185,7 +188,7 @@ In the example, AINode N0 has 3 outputs(i.e., 3 channels whose source node is N0
 
 
 
-Currently, the only puzzle left is how do we implement the processors including `DatasetReader()` and `ModelTrainer()`. We will introduce them later in [Implementing custom processor Processors](#Implementing custom processors) section. Next, let's pay attention to defining the Validation and Prediction jobs.
+Currently, the only puzzle left is how do we implement the processors including `DatasetReader()` and `ModelTrainer()`. We will introduce them later in [Implementing custom processor Processors](##Implementing custom processors) section. Next, let's pay attention to defining the Validation and Prediction jobs.
 
 ###  Defining the Validation Job and the Prediction Job
 
@@ -296,11 +299,13 @@ In fact, in our design, `Workflow` defines the execution logic of a set of jobs 
 
 ## Implementing custom processors
 
-As we have mentioned, users need to write their own logic in processors for each job. Currently, Flink AI Flow supports `baash`, `python` and `flink` processors.
+As we have mentioned, users need to write their own logic in processors for each job. Currently, Flink AI Flow supports `bash`, `python` and `flink` processors.
 
 The following codes are the `DatasetReader` processor whose type is `python`:
 
 ```python
+EXAMPLE_COLUMNS = ['sl', 'sw', 'pl', 'pw', 'type']
+
 class DatasetReader(PythonProcessor):
 
     def process(self, execution_context: ExecutionContext, input_list: List) -> List:
