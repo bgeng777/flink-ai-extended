@@ -28,8 +28,9 @@ from ai_flow.graph.channel import Channel
 
 class AINode(Node):
     """
-    AINodes are part of the ai graph(:class:`~ai_flow.ai_graph.ai_graph.AIGraph`),
-    and there are edges(:class:`ai_flow.ai_graph.data_edge.DataEdge`) connected between AINodes
+    AINode is the basic component of ai graph(:class:`~ai_flow.ai_graph.ai_graph.AIGraph`),
+    and there are edges(:class:`ai_flow.ai_graph.data_edge.DataEdge`) between the AINodes in
+    :class:`~ai_flow.ai_graph.ai_graph.AIGraph`
     """
     def __init__(self,
                  processor: object = None,
@@ -68,9 +69,9 @@ class AINode(Node):
 
     def get_processor(self) -> object:
         """
-        Return the processor object of the node
+        Return the processor object of the node.
 
-        :return: processor object
+        :return: The processor object.
         """
         if self.processor is None:
             return None
@@ -79,17 +80,17 @@ class AINode(Node):
 
     def node_type(self):
         """
-        Return the type of the node
+        Returns the type of the node.
 
-        :return: type string
+        :return: type string.
         """
         return self.node_config.get('node_type')
 
     def name(self):
         """
-        Return the name of the node
+        Returns the name of the node.
 
-        :return: name string
+        :return: name string.
         """
         return self.node_config.get('name')
 
@@ -146,9 +147,9 @@ class WriteDatasetNode(AINode):
 
     def dataset(self):
         """
-        Return metadata of the dataset
+        Returns metadata of the dataset.
 
-        :return: :class:`ai_flow.meta.dataset_meta.DatasetMeta` of the WriteDatasetNode
+        :return: :class:`ai_flow.meta.dataset_meta.DatasetMeta` of the WriteDatasetNode.
         """
         return self.node_config.get('dataset')
 
