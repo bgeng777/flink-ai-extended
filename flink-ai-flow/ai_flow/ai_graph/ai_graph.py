@@ -97,7 +97,7 @@ class AISubGraph(AIGraph):
     """
     It consists of a set of ai nodes(:class:`~ai_flow.ai_graph.ai_node.AINode`),
     all :class:`~ai_flow.ai_graph.ai_node.AINode` in sub-graph share the same job configuration
-    (:class:`~ai_flow.workflow.job_config.JobConfig`)
+    (:class:`~ai_flow.workflow.job_config.JobConfig`).
     """
 
     def __init__(self,

@@ -30,7 +30,7 @@ class AINode(Node):
     """
     AINode is the basic component of ai graph(:class:`~ai_flow.ai_graph.ai_graph.AIGraph`),
     and there are edges(:class:`ai_flow.ai_graph.data_edge.DataEdge`) between the AINodes in
-    :class:`~ai_flow.ai_graph.ai_graph.AIGraph`
+    :class:`~ai_flow.ai_graph.ai_graph.AIGraph`.
     """
     def __init__(self,
                  processor: object = None,
