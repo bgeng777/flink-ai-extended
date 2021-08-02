@@ -132,7 +132,6 @@ def setup(app):
     p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     for line in iter(p.stdout.readline, ''):
-        line = line.replace('\r', '').replace('\n', '')
         print(line)
         sys.stdout.flush()
     print("Sssssssss")
