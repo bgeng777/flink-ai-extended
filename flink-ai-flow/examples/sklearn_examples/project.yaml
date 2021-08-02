@@ -16,7 +16,7 @@
 ## specific language governing permissions and limitations
 ## under the License.
 ##
-project_name: sklearn_examples
+project_name: sklearn_examples2
 server_ip: localhost
 server_port: 50051
 blob:

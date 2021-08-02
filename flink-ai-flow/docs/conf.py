@@ -127,7 +127,7 @@ def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
     workdir = os.path.dirname(os.path.abspath(__file__))
     flink_ai_flow_dir = os.path.dirname(workdir)
-    subprocess.Popen("which npm", shell=True, stdout=sys.stdout, stderr=sys.stderr).communicate()
+    # subprocess.Popen("which npm", shell=True, stdout=sys.stdout, stderr=sys.stderr).communicate()
     command = ["which", "npm"]
     p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
