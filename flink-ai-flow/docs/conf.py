@@ -128,12 +128,14 @@ def setup(app):
     workdir = os.path.dirname(os.path.abspath(__file__))
     flink_ai_flow_dir = os.path.dirname(workdir)
     # subprocess.Popen("which npm", shell=True, stdout=sys.stdout, stderr=sys.stderr).communicate()
-    command = ["which", "npm"]
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # command = ["which", "npm"]
+    # p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    for line in iter(p.stdout.readline, ''):
-        print(line)
-        sys.stdout.flush()
+    # for line in iter(p.stdout.readline, ''):
+    #     print(line)
+    #     sys.stdout.flush()
+    for item, value in os.environ.items():
+        print('{}: {}'.format(item, value))
     print("Sssssssss")
     # subprocess.call(['pip', 'install', flink_ai_flow_dir + "/."])
     # subprocess.call(['pip', 'install', flink_ai_flow_dir + "/."])
