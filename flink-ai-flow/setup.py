@@ -60,9 +60,9 @@ def get_script():
 
 try:
     if in_source:
-        compile_assets()
         AIRFLOW_DIR = CURRENT_DIR + "/lib/airflow"
         try:
+            compile_assets()
             os.symlink(AIRFLOW_DIR + "/airflow", CURRENT_DIR + "/airflow")
         except BaseException:  # pylint: disable=broad-except
             copytree(AIRFLOW_DIR + "/airflow", CURRENT_DIR + "/airflow")
