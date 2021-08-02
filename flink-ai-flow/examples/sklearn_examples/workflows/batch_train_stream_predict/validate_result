@@ -23,3 +23,114 @@ new generated model version[8] pass validation.
 current model version[8] scores: 0.8254219225337905
 new generated model version[9] scores: 0.8252523543269895
 new generated model version[9] fail validation.
+current model version[8] scores: 0.8236112563453725
+new generated model version[10] scores: 0.823430853537352
+new generated model version[10] fail validation.
+current model version[8] scores: 0.8275251316260418
+new generated model version[11] scores: 0.8225711144101452
+new generated model version[11] fail validation.
+current model version[8] scores: 0.8295748614294168
+new generated model version[12] scores: 0.8266611384051551
+new generated model version[12] fail validation.
+current model version[8] scores: 0.8303961921395687
+new generated model version[13] scores: 0.8258997950630191
+new generated model version[13] fail validation.
+current model version[8] scores: 0.8273883554320696
+new generated model version[14] scores: 0.8268343951812595
+new generated model version[14] fail validation.
+current model version[8] scores: 0.8233206852271819
+new generated model version[15] scores: 0.8285195677274579
+new generated model version[15] pass validation.
+current model version[15] scores: 0.8258102636273618
+new generated model version[16] scores: 0.8270901093394869
+new generated model version[16] pass validation.
+current model version[16] scores: 0.8255695363493437
+new generated model version[17] scores: 0.8285559326939981
+new generated model version[17] pass validation.
+current model version[17] scores: 0.823281677583379
+new generated model version[18] scores: 0.8226968646309899
+new generated model version[18] fail validation.
+current model version[17] scores: 0.8255109307222318
+new generated model version[19] scores: 0.8271777796161065
+new generated model version[19] pass validation.
+current model version[19] scores: 0.824548774417243
+new generated model version[20] scores: 0.8269595034798621
+new generated model version[20] pass validation.
+current model version[20] scores: 0.8243268731111483
+new generated model version[21] scores: 0.8255596195513829
+new generated model version[21] pass validation.
+current model version[21] scores: 0.8271387989270362
+new generated model version[22] scores: 0.8254477425034649
+new generated model version[22] fail validation.
+current model version[21] scores: 0.8255555253376441
+new generated model version[23] scores: 0.8269490571891055
+new generated model version[23] pass validation.
+current model version[23] scores: 0.8247028252285652
+new generated model version[24] scores: 0.8271447250010017
+new generated model version[24] pass validation.
+current model version[24] scores: 0.8254494715172896
+new generated model version[25] scores: 0.8267698380538332
+new generated model version[25] pass validation.
+current model version[25] scores: 0.8254239231253822
+new generated model version[26] scores: 0.8254593512273152
+new generated model version[26] pass validation.
+current model version[26] scores: 0.8235244308876385
+new generated model version[27] scores: 0.8242919117934034
+new generated model version[27] pass validation.
+current model version[27] scores: 0.828376411325161
+new generated model version[28] scores: 0.8244353962640977
+new generated model version[28] fail validation.
+current model version[27] scores: 0.8244513588909386
+new generated model version[29] scores: 0.8262545436840063
+new generated model version[29] pass validation.
+current model version[29] scores: 0.8276894153754634
+new generated model version[30] scores: 0.8286685186616833
+new generated model version[30] pass validation.
+current model version[30] scores: 0.8239001278135286
+new generated model version[31] scores: 0.823929230659405
+new generated model version[31] pass validation.
+current model version[31] scores: 0.8238137658405155
+new generated model version[32] scores: 0.8255581071071366
+new generated model version[32] pass validation.
+current model version[32] scores: 0.8260233745891116
+new generated model version[33] scores: 0.8284163143063367
+new generated model version[33] pass validation.
+current model version[33] scores: 0.8284407944233384
+new generated model version[34] scores: 0.8239153910060262
+new generated model version[34] fail validation.
+current model version[33] scores: 0.8212581526336352
+new generated model version[35] scores: 0.8270512252132516
+new generated model version[35] pass validation.
+current model version[35] scores: 0.8240508014056713
+new generated model version[36] scores: 0.8260526182131409
+new generated model version[36] pass validation.
+current model version[36] scores: 0.8278355386270991
+new generated model version[37] scores: 0.8246649654475089
+new generated model version[37] fail validation.
+current model version[36] scores: 0.8246831914476297
+new generated model version[38] scores: 0.8253388143551247
+new generated model version[38] pass validation.
+current model version[38] scores: 0.8269608610434641
+new generated model version[39] scores: 0.8283216524562734
+new generated model version[39] pass validation.
+current model version[39] scores: 0.8273315915115212
+new generated model version[40] scores: 0.8278945385219018
+new generated model version[40] pass validation.
+current model version[40] scores: 0.8232559611124025
+new generated model version[41] scores: 0.8243141902936867
+new generated model version[41] pass validation.
+current model version[41] scores: 0.8254157012464131
+new generated model version[42] scores: 0.8286215252007487
+new generated model version[42] pass validation.
+current model version[42] scores: 0.8254336863037528
+new generated model version[43] scores: 0.8260150714006249
+new generated model version[43] pass validation.
+current model version[43] scores: 0.8267086786685299
+new generated model version[44] scores: 0.8237856246382992
+new generated model version[44] fail validation.
+current model version[43] scores: 0.8238976161825246
+new generated model version[45] scores: 0.8235012826679055
+new generated model version[45] fail validation.
+current model version[43] scores: 0.8262040057349336
+new generated model version[46] scores: 0.8280263759561276
+new generated model version[46] pass validation.

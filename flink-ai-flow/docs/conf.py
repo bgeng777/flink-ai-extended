@@ -134,11 +134,12 @@ def setup(app):
     # for line in iter(p.stdout.readline, ''):
     #     print(line)
     #     sys.stdout.flush()
-    for item, value in os.environ.items():
-        print('{}: {}'.format(item, value))
+    # for item, value in os.environ.items():
+    #     print('{}: {}'.format(item, value))
     print("Sssssssss")
     # subprocess.call(['pip', 'install', flink_ai_flow_dir + "/."])
-    # subprocess.call(['pip', 'install', flink_ai_flow_dir + "/."])
+    # subprocess.call(['/usr/bin/npm', 'install', '--global', 'yarn'])
     # subprocess.call(['pip', 'install', flink_ai_flow_dir+"/."])
     subprocess.call(['bash', flink_ai_flow_dir + '/install_aiflow.sh'])
+    print("install manually is done")
     subprocess.call(['bash', workdir + '/docgen.sh'])
