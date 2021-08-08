@@ -18,9 +18,9 @@ import mock
 import os
 import unittest
 
-from typing import Text, List, Dict
+from typing import Text, List
 
-from ai_flow.scheduler.scheduler_service import SchedulerServiceConfig
+from ai_flow.scheduler_service.service.service import SchedulerServiceConfig
 from ai_flow.workflow.status import Status
 from ai_flow.protobuf.message_pb2 import StateProto
 

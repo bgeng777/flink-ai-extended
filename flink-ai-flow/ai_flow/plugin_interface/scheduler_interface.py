@@ -19,6 +19,7 @@ from typing import Dict, Text, List, Optional
 from ai_flow.util import json_utils
 from ai_flow.workflow.workflow import Workflow
 from ai_flow.context.project_context import ProjectContext
+from ai_flow.common.module_load import import_string
 
 
 class WorkflowInfo(json_utils.Jsonable):
@@ -355,3 +356,17 @@ class Scheduler(ABC):
         :return: The job execution information.
         """
         pass
+
+
+class SchedulerFactory(object):
+    """
+    SchedulerFactory creates scheduler() based on configuration information.
+    """
+    @classmethod
+    def create_scheduler(cls, class_name, config: Dict) -> Scheduler:
+        """
+        :param class_name: The class name of a scheduler(ai_flow.plugin_interface.scheduler_interface.Scheduler)
+        :param config: The configuration of the scheduler.
+        """
+        class_object = import_string(class_name)
+        return class_object(config)

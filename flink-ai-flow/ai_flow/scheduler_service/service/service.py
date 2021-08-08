@@ -35,8 +35,7 @@ from ai_flow.protobuf.scheduling_service_pb2 import \
      ScheduleJobRequest,
      JobInfoResponse,
      ListJobInfoResponse)
-from ai_flow.scheduler.scheduler_factory import SchedulerFactory
-from ai_flow.plugin_interface.scheduler_interface import Scheduler
+from ai_flow.plugin_interface.scheduler_interface import Scheduler, SchedulerFactory
 from ai_flow.workflow.workflow import Workflow
 from ai_flow.endpoint.server.workflow_proto_utils import workflow_to_proto, workflow_list_to_proto, \
     workflow_execution_to_proto, workflow_execution_list_to_proto, job_to_proto, job_list_to_proto

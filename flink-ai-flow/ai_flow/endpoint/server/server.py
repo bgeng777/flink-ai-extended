@@ -47,7 +47,7 @@ from notification_service.proto import notification_service_pb2_grpc
 from ai_flow.metadata_store.service.service import MetadataService
 from ai_flow.model_center.service.service import ModelCenterService
 from ai_flow.metric.service.metric_service import MetricService
-from ai_flow.scheduler.scheduler_service import SchedulerService, SchedulerServiceConfig
+from ai_flow.scheduler_service.service.service import SchedulerService, SchedulerServiceConfig
 
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "../../..")))
 
