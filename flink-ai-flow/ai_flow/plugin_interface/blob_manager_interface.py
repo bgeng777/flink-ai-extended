@@ -35,7 +35,7 @@ class BlobConfig(AIFlowConfiguration):
                 'Please add the `blob_manager_class` option under the `blob` option!')
         self.set_blob_manager_class(config.get('blob_manager_class'))
         if config.get('blob_manager_config') is not None:
-            self['blob_manager_config'].update(config.get('blob_manager_config'))
+            self.set_blob_manager_config(config.get('blob_manager_config'))
 
     def blob_manager_class(self):
         return self.get('blob_manager_class')

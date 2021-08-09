@@ -14,7 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-from typing import Text
+from typing import Text, Dict
 import traceback
 
 from ai_flow.common.configuration import AIFlowConfiguration
@@ -43,15 +43,31 @@ from ai_flow.endpoint.server.workflow_proto_utils import workflow_to_proto, work
 
 class SchedulerServiceConfig(AIFlowConfiguration):
 
-    def __init__(self):
+    def __init__(self, config: Dict):
         super().__init__()
-        self['scheduler_config'] = {}
+        if config is None:
+            raise Exception(
+                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler_service',
+                                                                                        'scheduler_service'))
+        if config.get('scheduler') is None:
+            raise Exception(
+                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler',
+                                                                                        'scheduler'))
+        if 'scheduler_class' not in config.get('scheduler'):
+            raise Exception(
+                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler_class',
+                                                                                        'scheduler_class'))
+
+        if 'repository' not in config:
+            self['repository'] = '/tmp'
+        else:
+            self['repository'] = config.get('repository')
+        self['scheduler'] = {}
+        if 'scheduler_config' not in config.get('scheduler'):
+            self['scheduler']['scheduler_config'] = {}
 
     def repository(self):
-        if 'repository' not in self:
-            return '/tmp'
-        else:
-            return self['repository']
+        return self['repository']
 
     def set_repository(self, value):
         self['repository'] = value

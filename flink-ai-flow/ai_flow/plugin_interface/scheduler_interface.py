@@ -16,10 +16,42 @@
 # under the License.
 from abc import ABC, abstractmethod
 from typing import Dict, Text, List, Optional
+
+from ai_flow.common.configuration import AIFlowConfiguration
+
 from ai_flow.util import json_utils
 from ai_flow.workflow.workflow import Workflow
 from ai_flow.context.project_context import ProjectContext
 from ai_flow.common.module_load import import_string
+
+
+class SchedulerConfig(AIFlowConfiguration):
+
+    def __init__(self, config: Dict):
+        super().__init__()
+        self['scheduler_class'] = None
+        self['scheduler_config'] = {}
+        if config is None or 'scheduler_class' not in config:
+            raise Exception(
+                'The `scheduler_class` option of scheduler config is not configured. '
+                'Please add the `scheduler_class` option under the `scheduler` option!')
+        self.set_scheduler_class(config.get('scheduler_class'))
+        if config.get('scheduler_config') is not None:
+            self.set_scheduler_config(config.get('scheduler_config'))
+
+    def scheduler_class(self):
+        return self.get('scheduler_class')
+
+    def set_scheduler_class(self, value):
+        self['scheduler_class'] = value
+
+    def scheduler_config(self):
+        if 'scheduler_config' not in self:
+            return None
+        return self['scheduler_config']
+
+    def set_scheduler_config(self, value):
+        self['scheduler_config'] = value
 
 
 class WorkflowInfo(json_utils.Jsonable):
