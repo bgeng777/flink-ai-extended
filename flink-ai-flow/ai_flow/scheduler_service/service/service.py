@@ -35,7 +35,7 @@ from ai_flow.protobuf.scheduling_service_pb2 import \
      ScheduleJobRequest,
      JobInfoResponse,
      ListJobInfoResponse)
-from ai_flow.plugin_interface.scheduler_interface import Scheduler, SchedulerFactory
+from ai_flow.plugin_interface.scheduler_interface import Scheduler, SchedulerFactory, SchedulerConfig
 from ai_flow.workflow.workflow import Workflow
 from ai_flow.endpoint.server.workflow_proto_utils import workflow_to_proto, workflow_list_to_proto, \
     workflow_execution_to_proto, workflow_execution_list_to_proto, job_to_proto, job_list_to_proto
@@ -53,18 +53,13 @@ class SchedulerServiceConfig(AIFlowConfiguration):
             raise Exception(
                 'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler',
                                                                                         'scheduler'))
-        if 'scheduler_class' not in config.get('scheduler'):
-            raise Exception(
-                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler_class',
-                                                                                        'scheduler_class'))
+        scheduler_meta = SchedulerConfig(config.get('scheduler'))
 
         if 'repository' not in config:
             self['repository'] = '/tmp'
         else:
-            self['repository'] = config.get('repository')
-        self['scheduler'] = {}
-        if 'scheduler_config' not in config.get('scheduler'):
-            self['scheduler']['scheduler_config'] = {}
+            self.set_repository(config.get('repository'))
+        self['scheduler'] = scheduler_meta
 
     def repository(self):
         return self['repository']
@@ -72,22 +67,13 @@ class SchedulerServiceConfig(AIFlowConfiguration):
     def set_repository(self, value):
         self['repository'] = value
 
-    def scheduler_class(self):
-        if self.get('scheduler_class') is not None:
-            return self.get('scheduler_class')
-        else:
+    def scheduler(self):
+        if 'scheduler' not in self:
             return None
+        return self['scheduler']
 
-    def set_scheduler_class(self, value):
-        self['scheduler_class'] = value
-
-    def scheduler_config(self):
-        if 'scheduler_config' not in self:
-            return None
-        return self['scheduler_config']
-
-    def set_scheduler_config(self, value):
-        self['scheduler_config'] = value
+    def set_scheduler(self, value):
+        self['scheduler'] = value
 
 
 class SchedulerService(SchedulingServiceServicer):
@@ -95,8 +81,8 @@ class SchedulerService(SchedulingServiceServicer):
                  scheduler_service_config: SchedulerServiceConfig):
         self._scheduler_service_config = scheduler_service_config
         self._scheduler: Scheduler \
-            = SchedulerFactory.create_scheduler(scheduler_service_config.scheduler_class(),
-                                                scheduler_service_config.scheduler_config())
+            = SchedulerFactory.create_scheduler(scheduler_service_config.scheduler().scheduler_class(),
+                                                scheduler_service_config.scheduler().scheduler_config())
 
     # workflow interface
     def submitWorkflow(self, request, context):

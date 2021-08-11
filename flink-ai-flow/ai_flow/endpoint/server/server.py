@@ -113,21 +113,7 @@ class AIFlowServer(object):
 
     def _add_scheduler_service(self, scheduler_service_config):
         logging.info("start scheduler service.")
-        # check the `scheduler` option of scheduler service config
-        if scheduler_service_config is None:
-            raise Exception(
-                'The `scheduler` option of scheduler service config is not configured. '
-                'Please add the `scheduler` option!')
-        if 'scheduler_class' not in scheduler_service_config:
-            raise Exception(
-                'The `scheduler_class` option of scheduler service config is not configured. '
-                'Please add the `scheduler_class` option under the `scheduler` option!')
-        if 'scheduler_config' not in scheduler_service_config:
-            scheduler_service_config['scheduler_config'] = {}
-        real_config = SchedulerServiceConfig()
-        real_config.set_scheduler_config(scheduler_service_config.get('scheduler_config'))
-        real_config.set_repository(scheduler_service_config.get('repository'))
-        real_config.set_scheduler_class(scheduler_service_config.get('scheduler_class'))
+        real_config = SchedulerServiceConfig(scheduler_service_config)
         self.scheduler_service = SchedulerService(real_config)
         scheduling_service_pb2_grpc.add_SchedulingServiceServicer_to_server(self.scheduler_service,
                                                                             self.server)
