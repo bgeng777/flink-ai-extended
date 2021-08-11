@@ -17,11 +17,10 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Text, List, Optional
 
-from ai_flow.common.configuration import AIFlowConfiguration
-
 from ai_flow.util import json_utils
 from ai_flow.workflow.workflow import Workflow
 from ai_flow.context.project_context import ProjectContext
+from ai_flow.common.configuration import AIFlowConfiguration
 from ai_flow.common.module_load import import_string
 
 
