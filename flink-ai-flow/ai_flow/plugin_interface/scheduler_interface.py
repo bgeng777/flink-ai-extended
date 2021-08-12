@@ -33,13 +33,13 @@ class SchedulerConfig(AIFlowConfiguration):
                 'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler',
                                                                                         'scheduler'))
         self['scheduler_class'] = None
-        if 'scheduler_class' not in config or config.get('scheduler_class') is None:
+        if config.get('scheduler_class') is None:
             raise Exception(
                 'The `scheduler_class` option of scheduler config is not configured. '
                 'Please add the `scheduler_class` option under the `scheduler` option!')
         self['scheduler_class'] = config.get('scheduler_class')
         self['scheduler_config'] = {}
-        if 'scheduler_config' in config and config.get('scheduler_config') is not None:
+        if config.get('scheduler_config') is not None:
             self['scheduler_config'] = config.get('scheduler_config')
 
     def scheduler_class(self):

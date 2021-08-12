@@ -51,7 +51,7 @@ class SchedulerServiceConfig(AIFlowConfiguration):
                                                                                         'scheduler_service'))
 
         self['repository'] = '/tmp'
-        if 'repository' in config and config.get('repository') is not None:
+        if config.get('repository') is not None:
             self['repository'] = config.get('repository')
         scheduler_meta = SchedulerConfig(config.get('scheduler'))
         self['scheduler'] = scheduler_meta

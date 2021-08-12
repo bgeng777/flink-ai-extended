@@ -32,13 +32,13 @@ class BlobConfig(AIFlowConfiguration):
                 'The `{}` option is not configured. Please add the `{}` option!'.format('blob',
                                                                                         'blob'))
         self['blob_manager_class'] = None
-        if 'blob_manager_class' not in config or config.get('blob_manager_class') is None:
+        if config.get('blob_manager_class') is None:
             raise Exception(
                 'The `blob_manager_class` option of blob config is not configured. '
                 'Please add the `blob_manager_class` option under the `blob` option!')
         self['blob_manager_class'] = config.get('blob_manager_class')
         self['blob_manager_config'] = {}
-        if 'blob_manager_config' in config and config.get('blob_manager_config') is not None:
+        if config.get('blob_manager_config') is not None:
             self['blob_manager_config'] = config.get('blob_manager_config')
 
 
