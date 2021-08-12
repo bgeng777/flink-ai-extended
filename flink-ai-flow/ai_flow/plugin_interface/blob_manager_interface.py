@@ -29,8 +29,7 @@ class BlobConfig(AIFlowConfiguration):
         super().__init__()
         if config is None:
             raise Exception(
-                'The `{}` option is not configured. Please add the `{}` option!'.format('blob',
-                                                                                        'blob'))
+                'The `{}` option is not configured in the {} option. Please add it!'.format('blob', 'project.yaml'))
         self['blob_manager_class'] = None
         if config.get('blob_manager_class') is None:
             raise Exception(

@@ -47,8 +47,8 @@ class SchedulerServiceConfig(AIFlowConfiguration):
         super().__init__()
         if config is None:
             raise Exception(
-                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler_service',
-                                                                                        'scheduler_service'))
+                'The `{}` option is not configured in the {} option. Please add it!'.format('scheduler_service',
+                                                                                            'aiflow_server.yaml'))
 
         self['repository'] = '/tmp'
         if config.get('repository') is not None:
@@ -90,7 +90,7 @@ class SchedulerService(SchedulingServiceServicer):
             blob_config = BlobConfig(raw_config)
             blob_manager = BlobManagerFactory.create_blob_manager(blob_config.blob_manager_class(),
                                                                   blob_config.blob_manager_config())
-            project_path: Text = blob_manager\
+            project_path: Text = blob_manager \
                 .download_project(workflow_snapshot_id=workflow.workflow_snapshot_id,
                                   remote_path=workflow.project_uri,
                                   local_path=self._scheduler_service_config.repository())

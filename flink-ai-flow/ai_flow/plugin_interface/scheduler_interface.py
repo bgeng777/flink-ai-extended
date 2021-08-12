@@ -30,8 +30,8 @@ class SchedulerConfig(AIFlowConfiguration):
         super().__init__()
         if config is None:
             raise Exception(
-                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler',
-                                                                                        'scheduler'))
+                'The `{}` option is not configured in the {} option. Please add it!'.format('scheduler',
+                                                                                            'scheduler_service'))
         self['scheduler_class'] = None
         if config.get('scheduler_class') is None:
             raise Exception(
@@ -393,7 +393,7 @@ class Scheduler(ABC):
 
 class SchedulerFactory(object):
     """
-    SchedulerFactory creates scheduler() based on configuration information.
+    SchedulerFactory creates scheduler based on configuration information.
     """
 
     @classmethod
