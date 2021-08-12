@@ -28,25 +28,27 @@ class SchedulerConfig(AIFlowConfiguration):
 
     def __init__(self, config: Dict):
         super().__init__()
+        if config is None:
+            raise Exception(
+                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler',
+                                                                                        'scheduler'))
         self['scheduler_class'] = None
-        self['scheduler_config'] = {}
-        if config is None or 'scheduler_class' not in config:
+        if 'scheduler_class' not in config or config.get('scheduler_class') is None:
             raise Exception(
                 'The `scheduler_class` option of scheduler config is not configured. '
                 'Please add the `scheduler_class` option under the `scheduler` option!')
-        self.set_scheduler_class(config.get('scheduler_class'))
-        if config.get('scheduler_config') is not None:
-            self.set_scheduler_config(config.get('scheduler_config'))
+        self['scheduler_class'] = config.get('scheduler_class')
+        self['scheduler_config'] = {}
+        if 'scheduler_config' in config and config.get('scheduler_config') is not None:
+            self['scheduler_config'] = config.get('scheduler_config')
 
     def scheduler_class(self):
-        return self.get('scheduler_class')
+        return self['scheduler_class']
 
     def set_scheduler_class(self, value):
         self['scheduler_class'] = value
 
     def scheduler_config(self):
-        if 'scheduler_config' not in self:
-            return None
         return self['scheduler_config']
 
     def set_scheduler_config(self, value):
@@ -393,10 +395,11 @@ class SchedulerFactory(object):
     """
     SchedulerFactory creates scheduler() based on configuration information.
     """
+
     @classmethod
     def create_scheduler(cls, class_name, config: Dict) -> Scheduler:
         """
-        :param class_name: The class name of a scheduler(ai_flow.plugin_interface.scheduler_interface.Scheduler)
+        :param class_name: The class name of a :py:class:`ai_flow.plugin_interface.scheduler_interface.Scheduler`
         :param config: The configuration of the scheduler.
         """
         class_object = import_string(class_name)

@@ -49,14 +49,12 @@ class SchedulerServiceConfig(AIFlowConfiguration):
             raise Exception(
                 'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler_service',
                                                                                         'scheduler_service'))
-        if config.get('scheduler') is None:
-            raise Exception(
-                'The `{}` option is not configured. Please add the `{}` option!'.format('scheduler',
-                                                                                        'scheduler'))
-        scheduler_meta = SchedulerConfig(config.get('scheduler'))
 
-        self.set_repository(config.get('repository'))
-        self.set_scheduler(scheduler_meta)
+        self['repository'] = '/tmp'
+        if 'repository' in config and config.get('repository') is not None:
+            self['repository'] = config.get('repository')
+        scheduler_meta = SchedulerConfig(config.get('scheduler'))
+        self['scheduler'] = scheduler_meta
 
     def repository(self):
         return self['repository']
@@ -65,8 +63,6 @@ class SchedulerServiceConfig(AIFlowConfiguration):
         self['repository'] = value
 
     def scheduler(self):
-        if 'scheduler' not in self:
-            return None
         return self['scheduler']
 
     def set_scheduler(self, value):
