@@ -55,9 +55,6 @@ class SchedulerServiceConfig(AIFlowConfiguration):
                                                                                         'scheduler'))
         scheduler_meta = SchedulerConfig(config.get('scheduler'))
 
-        # if 'repository' not in config:
-        #     self['repository'] = '/tmp'
-        # else:
         self.set_repository(config.get('repository'))
         self.set_scheduler(scheduler_meta)
 
