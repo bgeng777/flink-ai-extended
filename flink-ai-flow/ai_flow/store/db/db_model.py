@@ -18,10 +18,10 @@
 #
 from notification_service.base_notification import BaseEvent
 from sqlalchemy import (
-    Column, String, ForeignKey, Integer, PrimaryKeyConstraint, BigInteger, UniqueConstraint, Text, Boolean)
+    Column, String, ForeignKey, Integer, PrimaryKeyConstraint, BigInteger, UniqueConstraint, Binary, Boolean)
 from sqlalchemy.orm import relationship, backref
 from mongoengine import (Document, StringField, IntField, LongField, ReferenceField,
-                         BooleanField, ListField, ObjectIdField, SequenceField)
+                         BooleanField, ListField, ObjectIdField, SequenceField, BinaryField)
 
 from ai_flow.meta.metric_meta import MetricType
 from ai_flow.model_center.entity.model_version_detail import ModelVersionDetail
@@ -266,6 +266,23 @@ class SqlEvent(base):
         return BaseEvent(self.key, self.value, self.event_type, self.version, self.create_time, self.id)
 
 
+class SqlContextExtractor(base, Base):
+    """
+    SQL model of context extractor for workflows
+    """
+    __tablename__ = 'context_extractor'
+
+    workflow_uuid = Column(BigInteger, ForeignKey('workflow.uuid', onupdate='cascade'), nullable=False)
+    workflow_name = Column(String(255), nullable=False)
+    context_extractor = Column(Binary(), nullable=False)
+
+    workflow = relationship("SqlWorkflow", backref=backref('context_extractor', cascade='all'))
+
+    def __repr__(self):
+        return '<SqlContextExtractor ({}, {}, {}, {})>'.format(self.uuid, self.workflow_uuid, self.workflow_name,
+                                                               self.context_extractor)
+
+
 class SqlMetricMeta(base, Base):
     """
     SQL model of metric meta
@@ -409,7 +426,7 @@ class MongoModelRelation(Document):
     model_version_relation = ListField(ReferenceField(MongoModelVersionRelation))
 
     meta = {'db_alias': MONGO_DB_ALIAS_META_SERVICE}
-    
+
     def __repr__(self):
         return '<Document ModelRelation ({}, {}, {})>'.format(
             self.uuid,
@@ -421,7 +438,7 @@ class MongoProject(Document):
     """
     Document of project in metadata backend storage.
     """
-    
+
     uuid = SequenceField(db_alias=MONGO_DB_ALIAS_META_SERVICE)
     name = StringField(max_length=255, required=True, unique=True)
     properties = StringField(max_length=1000)
@@ -512,7 +529,7 @@ class MongoModelVersion(Document):
         name_version_current_stage = f'{n}-{v}-{c}'
         kwargs['name_version_current_stage_unique'] = name_version_current_stage
         super().__init__(*args, **kwargs)
-    
+
     def __repr__(self):
         return '<Document ModelVersion ({}, {}, {}, {}, {}, {}, {}, {})>'.format(
             self.model_name,
@@ -639,8 +656,8 @@ class MongoMetricSummary(Document):
 
     def __repr__(self):
         return '<Document MetricSummary ({}, {}, {})>'.format(self.uuid, self.metric_name, self.metric_key,
-                                                                        self.metric_value, self.metric_timestamp,
-                                                                        self.model_version, self.job_execution_id)
+                                                              self.metric_value, self.metric_timestamp,
+                                                              self.model_version, self.job_execution_id)
 
 
 class MongoMember(Document):
@@ -658,3 +675,19 @@ class MongoMember(Document):
     def __repr__(self):
         return '<Document Member ({}, {}, {}, {}, {})>'.format(
             self.id, self.version, self.server_uri, self.update_time, self.uuid)
+
+
+class MongoContextExtractor(Document):
+    """
+    Document of context extractor for workflows
+    """
+
+    workflow_uuid = SequenceField(db_alias=MONGO_DB_ALIAS_META_SERVICE, required=True, unique=True)
+    workflow_name = StringField(max_length=255, required=True)
+    context_extractor = BinaryField(required=True)
+
+    meta = {'db_alias': MONGO_DB_ALIAS_META_SERVICE}
+
+    def __repr__(self):
+        return '<Document ContextExtractor ({}, {}, {})>'.format(self.id, self.workflow_uuid, self.workflow_name,
+                                                                 self.context_extractor)

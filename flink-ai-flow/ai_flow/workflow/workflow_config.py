@@ -18,6 +18,8 @@
 #
 import os
 from typing import Dict, Text
+
+from ai_flow.api.context_extractor import DefaultContextExtractor, ContextExtractor
 from ai_flow.util.json_utils import Jsonable, loads
 from ai_flow.workflow.job_config import JobConfig
 from ai_flow.workflow.periodic_config import PeriodicConfig
@@ -39,9 +41,13 @@ class WorkflowConfig(Jsonable):
         self.dependencies: Dict = None
         self.periodic_config: PeriodicConfig = None
         self.job_periodic_config_dict: Dict[Text, PeriodicConfig] = {}
+        self.context_extractor = None
 
     def add_job_config(self, config_key: Text, job_config: JobConfig):
         self.job_configs[config_key] = job_config
+
+    def set_context_extractor(self, context_extractor: ContextExtractor):
+        self.context_extractor = context_extractor
 
 
 def load_workflow_config(config_path: Text) -> WorkflowConfig:

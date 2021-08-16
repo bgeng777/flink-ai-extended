@@ -42,7 +42,7 @@ from ai_flow.endpoint.server.high_availability import Member
 from ai_flow.store.abstract_store import AbstractStore
 from ai_flow.store.db.base_model import base
 from ai_flow.store.db.db_model import SqlDataset, SqlModelRelation, SqlModelVersionRelation, SqlProject, \
-    SqlWorkflow, SqlEvent, SqlArtifact, SqlMember, SqlProjectSnapshot
+    SqlWorkflow, SqlEvent, SqlArtifact, SqlMember, SqlProjectSnapshot, SqlContextExtractor
 from ai_flow.store.db.db_model import SqlMetricMeta, SqlMetricSummary
 from ai_flow.store.db.db_model import SqlRegisteredModel, SqlModelVersion
 from ai_flow.store.db.db_util import extract_db_engine_from_uri, create_sqlalchemy_engine, _get_managed_session_maker
@@ -111,7 +111,8 @@ class SqlAlchemyStore(AbstractStore):
             SqlRegisteredModel.__tablename__,
             SqlModelVersion.__tablename__,
             SqlEvent.__tablename__,
-            SqlMember.__tablename__
+            SqlMember.__tablename__,
+            SqlContextExtractor.__tablename__
         ]
         if any([table not in inspected_tables for table in expected_tables]):
             raise AIFlowException("Database migration in unexpected state.")

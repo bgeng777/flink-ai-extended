@@ -87,7 +87,7 @@ def _apply_full_info_to_workflow(workflow: Workflow, entry_module_path: Text):
     :param workflow: The generated :class:`~ai_flow.workflow.workflow.Workflow`.
     :param entry_module_path: The entry module path of the workflow.
     """
-    workflow.workflow_config = current_workflow_config()
+    workflow.workflow_config = current_workflow_config() # This line may be redundant as config is set in build_workflow
     _set_entry_module_path(workflow, entry_module_path)
     _upload_project_package(workflow)
     _set_job_plugins(workflow)
