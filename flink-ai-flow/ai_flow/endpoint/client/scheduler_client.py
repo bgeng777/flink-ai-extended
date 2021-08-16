@@ -14,6 +14,9 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+from ai_flow.endpoint.server import stringValue
+from ai_flow.util import json_utils
+
 from ai_flow.workflow.control_edge import EventCondition
 from typing import Text, List, Dict
 
@@ -147,11 +150,17 @@ class SchedulerClient(BaseClient):
         :param workflow_name: name of the workflow.
         :param event_conditions: The list of :class:`EventCondition`.
         """
-        # TODO: grpc call
-        pass
+        event_conditions_json = json_utils.dumps(event_conditions)
+        request = scheduling_service_pb2.WorkflowExecutionOnEventRequest(namespace=namespace,
+                                                                         workflow_name=workflow_name,
+                                                                         event_conditions_json=event_conditions_json)
+        response = self.scheduling_stub.startNewWorkflowExecutionOnEvent(request)
+        if response.result.status != StatusProto.OK:
+            raise Exception(response.result.error_message)
+        return response.workflow
 
     def stop_workflow_execution_on_event(self, namespace: Text, workflow_name: Text,
-                                         event_conditions: List[EventCondition]):
+                                         event_conditions: List[EventCondition]) -> WorkflowProto:
         """
         Stop new workflow execution whenever any `EventCondition` in the given list is met. The context of the workflow
         execution to stop is decided by the :class:`ContextExtractor` set to the workflow.
@@ -162,13 +171,19 @@ class SchedulerClient(BaseClient):
         :param workflow_name: name of the workflow.
         :param event_conditions: The list of :class:`EventCondition`.
         """
-        # TODO: grpc call
-        pass
+        event_conditions_json = json_utils.dumps(event_conditions)
+        request = scheduling_service_pb2.WorkflowExecutionOnEventRequest(namespace=namespace,
+                                                                         workflow_name=workflow_name,
+                                                                         event_conditions_json=event_conditions_json)
+        response = self.scheduling_stub.killWorkflowExecutionOnEvent(request)
+        if response.result.status != StatusProto.OK:
+            raise Exception(response.result.error_message)
+        return response.workflow
 
     def start_new_workflow_execution(self,
                                      namespace: Text,
                                      workflow_name: Text,
-                                     context: Text) -> WorkflowExecutionProto:
+                                     context: Text = None) -> WorkflowExecutionProto:
         """
         Run the project under the current project path.
         :param namespace:
@@ -176,10 +191,9 @@ class SchedulerClient(BaseClient):
         :param context: The context of the new workflow execution.
         :return: The result of the run action.
         """
-        request = scheduling_service_pb2.WorkflowExecutionRequest()
+        request = scheduling_service_pb2.WorkflowExecutionRequest(context=stringValue(context))
         request.namespace = namespace
         request.workflow_name = workflow_name
-        # TODO: add context to request
         response = self.scheduling_stub.startNewWorkflowExecution(request)
         if response.result.status != StatusProto.OK:
             raise Exception(response.result.error_message)

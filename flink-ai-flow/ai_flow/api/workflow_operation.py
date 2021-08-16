@@ -238,7 +238,7 @@ def stop_workflow_execution_on_event(workflow_name: Text, event_conditions: Even
     get_ai_flow_client().stop_workflow_execution_on_event(namespace, workflow_name, event_conditions)
 
 
-def start_new_workflow_execution(workflow_name: Text, context: Text) -> WorkflowExecutionInfo:
+def start_new_workflow_execution(workflow_name: Text, context: Text = None) -> WorkflowExecutionInfo:
     """
     Starts the new workflow execution by the scheduler with the given name of workflow. The start of the workflow
     execution is delegated to the :class:`~ai_flow.plugin_interface.scheduler_interface.Scheduler` in Scheduler Service,
@@ -250,7 +250,8 @@ def start_new_workflow_execution(workflow_name: Text, context: Text) -> Workflow
                  information about the started workflow execution.
     """
     namespace = current_project_config().get_project_name()
-    return proto_to_workflow_execution(get_ai_flow_client().start_new_workflow_execution(namespace, workflow_name))
+    return proto_to_workflow_execution(get_ai_flow_client().start_new_workflow_execution(namespace, workflow_name,
+                                                                                         context))
 
 
 def stop_all_workflow_executions(workflow_name: Text) -> List[WorkflowExecutionInfo]:

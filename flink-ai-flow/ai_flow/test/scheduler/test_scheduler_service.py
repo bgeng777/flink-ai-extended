@@ -18,6 +18,8 @@ import mock
 import os
 import unittest
 
+from ai_flow.util import json_utils
+from ai_flow.workflow.control_edge import MeetAllEventCondition, MeetAnyEventCondition
 from typing import Text, List, Optional
 
 from ai_flow.scheduler_service.service.service import SchedulerServiceConfig
@@ -151,8 +153,49 @@ class TestSchedulerService(unittest.TestCase):
             client = SchedulerClient("localhost:{}".format(_PORT))
             workflow_execution = client.start_new_workflow_execution(namespace='namespace',
                                                                      workflow_name='test_workflow')
+            args, kwargs = instance.start_new_workflow_execution.call_args
+            self.assertEqual(('namespace', 'test_workflow', None), args)
             self.assertEqual('id', workflow_execution.execution_id)
             self.assertEqual(StateProto.INIT, workflow_execution.execution_state)
+            self.assertFalse(workflow_execution.HasField('context'))
+
+    def test_start_new_workflow_execution_with_context(self):
+        with mock.patch(SCHEDULER_CLASS) as mockScheduler:
+            self.server.scheduler_service._scheduler = mockScheduler
+
+            mockScheduler.start_new_workflow_execution.return_value \
+                = WorkflowExecutionInfo(workflow_execution_id='id', status=Status.INIT, context='test_context')
+            client = SchedulerClient("localhost:{}".format(_PORT))
+            workflow_execution = client.start_new_workflow_execution(namespace='namespace',
+                                                                     workflow_name='test_workflow',
+                                                                     context='test_context')
+            args, kwargs = mockScheduler.start_new_workflow_execution.call_args
+            self.assertEqual(('namespace', 'test_workflow', 'test_context'), args)
+            self.assertEqual('id', workflow_execution.execution_id)
+            self.assertEqual(StateProto.INIT, workflow_execution.execution_state)
+            self.assertEqual('test_context', workflow_execution.context.value)
+
+    def test_start_new_workflow_execution_on_event(self):
+        client = SchedulerClient("localhost:{}".format(_PORT))
+        c1 = MeetAllEventCondition().add_event('k1', 'v1')
+        c2 = MeetAnyEventCondition().add_event('k2', 'v2')
+        workflow_proto = client.start_new_workflow_execution_on_event(namespace='namespace',
+                                                                      workflow_name='test_workflow',
+                                                                      event_conditions=[c1, c2])
+        self.assertEqual('namespace', workflow_proto.namespace)
+        self.assertEqual('test_workflow', workflow_proto.name)
+        self.assertListEqual([c1, c2], json_utils.loads(workflow_proto.properties['event_conditions_json']))
+
+    def test_stop_workflow_execution_on_event(self):
+        client = SchedulerClient("localhost:{}".format(_PORT))
+        c1 = MeetAllEventCondition().add_event('k1', 'v1')
+        c2 = MeetAnyEventCondition().add_event('k2', 'v2')
+        workflow_proto = client.stop_workflow_execution_on_event(namespace='namespace',
+                                                                 workflow_name='test_workflow',
+                                                                 event_conditions=[c1, c2])
+        self.assertEqual('namespace', workflow_proto.namespace)
+        self.assertEqual('test_workflow', workflow_proto.name)
+        self.assertListEqual([c1, c2], json_utils.loads(workflow_proto.properties['event_conditions_json']))
 
     def test_kill_all_workflow_execution(self):
         with mock.patch(SCHEDULER_CLASS) as mockScheduler:
