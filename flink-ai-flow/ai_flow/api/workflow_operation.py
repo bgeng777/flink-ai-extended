@@ -118,7 +118,8 @@ def submit_workflow(workflow_name: Text = None) -> WorkflowInfo:
                                                               workflow_name=workflow_name)
     if workflow_meta is None:
         get_ai_flow_client().register_workflow(name=workflow_name,
-                                               project_id=int(current_project_config().get_project_uuid()))
+                                               project_id=int(current_project_config().get_project_uuid()),
+                                               context_extractor=current_graph().get_context_extractor())
     return proto_to_workflow(get_ai_flow_client()
                              .submit_workflow_to_scheduler(namespace=namespace,
                                                            workflow_json=json_utils.dumps(workflow),

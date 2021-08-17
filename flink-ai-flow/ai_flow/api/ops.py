@@ -18,6 +18,7 @@
 #
 from typing import Union, Text, Tuple, Optional, List
 
+from ai_flow.api.context_extractor import ContextExtractor
 from notification_service.base_notification import UNDEFINED_EVENT_TYPE, ANY_CONDITION
 from ai_flow.client.ai_flow_client import get_ai_flow_client
 from ai_flow.ai_graph.ai_node import AINode, ReadDatasetNode, WriteDatasetNode
@@ -32,6 +33,12 @@ from ai_flow.context.project_context import current_project_config
 from ai_flow.context.workflow_config_loader import current_workflow_config
 from ai_flow.workflow.status import Status
 
+def set_context_extractor(context_extractor: ContextExtractor):
+    """
+    Set the :class:`ContextExtractor` for the current workflow.
+    :param context_extractor: the :class:`ContextExtractor` for the current workflow.
+    """
+    current_graph().set_context_extractor(context_extractor)
 
 def read_dataset(dataset_info: Union[DatasetMeta, Text, int],
                  read_dataset_processor=None,

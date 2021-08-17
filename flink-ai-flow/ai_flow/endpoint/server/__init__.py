@@ -16,7 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-from google.protobuf.wrappers_pb2 import StringValue, Int32Value, Int64Value
+from google.protobuf.wrappers_pb2 import StringValue, Int32Value, Int64Value, BytesValue
 
 
 def stringValue(field):
@@ -38,3 +38,10 @@ def int64Value(field):
         return None
     else:
         return Int64Value(value=field)
+
+
+def bytesValue(field):
+    if field is None:
+        return None
+    else:
+        return BytesValue(value=field)

@@ -125,7 +125,7 @@ class SqlWorkflow(base, Base):
     create_time = Column(BigInteger)
     update_time = Column(BigInteger)
     is_deleted = Column(Boolean, default=False)
-
+    context_extractor_in_bytes = Column(Binary())
     UniqueConstraint(project_id, name)
 
     project = relationship("SqlProject", backref=backref('workflow', cascade='all'))
@@ -151,7 +151,7 @@ class SqlModelVersionRelation(base):
 
     def __repr__(self):
         return '<model_version_relation ({}, {}, {})>'.format(self.version, self.model_id,
-                                                              self.workflow_execution_id)
+                                                              self.project_snapshot_id)
 
 
 class SqlArtifact(base, Base):
@@ -191,7 +191,7 @@ class SqlRegisteredModel(base):
     )
 
     def __repr__(self):
-        return '<SqlRegisteredModel ({}, {}, {})>'.format(self.model_name, self.model_desc)
+        return '<SqlRegisteredModel ({}, {})>'.format(self.model_name, self.model_desc)
 
     # entity mappers
     def to_meta_entity(self):
@@ -264,23 +264,6 @@ class SqlEvent(base):
     # entity mappers
     def to_event(self):
         return BaseEvent(self.key, self.value, self.event_type, self.version, self.create_time, self.id)
-
-
-class SqlContextExtractor(base, Base):
-    """
-    SQL model of context extractor for workflows
-    """
-    __tablename__ = 'context_extractor'
-
-    workflow_uuid = Column(BigInteger, ForeignKey('workflow.uuid', onupdate='cascade'), nullable=False)
-    workflow_name = Column(String(255), nullable=False)
-    context_extractor = Column(Binary(), nullable=False)
-
-    workflow = relationship("SqlWorkflow", backref=backref('context_extractor', cascade='all'))
-
-    def __repr__(self):
-        return '<SqlContextExtractor ({}, {}, {}, {})>'.format(self.uuid, self.workflow_uuid, self.workflow_name,
-                                                               self.context_extractor)
 
 
 class SqlMetricMeta(base, Base):
@@ -491,18 +474,19 @@ class MongoWorkflow(Document):
     create_time = Column(BigInteger)
     update_time = Column(BigInteger)
     is_deleted = BooleanField(default=False)
-
+    context_extractor_in_bytes = BinaryField()
     meta = {'db_alias': MONGO_DB_ALIAS_META_SERVICE}
 
     def __repr__(self):
-        return '<Document Workflow ({}, {}, {}, {}, {}, {}, {})>'.format(
+        return '<Document Workflow ({}, {}, {}, {}, {}, {}, {}, {})>'.format(
             self.uuid,
             self.name,
             self.project_id,
             self.properties,
             self.create_time,
             self.update_time,
-            self.is_deleted)
+            self.is_deleted,
+            self.context_extractor_in_bytes)
 
 
 class MongoModelVersion(Document):
@@ -675,19 +659,3 @@ class MongoMember(Document):
     def __repr__(self):
         return '<Document Member ({}, {}, {}, {}, {})>'.format(
             self.id, self.version, self.server_uri, self.update_time, self.uuid)
-
-
-class MongoContextExtractor(Document):
-    """
-    Document of context extractor for workflows
-    """
-
-    workflow_uuid = SequenceField(db_alias=MONGO_DB_ALIAS_META_SERVICE, required=True, unique=True)
-    workflow_name = StringField(max_length=255, required=True)
-    context_extractor = BinaryField(required=True)
-
-    meta = {'db_alias': MONGO_DB_ALIAS_META_SERVICE}
-
-    def __repr__(self):
-        return '<Document ContextExtractor ({}, {}, {})>'.format(self.id, self.workflow_uuid, self.workflow_name,
-                                                                 self.context_extractor)

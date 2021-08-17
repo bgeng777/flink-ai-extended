@@ -17,13 +17,12 @@
 # under the License.
 #
 
-import dill
-from typing import List, Text
+from typing import List
 
 from ai_flow.meta.dataset_meta import DatasetMeta
 from ai_flow.endpoint.server.exception import AIFlowException
 from ai_flow.store.db.db_model import SqlDataset, SqlProject, SqlModelRelation, \
-    SqlModelVersionRelation, SqlArtifact, SqlWorkflow, SqlContextExtractor, MongoWorkflow, MongoContextExtractor
+    SqlModelVersionRelation, SqlArtifact, SqlWorkflow, MongoWorkflow
 from ai_flow.store.db.db_model import (MongoProject, MongoDataset,
                                        MongoArtifact,
                                        MongoModelRelation, MongoModelVersionRelation)
@@ -135,7 +134,8 @@ class MetaToTable:
                       project_snapshot_id=project_snapshot_id)
 
     @staticmethod
-    def workflow_to_table(name, project_id, properties, create_time, update_time, store_type='SqlAlchemyStore'):
+    def workflow_to_table(name, project_id, properties, create_time, update_time, context_extractor_in_bytes,
+                          store_type='SqlAlchemyStore'):
         if properties is not None:
             properties = str(properties)
         if store_type == 'MongoStore':
@@ -146,16 +146,5 @@ class MetaToTable:
                       project_id=project_id,
                       properties=properties,
                       create_time=create_time,
-                      update_time=update_time)
-
-    @staticmethod
-    def context_extractor_to_table(workflow_uuid, workflow_name, context_extractor, store_type='SqlAlchemyStore'):
-
-        if store_type == 'MongoStore':
-            _class = MongoContextExtractor
-        else:
-            _class = SqlContextExtractor
-        # binary_context_extractor = dill.dumps()
-        return _class(workflow_uuid=workflow_uuid,
-                      workflow_name=workflow_name,
-                      context_extractor=dill.dumps(context_extractor))
+                      update_time=update_time,
+                      context_extractor_in_bytes=context_extractor_in_bytes)

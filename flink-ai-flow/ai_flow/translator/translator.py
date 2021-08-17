@@ -107,6 +107,7 @@ class GraphSplitter(object):
             for ee in graph.edges[e]:
                 if isinstance(ee, ControlEdge):
                     split_graph.add_edge(ee.destination, ee)
+        split_graph.set_context_extractor(graph.get_context_extractor())
         return split_graph
 
 
@@ -194,6 +195,7 @@ class Translator(object):
         :param graph: The ai graph(ai_flow.ai_graph.ai_graph.AIGraph)
         :param project_context: The ai flow project context(ai_flow.context.project_context.ProjectContext)
         """
+        # current_workflow_config().set_context_extractor(graph.get_context_extractor())
         split_graph = self.graph_splitter.split(graph=graph)
         workflow = self.workflow_constructor.build_workflow(split_graph=split_graph,
                                                             project_context=project_context)

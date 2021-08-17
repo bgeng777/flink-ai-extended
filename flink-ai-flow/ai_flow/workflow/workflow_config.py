@@ -19,7 +19,7 @@
 import os
 from typing import Dict, Text
 
-from ai_flow.api.context_extractor import DefaultContextExtractor, ContextExtractor
+from ai_flow.api.context_extractor import ContextExtractor
 from ai_flow.util.json_utils import Jsonable, loads
 from ai_flow.workflow.job_config import JobConfig
 from ai_flow.workflow.periodic_config import PeriodicConfig

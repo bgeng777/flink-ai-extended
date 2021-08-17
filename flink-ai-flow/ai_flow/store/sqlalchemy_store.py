@@ -19,10 +19,14 @@
 import logging
 import time
 from typing import Optional, Text, List, Union
+
+import cloudpickle
 import sqlalchemy.exc
 import sqlalchemy.orm
 from sqlalchemy import and_, cast, Integer
 
+from ai_flow.api.context_extractor import ContextExtractor
+from ai_flow.api.context_extractor import BroadcastAllContextExtractor
 from ai_flow.common.status import Status
 from ai_flow.meta.artifact_meta import ArtifactMeta
 from ai_flow.meta.dataset_meta import DatasetMeta, Properties, DataType, Schema
@@ -42,7 +46,7 @@ from ai_flow.endpoint.server.high_availability import Member
 from ai_flow.store.abstract_store import AbstractStore
 from ai_flow.store.db.base_model import base
 from ai_flow.store.db.db_model import SqlDataset, SqlModelRelation, SqlModelVersionRelation, SqlProject, \
-    SqlWorkflow, SqlEvent, SqlArtifact, SqlMember, SqlProjectSnapshot, SqlContextExtractor
+    SqlWorkflow, SqlEvent, SqlArtifact, SqlMember, SqlProjectSnapshot
 from ai_flow.store.db.db_model import SqlMetricMeta, SqlMetricSummary
 from ai_flow.store.db.db_model import SqlRegisteredModel, SqlModelVersion
 from ai_flow.store.db.db_util import extract_db_engine_from_uri, create_sqlalchemy_engine, _get_managed_session_maker
@@ -111,8 +115,7 @@ class SqlAlchemyStore(AbstractStore):
             SqlRegisteredModel.__tablename__,
             SqlModelVersion.__tablename__,
             SqlEvent.__tablename__,
-            SqlMember.__tablename__,
-            SqlContextExtractor.__tablename__
+            SqlMember.__tablename__
         ]
         if any([table not in inspected_tables for table in expected_tables]):
             raise AIFlowException("Database migration in unexpected state.")
@@ -753,12 +756,13 @@ class SqlAlchemyStore(AbstractStore):
 
     '''workflow api'''
 
-    def register_workflow(self, name, project_id, properties=None) -> WorkflowMeta:
+    def register_workflow(self, name, project_id, context_extractor_in_bytes, properties=None) -> WorkflowMeta:
         """
         Register a workflow in metadata store.
 
         :param name: the workflow name
         :param project_id: the id of project which contains the workflow
+        :param context_extractor_in_bytes: serialized context extractor inbytes
         :param properties: the workflow properties
         """
         update_time = create_time = int(time.time() * 1000)
@@ -768,12 +772,14 @@ class SqlAlchemyStore(AbstractStore):
                                                          project_id=project_id,
                                                          properties=properties,
                                                          create_time=create_time,
-                                                         update_time=update_time)
+                                                         update_time=update_time,
+                                                         context_extractor_in_bytes=context_extractor_in_bytes)
                 session.add(workflow)
                 session.flush()
                 return WorkflowMeta(uuid=workflow.uuid, name=name,
                                     project_id=project_id, properties=properties,
-                                    create_time=create_time, update_time=update_time)
+                                    create_time=create_time, update_time=update_time,
+                                    context_extractor_in_bytes=context_extractor_in_bytes)
             except sqlalchemy.exc.IntegrityError as e:
                 raise AIFlowException('Error: {}'.format(workflow.name, workflow.project_id, str(e)))
 
@@ -1653,6 +1659,13 @@ class SqlAlchemyStore(AbstractStore):
                     .delete()
             except Exception as e:
                 raise AIFlowException("Clear dead AIFlow Member Error.") from e
+
+    def get_context_extractor_by_workflow_name(self, project_name, workflow_name) -> ContextExtractor:
+        workflow = self.get_workflow_by_name(project_name=project_name,
+                                             workflow_name=workflow_name)
+        context_extractor_in_bytes = workflow.context_extractor_in_bytes
+        context_extractor = cloudpickle.loads(context_extractor_in_bytes)
+        return BroadcastAllContextExtractor if context_extractor is None else context_extractor
 
 
 def _gen_entity_name_prefix(name):

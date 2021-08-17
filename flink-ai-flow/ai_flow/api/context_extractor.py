@@ -1,29 +1,63 @@
-from abc import abstractmethod
-from typing import Text, Union
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+from abc import ABC, abstractmethod
+
 from ai_flow.util.json_utils import Jsonable
+from typing import Text, Optional
+
 from notification_service.base_notification import BaseEvent
 
 
-class ContextExtractor(Jsonable):
+class ContextExtractor(ABC, Jsonable):
     """
-    ContextExtractor is written by users to decide how to extract the context of a workflow execution
-    (or job executions in that workflow execution) from the event subscribed by the workflow or the job.
-    It is a workflow-level config.
+    ContextExtractor can be implemented by user to decide if a event should be broadcast or we should extract context
+    from a event. If the event should be broadcast, it will be handle by all the workflow executions and job executions
+    of that workflow. Otherwise, only workflow execution and job execution with the same context can handle the event.
     """
 
     @abstractmethod
-    def extract_context(self, event: BaseEvent) -> Union[Text, None]:
+    def extract_context(self, event: BaseEvent) -> Optional[Text]:
         """
-        Extract context(string) from the given event
+        If the event is not to be broadcast, this method is called to extract the context from the event. The event will
+        only be handled by the workflow execution and job execution under the same context. If the None is returned,
+        workflow execution and job execution under default context will handle the event.
+        :param event: The :class:`~notification_service.base_notification.BaseEvent` to extract context from.
+        :return: The context of the event.
+        """
+        pass
 
-        :param event: The :class:`~notification_service.base_notification.BaseEvent` that should be processed.
-        :return: The context that this event belongs to.
-        :rtype: Text
+    @abstractmethod
+    def is_broadcast_event(self, event: BaseEvent) -> bool:
+        """
+        Decide if the event should be broadcast. If True, the event will be handled by all the workflow execution and
+        job execution in the workflow. Otherwise, extract_context will be called to decide the context of the event.
+        :param event: The event to check if it should be broadcast.
+        :return: Whether the event should be broadcast.
         """
         pass
 
 
-class DefaultContextExtractor(ContextExtractor):
+class BroadcastAllContextExtractor(ContextExtractor):
+    """
+    BroadcastAllContextExtractor is the default ContextExtractor to used. It marks all events as broadcast events.
+    """
 
-    def extract_context(self, event: BaseEvent) -> Union[Text, None]:
+    def extract_context(self, event: BaseEvent) -> Optional[Text]:
         return None
+
+    def is_broadcast_event(self, event: BaseEvent) -> bool:
+        return True

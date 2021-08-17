@@ -17,6 +17,10 @@
 # under the License.
 #
 import ast
+
+import cloudpickle
+
+from ai_flow.api.context_extractor import ContextExtractor
 from ai_flow.meta.artifact_meta import ArtifactMeta
 from ai_flow.meta.dataset_meta import DatasetMeta, DataType, Schema
 from ai_flow.meta.model_relation_meta import ModelRelationMeta, ModelVersionRelationMeta, \
@@ -93,4 +97,10 @@ class ResultToMeta:
                             properties=properties,
                             create_time=workflow_result.create_time,
                             update_time=workflow_result.update_time,
+                            context_extractor_in_bytes=workflow_result.context_extractor_in_bytes,
                             uuid=workflow_result.uuid)
+
+    @staticmethod
+    def result_to_context_extractor(context_extractor_result) -> ContextExtractor:
+        binary_context_extractor = context_extractor_result.context_extractor
+        return cloudpickle.loads(binary_context_extractor)

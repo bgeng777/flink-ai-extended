@@ -481,7 +481,7 @@ class MongoStore(AbstractStore):
 
     '''workflow api'''
 
-    def register_workflow(self, name, project_id, properties=None) -> WorkflowMeta:
+    def register_workflow(self, name, project_id, context_extractor_in_bytes, properties=None) -> WorkflowMeta:
         """
         Register a workflow in metadata store.
 
@@ -496,11 +496,13 @@ class MongoStore(AbstractStore):
                                                      properties=properties,
                                                      create_time=create_time,
                                                      update_time=update_time,
+                                                     context_extractor_in_bytes=context_extractor_in_bytes,
                                                      store_type=type(self).__name__)
             workflow.save()
             return WorkflowMeta(uuid=workflow.uuid, name=name,
                                 project_id=project_id, properties=properties,
-                                create_time=create_time, update_time=update_time)
+                                create_time=create_time, update_time=update_time,
+                                context_extractor_in_bytes=context_extractor_in_bytes)
         except mongoengine.OperationError as e:
             raise AIFlowException('Registered Workflow (name={}, project_id={}) already exists. '
                                   'Error: {}'.format(workflow.name, workflow.project_id, str(e)))

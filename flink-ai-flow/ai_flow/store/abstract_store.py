@@ -18,6 +18,8 @@
 #
 from abc import abstractmethod, ABCMeta
 
+from ai_flow.api.context_extractor import ContextExtractor
+from ai_flow.api.context_extractor import BroadcastAllContextExtractor
 from ai_flow.meta.artifact_meta import ArtifactMeta
 from ai_flow.endpoint.server.high_availability import Member
 from typing import Text, Union, List, Optional
@@ -299,12 +301,14 @@ class AbstractStore(object):
         workflow api
     '''
 
-    def register_workflow(self, name, project_id, properties=None):
+    def register_workflow(self, name, project_id, context_extractor_in_bytes,
+                          properties=None):
         """
         Register a workflow in metadata store.
 
         :param name: the workflow name
         :param project_id: the id of project which contains the workflow
+        :param context_extractor_in_bytes: serialized context extractor inbytes
         :param properties: the workflow properties
         """
         pass
@@ -612,4 +616,8 @@ class AbstractStore(object):
 
     @abstractmethod
     def clear_dead_members(self, ttl_ms):
+        pass
+
+    @abstractmethod
+    def get_context_extractor_by_workflow_name(self, project_name, workflow_name) -> ContextExtractor:
         pass

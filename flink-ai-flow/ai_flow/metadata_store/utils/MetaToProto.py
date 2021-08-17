@@ -27,7 +27,7 @@ from ai_flow.protobuf.message_pb2 import DatasetProto, DataTypeProto, \
     SchemaProto, ProjectProto, \
     ModelRelationProto, ModelVersionRelationProto, ModelProto, ModelVersionProto, ArtifactProto, \
     ModelVersionStage, WorkflowMetaProto
-from ai_flow.endpoint.server import stringValue, int64Value
+from ai_flow.endpoint.server import stringValue, int64Value, bytesValue
 
 
 class MetaToProto:
@@ -102,6 +102,7 @@ class MetaToProto:
                 properties=workflow_meta.properties,
                 create_time=int64Value(workflow_meta.create_time),
                 update_time=int64Value(workflow_meta.update_time),
+                context_extractor_in_bytes=bytesValue(workflow_meta.context_extractor_in_bytes),
                 uuid=workflow_meta.uuid)
 
     @staticmethod

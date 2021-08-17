@@ -16,6 +16,12 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+import cloudpickle
+from notification_service.base_notification import BaseEvent
+
+from ai_flow.api.context_extractor import BroadcastAllContextExtractor
+
+from ai_flow.api.context_extractor import ContextExtractor
 from ai_flow.meta.workflow_meta import WorkflowMeta
 from typing import Optional, Text, List
 
@@ -33,7 +39,7 @@ from ai_flow.protobuf.message_pb2 import DatasetProto, SchemaProto, ModelRelatio
     ModelVersionRelationProto, ModelVersionProto, ProjectProto, \
     ArtifactProto, ModelVersionStage, WorkflowMetaProto
 from ai_flow.protobuf.metadata_service_pb2 import ModelNameRequest
-from ai_flow.endpoint.server import stringValue, int64Value
+from ai_flow.endpoint.server import stringValue, int64Value, bytesValue
 from ai_flow.endpoint.client.base_client import BaseClient
 from ai_flow.endpoint.server.util import _unwrap_dataset_response, \
     transform_dataset_type_list_to_proto, _unwrap_dataset_list_response, _unwrap_delete_response, \
@@ -43,6 +49,17 @@ from ai_flow.endpoint.server.util import _unwrap_dataset_response, \
     _unwrap_project_response, _unwrap_project_list_response, \
     _unwrap_artifact_response, _unwrap_artifact_list_response, _unwrap_workflow_response, _unwrap_workflow_list_response
 
+
+class MyContextExtractor(ContextExtractor):
+    """
+    BroadcastAllContextExtractor is the default ContextExtractor to used. It marks all events as broadcast events.
+    """
+
+    def extract_context(self, event: BaseEvent) -> Optional[Text]:
+        return "hello"
+
+    def is_broadcast_event(self, event: BaseEvent) -> bool:
+        return False
 
 class MetadataClient(BaseClient):
     def __init__(self, server_uri):
@@ -686,17 +703,20 @@ class MetadataClient(BaseClient):
 
     '''workflow api'''
 
-    def register_workflow(self, name: Text, project_id: int, properties: Properties = None) -> WorkflowMeta:
+    def register_workflow(self, name: Text, project_id: int, properties: Properties = None,
+                          context_extractor: ContextExtractor = BroadcastAllContextExtractor) -> WorkflowMeta:
         """
         Register a workflow in metadata store.
 
         :param name: the workflow name
         :param project_id: the id of project which contains the workflow
         :param properties: the workflow properties
+        :param context_extractor: the :class:`~ai_flow.api.context_extractor.ContextExtractor`
         """
         workflow_request = WorkflowMetaProto(name=name,
                                              project_id=int64Value(project_id),
-                                             properties=properties)
+                                             properties=properties,
+                                             context_extractor_in_bytes=bytesValue(cloudpickle.dumps(context_extractor)))
         request = metadata_service_pb2.RegisterWorkflowRequest(workflow=workflow_request)
         response = self.metadata_store_stub.registerWorkflow(request)
         return _unwrap_workflow_response(response)
@@ -710,6 +730,7 @@ class MetadataClient(BaseClient):
         """
         request = metadata_service_pb2.WorkflowNameRequest(workflow_name=workflow_name,
                                                            project_name=project_name)
+
         response = self.metadata_store_stub.getWorkflowByName(request)
         return _unwrap_workflow_response(response)
 
