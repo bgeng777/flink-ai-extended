@@ -76,7 +76,7 @@ class AIGraph(Graph):
         """
         Set the context extractor to the AIGraph.
 
-        :param context_extractor: The :class:`ContextExtractor` for the AIGraph.
+        :param context_extractor: The :class:`~ai_flow.api.context_extractor.ContextExtractor` for the AIGraph.
         """
 
         self._context_extractor = context_extractor

@@ -215,7 +215,7 @@ def start_new_workflow_execution_on_event(workflow_name: Text, event_conditions:
     Start new workflow execution whenever any `EventCondition` in the given list is met. The context of the started
     workflow execution is decided by the :class:`ContextExtractor` set to the workflow.
     Multiple calls on the same workflow will change the event conditions list. To disable starting new workflow
-    execution on event, one could pass a empty list.
+    executions on event, one could pass a empty list.
 
     :param workflow_name: The name of the workflow.
     :param event_conditions: A list of :class:`EventCondition`.
