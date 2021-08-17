@@ -138,10 +138,10 @@ class SchedulerClient(BaseClient):
             raise Exception(response.result.error_message)
         return response.workflow_list
 
-    def start_new_workflow_execution_on_event(self, namespace: Text, workflow_name: Text,
+    def start_new_workflow_execution_on_events(self, namespace: Text, workflow_name: Text,
                                               event_conditions: List[EventCondition]):
         """
-        Start new workflow execution whenever any `EventCondition` in the given list is met. The context of the started
+        Start new workflow executions whenever any `EventCondition` in the given list is met. The context of the started
         workflow execution is decided by the :class:`ContextExtractor` set to the workflow.
         Multiple calls on the same workflow will change the event conditions list. To disable starting new workflow
         execution on event, one could pass a empty list.
@@ -159,10 +159,10 @@ class SchedulerClient(BaseClient):
             raise Exception(response.result.error_message)
         return response.workflow
 
-    def stop_workflow_execution_on_event(self, namespace: Text, workflow_name: Text,
+    def stop_workflow_execution_on_events(self, namespace: Text, workflow_name: Text,
                                          event_conditions: List[EventCondition]) -> WorkflowProto:
         """
-        Stop new workflow execution whenever any `EventCondition` in the given list is met. The context of the workflow
+        Stop new workflow executions whenever any `EventCondition` in the given list is met. The context of the workflow
         execution to stop is decided by the :class:`ContextExtractor` set to the workflow.
         Multiple calls on the same workflow will change the event conditions list. To disable stopping workflow
         execution on event, one could pass a empty list.
