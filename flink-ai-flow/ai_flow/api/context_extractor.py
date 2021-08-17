@@ -49,3 +49,15 @@ class ContextExtractor(ABC):
         :return: Whether the event should be broadcast.
         """
         pass
+
+
+class BroadcastAllContextExtractor(ContextExtractor):
+    """
+    BroadcastAllContextExtractor is the default ContextExtractor to used. It marks all events as broadcast events.
+    """
+
+    def extract_context(self, event: BaseEvent) -> Optional[Text]:
+        return None
+
+    def is_broadcast_event(self, event: BaseEvent) -> bool:
+        return True
