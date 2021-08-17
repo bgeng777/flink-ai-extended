@@ -15,12 +15,14 @@
 # specific language governing permissions and limitations
 # under the License.
 from abc import ABC, abstractmethod
+
+from ai_flow.util.json_utils import Jsonable
 from typing import Text, Optional
 
 from notification_service.base_notification import BaseEvent
 
 
-class ContextExtractor(ABC):
+class ContextExtractor(ABC, Jsonable):
     """
     ContextExtractor can be implemented by user to decide if a event should be broadcast or we should extract context
     from a event. If the event should be broadcast, it will be handle by all the workflow executions and job executions
