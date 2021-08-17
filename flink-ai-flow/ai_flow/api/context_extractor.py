@@ -15,26 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 from abc import ABC, abstractmethod
-from typing import Text
+from typing import Text, Optional
 
 from notification_service.base_notification import BaseEvent
 
 
 class ContextExtractor(ABC):
     """
-    ContextExtractor is used to decide if a event should be broadcast or extract context from a event.
-    If the event should be broadcast, it will be handle by all the workflow execution and job execution
+    ContextExtractor can be implemented by user to decide if a event should be broadcast or we should extract context
+    from a event. If the event should be broadcast, it will be handle by all the workflow executions and job executions
     of that workflow. Otherwise, only workflow execution and job execution with the same context can handle the event.
     """
 
     @abstractmethod
-    def extract_context(self, event: BaseEvent) -> Text:
+    def extract_context(self, event: BaseEvent) -> Optional[Text]:
         """
         If the event is not to be broadcast, this method is called to extract the context from the event. The event will
         only be handled by the workflow execution and job execution under the same context. If the None is returned,
         workflow execution and job execution under default context will handle the event.
 
-        :param event: The event to extract context from.
+        :param event: The :class:`~notification_service.base_notification.BaseEvent` to extract context from.
         :return: The context of the event.
         """
         pass
