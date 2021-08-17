@@ -179,7 +179,7 @@ class TestSchedulerService(unittest.TestCase):
         client = SchedulerClient("localhost:{}".format(_PORT))
         c1 = MeetAllEventCondition().add_event('k1', 'v1')
         c2 = MeetAnyEventCondition().add_event('k2', 'v2')
-        workflow_proto = client.start_new_workflow_execution_on_event(namespace='namespace',
+        workflow_proto = client.start_new_workflow_execution_on_events(namespace='namespace',
                                                                       workflow_name='test_workflow',
                                                                       event_conditions=[c1, c2])
         self.assertEqual('namespace', workflow_proto.namespace)
@@ -190,7 +190,7 @@ class TestSchedulerService(unittest.TestCase):
         client = SchedulerClient("localhost:{}".format(_PORT))
         c1 = MeetAllEventCondition().add_event('k1', 'v1')
         c2 = MeetAnyEventCondition().add_event('k2', 'v2')
-        workflow_proto = client.stop_workflow_execution_on_event(namespace='namespace',
+        workflow_proto = client.stop_workflow_execution_on_events(namespace='namespace',
                                                                  workflow_name='test_workflow',
                                                                  event_conditions=[c1, c2])
         self.assertEqual('namespace', workflow_proto.namespace)
