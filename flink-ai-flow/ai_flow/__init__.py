@@ -18,6 +18,7 @@
 #
 from ai_flow.api.ai_flow_context import init_ai_flow_context
 from ai_flow.api import workflow_operation
+from ai_flow.api import context_extractor
 from ai_flow.api.ops import read_dataset, write_dataset, transform, train, predict, evaluate, dataset_validate, \
     model_validate, push_model, user_define_operation, action_on_event, action_on_events, action_on_job_status, \
     action_on_model_version_event, action_on_dataset_event, set_context_extractor
