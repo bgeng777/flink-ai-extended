@@ -224,7 +224,7 @@ def start_new_workflow_execution_on_events(workflow_name: Text, event_conditions
     get_ai_flow_client().start_new_workflow_execution_on_events(namespace, workflow_name, event_conditions)
 
 
-def stop_workflow_execution_on_events(workflow_name: Text, event_conditions: EventCondition):
+def stop_workflow_execution_on_events(workflow_name: Text, event_conditions: List[EventCondition]):
     """
     Stop new workflow executions whenever any EventCondition in the given list is met. The context of the workflow
     execution to stop is decided by the :class:`ContextExtractor` set to the workflow.

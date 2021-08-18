@@ -139,7 +139,7 @@ class SchedulerClient(BaseClient):
         return response.workflow_list
 
     def start_new_workflow_execution_on_events(self, namespace: Text, workflow_name: Text,
-                                              event_conditions: List[EventCondition]):
+                                               event_conditions: List[EventCondition]):
         """
         Start new workflow executions whenever any `EventCondition` in the given list is met. The context of the started
         workflow execution is decided by the :class:`ContextExtractor` set to the workflow.
@@ -160,7 +160,7 @@ class SchedulerClient(BaseClient):
         return response.workflow
 
     def stop_workflow_execution_on_events(self, namespace: Text, workflow_name: Text,
-                                         event_conditions: List[EventCondition]) -> WorkflowProto:
+                                          event_conditions: List[EventCondition]) -> WorkflowProto:
         """
         Stop new workflow executions whenever any `EventCondition` in the given list is met. The context of the workflow
         execution to stop is decided by the :class:`ContextExtractor` set to the workflow.
@@ -336,4 +336,3 @@ class SchedulerClient(BaseClient):
         if response.result.status != StatusProto.OK:
             raise Exception(response.result.error_message)
         return response.job_list
-
