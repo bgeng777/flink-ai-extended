@@ -15,40 +15,84 @@
 # specific language governing permissions and limitations
 # under the License.
 from abc import ABC, abstractmethod
-
-from ai_flow.util.json_utils import Jsonable
-from typing import Text, Optional
+from typing import Text, Set
 
 from notification_service.base_notification import BaseEvent
 
+WORKFLOW_EXECUTION_DEFAULT_CONTEXT = 'default'
 
-class ContextExtractor(ABC, Jsonable):
+
+class EventContext(ABC):
     """
-    ContextExtractor can be implemented by user to decide if a event should be broadcast or we should extract context
-    from a event. If the event should be broadcast, it will be handle by all the workflow executions and job executions
-    of that workflow. Otherwise, only workflow execution and job execution with the same context can handle the event.
+    The context of the event returns by ContextExtractor.
     """
 
     @abstractmethod
-    def extract_context(self, event: BaseEvent) -> Optional[Text]:
+    def is_broadcast(self) -> bool:
         """
-        If the event is not to be broadcast, this method is called to extract the context from the event. The event will
-        only be handled by the workflow execution and job execution under the same context. If the None is returned,
-        workflow execution and job execution under default context will handle the event.
-
-        :param event: The :class:`~notification_service.base_notification.BaseEvent` to extract context from.
-        :return: The context of the event.
+        :return: Whether the event should be broadcast.
         """
         pass
 
     @abstractmethod
-    def is_broadcast_event(self, event: BaseEvent) -> bool:
+    def get_contexts(self) -> Set[Text]:
         """
-        Decide if the event should be broadcast. If True, the event will be handled by all the workflow execution and
-        job execution in the workflow. Otherwise, extract_context will be called to decide the context of the event.
+        :return: A set of contexts the event belongs to.
+        """
+        pass
 
-        :param event: The event to check if it should be broadcast.
-        :return: Whether the event should be broadcast.
+
+class Broadcast(EventContext):
+    """
+    This class indicates that the event should be broadcast.
+    """
+
+    def is_broadcast(self) -> bool:
+        return True
+
+    def get_contexts(self) -> Set[Text]:
+        return set()
+
+
+class ContextList(EventContext):
+    """
+    A set of context the event belongs to.
+
+    Note: 'default' is a reserved key word for default context.
+    """
+
+    def __init__(self):
+        self._contexts: Set[Text] = set()
+
+    def is_broadcast(self) -> bool:
+        return False
+
+    def get_contexts(self) -> Set[Text]:
+        return self._contexts
+
+    def add_context(self, context: Text):
+        self._contexts.add(context)
+
+
+class ContextExtractor(ABC):
+    """
+    ContextExtractor can be implemented by user to decide if an event should be broadcast or we should extract context
+    from an event. If the event should be broadcast, it will be handle by all the workflow executions and job executions
+    of that workflow. Otherwise, only workflow execution and job executions with the same context can handle the event.
+    """
+
+    @abstractmethod
+    def extract_context(self, event: BaseEvent) -> EventContext:
+        """
+        This method is called to decide if an event should be broadcast or we should extract context from the event.
+        If the event should be broadcast, return :class:`Broadcast`. The event will be handle by all the workflow
+        executions and job executions of that workflow. Otherwise, return :class:`ContextList`. Only workflow execution
+        and job executions with the same context can handle the event.
+
+        If a :class:`ContextList` with an empty set or None is returns, the event is dropped.
+
+        :param event: The :class:`~notification_service.base_notification.BaseEvent` to extract context from.
+        :return: The context of the event or it should be broadcast.
         """
         pass
 
@@ -58,8 +102,5 @@ class BroadcastAllContextExtractor(ContextExtractor):
     BroadcastAllContextExtractor is the default ContextExtractor to used. It marks all events as broadcast events.
     """
 
-    def extract_context(self, event: BaseEvent) -> Optional[Text]:
-        return None
-
-    def is_broadcast_event(self, event: BaseEvent) -> bool:
-        return True
+    def extract_context(self, event: BaseEvent) -> EventContext:
+        return Broadcast()
