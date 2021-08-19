@@ -8,28 +8,26 @@ from ai_flow.api.context_extractor import ContextExtractor, EventContext, Broadc
 import ai_flow as af
 from ai_flow_plugins.job_plugins.bash import BashProcessor
 
-# class TestContext(EventContext):
-#     """
-#     This class indicates that the event should be broadcast.
-#     """
-#
-#     def is_broadcast(self) -> bool:
-#         return True
-#
-#     def get_contexts(self) -> Set[Text]:
-#         s = set()
-#         s.add('hello')
-#         return s
-#
-# class TestContextExtractor(ContextExtractor):
-#     """
-#     BroadcastAllContextExtractor is the default ContextExtractor to used. It marks all events as broadcast events.
-#     """
-#
-#     def extract_context(self, event: BaseEvent) -> EventContext:
-#         return TestContext()
-# from simple_workflow_extractor import TestContextExtractor2
-import inspect
+class TestContext(EventContext):
+    """
+    This class indicates that the event should be broadcast.
+    """
+
+    def is_broadcast(self) -> bool:
+        return True
+
+    def get_contexts(self) -> Set[Text]:
+        s = set()
+        s.add('hello')
+        return s
+
+class TestContextExtractor(ContextExtractor):
+    """
+    BroadcastAllContextExtractor is the default ContextExtractor to used. It marks all events as broadcast events.
+    """
+
+    def extract_context(self, event: BaseEvent) -> EventContext:
+        return TestContext()
 
 def main():
     af.init_ai_flow_context()
@@ -42,18 +40,13 @@ def main():
 
     workflow_name = af.current_workflow_config().workflow_name
     stop_workflow_executions(workflow_name)
-    # af.set_context_extractor(TestContextExtractor2())
-    # af.workflow_operation.submit_workflow(workflow_name)
-    # af.workflow_operation.start_new_workflow_execution(workflow_name)
+    af.set_context_extractor(TestContextExtractor())
+    af.workflow_operation.submit_workflow(workflow_name)
+    af.workflow_operation.start_new_workflow_execution(workflow_name)
 
-    t = af.get_ai_flow_client().get_workflow_by_name('demo4', workflow_name)
-    print("----")
-    print(t.context_extractor_in_bytes)
+    t = af.get_ai_flow_client().get_workflow_by_name('demo', workflow_name)
     cc = cloudpickle.loads(t.context_extractor_in_bytes)
-    print(cc)
-    print(dir(cc))
     print(cc.extract_context(BaseEvent(key='1', value='1')).get_contexts())
-    # inspect.getsource(cc)
 
 
 def stop_workflow_executions(workflow_name):
