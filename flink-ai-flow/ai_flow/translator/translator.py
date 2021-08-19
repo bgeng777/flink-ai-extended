@@ -85,7 +85,7 @@ class GraphSplitter(object):
     def split(self, graph: AIGraph) -> SplitGraph:
 
         split_graph = SplitGraph()
-
+        split_graph.set_context_extractor(graph.get_context_extractor())
         for n in graph.nodes.values():
             job_name = n.config.job_name
             if job_name in split_graph.nodes:
