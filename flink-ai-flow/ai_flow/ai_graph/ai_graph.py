@@ -14,6 +14,8 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+import cloudpickle
+
 from ai_flow.api.context_extractor import ContextExtractor, BroadcastAllContextExtractor
 from ai_flow.graph.graph import Graph
 from ai_flow.graph.channel import Channel
@@ -36,7 +38,7 @@ class AIGraph(Graph):
     def __init__(self) -> None:
         super().__init__()
         self.nodes: Dict[Text, AINode] = {}
-        self._context_extractor: ContextExtractor = BroadcastAllContextExtractor()
+        self._context_extractor: bytes = cloudpickle.dumps(BroadcastAllContextExtractor())
 
     def add_node(self, node: AINode):
         """
@@ -79,14 +81,14 @@ class AIGraph(Graph):
         :param context_extractor: The :class:`~ai_flow.api.context_extractor.ContextExtractor` for the AIGraph.
         """
 
-        self._context_extractor = context_extractor
+        self._context_extractor = cloudpickle.dumps(context_extractor)
 
     def get_context_extractor(self) -> ContextExtractor:
         """
         Get the context extractor of the AIGraph.
         :return: The :class:`ContextExtractor` for the AIGraph.
         """
-        return self._context_extractor
+        return cloudpickle.loads(self._context_extractor)
 
 
 __current_ai_graph__ = AIGraph()
