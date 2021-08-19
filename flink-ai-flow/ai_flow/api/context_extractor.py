@@ -17,6 +17,7 @@
 from abc import ABC, abstractmethod
 from typing import Text, Set
 
+from ai_flow.util.json_utils import Jsonable
 from notification_service.base_notification import BaseEvent
 
 WORKFLOW_EXECUTION_DEFAULT_CONTEXT = 'default'
@@ -74,7 +75,7 @@ class ContextList(EventContext):
         self._contexts.add(context)
 
 
-class ContextExtractor(ABC):
+class ContextExtractor(ABC, Jsonable):
     """
     ContextExtractor can be implemented by user to decide if an event should be broadcast or we should extract context
     from an event. If the event should be broadcast, it will be handle by all the workflow executions and job executions
