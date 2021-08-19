@@ -43,7 +43,6 @@ class Workflow(Graph):
         # The project package uri is used to download the project package.
         self.project_uri = None
 
-        self.context_extractor = None
 
     @property
     def workflow_name(self):
@@ -83,24 +82,6 @@ class Workflow(Graph):
         if job_name not in self.edges:
             self.edges[job_name] = []
         self.edges[job_name].append(edge)
-
-    def set_context_extractor(self, context_extractor: ContextExtractor):
-        """
-        Set the context extractor to the workflow.
-
-        :param context_extractor: The :class:`~ai_flow.api.context_extractor.ContextExtractor` for the AIGraph.
-        """
-
-        self.context_extractor = context_extractor
-
-    def get_context_extractor(self) -> ContextExtractor:
-        """
-        Get the context extractor of the AIGraph.
-        :return: The :class:`ContextExtractor` for the AIGraph.
-        """
-        if self.context_extractor is None:
-            return BroadcastAllContextExtractor()
-        return self.context_extractor
 
 
 class WorkflowPropertyKeys(object):

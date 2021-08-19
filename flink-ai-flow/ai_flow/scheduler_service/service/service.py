@@ -102,11 +102,6 @@ class SchedulerService(SchedulingServiceServicer):
             project_context: ProjectContext = build_project_context(project_path)
             project_name = project_context.project_name
 
-            # metadata_client = MetadataClient(project_context.project_config.get_server_uri())
-            # context_extractor_in_bytes: bytes = metadata_client.get_workflow_by_name(project_name, workflow.workflow_name).context_extractor_in_bytes
-            # workflow.set_context_extractor(cloudpickle.loads(context_extractor_in_bytes))
-            # logging.info(workflow.get_context_extractor().__class__.__name__)
-            # logging.info(context_extractor_in_bytes)
             workflow_info = self._scheduler.submit_workflow(workflow, project_context)
             if workflow_info is None:
                 return WorkflowInfoResponse(
