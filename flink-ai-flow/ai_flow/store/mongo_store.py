@@ -19,8 +19,6 @@
 import logging
 import time
 
-import cloudpickle
-
 from ai_flow.meta.workflow_meta import WorkflowMeta
 from ai_flow.store import MONGO_DB_ALIAS_META_SERVICE
 from typing import Optional, Text, List, Union

@@ -60,10 +60,7 @@ class TestContextExtractor(ContextExtractor):
     def extract_context(self, event: BaseEvent) -> EventContext:
         return TestContext()
 
-
-
-
-
+`
 class AbstractTestStore(object):
     """test dataset"""
 

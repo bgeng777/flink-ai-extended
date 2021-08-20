@@ -104,17 +104,17 @@ class AIFlowServer(object):
             metric_service_pb2_grpc.add_MetricServiceServicer_to_server(MetricService(db_uri=store_uri), self.server)
 
         if start_scheduler_service:
-            self._add_scheduler_service(scheduler_service_config, metadata_uri=server_uri)
+            self._add_scheduler_service(scheduler_service_config)
 
         if enabled_ha:
             self._add_ha_service(ha_manager, ha_server_uri, ha_storage, store_uri, ttl_ms)
 
         self.server.add_insecure_port('[::]:' + str(port))
 
-    def _add_scheduler_service(self, scheduler_service_config, metadata_uri):
+    def _add_scheduler_service(self, scheduler_service_config):
         logging.info("start scheduler service.")
         real_config = SchedulerServiceConfig(scheduler_service_config)
-        self.scheduler_service = SchedulerService(real_config, metadata_uri)
+        self.scheduler_service = SchedulerService(real_config)
         scheduling_service_pb2_grpc.add_SchedulingServiceServicer_to_server(self.scheduler_service,
                                                                             self.server)
 

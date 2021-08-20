@@ -17,7 +17,6 @@
 from typing import Text, Dict
 import traceback
 
-
 from ai_flow.common.configuration import AIFlowConfiguration
 from ai_flow.workflow.workflow import WorkflowPropertyKeys
 from ai_flow.plugin_interface.blob_manager_interface import BlobConfig, BlobManagerFactory
@@ -72,12 +71,11 @@ class SchedulerServiceConfig(AIFlowConfiguration):
 
 class SchedulerService(SchedulingServiceServicer):
     def __init__(self,
-                 scheduler_service_config: SchedulerServiceConfig, metadata_uri):
+                 scheduler_service_config: SchedulerServiceConfig):
         self._scheduler_service_config = scheduler_service_config
         self._scheduler: Scheduler \
             = SchedulerFactory.create_scheduler(scheduler_service_config.scheduler().scheduler_class(),
                                                 scheduler_service_config.scheduler().scheduler_config())
-        self.metadata_uri = metadata_uri
 
     # workflow interface
     def submitWorkflow(self, request, context):
