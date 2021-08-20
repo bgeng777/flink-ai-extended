@@ -81,6 +81,14 @@ class WorkflowMeta(Jsonable):
         """
         return cloudpickle.loads(self.context_extractor_in_bytes)
 
+    def set_context_extractor(self, context_extractor: ContextExtractor):
+        """
+        Set the context_extractor_in_bytes from given ContextExtractor instance.
+
+        :param context_extractor: ContextExtractor instance
+        """
+        self.context_extractor_in_bytes = cloudpickle.dumps(context_extractor)
+
 
 def create_workflow(name: Text,
                     project_id: Text,
