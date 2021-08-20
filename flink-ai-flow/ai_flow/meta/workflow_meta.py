@@ -16,6 +16,10 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+import cloudpickle
+
+from ai_flow.api.context_extractor import ContextExtractor
+
 from ai_flow.util.json_utils import Jsonable
 from typing import Text
 from ai_flow.common.properties import Properties
@@ -69,6 +73,13 @@ class WorkflowMeta(Jsonable):
                           self.create_time,
                           self.update_time,
                           self.context_extractor_in_bytes)
+
+    def get_context_extractor(self) -> ContextExtractor:
+        """
+        Return the deserialized ContextExtractor instance.
+
+        """
+        return cloudpickle.loads(self.context_extractor_in_bytes)
 
 
 def create_workflow(name: Text,

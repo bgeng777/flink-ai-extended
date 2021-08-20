@@ -460,8 +460,7 @@ class SqlAlchemyStore(AbstractStore):
                 projects.append(ResultToMeta.result_to_project_meta(project))
             return projects
 
-    def update_project(self, project_name: Text, uri: Text = None, properties: Properties = None) -> Optional[
-        ProjectMeta]:
+    def update_project(self, project_name: Text, uri: Text = None, properties: Properties = None) -> Optional[ProjectMeta]:
         with self.ManagedSessionMaker() as session:
             try:
                 project: SqlProject = session.query(SqlProject).filter(

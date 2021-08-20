@@ -38,7 +38,7 @@ class AIGraph(Graph):
     def __init__(self) -> None:
         super().__init__()
         self.nodes: Dict[Text, AINode] = {}
-        self._context_extractor: bytes = cloudpickle.dumps(BroadcastAllContextExtractor())
+        self._context_extractor: ContextExtractor = BroadcastAllContextExtractor()
 
     def add_node(self, node: AINode):
         """
@@ -88,7 +88,7 @@ class AIGraph(Graph):
         Get the context extractor of the AIGraph.
         :return: The :class:`ContextExtractor` for the AIGraph.
         """
-        return cloudpickle.loads(self._context_extractor)
+        return self._context_extractor
 
 
 __current_ai_graph__ = AIGraph()
