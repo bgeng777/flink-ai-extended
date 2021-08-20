@@ -24,7 +24,7 @@ from unittest import mock
 import cloudpickle
 from notification_service.base_notification import BaseEvent
 
-from ai_flow.api.context_extractor import EventContext, ContextExtractor, BroadcastAllContextExtractor
+from ai_flow.api.context_extractor import EventContext, ContextExtractor
 
 from ai_flow.common.properties import Properties
 from ai_flow.common.status import Status
