@@ -81,7 +81,7 @@ class AIGraph(Graph):
         :param context_extractor: The :class:`~ai_flow.api.context_extractor.ContextExtractor` for the AIGraph.
         """
 
-        self._context_extractor = cloudpickle.dumps(context_extractor)
+        self._context_extractor = context_extractor
 
     def get_context_extractor(self) -> ContextExtractor:
         """
