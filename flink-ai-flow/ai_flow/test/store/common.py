@@ -248,16 +248,21 @@ class AbstractTestStore(object):
 
         scheduling_rules = [WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START),
                             WorkflowSchedulingRule(MeetAllEventCondition().add_event('k2', 'v2'), WorkflowAction.STOP)]
+        context_extractor = TestContextExtractor()
+        context_extractor_in_bytes = cloudpickle.dumps(context_extractor)
         updated_workflow = self.store.update_workflow(project_name=project_response.name,
                                                       workflow_name='workflow',
                                                       properties=Properties({'a': 'c'}),
+                                                      context_extractor_in_bytes=context_extractor_in_bytes,
                                                       scheduling_rules=scheduling_rules)
         self.assertEqual(updated_workflow.properties, Properties({'a': 'c'}))
         self.assertEqual(updated_workflow.scheduling_rules, scheduling_rules)
+        self.assertEqual(updated_workflow.context_extractor_in_bytes, context_extractor_in_bytes)
 
         workflow = self.store.get_workflow_by_name(project_name=project_response.name, workflow_name='workflow')
         self.assertEqual(workflow.properties, Properties({'a': 'c'}))
         self.assertEqual(workflow.scheduling_rules, scheduling_rules)
+        self.assertEqual(workflow.context_extractor_in_bytes, context_extractor_in_bytes)
 
     """test project"""
 

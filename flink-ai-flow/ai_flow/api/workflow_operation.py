@@ -14,6 +14,8 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+import cloudpickle
+
 from ai_flow.workflow.control_edge import EventCondition
 from typing import Text, List, Optional
 
@@ -120,7 +122,13 @@ def submit_workflow(workflow_name: Text = None) -> WorkflowInfo:
     if workflow_meta is None:
         get_ai_flow_client().register_workflow(name=workflow_name,
                                                project_id=int(current_project_config().get_project_uuid()),
+                                               properties=workflow.properties,
                                                context_extractor=current_graph().get_context_extractor())
+    else:
+        get_ai_flow_client().update_workflow(workflow_name=workflow_name,
+                                             project_id=int(current_project_config().get_project_uuid()),
+                                             context_extractor=current_graph().get_context_extractor(),
+                                             properties=workflow.properties)
     return proto_to_workflow(get_ai_flow_client()
                              .submit_workflow_to_scheduler(namespace=namespace,
                                                            workflow_json=json_utils.dumps(workflow),
