@@ -116,19 +116,22 @@ def submit_workflow(workflow_name: Text = None) -> WorkflowInfo:
     translator = get_translator()
     workflow = translator.translate(graph=current_graph(), project_context=current_project_context())
     _apply_full_info_to_workflow(workflow, entry_module_path)
-    current_graph().clear_graph()
+
     workflow_meta = get_ai_flow_client().get_workflow_by_name(project_name=current_project_config().get_project_name(),
                                                               workflow_name=workflow_name)
     if workflow_meta is None:
         get_ai_flow_client().register_workflow(name=workflow_name,
                                                project_id=int(current_project_config().get_project_uuid()),
-                                               properties=workflow.properties,
+                                               properties=workflow.properties.get('properties'),
                                                context_extractor=current_graph().get_context_extractor())
     else:
+        print("---")
+        print(workflow.properties)
         get_ai_flow_client().update_workflow(workflow_name=workflow_name,
-                                             project_id=int(current_project_config().get_project_uuid()),
-                                             context_extractor=current_graph().get_context_extractor(),
-                                             properties=workflow.properties)
+                                             project_name=current_project_config().get_project_name(),
+                                             properties=workflow.properties.get('properties'),
+                                             context_extractor=current_graph().get_context_extractor())
+    current_graph().clear_graph()
     return proto_to_workflow(get_ai_flow_client()
                              .submit_workflow_to_scheduler(namespace=namespace,
                                                            workflow_json=json_utils.dumps(workflow),

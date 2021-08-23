@@ -54,7 +54,7 @@ class TestSqlAlchemyStoreSqlite(AbstractTestStore, unittest.TestCase):
         base.metadata.drop_all(self.store.db_engine)
 
 
-@unittest.skip("To run this test you need to configure the mysql info in 'ai_flow/test/test_util.py'")
+# @unittest.skip("To run this test you need to configure the mysql info in 'ai_flow/test/test_util.py'")
 @pytest.mark.release
 class TestSqlAlchemyStoreMySQL(AbstractTestStore, unittest.TestCase):
     """

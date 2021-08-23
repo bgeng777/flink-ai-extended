@@ -688,7 +688,7 @@ class MetadataClient(BaseClient):
     '''workflow api'''
 
     def register_workflow(self, name: Text, project_id: int, properties: Properties = None,
-                          context_extractor: ContextExtractor = BroadcastAllContextExtractor) -> WorkflowMeta:
+                          context_extractor: ContextExtractor = BroadcastAllContextExtractor()) -> WorkflowMeta:
         """
         Register a workflow in metadata store.
 

@@ -743,6 +743,17 @@ class AbstractTestStore(object):
 
     def test_metric_summary(self):
         metric_timestamp = round(time.time())
+        start_time = round(time.time())
+        end_time = start_time + 1
+        metric_meta = self.store.register_metric_meta(metric_name='test_metric_summary_1',
+                                                      metric_type=MetricType.DATASET,
+                                                      metric_desc='test dataset metric meta',
+                                                      project_name='test_metric_meta_project_1',
+                                                      dataset_name='test_metric_meta_dataset_1',
+                                                      start_time=start_time, end_time=end_time,
+                                                      uri='/tmp/metric', tags='test_metric_meta_tag',
+                                                      properties={'a': 'a'})
+        metric_meta = self.store.get_metric_meta(metric_meta.metric_name)
         metric_summary = self.store.register_metric_summary(metric_name='test_metric_summary_1', metric_key='auc',
                                                             metric_value='0.6', metric_timestamp=metric_timestamp)
         metric_summary = self.store.get_metric_summary(metric_summary.uuid)
