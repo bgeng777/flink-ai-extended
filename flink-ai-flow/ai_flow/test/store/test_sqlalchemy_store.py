@@ -63,7 +63,7 @@ class TestSqlAlchemyStoreMySQL(AbstractTestStore, unittest.TestCase):
     You may optionally specify MySQL host via MYSQL_TEST_HOST (default is 100.69.96.145)
     and specify MySQL port via MYSQL_TEST_PORT (default is 3306).
     """
-    test_start_new_workflow_execution_on_event
+
     @classmethod
     def setUpClass(cls) -> None:
         db_server_url = get_mysql_server_url()

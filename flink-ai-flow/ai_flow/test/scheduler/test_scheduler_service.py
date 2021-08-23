@@ -175,7 +175,7 @@ class TestSchedulerService(unittest.TestCase):
             self.assertEqual(StateProto.INIT, workflow_execution.execution_state)
             self.assertEqual('test_context', workflow_execution.context.value)
 
-    def test_start_new_workflow_execution_on_eventtest_start_new_workflow_execution_on_event(self):
+    def test_start_new_workflow_execution_on_event(self):
         store = self.server.scheduler_service.store
         project_meta = store.register_project('namespace', 'example.com')
         store.register_workflow('test_workflow', project_meta.uuid)
