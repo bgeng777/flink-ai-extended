@@ -252,8 +252,8 @@ class AbstractTestStore(object):
         context_extractor_in_bytes = cloudpickle.dumps(context_extractor)
         updated_workflow = self.store.update_workflow(project_name=project_response.name,
                                                       workflow_name='workflow',
-                                                      properties=Properties({'a': 'c'}),
                                                       context_extractor_in_bytes=context_extractor_in_bytes,
+                                                      properties=Properties({'a': 'c'}),
                                                       scheduling_rules=scheduling_rules)
         self.assertEqual(updated_workflow.properties, Properties({'a': 'c'}))
         self.assertEqual(updated_workflow.scheduling_rules, scheduling_rules)
