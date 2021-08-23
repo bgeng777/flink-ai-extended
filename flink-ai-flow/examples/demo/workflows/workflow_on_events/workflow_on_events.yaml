@@ -2,6 +2,3 @@ task_1:
   job_type: bash
 task_2:
   job_type: bash
-
-properties:
-  a: bbb

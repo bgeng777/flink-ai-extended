@@ -122,14 +122,10 @@ def submit_workflow(workflow_name: Text = None) -> WorkflowInfo:
     if workflow_meta is None:
         get_ai_flow_client().register_workflow(name=workflow_name,
                                                project_id=int(current_project_config().get_project_uuid()),
-                                               properties=workflow.properties.get('properties'),
                                                context_extractor=current_graph().get_context_extractor())
     else:
-        print("---")
-        print(workflow.properties)
         get_ai_flow_client().update_workflow(workflow_name=workflow_name,
                                              project_name=current_project_config().get_project_name(),
-                                             properties=workflow.properties.get('properties'),
                                              context_extractor=current_graph().get_context_extractor())
     current_graph().clear_graph()
     return proto_to_workflow(get_ai_flow_client()
