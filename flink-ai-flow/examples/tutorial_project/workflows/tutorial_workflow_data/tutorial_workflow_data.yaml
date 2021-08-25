@@ -19,6 +19,6 @@
 
 data_gen:
   job_type: python
-  periodic_config:
-    interval: '0,0,0,30' # The train job will be executed every 60s
+#  periodic_config:
+#    interval: '0,0,0,30' # The train job will be executed every 60s
 

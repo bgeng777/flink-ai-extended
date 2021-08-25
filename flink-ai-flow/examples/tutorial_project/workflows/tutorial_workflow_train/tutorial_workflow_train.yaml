@@ -20,13 +20,10 @@
 train:
   job_type: python
 
-validate:
-  job_type: python
-
 predict:
   job_type: flink
   properties:
-    run_mode: local
-    flink_run_args: # The flink run command args(-pym etc.). It's type is List.
-      - -pyexec # the executable python path for the submission of the Flink client when running mode is cluster.
-      - /path/to/bin/python
+    run_mode: cluster
+#    flink_run_args: # The flink run command args(-pym etc.). It's type is List.
+#      - -pyexec # the executable python path for the submission of the Flink client when running mode is cluster.
+#      - /Users/kenken/bella/bin/python

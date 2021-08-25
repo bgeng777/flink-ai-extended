@@ -17,8 +17,9 @@
 # under the License.
 #
 import os
+import time
 
-from ai_flow.api.context_extractor import ContextList, EventContext
+from ai_flow.api.context_extractor import ContextList, EventContext, Broadcast
 from notification_service.base_notification import ANY_CONDITION, BaseEvent
 
 from ai_flow import ContextExtractor
@@ -27,11 +28,11 @@ from ai_flow.workflow.control_edge import MeetAllEventCondition
 import ai_flow as af
 from ai_flow.util.path_util import get_file_dir
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from tutorial_processors_train import DatasetReader, ModelTrainer, ValidateDatasetReader, ModelValidator, Source, Sink, \
-    Predictor
+from tutorial_processors_train import DatasetReader, ModelTrainer, Source, Sink, Predictor
 
 DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../")) + '/resources/iris_{}.csv'
 
+import json
 
 class HourlyWorkflowContextExtractor2(ContextExtractor):
 
@@ -40,8 +41,16 @@ class HourlyWorkflowContextExtractor2(ContextExtractor):
         if event.event_type == 'DATA_EVENT' and event.key == 'hourly_data':
             context_list.add_context(event.context)
             return context_list
+        elif event.event_type == 'MODEL_GENERATED':
+            event_value = event.value
+            model_mark = str(json.loads(event_value)['_model_path']).split('/')[-1]
+            context_list.add_context(model_mark)
+            return context_list
+        else:
+            return Broadcast()
 
 
+# execution_context.job_execution_info.workflow_execution.context
 
 def run_workflow():
     # Init project
@@ -53,6 +62,8 @@ def run_workflow():
         # Register metadata of training data(dataset) and read dataset(i.e. training dataset)
         train_dataset = af.register_dataset(name=artifact_prefix + 'train_dataset',
                                             uri=DATASET_URI.format('train'))
+
+        timestamp = time.strftime("%Y%m%d%H%M%S", time.localtime())
         train_read_dataset = af.read_dataset(dataset_info=train_dataset,
                                              read_dataset_processor=DatasetReader())
 
@@ -62,21 +73,6 @@ def run_workflow():
         train_channel = af.train(input=[train_read_dataset],
                                  training_processor=ModelTrainer(),
                                  model_info=train_model)
-
-    # Validation of model
-    with af.job_config('validate'):
-        # Read validation dataset
-        validate_dataset = af.register_dataset(name=artifact_prefix + 'validate_dataset',
-                                               uri=DATASET_URI.format('test'))
-        # Validate model before it is used to predict
-        validate_read_dataset = af.read_dataset(dataset_info=validate_dataset,
-                                                read_dataset_processor=ValidateDatasetReader())
-        validate_artifact_name = artifact_prefix + 'validate_artifact'
-        validate_artifact = af.register_artifact(name=validate_artifact_name,
-                                                 uri=get_file_dir(__file__) + '/validate_result')
-        validate_channel = af.model_validate(input=[validate_read_dataset],
-                                             model_info=train_model,
-                                             model_validation_processor=ModelValidator(validate_artifact_name))
 
     # Prediction(Inference) using flink
     with af.job_config('predict'):
@@ -95,12 +91,8 @@ def run_workflow():
                          dataset_info=write_dataset,
                          write_dataset_processor=Sink())
 
-    # Define relation graph connected by control edge: train -> validate -> predict
-    af.action_on_model_version_event(job_name='validate',
-                                     model_version_event_type=ModelVersionEventType.MODEL_GENERATED,
-                                     model_name=train_model.name)
     af.action_on_model_version_event(job_name='predict',
-                                     model_version_event_type=ModelVersionEventType.MODEL_VALIDATED,
+                                     model_version_event_type=ModelVersionEventType.MODEL_GENERATED,
                                      model_name=train_model.name)
     # Submit workflow
     af.set_context_extractor(HourlyWorkflowContextExtractor2())

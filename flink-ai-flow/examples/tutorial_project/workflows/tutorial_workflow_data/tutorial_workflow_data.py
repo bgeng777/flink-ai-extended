@@ -43,12 +43,16 @@ class DatasetMaker(PythonProcessor):
         """
         Read dataset using pandas
         """
-        timestamp = time.strftime("%Y%m%d%H%M%S", time.localtime())
-        new_dataset_path = self.raw_dataset[:-4] + timestamp + '.csv'
-        shutil.copy(self.raw_dataset, new_dataset_path)
-        af.get_ai_flow_client().send_event(BaseEvent(event_type='DATA_EVENT', key='hourly_data', value='ready',
-                                                     context=new_dataset_path, namespace=self.project_name,
-                                                     sender=ANY_CONDITION))
+        i = 0
+        while i < 4:
+            timestamp = time.strftime("%Y%m%d%H%M%S", time.localtime())
+            new_dataset_path = self.raw_dataset[:-4] + timestamp + '.csv'
+            shutil.copy(self.raw_dataset, new_dataset_path)
+            af.get_ai_flow_client().send_event(BaseEvent(event_type='DATA_EVENT', key='hourly_data', value='ready',
+                                                         context=timestamp, namespace=self.project_name,
+                                                         sender=ANY_CONDITION))
+            time.sleep(20)
+            i+=1
         return []
 
 

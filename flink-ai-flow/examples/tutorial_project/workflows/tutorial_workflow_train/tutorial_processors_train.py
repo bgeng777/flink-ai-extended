@@ -56,6 +56,7 @@ class ModelTrainer(PythonProcessor):
         """
         Train and save KNN model
         """
+        context = execution_context.job_execution_info.workflow_execution.context
         model_meta: af.ModelMeta = execution_context.config.get('model_info')
         clf = KNeighborsClassifier(n_neighbors=5)
         x_train, y_train = input_list[0][0], input_list[0][1]
@@ -65,70 +66,12 @@ class ModelTrainer(PythonProcessor):
         model_path = get_file_dir(__file__) + '/saved_model'
         if not os.path.exists(model_path):
             os.makedirs(model_path)
-        model_timestamp = time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime())
-        model_path = model_path + '/' + model_timestamp
+        # model_timestamp = time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime())
+        model_mark = context
+        model_path = model_path + '/' + model_mark
         dump(clf, model_path)
+        time.sleep(30)
         af.register_model_version(model=model_meta, model_path=model_path)
-        return []
-
-
-class ValidateDatasetReader(PythonProcessor):
-
-    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
-        """
-        Read test dataset
-        """
-        dataset_meta: af.DatasetMeta = execution_context.config.get('dataset')
-        x_test = pd.read_csv(dataset_meta.uri, header=0, names=EXAMPLE_COLUMNS)
-        y_test = x_test.pop(EXAMPLE_COLUMNS[4])
-        return [[x_test, y_test]]
-
-
-class ModelValidator(PythonProcessor):
-
-    def __init__(self, artifact):
-        super().__init__()
-        self.artifact = artifact
-
-    def process(self, execution_context: ExecutionContext, input_list: List) -> List:
-        """
-        Validate and deploy model if necessary
-        """
-        current_model_meta: af.ModelMeta = execution_context.config.get('model_info')
-        deployed_model_version = af.get_deployed_model_version(model_name=current_model_meta.name)
-        new_model_meta = af.get_latest_generated_model_version(current_model_meta.name)
-        uri = af.get_artifact_by_name(self.artifact).uri
-        if deployed_model_version is None:
-            # If there is no deployed model for now, update the current generated model to be deployed.
-            af.update_model_version(model_name=current_model_meta.name,
-                                    model_version=new_model_meta.version,
-                                    current_stage=ModelVersionStage.VALIDATED)
-            af.update_model_version(model_name=current_model_meta.name,
-                                    model_version=new_model_meta.version,
-                                    current_stage=ModelVersionStage.DEPLOYED)
-        else:
-            x_validate = input_list[0][0]
-            y_validate = input_list[0][1]
-            knn = load(new_model_meta.model_path)
-            scores = knn.score(x_validate, y_validate)
-            deployed_knn = load(deployed_model_version.model_path)
-            deployed_scores = deployed_knn.score(x_validate, y_validate)
-
-            with open(uri, 'a') as f:
-                f.write(
-                    'deployed model version: {} scores: {}\n'.format(deployed_model_version.version, deployed_scores))
-                f.write('generated model version: {} scores: {}\n'.format(new_model_meta.version, scores))
-            if scores >= deployed_scores:
-                # Deprecate current model and deploy better new model
-                af.update_model_version(model_name=current_model_meta.name,
-                                        model_version=deployed_model_version.version,
-                                        current_stage=ModelVersionStage.DEPRECATED)
-                af.update_model_version(model_name=current_model_meta.name,
-                                        model_version=new_model_meta.version,
-                                        current_stage=ModelVersionStage.VALIDATED)
-                af.update_model_version(model_name=current_model_meta.name,
-                                        model_version=new_model_meta.version,
-                                        current_stage=ModelVersionStage.DEPLOYED)
         return []
 
 
@@ -169,7 +112,7 @@ class Predictor(flink.FlinkPythonProcessor):
         """
         Use pyflink udf to do prediction
         """
-        model_meta = af.get_deployed_model_version(self.model_name)
+        model_meta = af.get_latest_generated_model_version(self.model_name)
         model_path = model_meta.model_path
         clf = load(model_path)
 
