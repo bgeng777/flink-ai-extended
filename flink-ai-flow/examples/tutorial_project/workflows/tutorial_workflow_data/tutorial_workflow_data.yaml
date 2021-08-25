@@ -16,8 +16,9 @@
 ## specific language governing permissions and limitations
 ## under the License.
 ##
-project_name: tutorial_project7
-server_ip: localhost
-server_port: 50051
-blob:
-  blob_manager_class: ai_flow_plugins.blob_manager_plugins.local_blob_manager.LocalBlobManager
+
+data_gen:
+  job_type: python
+  periodic_config:
+    interval: '0,0,0,30' # The train job will be executed every 60s
+

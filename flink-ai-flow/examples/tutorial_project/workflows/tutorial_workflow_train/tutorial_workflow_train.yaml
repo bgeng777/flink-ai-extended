@@ -16,8 +16,17 @@
 ## specific language governing permissions and limitations
 ## under the License.
 ##
-project_name: tutorial_project7
-server_ip: localhost
-server_port: 50051
-blob:
-  blob_manager_class: ai_flow_plugins.blob_manager_plugins.local_blob_manager.LocalBlobManager
+
+train:
+  job_type: python
+
+validate:
+  job_type: python
+
+predict:
+  job_type: flink
+  properties:
+    run_mode: local
+    flink_run_args: # The flink run command args(-pym etc.). It's type is List.
+      - -pyexec # the executable python path for the submission of the Flink client when running mode is cluster.
+      - /path/to/bin/python
