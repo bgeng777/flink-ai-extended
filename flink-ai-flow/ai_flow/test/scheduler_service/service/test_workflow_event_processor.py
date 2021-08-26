@@ -78,7 +78,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         process = multiprocessing.Process(target=self.processor.run)
         process.start()
 
-        event = BaseEvent('k', 'v', namespace='default')
+        event = BaseEvent('k', 'v', namespace='test_namespace')
         self.c2.send(event)
 
         time.sleep(1)
@@ -96,15 +96,15 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
         self.processor._handle_event_for_workflow = mock__handle_event_for_workflow
 
-        self.processor._process_event(BaseEvent('k', 'v', namespace='default'))
+        self.processor._process_event(BaseEvent('k', 'v', namespace='test_namespace'))
         self.assertEqual(2, self.call_cnt)
 
     def _prepare_workflows(self):
         context_extractor = MyContextExtractor()
 
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.STOP)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
-        rule2 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k2', 'v2'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.STOP)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
+        rule2 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k2', 'v2', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         w2 = WorkflowMeta('workflow2', 1, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
@@ -112,26 +112,26 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         self.mock_store.list_workflows.return_value = [w1, w2]
 
     def test__get_subscribed_workflow(self):
-        e = BaseEvent('k1', 'v1', namespace='default')
-        workflows = self.processor._get_subscribed_workflow(e, 'default')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace')
+        workflows = self.processor._get_subscribed_workflow(e, 'test_namespace')
         self.assertEqual(1, len(workflows))
         self.assertEqual('workflow1', workflows[0].name)
 
-        e = BaseEvent('k2', 'v2', namespace='default')
-        workflows = self.processor._get_subscribed_workflow(e, 'default')
+        e = BaseEvent('k2', 'v2', namespace='test_namespace')
+        workflows = self.processor._get_subscribed_workflow(e, 'test_namespace')
         self.assertEqual(1, len(workflows))
         self.assertEqual('workflow2', workflows[0].name)
 
-        e = BaseEvent('k', 'v', namespace='default')
-        workflows = self.processor._get_subscribed_workflow(e, 'default')
+        e = BaseEvent('k', 'v', namespace='test_namespace')
+        workflows = self.processor._get_subscribed_workflow(e, 'test_namespace')
         self.assertEqual(2, len(workflows))
         self.assertIn('workflow1', [workflow.name for workflow in workflows])
         self.assertIn('workflow2', [workflow.name for workflow in workflows])
 
     def test__get_subscribed_workflow_without_workflow(self):
         self.mock_store.list_workflows.return_value = None
-        e = BaseEvent('k2', 'v2', namespace='default')
-        workflows = self.processor._get_subscribed_workflow(e, 'default')
+        e = BaseEvent('k2', 'v2', namespace='test_namespace')
+        workflows = self.processor._get_subscribed_workflow(e, 'test_namespace')
         self.assertEqual(0, len(workflows))
 
     def test__get_workflow_execution_state_register_state_if_not_exist(self):
@@ -181,7 +181,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         self.mock_store.get_workflow_context_event_handler_state.return_value = state
         self.mock_event_handler.handle_event.return_value = (WorkflowAction.NONE, 1)
 
-        e = BaseEvent('k1', 'v1', namespace='default')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace')
         self.processor._handle_event_for_workflow('project', w1, e)
 
         self.mock_store.update_workflow_context_event_handler_state \
@@ -199,7 +199,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         # Start Action
         self.mock_scheduler.start_new_workflow_execution.return_value = WorkflowExecutionInfo('execution_id')
         self.mock_event_handler.handle_event.return_value = (WorkflowAction.START, 1)
-        e = BaseEvent('k1', 'v1', namespace='default')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace')
         self.processor._handle_event_for_workflow('project', w1, e)
 
         self.mock_scheduler.start_new_workflow_execution.assert_called_with('project', 'workflow1', 'context_1')
@@ -218,7 +218,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         # Start Action
         self.mock_scheduler.get_workflow_execution.return_value = WorkflowExecutionInfo('1', status=Status.RUNNING)
         self.mock_event_handler.handle_event.return_value = (WorkflowAction.START, 1)
-        e = BaseEvent('k1', 'v1', namespace='default')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace')
         self.processor._handle_event_for_workflow('project', w1, e)
 
         self.mock_scheduler.start_new_workflow_execution.assert_not_called()
@@ -238,7 +238,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         self.mock_scheduler.get_workflow_execution.return_value = WorkflowExecutionInfo('1', status=Status.FINISHED)
         self.mock_scheduler.start_new_workflow_execution.return_value = WorkflowExecutionInfo('execution_id')
         self.mock_event_handler.handle_event.return_value = (WorkflowAction.START, 1)
-        e = BaseEvent('k1', 'v1', namespace='default')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace')
         self.processor._handle_event_for_workflow('project', w1, e)
 
         self.mock_scheduler.start_new_workflow_execution.assert_called_with('project', 'workflow1', 'context_1')
@@ -256,7 +256,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         self.mock_store.get_workflow_context_event_handler_state.return_value = state
         self.mock_event_handler.handle_event.return_value = (WorkflowAction.STOP, 1)
 
-        e = BaseEvent('k1', 'v1', namespace='default')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace')
         self.processor._handle_event_for_workflow('project', w1, e)
 
         self.mock_store.update_workflow_context_event_handler_state \
@@ -278,5 +278,5 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         self.mock_store.get_workflow_context_event_handler_state.return_value = state
 
         # Start Action
-        e = BaseEvent('k1', 'v1', namespace='default', event_type='exception')
+        e = BaseEvent('k1', 'v1', namespace='test_namespace', event_type='exception')
         self.processor._handle_event_for_workflow('project', w1, e)
