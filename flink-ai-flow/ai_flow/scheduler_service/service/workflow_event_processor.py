@@ -67,8 +67,8 @@ class WorkflowEventProcessor:
                 logging.error("Unexpected Exception", exc_info=e)
 
     def _process_event(self, event: BaseEvent):
-        # ignore scheduler event
-        if event.namespace == 'scheduler':
+        # ignore events from scheduler and the default namespace as there are no corresponding projects
+        if event.namespace == 'scheduler' or event.namespace == 'default':
             return
         project_name = event.namespace
         subscribed_workflow = self._get_subscribed_workflow(event, project_name)
