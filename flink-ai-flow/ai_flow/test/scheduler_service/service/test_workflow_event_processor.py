@@ -173,8 +173,8 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
     def test__handler_event_for_workflow_none_action(self):
         context_extractor = MyContextExtractor()
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.START)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.START)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         state = WorkflowContextEventHandlerState('project', 'workflow1', 'context_1')
@@ -189,8 +189,8 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
     def test__handler_event_for_workflow_start_action(self):
         context_extractor = MyContextExtractor()
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.START)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.START)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         state = WorkflowContextEventHandlerState('project', 'workflow1', 'context_1')
@@ -208,8 +208,8 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
     def test__handler_event_for_workflow_start_with_running_workflow_execution(self):
         context_extractor = MyContextExtractor()
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.START)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.START)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         state = WorkflowContextEventHandlerState('project', 'workflow1', 'context_1', '1')
@@ -227,8 +227,8 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
     def test__handler_event_for_workflow_start_with_non_running_workflow_execution(self):
         context_extractor = MyContextExtractor()
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.START)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.START)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         state = WorkflowContextEventHandlerState('project', 'workflow1', 'context_1', '1')
@@ -248,8 +248,8 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
     def test__handler_event_for_workflow_stop_action(self):
         context_extractor = MyContextExtractor()
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.START)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.START)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         state = WorkflowContextEventHandlerState('project', 'workflow1', 'context_1')
@@ -270,8 +270,8 @@ class TestWorkflowEventProcessor(unittest.TestCase):
 
     def test__handler_event_for_workflow_exception(self):
         context_extractor = MyContextExtractor()
-        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v'), WorkflowAction.START)
-        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1'), WorkflowAction.START)
+        rule = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k', 'v', namespace='test_namespace'), WorkflowAction.START)
+        rule1 = WorkflowSchedulingRule(MeetAllEventCondition().add_event('k1', 'v1', namespace='test_namespace'), WorkflowAction.START)
         w1 = WorkflowMeta('workflow1', 0, context_extractor_in_bytes=cloudpickle.dumps(context_extractor),
                           scheduling_rules=[rule, rule1])
         state = WorkflowContextEventHandlerState('project', 'workflow1', 'context_1')
