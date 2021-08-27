@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 import logging
+import sys
 from typing import List, Callable
 
 from ai_flow.meta.workflow_meta import WorkflowMeta
@@ -67,17 +68,21 @@ class WorkflowEventProcessor:
                 logging.error("Unexpected Exception", exc_info=e)
 
     def _process_event(self, event: BaseEvent):
-        # ignore events from scheduler and the default namespace as there are no corresponding projects
-        if event.namespace == 'scheduler' or event.namespace == 'default':
-            return
-        project_name = event.namespace
-        subscribed_workflow = self._get_subscribed_workflow(event, project_name)
+        subscribed_workflow = []
+        projects = self.store.list_project(sys.maxsize, 0)
+        for project_name in projects:
+            workflows = self._get_subscribed_workflow(event, project_name)
+            if len(workflows) > 0:
+                for workflow in workflows:
+                    subscribed_workflow.append((project_name, workflow))
 
-        for workflow in subscribed_workflow:
+        for workflow_tuple in subscribed_workflow:
+            project_name, workflow = workflow_tuple
             self._handle_event_for_workflow(project_name, workflow, event)
 
     def _get_subscribed_workflow(self, event, project_name):
         workflows: List[WorkflowMeta] = self.store.list_workflows(project_name=project_name)
+        print(workflows)
         if workflows is None:
             subscribed_workflow = []
         else:
