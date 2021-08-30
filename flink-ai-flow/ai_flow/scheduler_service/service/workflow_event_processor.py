@@ -82,7 +82,6 @@ class WorkflowEventProcessor:
 
     def _get_subscribed_workflow(self, event, project_name):
         workflows: List[WorkflowMeta] = self.store.list_workflows(project_name=project_name)
-        print(workflows)
         if workflows is None:
             subscribed_workflow = []
         else:

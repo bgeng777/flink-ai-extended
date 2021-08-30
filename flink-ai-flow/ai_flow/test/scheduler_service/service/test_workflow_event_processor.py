@@ -140,7 +140,7 @@ class TestWorkflowEventProcessor(unittest.TestCase):
         e = BaseEvent('k', 'v', namespace='test_namespace')
         workflows1 = self.processor._get_subscribed_workflow(e, 'test_project1')
         workflows2 = self.processor._get_subscribed_workflow(e, 'test_project2')
-        self.assertEqual(3, len(workflows + workflows2))
+        self.assertEqual(3, len(workflows1 + workflows2))
         self.assertIn('workflow1', [workflow.name for workflow in workflows1])
         self.assertIn('workflow2', [workflow.name for workflow in workflows2])
         self.assertIn('workflow3', [workflow.name for workflow in workflows2])
