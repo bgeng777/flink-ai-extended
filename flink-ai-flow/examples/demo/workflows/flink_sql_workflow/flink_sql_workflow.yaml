@@ -19,8 +19,6 @@
 
 train:
   job_type: python
-  periodic_config:
-    interval: '0,0,0,60' # The train job will be executed every 60s
 
 validate:
   job_type: python

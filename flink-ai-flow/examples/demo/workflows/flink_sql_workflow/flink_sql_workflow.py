@@ -20,9 +20,7 @@ import os
 import ai_flow as af
 from ai_flow.util.path_util import get_file_dir
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
-from tutorial_processors import DatasetReader, ModelTrainer, ValidateDatasetReader, ModelValidator, Source, Sink, \
-    Predictor
-
+from flink_sql_workflow_processors import DatasetReader, ModelTrainer, Source, Sink
 
 DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../")) + '/resources/iris_{}.csv'
 
@@ -47,20 +45,6 @@ def run_workflow():
                                  training_processor=ModelTrainer(),
                                  model_info=train_model)
 
-    # Validation of model
-    with af.job_config('validate'):
-        # Read validation dataset
-        validate_dataset = af.register_dataset(name=artifact_prefix + 'validate_dataset',
-                                               uri=DATASET_URI.format('test'))
-        # Validate model before it is used to predict
-        validate_read_dataset = af.read_dataset(dataset_info=validate_dataset,
-                                                read_dataset_processor=ValidateDatasetReader())
-        validate_artifact_name = artifact_prefix + 'validate_artifact'
-        validate_artifact = af.register_artifact(name=validate_artifact_name,
-                                                 uri=get_file_dir(__file__) + '/validate_result')
-        validate_channel = af.model_validate(input=[validate_read_dataset],
-                                             model_info=train_model,
-                                             model_validation_processor=ModelValidator(validate_artifact_name))
 
     # Prediction(Inference) using flink
     with af.job_config('predict'):
@@ -69,22 +53,16 @@ def run_workflow():
                                               uri=DATASET_URI.format('test'))
         predict_read_dataset = af.read_dataset(dataset_info=predict_dataset,
                                                read_dataset_processor=Source())
-        predict_channel = af.predict(input=[predict_read_dataset],
-                                     model_info=train_model,
-                                     prediction_processor=Predictor())
         # Save prediction result
         write_dataset = af.register_dataset(name=artifact_prefix + 'write_dataset',
                                             uri=get_file_dir(__file__) + '/predict_result.csv')
-        af.write_dataset(input=predict_channel,
+        af.write_dataset(input=predict_read_dataset,
                          dataset_info=write_dataset,
                          write_dataset_processor=Sink())
 
     # Define relation graph connected by control edge: train -> validate -> predict
-    af.action_on_model_version_event(job_name='validate',
-                                     model_version_event_type=ModelVersionEventType.MODEL_GENERATED,
-                                     model_name=train_model.name)
     af.action_on_model_version_event(job_name='predict',
-                                     model_version_event_type=ModelVersionEventType.MODEL_VALIDATED,
+                                     model_version_event_type=ModelVersionEventType.MODEL_GENERATED,
                                      model_name=train_model.name)
     # Submit workflow
     # af.workflow_operation.stop_all_workflow_executions(af.current_workflow_config().workflow_name)
