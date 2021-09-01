@@ -28,6 +28,7 @@ class ExecutionContext(json_utils.Jsonable):
     AINode node configuration parameters(config), ExecutionEnvironment, TableEnvironment and StatementSet.
     ExecutionContext is passed as a parameter to the process function of FlinkPythonProcessor.
     """
+
     def __init__(self,
                  job_execution_info: JobExecutionInfo,
                  config: Dict,
@@ -76,7 +77,7 @@ class FlinkPythonProcessor(object):
         super().__init__()
 
     @abstractmethod
-    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None) -> List[Table]:
+    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None):
         """
         Process method for user-defined function. User write their logic in this method.
         """
@@ -101,6 +102,7 @@ class FlinkJavaProcessor(object):
     """
     FlinkJavaProcessor is the processor of flink java jobs.
     """
+
     def __init__(self,
                  entry_class: Optional[Text],
                  main_jar_file: Text,
@@ -114,3 +116,48 @@ class FlinkJavaProcessor(object):
         self.entry_class: Text = entry_class
         self.main_jar_file: Text = main_jar_file
         self.args = args
+
+
+class UDFWrapper(object):
+    def __init__(self, name, func):
+        self.name = name
+        self.func = func
+
+    def is_java_udf(self):
+        return type(self.func) == str
+
+
+class FlinkSqlProcessor(FlinkPythonProcessor):
+
+    @abstractmethod
+    def sql_statements(self, execution_context: ExecutionContext) -> str:
+        pass
+
+    @abstractmethod
+    def udf_list(self, execution_context: ExecutionContext) -> List[UDFWrapper]:
+        pass
+
+    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None):
+        """
+        Process method for user-defined function. User write their logic in this method.
+        """
+        _sql_statements = self.sql_statements(execution_context)
+        if _sql_statements is None:
+            raise Exception("The sql_statements() cannot be None.")
+        sql_statements = [statement.strip() for statement in _sql_statements.strip().split(';') if statement]
+        table_env = execution_context.table_env
+        statement_set = execution_context.statement_set
+        _udfs = self.udf_list(execution_context)
+        if _udfs is not None:
+            for udf in _udfs:
+                if udf.is_java_udf():
+                    table_env.register_java_function(udf.name, udf.func)
+                else:
+                    table_env.register_function(udf.name, udf.func)
+
+        for sql_statement in sql_statements:
+            if sql_statement.lower().startswith('insert'):
+                statement_set.add_insert_sql(sql_statement)
+            else:
+                table_env.execute_sql(sql_statement)
+        return []
