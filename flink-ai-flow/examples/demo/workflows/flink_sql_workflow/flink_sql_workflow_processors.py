@@ -36,7 +36,6 @@ EXAMPLE_COLUMNS = ['sl', 'sw', 'pl', 'pw', 'type']
 flink.set_flink_env(flink.FlinkStreamEnv())
 
 
-
 class DatasetReader(PythonProcessor):
 
     def process(self, execution_context: ExecutionContext, input_list: List) -> List:

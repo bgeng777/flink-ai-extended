@@ -144,7 +144,7 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
         _sql_statements = self.sql_statements(execution_context)
         if _sql_statements is None:
             raise Exception("The sql_statements() cannot be None.")
-        sql_statements = [statement.lower() for statement in _sql_statements.strip().split(';') if statement]
+        sql_statements = [statement.strip() for statement in _sql_statements.strip().split(';') if statement]
         table_env = execution_context.table_env
         statement_set = execution_context.statement_set
         _udfs = self.udf_list(execution_context)
@@ -156,7 +156,8 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
                     table_env.register_function(udf.name, udf.func)
 
         for sql_statement in sql_statements:
-            if sql_statement.startswith('insert'):
+            if sql_statement.lower().startswith('insert'):
                 statement_set.add_insert_sql(sql_statement)
             else:
                 table_env.execute_sql(sql_statement)
+        return []
