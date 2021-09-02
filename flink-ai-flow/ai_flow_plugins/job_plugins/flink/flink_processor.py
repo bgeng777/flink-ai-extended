@@ -15,7 +15,10 @@
 # specific language governing permissions and limitations
 # under the License.
 from abc import abstractmethod
-from typing import List, Dict, Text, Optional
+from typing import List, Dict, Text, Optional, Union
+
+from pyflink.table.udf import UserDefinedScalarFunctionWrapper
+
 from ai_flow.plugin_interface.scheduler_interface import JobExecutionInfo
 from ai_flow.util import json_utils
 from pyflink.dataset import ExecutionEnvironment
@@ -77,7 +80,7 @@ class FlinkPythonProcessor(object):
         super().__init__()
 
     @abstractmethod
-    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None):
+    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None) -> List[Table]:
         """
         Process method for user-defined function. User write their logic in this method.
         """
@@ -119,7 +122,7 @@ class FlinkJavaProcessor(object):
 
 
 class UDFWrapper(object):
-    def __init__(self, name, func):
+    def __init__(self, name, func: Union[str, UserDefinedScalarFunctionWrapper]):
         self.name = name
         self.func = func
 
@@ -130,21 +133,21 @@ class UDFWrapper(object):
 class FlinkSqlProcessor(FlinkPythonProcessor):
 
     @abstractmethod
-    def sql_statements(self, execution_context: ExecutionContext) -> str:
+    def sql_statements(self, execution_context: ExecutionContext) -> List[str]:
         pass
 
     @abstractmethod
     def udf_list(self, execution_context: ExecutionContext) -> List[UDFWrapper]:
         pass
 
-    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None):
+    def process(self, execution_context: ExecutionContext, input_list: List[Table] = None) -> List[Table]:
         """
         Process method for user-defined function. User write their logic in this method.
         """
         _sql_statements = self.sql_statements(execution_context)
-        if _sql_statements is None:
-            raise Exception("The sql_statements() cannot be None.")
-        sql_statements = [statement.strip() for statement in _sql_statements.strip().split(';') if statement]
+        if _sql_statements is None or len(_sql_statements) == 0:
+            raise Exception("The sql_statements() cannot be None or empty.")
+        sql_statements = [statement.strip() for statement in _sql_statements]
         table_env = execution_context.table_env
         statement_set = execution_context.statement_set
         _udfs = self.udf_list(execution_context)

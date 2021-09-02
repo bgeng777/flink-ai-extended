@@ -151,8 +151,8 @@ class SourceSql(flink.FlinkSqlProcessor):
     def open(self, execution_context: flink.ExecutionContext):
         self.input_file = os.path.join(os.getcwd(), 'resources', 'word_count.txt')
 
-    def sql_statements(self, execution_context: flink.ExecutionContext) -> str:
-        sql_statements = '''
+    def sql_statements(self, execution_context: flink.ExecutionContext) -> List[str]:
+        table_source_stmt = '''
                            CREATE TABLE mySource (
                                word STRING 
                            ) WITH (
@@ -160,9 +160,9 @@ class SourceSql(flink.FlinkSqlProcessor):
                                'path' = '{uri}',
                                'format' = 'csv',
                                'csv.ignore-parse-errors' = 'true'
-                           );
+                           )
                             '''.format(uri=self.input_file)
-        return sql_statements
+        return [table_source_stmt]
 
 
 class SinkSql(flink.FlinkSqlProcessor):
@@ -183,8 +183,8 @@ class SinkSql(flink.FlinkSqlProcessor):
                                                       input_types=[DataTypes.STRING()],
                                                       result_type=DataTypes.STRING()))]
 
-    def sql_statements(self, execution_context: flink.ExecutionContext) -> str:
-        sql_statements = '''
+    def sql_statements(self, execution_context: flink.ExecutionContext) -> List[str]:
+        table_sink_stmt = '''
                            CREATE TABLE mySink (
                                newword STRING
                            ) WITH (
@@ -192,7 +192,7 @@ class SinkSql(flink.FlinkSqlProcessor):
                                'path' = '{uri}',
                                'format' = 'csv',
                                'csv.ignore-parse-errors' = 'true'
-                           );
-                            INSERT INTO mySink SELECT * FROM mySource;
-                            '''.format(uri=self.output_file)
-        return sql_statements
+                           )
+        '''.format(uri=self.output_file)
+        insert_stmt = 'INSERT INTO mySink SELECT pass_func(word) FROM mySource'
+        return [table_sink_stmt, insert_stmt]
