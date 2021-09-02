@@ -19,6 +19,7 @@ from typing import List, Dict, Text, Optional, Union
 
 from pyflink.table.udf import UserDefinedScalarFunctionWrapper
 
+from ai_flow import DatasetMeta
 from ai_flow.plugin_interface.scheduler_interface import JobExecutionInfo
 from ai_flow.util import json_utils
 from pyflink.dataset import ExecutionEnvironment
@@ -158,9 +159,35 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
                 else:
                     table_env.register_function(udf.name, udf.func)
 
+        a = execution_context.node_type
         for sql_statement in sql_statements:
             if sql_statement.lower().startswith('insert'):
                 statement_set.add_insert_sql(sql_statement)
+            if sql_statement.lower().startswith('create'):
+                if execution_context.node_type == 'read_dataset' or execution_context.node_type == 'write_dataset':
+                    data_meta: DatasetMeta = execution_context.config['dataset']
+                    if not _validate_create_statement(sql_statement, data_meta):
+                        raise Exception("Format in CREATE statement is inconsistent with the attached dataset!")
+
+                table_env.execute_sql(sql_statement)
             else:
                 table_env.execute_sql(sql_statement)
         return []
+
+
+def _check_with_options_sql(stmt, option_name, target_value):
+    words = stmt.split()
+    for i in range(len(words)):
+        if words[i] == option_name and i + 1 < len(words) and words[i + 1] == '=':
+            if i + 2 < len(words) and target_value != words[i + 2].replace("'", ''):
+                return False
+    return True
+
+
+def _validate_create_statement(stmt, dataset_meta: DatasetMeta):
+    required_format = dataset_meta.data_format
+    required_connector = None if dataset_meta.properties is None else dataset_meta.properties.get('connector')
+    _check_with_options_sql(stmt.lower(), "'format'", required_format)
+    _check_with_options_sql(stmt.lower(), "'connector'", required_connector)
+    return _check_with_options_sql(stmt, "'format'", required_format) and \
+           _check_with_options_sql(stmt, "'connector'", required_connector)
