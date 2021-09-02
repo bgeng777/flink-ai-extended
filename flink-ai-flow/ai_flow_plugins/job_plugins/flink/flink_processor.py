@@ -135,15 +135,41 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
 
     @abstractmethod
     def sql_statements(self, execution_context: ExecutionContext) -> List[str]:
+        """
+        The user should override this method to define their own sql statements. Multiple insertions in a job will be
+        added into one same statement set.
+        
+        For the processor in :py:func:`~ai_flow.api.ops.read_dataset` or :py:func:`~ai_flow.api.ops.write_dataset`, 
+        this method should return at most one DDL(i.e. CREATE statement) for table source or table sink and the DDL
+        should be consistent with the dataset_info in the :py:func:`~ai_flow.api.ops.read_dataset` or 
+        :py:func:`~ai_flow.api.ops.write_dataset` (i.e. dataset_info.data_format should be equal to the 'format' option 
+        in DDL if it is defined.). 
+        
+        If multiple table sinks are required, users can call multiple :py:func:`~ai_flow.api.ops.write_dataset` or use 
+        single :py:func:`~ai_flow.api.ops.user_define_operation` with multiple DDL. 
+        
+
+        :param execution_context: The :class:`~ai_flow_plugins.job_plugins.flink.flink_processor.ExecutionContext` of
+        the processor
+        :rtype List[str]: A list of sql statement. Each element should be a DDL/DML/DCL/DQL statement.
+        """
         pass
 
     @abstractmethod
     def udf_list(self, execution_context: ExecutionContext) -> List[UDFWrapper]:
+        """
+        The user should override this method to register user-defined functions(udf or udtf). 
+
+        :param execution_context: The :class:`~ai_flow_plugins.job_plugins.flink.flink_processor.ExecutionContext` of
+        the processor
+        :rtype List[UDFWrapper]: A list of :classs:`ai_flow_plugins.job_plugins.flink.flink_processor.UDFWrapper`. 
+        """
         pass
 
     def process(self, execution_context: ExecutionContext, input_list: List[Table] = None) -> List[Table]:
         """
-        Process method for user-defined function. User write their logic in this method.
+        The method will register udfs defined in :py:func:`~ai_flow_plugins.job_plugins.flink.flink_processor.FlinkSqlProcessor.udf_list`
+        and execute sql statements in :py:func:`~ai_flow_plugins.job_plugins.flink.flink_processor.FlinkSqlProcessor.sql_statements`.
         """
         _sql_statements = self.sql_statements(execution_context)
         if _sql_statements is None or len(_sql_statements) == 0:
@@ -164,10 +190,13 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
             if sql_statement.lower().startswith('insert'):
                 statement_set.add_insert_sql(sql_statement)
             if sql_statement.lower().startswith('create'):
+                # Check if users' DDL are consistent with info they provide in the
+                # :py:class:`ai_flow.meta.dataset_meta.DatasetMeta`
                 if execution_context.node_type == 'read_dataset' or execution_context.node_type == 'write_dataset':
-                    data_meta: DatasetMeta = execution_context.config['dataset']
-                    if not _validate_create_statement(sql_statement, data_meta):
-                        raise Exception("Format in CREATE statement is inconsistent with the attached dataset!")
+                    dataset_meta: DatasetMeta = execution_context.config['dataset']
+                    if not _validate_create_statement(sql_statement, dataset_meta):
+                        raise Exception("'format' option in CREATE statement is inconsistent with the attached "
+                                        "dataset! The registered format of the dataset is {}", dataset_meta.data_format)
 
                 table_env.execute_sql(sql_statement)
             else:
@@ -175,11 +204,13 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
         return []
 
 
-def _check_with_options_sql(stmt, option_name, target_value):
+def _check_options_in_sql(stmt, option_name, target_value):
+    if target_value is None:
+        return True
     words = stmt.split()
     for i in range(len(words)):
         if words[i] == option_name and i + 1 < len(words) and words[i + 1] == '=':
-            if i + 2 < len(words) and target_value != words[i + 2].replace("'", ''):
+            if i + 2 < len(words) and target_value.lower() != words[i + 2].replace("'", '').lower():
                 return False
     return True
 
@@ -187,7 +218,5 @@ def _check_with_options_sql(stmt, option_name, target_value):
 def _validate_create_statement(stmt, dataset_meta: DatasetMeta):
     required_format = dataset_meta.data_format
     required_connector = None if dataset_meta.properties is None else dataset_meta.properties.get('connector')
-    _check_with_options_sql(stmt.lower(), "'format'", required_format)
-    _check_with_options_sql(stmt.lower(), "'connector'", required_connector)
-    return _check_with_options_sql(stmt, "'format'", required_format) and \
-           _check_with_options_sql(stmt, "'connector'", required_connector)
+    return _check_options_in_sql(stmt, "'format'", required_format) and \
+           _check_options_in_sql(stmt, "'connector'", required_connector)
