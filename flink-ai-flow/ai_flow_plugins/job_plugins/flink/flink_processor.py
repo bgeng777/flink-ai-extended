@@ -144,7 +144,7 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
         _sql_statements = self.sql_statements(execution_context)
         if _sql_statements is None:
             raise Exception("The sql_statements() cannot be None.")
-        sql_statements = [statement.lower() for statement in _sql_statements.split(';')]
+        sql_statements = [statement.lower() for statement in _sql_statements.strip().split(';') if statement]
         table_env = execution_context.table_env
         statement_set = execution_context.statement_set
         _udfs = self.udf_list(execution_context)

@@ -90,16 +90,17 @@ class Source(flink.FlinkSqlProcessor):
                                 'path' = '{uri}',
                                 'format' = 'csv',
                                 'csv.ignore-parse-errors' = 'true'
-                            )
+                            );
                         '''.format(uri=data_meta.uri)
         return sql_statements
 
 
 class Sink(flink.FlinkSqlProcessor):
+    def __init__(self, model_name):
+        self.model_name = model_name
 
     def udf_list(self, execution_context: ExecutionContext) -> List:
-        model_name = execution_context.config['model_info'].name
-        model_path = af.get_deployed_model_version(model_name).model_path
+        model_path = af.get_latest_generated_model_version(self.model_name).model_path
         clf = load(model_path)
 
         # Define the python udf
