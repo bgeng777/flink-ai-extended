@@ -87,7 +87,7 @@ def run_workflow():
                                      model_version_event_type=ModelVersionEventType.MODEL_VALIDATED,
                                      model_name=train_model.name)
     # Submit workflow
-    # af.workflow_operation.stop_all_workflow_executions(af.current_workflow_config().workflow_name)
+    af.workflow_operation.stop_all_workflow_executions(af.current_workflow_config().workflow_name)
     af.workflow_operation.submit_workflow(af.current_workflow_config().workflow_name)
     # Run workflow
     af.workflow_operation.start_new_workflow_execution(af.current_workflow_config().workflow_name)
