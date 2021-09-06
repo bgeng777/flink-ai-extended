@@ -123,7 +123,15 @@ class FlinkJavaProcessor(object):
 
 
 class UDFWrapper(object):
+    """
+    A wrapper for flink udf, which will be utilized by FlinkSqlProcessor to pass user-defined functions(udf and udtf).
+    """
     def __init__(self, name, func: Union[str, UserDefinedScalarFunctionWrapper]):
+        """
+       :param name: The name of user-defined functions which will be registered in the table env.
+       :param func: Thr user-defined function. For python, it is the python user-defined function to register.
+       For java, it is the java full qualified class name of the function to register.
+       """
         self.name = name
         self.func = func
 
@@ -132,7 +140,9 @@ class UDFWrapper(object):
 
 
 class FlinkSqlProcessor(FlinkPythonProcessor):
-
+    """
+    FlinkSqlProcessor is the processor of flink sql jobs based on pyflink.
+    """
     @abstractmethod
     def sql_statements(self, execution_context: ExecutionContext) -> List[str]:
         """
@@ -151,7 +161,7 @@ class FlinkSqlProcessor(FlinkPythonProcessor):
 
         :param execution_context: The :class:`~ai_flow_plugins.job_plugins.flink.flink_processor.ExecutionContext` of
         the processor
-        :rtype List[str]: A list of sql statement. Each element should be a DDL/DML/DCL/DQL statement.
+        :rtype List[str]: A list of sql statement. Each element should be a DDL/DML/DQL statement.
         """
         pass
 
