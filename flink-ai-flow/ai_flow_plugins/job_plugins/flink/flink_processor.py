@@ -129,8 +129,8 @@ class UDFWrapper(object):
     def __init__(self, name, func: Union[str, UserDefinedScalarFunctionWrapper]):
         """
        :param name: The name of user-defined functions which will be registered in the table env.
-       :param func: Thr user-defined function. For python, it is the python user-defined function to register.
-       For java, it is the java full qualified class name of the function to register.
+       :param func: Thr user-defined function. For python, it is the python user-defined function to register. For java,
+        it is the java full qualified class name of the function to register.
        """
         self.name = name
         self.func = func
