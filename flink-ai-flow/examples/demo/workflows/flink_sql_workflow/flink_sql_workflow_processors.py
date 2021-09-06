@@ -74,7 +74,7 @@ class ModelTrainer(PythonProcessor):
 
 class Source(flink.FlinkSqlProcessor):
 
-    def sql_statements(self, execution_context: ExecutionContext) -> str:
+    def sql_statements(self, execution_context: ExecutionContext) -> List[str]:
         data_meta = execution_context.config['dataset']
         sql_statements = '''
                             CREATE TABLE predict_source (
@@ -90,7 +90,7 @@ class Source(flink.FlinkSqlProcessor):
                                 'csv.ignore-parse-errors' = 'true'
                             );
                         '''.format(uri=data_meta.uri)
-        return sql_statements
+        return [sql_statements]
 
 
 class Sink(flink.FlinkSqlProcessor):
@@ -114,7 +114,7 @@ class Sink(flink.FlinkSqlProcessor):
                                             result_type=DataTypes.FLOAT()))
         return [udf_func]
 
-    def sql_statements(self, execution_context: ExecutionContext) -> str:
+    def sql_statements(self, execution_context: ExecutionContext) -> List[str]:
         create_stmt = '''
                    CREATE TABLE predict_sink (
                        prediction FLOAT 
