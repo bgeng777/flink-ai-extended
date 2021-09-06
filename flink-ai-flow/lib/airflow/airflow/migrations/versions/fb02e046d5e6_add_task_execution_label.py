@@ -1,3 +1,4 @@
+#
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -14,16 +15,31 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-from datetime import datetime
 
-from airflow import DAG
-from airflow.operators.bash import BashOperator
-from tests.dags.test_context_extractor import FixedContextExtractor
+"""Add task execution label
 
-DEFAULT_DATE = datetime(2016, 1, 1)
-dag = DAG(dag_id="test_dag_context_extractor", start_date=datetime.utcnow(), schedule_interval='@once')
-dag.context_extractor = FixedContextExtractor('test_context')
+Revision ID: fb02e046d5e6
+Revises: d47076ca1426
+Create Date: 2021-09-02 11:45:12.937665
 
-op1 = BashOperator(task_id="task_1", dag=dag, owner='airflow', bash_command='echo "hello world 1!"')
-op1.subscribe_event(event_key='k', event_namespace='*', from_task_id='*')
-op1.subscribe_event(event_key='broadcast', event_namespace='*', from_task_id='*')
+"""
+
+import sqlalchemy as sa
+from alembic import op
+
+
+# revision identifiers, used by Alembic.
+revision = 'fb02e046d5e6'
+down_revision = 'd47076ca1426'
+branch_labels = None
+depends_on = None
+
+
+def upgrade():
+    """Apply Add task execution label"""
+    op.add_column('task_execution', sa.Column('execution_label', sa.Text, nullable=True))
+
+
+def downgrade():
+    """Unapply Add task execution label"""
+    op.drop_column('task_execution', 'execution_label')
