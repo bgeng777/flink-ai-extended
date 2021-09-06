@@ -25,7 +25,6 @@ from joblib import dump, load
 import ai_flow as af
 from pyflink.table.udf import udf
 from pyflink.table import Table, ScalarFunction, DataTypes
-from ai_flow.model_center.entity.model_version_stage import ModelVersionStage
 from ai_flow.util.path_util import get_file_dir
 from ai_flow_plugins.job_plugins.flink import UDFWrapper
 from ai_flow_plugins.job_plugins.python.python_processor import ExecutionContext, PythonProcessor
@@ -116,7 +115,7 @@ class Sink(flink.FlinkSqlProcessor):
         return [udf_func]
 
     def sql_statements(self, execution_context: ExecutionContext) -> str:
-        sql_statements = '''
+        create_stmt = '''
                    CREATE TABLE predict_sink (
                        prediction FLOAT 
                    ) WITH (
@@ -124,9 +123,7 @@ class Sink(flink.FlinkSqlProcessor):
                        'path' = '{uri}',
                        'format' = 'csv',
                        'csv.ignore-parse-errors' = 'true'
-                   );
-                   INSERT INTO predict_sink
-                    SELECT mypred(sl,sw,pl,pw)
-                    FROM predict_source;
+                   )
                     '''.format(uri=execution_context.config['dataset'].uri)
-        return sql_statements
+        sink_stmt = 'INSERT INTO predict_sink SELECT mypred(sl,sw,pl,pw) FROM predict_source'
+        return [create_stmt, sink_stmt]
