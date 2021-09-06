@@ -145,6 +145,13 @@ class FlinkJobController(JobController):
 
                 if job_config.flink_run_args is not None:
                     bash_command.extend(job_config.flink_run_args)
+                    for i in range(len(bash_command)):
+                        if bash_command[i] == '-j' or bash_command[i] == '--jarfile':
+                            if i + 1 < len(bash_command):
+                                bash_command[i+1] = os.path.join(job_runtime_env.jar_dep_dir, bash_command[i+1])
+                            else:
+                                raise Exception('You have specified the -j or --jarfile option but there is no jar file'
+                                                'provided!')
 
                 bash_command.append('-pyfs')
                 files = [job_runtime_env.workflow_dir]
