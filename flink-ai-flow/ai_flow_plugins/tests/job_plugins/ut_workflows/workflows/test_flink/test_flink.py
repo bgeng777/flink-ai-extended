@@ -224,6 +224,31 @@ class TestFlink(unittest.TestCase):
         if os.path.exists(dep_dir):
             shutil.rmtree(dep_dir)
 
+    @unittest.skip("need start flink cluster")
+    def test_cluster_pyflink_java_udf(self):
+        flink_home = os.environ.get('FLINK_HOME')
+        word_count_jar = os.path.join(flink_home, 'examples', 'batch', 'WordCount.jar')
+        output_file = os.path.join(flink_home, 'log', 'output')
+        if os.path.exists(output_file):
+            os.remove(output_file)
+        jar_dir = os.path.join(project_path, 'dependencies', 'jar')
+        if not os.path.exists(jar_dir):
+            os.makedirs(jar_dir)
+            shutil.copy(word_count_jar, jar_dir)
+
+        args = ['--input', os.path.join(flink_home, 'conf', 'flink-conf.yaml'), '--output', output_file]
+        with af.job_config('task_2'):
+            af.user_define_operation(processor=flink.FlinkJavaProcessor(entry_class=None,
+                                                                        main_jar_file='WordCount.jar',
+                                                                        args=args))
+        w = af.workflow_operation.submit_workflow(workflow_name=af.current_workflow_config().workflow_name)
+        je = af.workflow_operation.start_job_execution(job_name='task_2', execution_id='1')
+        je = af.workflow_operation.get_job_execution(job_name='task_2', execution_id='1')
+        self.assertEqual(Status.FINISHED, je.status)
+        dep_dir = os.path.join(project_path, 'dependencies')
+        if os.path.exists(dep_dir):
+            shutil.rmtree(dep_dir)
+
 
 if __name__ == '__main__':
     unittest.main()
