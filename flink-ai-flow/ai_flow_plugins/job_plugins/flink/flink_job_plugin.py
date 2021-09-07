@@ -17,6 +17,8 @@
 import os
 import signal
 import sys
+import ast
+import copy
 import time
 from subprocess import Popen, PIPE, STDOUT
 from tempfile import NamedTemporaryFile
@@ -145,6 +147,13 @@ class FlinkJobController(JobController):
 
                 if job_config.flink_run_args is not None:
                     bash_command.extend(job_config.flink_run_args)
+                    for i in range(len(bash_command)):
+                        if bash_command[i] == '-j' or bash_command[i] == '--jarfile':
+                            if i + 1 < len(bash_command):
+                                bash_command[i+1] = os.path.join(job_runtime_env.jar_dep_dir, bash_command[i+1])
+                            else:
+                                raise Exception('You have specified the -j or --jarfile option but there is no jar file'
+                                                'provided!')
 
                 bash_command.append('-pyfs')
                 files = [job_runtime_env.workflow_dir]
@@ -239,14 +248,18 @@ class FlinkJobController(JobController):
                 bash_command = ['flink', stop_mode]
                 if job_config.flink_stop_args is not None:
                     bash_command.extend(job_config.flink_stop_args)
-                bash_command.append(job_id)
-                self.log.info(' '.join(bash_command))
-                sp = Popen(bash_command,
-                           stdout=PIPE,
-                           stderr=STDOUT,
-                           cwd=job_runtime_env.working_dir,
-                           env=env)
-                sp.wait()
+
+                job_ids = ast.literal_eval(job_id)
+                for j_id in job_ids:
+                    command = copy.deepcopy(bash_command)
+                    command.append(j_id)
+                    self.log.info(' '.join(command))
+                    sp = Popen(command,
+                               stdout=PIPE,
+                               stderr=STDOUT,
+                               cwd=job_runtime_env.working_dir,
+                               env=env)
+                    sp.wait()
         self.log.info('Output:')
         sub_process = handle.sub_process
         self.log.info('Sending SIGTERM signal to process group')
