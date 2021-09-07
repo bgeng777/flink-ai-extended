@@ -23,7 +23,7 @@ from ai_flow.util.path_util import get_file_dir
 from ai_flow.model_center.entity.model_version_stage import ModelVersionEventType
 from flink_sql_workflow_processors import DatasetReader, ModelTrainer, Source, Sink
 
-DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../")) + '/resources/iris_{}.csv'
+DATASET_URI = os.path.abspath(os.path.join(__file__, "../../../..")) + '/dataset_data/iris_{}.csv'
 
 
 def run_workflow():
@@ -55,8 +55,8 @@ def run_workflow():
                                                read_dataset_processor=Source())
         # Save prediction result
         write_dataset = af.register_dataset(name=artifact_prefix + 'write_dataset',
-                                            uri=get_file_dir(__file__) + '/predict_result.csv')
-        af.write_dataset(input=predict_read_dataset,
+                                            uri=get_file_dir(__file__) + '/predict_result')
+        af.write_dataset(input=None,
                          dataset_info=write_dataset,
                          write_dataset_processor=Sink(model_name=train_model.name))
 

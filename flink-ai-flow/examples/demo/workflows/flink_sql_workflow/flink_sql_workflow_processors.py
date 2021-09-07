@@ -24,7 +24,7 @@ from joblib import dump, load
 
 import ai_flow as af
 from pyflink.table.udf import udf
-from pyflink.table import Table, ScalarFunction, DataTypes
+from pyflink.table import ScalarFunction, DataTypes
 from ai_flow.util.path_util import get_file_dir
 from ai_flow_plugins.job_plugins.flink import UDFWrapper
 from ai_flow_plugins.job_plugins.python.python_processor import ExecutionContext, PythonProcessor
@@ -88,7 +88,7 @@ class Source(flink.FlinkSqlProcessor):
                                 'path' = '{uri}',
                                 'format' = 'csv',
                                 'csv.ignore-parse-errors' = 'true'
-                            );
+                            )
                         '''.format(uri=data_meta.uri)
         return [sql_statements]
 
