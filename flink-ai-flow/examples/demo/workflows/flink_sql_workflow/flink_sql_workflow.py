@@ -44,7 +44,7 @@ def run_workflow():
                                         model_desc='KNN model')
         train_channel = af.train(input=[train_read_dataset],
                                  training_processor=ModelTrainer(),
-                                 model_info=train_model)flink-ai-flow/lib/airflow/airflow/www/compile_assets.sh
+                                 model_info=train_model)
 
     # Prediction(Inference) using flink
     with af.job_config('predict'):
