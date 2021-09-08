@@ -47,7 +47,7 @@ def run_workflow():
                                  model_info=train_model)
 
     # Prediction(Inference) using flink
-    with af.job_config('predict'):
+    with af.job_config('predict') as job_config:
         # Read test data and do prediction
         predict_dataset = af.register_dataset(name=artifact_prefix + 'predict_dataset',
                                               uri=DATASET_URI.format('test'))
@@ -58,7 +58,8 @@ def run_workflow():
                                             uri=get_file_dir(__file__) + '/predict_result')
         af.write_dataset(input=None,
                          dataset_info=write_dataset,
-                         write_dataset_processor=Sink(model_name=train_model.name))
+                         write_dataset_processor=Sink(model_name=train_model.name,
+                                                      run_mode=job_config.properties.get('run_mode')))
 
     # Define relation graph connected by control edge: train -> validate -> predict
     af.action_on_model_version_event(job_name='predict',

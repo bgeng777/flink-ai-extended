@@ -23,4 +23,7 @@ train:
 predict:
   job_type: flink
   properties:
-    run_mode: local 
+    run_mode: local # local or cluster
+#    flink_run_args: # The flink run command args(-pym etc.). It's type is List.
+#      - --jarfile # the executable python path for the submission of the Flink client when running mode is cluster.
+#      - scalar-function-1.0.jar

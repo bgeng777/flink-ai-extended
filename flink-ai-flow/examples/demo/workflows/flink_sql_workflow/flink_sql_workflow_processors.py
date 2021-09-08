@@ -94,13 +94,13 @@ class Source(flink.FlinkSqlProcessor):
 
 
 class Sink(flink.FlinkSqlProcessor):
-    def __init__(self, model_name):
+    def __init__(self, model_name, run_mode):
         self.model_name = model_name
+        self.run_mode = run_mode
 
     def udf_list(self, execution_context: ExecutionContext) -> List:
         model_path = af.get_latest_generated_model_version(self.model_name).model_path
         clf = load(model_path)
-
         # Define the python udf
         class Predict(ScalarFunction):
             def eval(self, sl, sw, pl, pw):
@@ -112,12 +112,15 @@ class Sink(flink.FlinkSqlProcessor):
                                             input_types=[DataTypes.FLOAT(), DataTypes.FLOAT(),
                                                          DataTypes.FLOAT(), DataTypes.FLOAT()],
                                             result_type=DataTypes.FLOAT()))
-        return [udf_func]
+        if self.run_mode == 'local':
+            return [udf_func]
+        else:
+            return [udf_func, UDFWrapper('dummyJavaUDF', 'com.pyflink.table.DummyJavaUDF')]
 
     def sql_statements(self, execution_context: ExecutionContext) -> List[str]:
         create_stmt = '''
                    CREATE TABLE predict_sink (
-                       prediction FLOAT 
+                       prediction FLOAT
                    ) WITH (
                        'connector' = 'filesystem',
                        'path' = '{uri}',
@@ -125,5 +128,8 @@ class Sink(flink.FlinkSqlProcessor):
                        'csv.ignore-parse-errors' = 'true'
                    )
                     '''.format(uri=execution_context.config['dataset'].uri)
-        sink_stmt = 'INSERT INTO predict_sink SELECT mypred(sl,sw,pl,pw) FROM predict_source'
+        if self.run_mode == 'local':
+            sink_stmt = 'INSERT INTO predict_sink SELECT mypred(sl,sw,pl,pw) FROM predict_source'
+        else:
+            sink_stmt = 'INSERT INTO predict_sink SELECT dummyJavaUDF(mypred(sl,sw,pl,pw)) FROM predict_source'
         return [create_stmt, sink_stmt]
