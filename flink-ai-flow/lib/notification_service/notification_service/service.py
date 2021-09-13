@@ -302,8 +302,7 @@ class NotificationService(notification_service_pb2_grpc.NotificationServiceServi
                 return_code=notification_service_pb2.ReturnStatus.ERROR, return_msg=str(e))
 
     async def _register_client(self, request):
-        # this method is used in HA mode, so we just return here.
-        client_id = self.storage.register_client()
+        client_id = self.storage.register_client(request.client_meta.namespace, request.client_meta.sender)
         return notification_service_pb2.RegisterClientResponse(
             return_code=notification_service_pb2.ReturnStatus.SUCCESS,
             return_msg='',

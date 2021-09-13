@@ -87,7 +87,8 @@ service NotificationService {
     // Register notification client in the db of notification service
     rpc registerClient (RegisterClientRequest) returns (RegisterClientResponse) {
         option (google.api.http) = {
-            get: "/aiflow/notification-service/register_client"
+            post: "/aiflow/notification-service/register_client"
+            body: "*"
         };
     }
 }

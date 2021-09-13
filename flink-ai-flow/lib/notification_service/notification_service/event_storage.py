@@ -169,7 +169,7 @@ class DbEventStorage(BaseEventStorage):
         return EventModel.get_latest_version()
 
     def register_client(self, namespace: str = None, sender: str = None) -> int:
-        return EventModel.register_client(namespace, sender)
+        return ClientModel.register_client(namespace, sender)
 
     def clean_up(self):
         EventModel.cleanup()

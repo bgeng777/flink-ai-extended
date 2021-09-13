@@ -33,7 +33,7 @@ from notification_service.base_notification import BaseNotification, EventWatche
 from notification_service.proto import notification_service_pb2_grpc
 from notification_service.proto.notification_service_pb2 \
     import SendEventRequest, ListEventsRequest, EventProto, ReturnStatus, ListAllEventsRequest, \
-    GetLatestVersionByKeyRequest, ListMembersRequest
+    GetLatestVersionByKeyRequest, ListMembersRequest, RegisterClientRequest, ClientMeta
 from notification_service.util.utils import event_proto_to_event, proto_to_member, sleep_and_detecting_running
 
 if not hasattr(time, 'time_ns'):
@@ -134,7 +134,13 @@ class NotificationClient(BaseNotification):
             self.notification_stub = self._wrap_rpcs(self.notification_stub, server_uri)
             self.list_member_thread = threading.Thread(target=self._list_members, daemon=True)
             self.list_member_thread.start()
-        self.id = self.notification_stub.registerClient()
+
+        request = RegisterClientRequest(client_meta=ClientMeta(namespace=self._default_namespace, sender=self._sender))
+        response = self.notification_stub.registerClient(request)
+        if response.return_code == ReturnStatus.SUCCESS:
+            self.id = response.client_id
+        else:
+            raise Exception(response.return_msg)
 
     def send_event(self, event: BaseEvent):
         """

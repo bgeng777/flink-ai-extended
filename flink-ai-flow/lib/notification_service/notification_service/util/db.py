@@ -36,7 +36,8 @@ if not hasattr(time, 'time_ns'):
     time.time_ns = lambda: int(time.time() * 1e9)
 
 # use sqlite by default for testing
-SQL_ALCHEMY_CONN = "sqlite:///notification_service.db"
+SQL_ALCHEMY_DB_FILE = 'notification_service.db'
+SQL_ALCHEMY_CONN = "sqlite:///" + SQL_ALCHEMY_DB_FILE
 engine = None
 Session = None
 
@@ -304,10 +305,9 @@ class EventModel(Base):
 
 class ClientModel(Base):
     __tablename__ = "notification_client"
-    id = Column(BigInteger, primary_key=True)
+    id = Column(BigInteger().with_variant(Integer, "sqlite"), autoincrement=True, primary_key=True)
     namespace = Column(String(1024))
     sender = Column(String(1024))
-    max_sequence_num = Column(BigInteger, server_default=text('0'))
 
     @staticmethod
     @provide_session
@@ -318,23 +318,6 @@ class ClientModel(Base):
         session.add(client)
         session.commit()
         return client.id
-
-    @staticmethod
-    @provide_session
-    def get_max_sequence_num_by_id(id, session=None):
-        client_meta = session.query(ClientModel) \
-            .filter(ClientModel.id == id)
-        return client_meta.max_sequence_num
-
-    @staticmethod
-    @provide_session
-    def update_max_sequence_num_by_id(client_id, session=None):
-        client_meta = session.query(ClientModel) \
-            .filter(ClientModel.id == client_id)
-        if client_meta is None:
-            raise Exception("The notification client(id: '%s') you want to update does not exist!" % client_id)
-        client_meta.max_sequence_num += 1
-        session.commit()
 
     @staticmethod
     def create_table(db_conn=None):

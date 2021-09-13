@@ -111,3 +111,15 @@ class MongoEvent(Document):
     @classmethod
     def delete_by_client(cls, server_ip):
         cls.objects(server_ip=server_ip).delete()
+
+
+class MongoClientModel(Document):
+    id = SequenceField(primary_key=True)
+    namespace = StringField()
+    sender = StringField()
+
+    def __repr__(self):
+        return '<Document Client ({}, {}, {})>'.format(
+            self.id,
+            self.namespace,
+            self.sender)
