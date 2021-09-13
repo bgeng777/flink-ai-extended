@@ -25,7 +25,7 @@ from enum import Enum
 from functools import wraps
 from typing import Tuple, Union
 
-from sqlalchemy import create_engine, Column, String, BigInteger, Text, Integer
+from sqlalchemy import create_engine, Column, String, BigInteger, Text, Integer, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -300,6 +300,50 @@ class EventModel(Base):
     def cleanup(session=None):
         session.query(EventModel).delete()
         session.commit()
+
+
+class ClientModel(Base):
+    __tablename__ = "notification_client"
+    id = Column(BigInteger, primary_key=True)
+    namespace = Column(String(1024))
+    sender = Column(String(1024))
+    max_sequence_num = Column(BigInteger, server_default=text('0'))
+
+    @staticmethod
+    @provide_session
+    def register_client(namespace: str = None, sender: str = None, session = None):
+        client = ClientModel()
+        client.namespace = namespace
+        client.sender = sender
+        session.add(client)
+        session.commit()
+        return client.id
+
+    @staticmethod
+    @provide_session
+    def get_max_sequence_num_by_id(id, session=None):
+        client_meta = session.query(ClientModel) \
+            .filter(ClientModel.id == id)
+        return client_meta.max_sequence_num
+
+    @staticmethod
+    @provide_session
+    def update_max_sequence_num_by_id(client_id, session=None):
+        client_meta = session.query(ClientModel) \
+            .filter(ClientModel.id == client_id)
+        if client_meta is None:
+            raise Exception("The notification client(id: '%s') you want to update does not exist!" % client_id)
+        client_meta.max_sequence_num += 1
+        session.commit()
+
+    @staticmethod
+    def create_table(db_conn=None):
+        if db_conn is not None:
+            global SQL_ALCHEMY_CONN
+            SQL_ALCHEMY_CONN = db_conn
+        prepare_db()
+        if not engine.dialect.has_table(engine, ClientModel.__tablename__):
+            Base.metadata.create_all(engine)
 
 
 class MemberModel(Base):

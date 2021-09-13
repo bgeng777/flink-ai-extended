@@ -94,7 +94,7 @@ class NotificationClient(BaseNotification):
         :param retry_timeout_ms: In HA mode a rpc call has failed on all the
                                  living members, this client will retry until success or timeout.
                                  This param specifies the retry timeout.
-        :param sender: The identify of the client.
+        :param sender: The identifier of the client.
         """
         channel = grpc.insecure_channel(server_uri)
         self._default_namespace = default_namespace
@@ -134,6 +134,7 @@ class NotificationClient(BaseNotification):
             self.notification_stub = self._wrap_rpcs(self.notification_stub, server_uri)
             self.list_member_thread = threading.Thread(target=self._list_members, daemon=True)
             self.list_member_thread.start()
+        self.id = self.notification_stub.registerClient()
 
     def send_event(self, event: BaseEvent):
         """
@@ -231,7 +232,7 @@ class NotificationClient(BaseNotification):
 
         def list_events(client,
                         k: Tuple[str],
-                        v: List[int],
+                        v: List[int],  ### Question: why the type of arg is a list?
                         t: str = None,
                         ts: int = None,
                         ns: str = None,
