@@ -24,9 +24,7 @@ from typing import Union, Tuple
 from mongoengine import connect
 from notification_service.event_storage import BaseEventStorage
 from notification_service.base_notification import BaseEvent
-from notification_service.mongo_notification import MongoEvent
-
-from lib.notification_service.notification_service.mongo_notification import MongoClientModel
+from notification_service.mongo_notification import MongoEvent, MongoClientModel
 
 
 class MongoEventStorage(BaseEventStorage):

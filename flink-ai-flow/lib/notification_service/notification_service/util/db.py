@@ -308,6 +308,7 @@ class ClientModel(Base):
     id = Column(BigInteger().with_variant(Integer, "sqlite"), autoincrement=True, primary_key=True)
     namespace = Column(String(1024))
     sender = Column(String(1024))
+    create_time = Column(BigInteger)
 
     @staticmethod
     @provide_session
@@ -315,6 +316,7 @@ class ClientModel(Base):
         client = ClientModel()
         client.namespace = namespace
         client.sender = sender
+        client.create_time = int(time.time() * 1000)
         session.add(client)
         session.commit()
         return client.id

@@ -18,7 +18,7 @@
 #
 from typing import Tuple
 
-from mongoengine import (Document, IntField, StringField, SequenceField)
+from mongoengine import (Document, IntField, StringField, SequenceField, LongField)
 from notification_service.base_notification import BaseEvent, ANY_CONDITION
 
 
@@ -28,7 +28,7 @@ class MongoEvent(Document):
     value = StringField()
     event_type = StringField()
     version = SequenceField()  # use 'version' as the auto increase id
-    create_time = IntField()
+    create_time = LongField()
     context = StringField()
     namespace = StringField()
     sender = StringField()
@@ -117,6 +117,7 @@ class MongoClientModel(Document):
     id = SequenceField(primary_key=True)
     namespace = StringField()
     sender = StringField()
+    create_time = LongField()
 
     def __repr__(self):
         return '<Document Client ({}, {}, {})>'.format(

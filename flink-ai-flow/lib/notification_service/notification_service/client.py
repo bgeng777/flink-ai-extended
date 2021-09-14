@@ -75,7 +75,8 @@ class NotificationClient(BaseNotification):
                  list_member_interval_ms: int = 5000,
                  retry_interval_ms: int = 1000,
                  retry_timeout_ms: int = 10000,
-                 sender: str = None):
+                 sender: str = None,
+                 enable_idempotent = False):
         """
         The constructor of the NotificationClient.
 
@@ -95,6 +96,7 @@ class NotificationClient(BaseNotification):
                                  living members, this client will retry until success or timeout.
                                  This param specifies the retry timeout.
         :param sender: The identifier of the client.
+        :param enable_idempotent: !!Temporary for tests. Should be replaced when merging!!
         """
         channel = grpc.insecure_channel(server_uri)
         self._default_namespace = default_namespace
@@ -135,12 +137,14 @@ class NotificationClient(BaseNotification):
             self.list_member_thread = threading.Thread(target=self._list_members, daemon=True)
             self.list_member_thread.start()
 
-        request = RegisterClientRequest(client_meta=ClientMeta(namespace=self._default_namespace, sender=self._sender))
-        response = self.notification_stub.registerClient(request)
-        if response.return_code == ReturnStatus.SUCCESS:
-            self.id = response.client_id
-        else:
-            raise Exception(response.return_msg)
+        self.enable_idempotent = enable_idempotent
+        if self.enable_idempotent:
+            request = RegisterClientRequest(client_meta=ClientMeta(namespace=self._default_namespace, sender=self._sender))
+            response = self.notification_stub.registerClient(request)
+            if response.return_code == ReturnStatus.SUCCESS:
+                self.id = response.client_id
+            else:
+                raise Exception(response.return_msg)
 
     def send_event(self, event: BaseEvent):
         """

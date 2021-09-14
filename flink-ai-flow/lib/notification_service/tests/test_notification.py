@@ -27,7 +27,7 @@ from notification_service.high_availability import SimpleNotificationServerHaMan
 from notification_service.master import NotificationMaster
 from notification_service.service import NotificationService, HighAvailableNotificationService
 
-from lib.notification_service.notification_service.util.db import SQL_ALCHEMY_DB_FILE
+from notification_service.util.db import SQL_ALCHEMY_DB_FILE
 
 
 def start_ha_master(host, port):
@@ -301,7 +301,7 @@ class DbStorageTest(unittest.TestCase, NotificationTest):
 
     def setUp(self):
         self.storage.clean_up()
-        self.client = NotificationClient(server_uri="localhost:50051")
+        self.client = NotificationClient(server_uri="localhost:50051", enable_idempotent=True)
 
     def tearDown(self):
         self.client.stop_listen_events()
@@ -326,7 +326,7 @@ class MemoryStorageTest(unittest.TestCase, NotificationTest):
 
     def setUp(self):
         self.storage.clean_up()
-        self.client = NotificationClient(server_uri="localhost:50051")
+        self.client = NotificationClient(server_uri="localhost:50051", enable_idempotent=True)
 
     def tearDown(self):
         self.client.stop_listen_events()
