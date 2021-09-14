@@ -26,7 +26,7 @@ from notification_service.master import NotificationMaster
 from notification_service.service import NotificationService
 
 
-# @unittest.skip("To run this test you need to setup a local mongodb")
+@unittest.skip("To run this test you need to setup a local mongodb")
 @pytest.mark.release
 class MongoNotificationTest(unittest.TestCase):
 

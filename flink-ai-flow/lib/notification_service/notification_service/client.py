@@ -238,7 +238,7 @@ class NotificationClient(BaseNotification):
 
         def list_events(client,
                         k: Tuple[str],
-                        v: List[int],  ### Question: why the type of arg is a list?
+                        v: List[int],
                         t: str = None,
                         ts: int = None,
                         ns: str = None,
