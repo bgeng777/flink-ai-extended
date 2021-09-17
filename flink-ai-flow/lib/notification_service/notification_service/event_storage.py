@@ -63,7 +63,7 @@ class BaseEventStorage(ABC):
         pass
 
     @abstractmethod
-    def close_client(self, client_id):
+    def delete_client(self, client_id):
         pass
 
     @abstractmethod
@@ -146,7 +146,7 @@ class MemoryEventStorage(BaseEventStorage):
         self.clients.append((len(self.clients), namespace, sender))
         return len(self.clients) - 1
 
-    def close_client(self, client_id):
+    def delete_client(self, client_id):
         self.clients.pop(client_id)
 
     def is_client_exists(self, client_id) -> bool:
@@ -196,8 +196,8 @@ class DbEventStorage(BaseEventStorage):
     def register_client(self, namespace: str = None, sender: str = None) -> int:
         return ClientModel.register_client(namespace, sender)
 
-    def close_client(self, client_id):
-        ClientModel.close_client(client_id)
+    def delete_client(self, client_id):
+        ClientModel.delete_client(client_id)
 
     def is_client_exists(self, client_id) -> bool:
         return ClientModel.is_client_exists(client_id)

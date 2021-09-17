@@ -77,14 +77,14 @@ class NotificationServiceStub(object):
                 request_serializer=notification__service__pb2.RegisterClientRequest.SerializeToString,
                 response_deserializer=notification__service__pb2.RegisterClientResponse.FromString,
                 )
-        self.closeClient = channel.unary_unary(
-                '/notification_service.NotificationService/closeClient',
-                request_serializer=notification__service__pb2.CloseClientRequest.SerializeToString,
+        self.deleteClient = channel.unary_unary(
+                '/notification_service.NotificationService/deleteClient',
+                request_serializer=notification__service__pb2.ClientIdRequest.SerializeToString,
                 response_deserializer=notification__service__pb2.CommonResponse.FromString,
                 )
         self.isClientExists = channel.unary_unary(
                 '/notification_service.NotificationService/isClientExists',
-                request_serializer=notification__service__pb2.isClientExistsRequest.SerializeToString,
+                request_serializer=notification__service__pb2.ClientIdRequest.SerializeToString,
                 response_deserializer=notification__service__pb2.isClientExistsResponse.FromString,
                 )
 
@@ -152,8 +152,8 @@ class NotificationServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def closeClient(self, request, context):
-        """Close notification client
+    def deleteClient(self, request, context):
+        """Delete notification client
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -209,14 +209,14 @@ def add_NotificationServiceServicer_to_server(servicer, server):
                     request_deserializer=notification__service__pb2.RegisterClientRequest.FromString,
                     response_serializer=notification__service__pb2.RegisterClientResponse.SerializeToString,
             ),
-            'closeClient': grpc.unary_unary_rpc_method_handler(
-                    servicer.closeClient,
-                    request_deserializer=notification__service__pb2.CloseClientRequest.FromString,
+            'deleteClient': grpc.unary_unary_rpc_method_handler(
+                    servicer.deleteClient,
+                    request_deserializer=notification__service__pb2.ClientIdRequest.FromString,
                     response_serializer=notification__service__pb2.CommonResponse.SerializeToString,
             ),
             'isClientExists': grpc.unary_unary_rpc_method_handler(
                     servicer.isClientExists,
-                    request_deserializer=notification__service__pb2.isClientExistsRequest.FromString,
+                    request_deserializer=notification__service__pb2.ClientIdRequest.FromString,
                     response_serializer=notification__service__pb2.isClientExistsResponse.SerializeToString,
             ),
     }
@@ -370,7 +370,7 @@ class NotificationService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def closeClient(request,
+    def deleteClient(request,
             target,
             options=(),
             channel_credentials=None,
@@ -380,8 +380,8 @@ class NotificationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/notification_service.NotificationService/closeClient',
-            notification__service__pb2.CloseClientRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/notification_service.NotificationService/deleteClient',
+            notification__service__pb2.ClientIdRequest.SerializeToString,
             notification__service__pb2.CommonResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -398,7 +398,7 @@ class NotificationService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/notification_service.NotificationService/isClientExists',
-            notification__service__pb2.isClientExistsRequest.SerializeToString,
+            notification__service__pb2.ClientIdRequest.SerializeToString,
             notification__service__pb2.isClientExistsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

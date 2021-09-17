@@ -314,15 +314,15 @@ class NotificationService(notification_service_pb2_grpc.NotificationServiceServi
             client_id=client_id)
 
     @asyncio.coroutine
-    def closeClient(self, request, context):
+    def deleteClient(self, request, context):
         try:
-            return self._close_client(request)
+            return self._delete_client(request)
         except Exception as e:
             return notification_service_pb2.CommonResponse(
                 return_code=notification_service_pb2.ReturnStatus.ERROR, return_msg=str(e))
 
-    async def _close_client(self, request):
-        self.storage.close_client(request.client_id)
+    async def _delete_client(self, request):
+        self.storage.delete_client(request.client_id)
         return notification_service_pb2.CommonResponse(
             return_code=notification_service_pb2.ReturnStatus.SUCCESS,
             return_msg='')

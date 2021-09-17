@@ -14449,8 +14449,8 @@ public final class NotificationServiceOuterClass {
 
   }
 
-  public interface CloseClientRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:notification_service.CloseClientRequest)
+  public interface ClientIdRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:notification_service.ClientIdRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -14460,25 +14460,25 @@ public final class NotificationServiceOuterClass {
     long getClientId();
   }
   /**
-   * Protobuf type {@code notification_service.CloseClientRequest}
+   * Protobuf type {@code notification_service.ClientIdRequest}
    */
-  public static final class CloseClientRequest extends
+  public static final class ClientIdRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:notification_service.CloseClientRequest)
-      CloseClientRequestOrBuilder {
+      // @@protoc_insertion_point(message_implements:notification_service.ClientIdRequest)
+      ClientIdRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use CloseClientRequest.newBuilder() to construct.
-    private CloseClientRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ClientIdRequest.newBuilder() to construct.
+    private ClientIdRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private CloseClientRequest() {
+    private ClientIdRequest() {
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new CloseClientRequest();
+      return new ClientIdRequest();
     }
 
     @java.lang.Override
@@ -14486,7 +14486,7 @@ public final class NotificationServiceOuterClass {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private CloseClientRequest(
+    private ClientIdRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -14530,15 +14530,15 @@ public final class NotificationServiceOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_CloseClientRequest_descriptor;
+      return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_ClientIdRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_CloseClientRequest_fieldAccessorTable
+      return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_ClientIdRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.class, org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.Builder.class);
+              org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.class, org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.Builder.class);
     }
 
     public static final int CLIENT_ID_FIELD_NUMBER = 1;
@@ -14592,10 +14592,10 @@ public final class NotificationServiceOuterClass {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest)) {
+      if (!(obj instanceof org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest)) {
         return super.equals(obj);
       }
-      org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest other = (org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest) obj;
+      org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest other = (org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest) obj;
 
       if (getClientId()
           != other.getClientId()) return false;
@@ -14618,69 +14618,69 @@ public final class NotificationServiceOuterClass {
       return hash;
     }
 
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(byte[] data)
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(java.io.InputStream input)
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseDelimitedFrom(java.io.InputStream input)
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseDelimitedFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parseFrom(
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -14693,7 +14693,7 @@ public final class NotificationServiceOuterClass {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest prototype) {
+    public static Builder newBuilder(org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -14709,26 +14709,26 @@ public final class NotificationServiceOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code notification_service.CloseClientRequest}
+     * Protobuf type {@code notification_service.ClientIdRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:notification_service.CloseClientRequest)
-        org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequestOrBuilder {
+        // @@protoc_insertion_point(builder_implements:notification_service.ClientIdRequest)
+        org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_CloseClientRequest_descriptor;
+        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_ClientIdRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_CloseClientRequest_fieldAccessorTable
+        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_ClientIdRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.class, org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.Builder.class);
+                org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.class, org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.Builder.class);
       }
 
-      // Construct using org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.newBuilder()
+      // Construct using org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -14754,17 +14754,17 @@ public final class NotificationServiceOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_CloseClientRequest_descriptor;
+        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_ClientIdRequest_descriptor;
       }
 
       @java.lang.Override
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest getDefaultInstanceForType() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.getDefaultInstance();
+      public org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest getDefaultInstanceForType() {
+        return org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest build() {
-        org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest result = buildPartial();
+      public org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest build() {
+        org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -14772,8 +14772,8 @@ public final class NotificationServiceOuterClass {
       }
 
       @java.lang.Override
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest buildPartial() {
-        org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest result = new org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest(this);
+      public org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest buildPartial() {
+        org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest result = new org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest(this);
         result.clientId_ = clientId_;
         onBuilt();
         return result;
@@ -14813,16 +14813,16 @@ public final class NotificationServiceOuterClass {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest) {
-          return mergeFrom((org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest)other);
+        if (other instanceof org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest) {
+          return mergeFrom((org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest other) {
-        if (other == org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest other) {
+        if (other == org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.getDefaultInstance()) return this;
         if (other.getClientId() != 0L) {
           setClientId(other.getClientId());
         }
@@ -14841,11 +14841,11 @@ public final class NotificationServiceOuterClass {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest parsedMessage = null;
+        org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest) e.getUnfinishedMessage();
+          parsedMessage = (org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -14898,41 +14898,41 @@ public final class NotificationServiceOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:notification_service.CloseClientRequest)
+      // @@protoc_insertion_point(builder_scope:notification_service.ClientIdRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:notification_service.CloseClientRequest)
-    private static final org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:notification_service.ClientIdRequest)
+    private static final org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest();
+      DEFAULT_INSTANCE = new org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest();
     }
 
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest getDefaultInstance() {
+    public static org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<CloseClientRequest>
-        PARSER = new com.google.protobuf.AbstractParser<CloseClientRequest>() {
+    private static final com.google.protobuf.Parser<ClientIdRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ClientIdRequest>() {
       @java.lang.Override
-      public CloseClientRequest parsePartialFrom(
+      public ClientIdRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CloseClientRequest(input, extensionRegistry);
+        return new ClientIdRequest(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<CloseClientRequest> parser() {
+    public static com.google.protobuf.Parser<ClientIdRequest> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<CloseClientRequest> getParserForType() {
+    public com.google.protobuf.Parser<ClientIdRequest> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest getDefaultInstanceForType() {
+    public org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -15608,495 +15608,6 @@ public final class NotificationServiceOuterClass {
 
     @java.lang.Override
     public org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface isClientExistsRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:notification_service.isClientExistsRequest)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int64 client_id = 1;</code>
-     * @return The clientId.
-     */
-    long getClientId();
-  }
-  /**
-   * Protobuf type {@code notification_service.isClientExistsRequest}
-   */
-  public static final class isClientExistsRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:notification_service.isClientExistsRequest)
-      isClientExistsRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use isClientExistsRequest.newBuilder() to construct.
-    private isClientExistsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private isClientExistsRequest() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new isClientExistsRequest();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private isClientExistsRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              clientId_ = input.readInt64();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_isClientExistsRequest_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_isClientExistsRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.class, org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.Builder.class);
-    }
-
-    public static final int CLIENT_ID_FIELD_NUMBER = 1;
-    private long clientId_;
-    /**
-     * <code>int64 client_id = 1;</code>
-     * @return The clientId.
-     */
-    @java.lang.Override
-    public long getClientId() {
-      return clientId_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (clientId_ != 0L) {
-        output.writeInt64(1, clientId_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (clientId_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, clientId_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest)) {
-        return super.equals(obj);
-      }
-      org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest other = (org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest) obj;
-
-      if (getClientId()
-          != other.getClientId()) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + CLIENT_ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getClientId());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code notification_service.isClientExistsRequest}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:notification_service.isClientExistsRequest)
-        org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_isClientExistsRequest_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_isClientExistsRequest_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.class, org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.Builder.class);
-      }
-
-      // Construct using org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        clientId_ = 0L;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.internal_static_notification_service_isClientExistsRequest_descriptor;
-      }
-
-      @java.lang.Override
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest getDefaultInstanceForType() {
-        return org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest build() {
-        org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest buildPartial() {
-        org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest result = new org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest(this);
-        result.clientId_ = clientId_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest) {
-          return mergeFrom((org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest other) {
-        if (other == org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.getDefaultInstance()) return this;
-        if (other.getClientId() != 0L) {
-          setClientId(other.getClientId());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private long clientId_ ;
-      /**
-       * <code>int64 client_id = 1;</code>
-       * @return The clientId.
-       */
-      @java.lang.Override
-      public long getClientId() {
-        return clientId_;
-      }
-      /**
-       * <code>int64 client_id = 1;</code>
-       * @param value The clientId to set.
-       * @return This builder for chaining.
-       */
-      public Builder setClientId(long value) {
-        
-        clientId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 client_id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearClientId() {
-        
-        clientId_ = 0L;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:notification_service.isClientExistsRequest)
-    }
-
-    // @@protoc_insertion_point(class_scope:notification_service.isClientExistsRequest)
-    private static final org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest();
-    }
-
-    public static org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<isClientExistsRequest>
-        PARSER = new com.google.protobuf.AbstractParser<isClientExistsRequest>() {
-      @java.lang.Override
-      public isClientExistsRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new isClientExistsRequest(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<isClientExistsRequest> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<isClientExistsRequest> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -16961,14 +16472,14 @@ public final class NotificationServiceOuterClass {
 
       /**
        * <pre>
-       * Close notification client
+       * Delete notification client
        * </pre>
        *
-       * <code>rpc closeClient(.notification_service.CloseClientRequest) returns (.notification_service.CommonResponse) { ... }</code>
+       * <code>rpc deleteClient(.notification_service.ClientIdRequest) returns (.notification_service.CommonResponse) { ... }</code>
        */
-      public abstract void closeClient(
+      public abstract void deleteClient(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest request,
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
           com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse> done);
 
       /**
@@ -16976,11 +16487,11 @@ public final class NotificationServiceOuterClass {
        * Check if a notification client has been registered in the db
        * </pre>
        *
-       * <code>rpc isClientExists(.notification_service.isClientExistsRequest) returns (.notification_service.isClientExistsResponse) { ... }</code>
+       * <code>rpc isClientExists(.notification_service.ClientIdRequest) returns (.notification_service.isClientExistsResponse) { ... }</code>
        */
       public abstract void isClientExists(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest request,
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
           com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse> done);
 
     }
@@ -17053,17 +16564,17 @@ public final class NotificationServiceOuterClass {
         }
 
         @java.lang.Override
-        public  void closeClient(
+        public  void deleteClient(
             com.google.protobuf.RpcController controller,
-            org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest request,
+            org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
             com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse> done) {
-          impl.closeClient(controller, request, done);
+          impl.deleteClient(controller, request, done);
         }
 
         @java.lang.Override
         public  void isClientExists(
             com.google.protobuf.RpcController controller,
-            org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest request,
+            org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
             com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse> done) {
           impl.isClientExists(controller, request, done);
         }
@@ -17107,9 +16618,9 @@ public final class NotificationServiceOuterClass {
             case 7:
               return impl.registerClient(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.RegisterClientRequest)request);
             case 8:
-              return impl.closeClient(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest)request);
+              return impl.deleteClient(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest)request);
             case 9:
-              return impl.isClientExists(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest)request);
+              return impl.isClientExists(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest)request);
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -17141,9 +16652,9 @@ public final class NotificationServiceOuterClass {
             case 7:
               return org.aiflow.notification.proto.NotificationServiceOuterClass.RegisterClientRequest.getDefaultInstance();
             case 8:
-              return org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.getDefaultInstance();
+              return org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.getDefaultInstance();
             case 9:
-              return org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.getDefaultInstance();
+              return org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.getDefaultInstance();
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -17284,14 +16795,14 @@ public final class NotificationServiceOuterClass {
 
     /**
      * <pre>
-     * Close notification client
+     * Delete notification client
      * </pre>
      *
-     * <code>rpc closeClient(.notification_service.CloseClientRequest) returns (.notification_service.CommonResponse) { ... }</code>
+     * <code>rpc deleteClient(.notification_service.ClientIdRequest) returns (.notification_service.CommonResponse) { ... }</code>
      */
-    public abstract void closeClient(
+    public abstract void deleteClient(
         com.google.protobuf.RpcController controller,
-        org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest request,
+        org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
         com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse> done);
 
     /**
@@ -17299,11 +16810,11 @@ public final class NotificationServiceOuterClass {
      * Check if a notification client has been registered in the db
      * </pre>
      *
-     * <code>rpc isClientExists(.notification_service.isClientExistsRequest) returns (.notification_service.isClientExistsResponse) { ... }</code>
+     * <code>rpc isClientExists(.notification_service.ClientIdRequest) returns (.notification_service.isClientExistsResponse) { ... }</code>
      */
     public abstract void isClientExists(
         com.google.protobuf.RpcController controller,
-        org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest request,
+        org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
         com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse> done);
 
     public static final
@@ -17369,12 +16880,12 @@ public final class NotificationServiceOuterClass {
               done));
           return;
         case 8:
-          this.closeClient(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest)request,
+          this.deleteClient(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest)request,
             com.google.protobuf.RpcUtil.<org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse>specializeCallback(
               done));
           return;
         case 9:
-          this.isClientExists(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest)request,
+          this.isClientExists(controller, (org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest)request,
             com.google.protobuf.RpcUtil.<org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse>specializeCallback(
               done));
           return;
@@ -17409,9 +16920,9 @@ public final class NotificationServiceOuterClass {
         case 7:
           return org.aiflow.notification.proto.NotificationServiceOuterClass.RegisterClientRequest.getDefaultInstance();
         case 8:
-          return org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest.getDefaultInstance();
+          return org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.getDefaultInstance();
         case 9:
-          return org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest.getDefaultInstance();
+          return org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest.getDefaultInstance();
         default:
           throw new java.lang.AssertionError("Can't get here.");
       }
@@ -17587,9 +17098,9 @@ public final class NotificationServiceOuterClass {
             org.aiflow.notification.proto.NotificationServiceOuterClass.RegisterClientResponse.getDefaultInstance()));
       }
 
-      public  void closeClient(
+      public  void deleteClient(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest request,
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
           com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse> done) {
         channel.callMethod(
           getDescriptor().getMethods().get(8),
@@ -17604,7 +17115,7 @@ public final class NotificationServiceOuterClass {
 
       public  void isClientExists(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest request,
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request,
           com.google.protobuf.RpcCallback<org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse> done) {
         channel.callMethod(
           getDescriptor().getMethods().get(9),
@@ -17664,14 +17175,14 @@ public final class NotificationServiceOuterClass {
           org.aiflow.notification.proto.NotificationServiceOuterClass.RegisterClientRequest request)
           throws com.google.protobuf.ServiceException;
 
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse closeClient(
+      public org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse deleteClient(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest request)
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request)
           throws com.google.protobuf.ServiceException;
 
       public org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse isClientExists(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest request)
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request)
           throws com.google.protobuf.ServiceException;
     }
 
@@ -17778,9 +17289,9 @@ public final class NotificationServiceOuterClass {
       }
 
 
-      public org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse closeClient(
+      public org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse deleteClient(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.CloseClientRequest request)
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request)
           throws com.google.protobuf.ServiceException {
         return (org.aiflow.notification.proto.NotificationServiceOuterClass.CommonResponse) channel.callBlockingMethod(
           getDescriptor().getMethods().get(8),
@@ -17792,7 +17303,7 @@ public final class NotificationServiceOuterClass {
 
       public org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse isClientExists(
           com.google.protobuf.RpcController controller,
-          org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsRequest request)
+          org.aiflow.notification.proto.NotificationServiceOuterClass.ClientIdRequest request)
           throws com.google.protobuf.ServiceException {
         return (org.aiflow.notification.proto.NotificationServiceOuterClass.isClientExistsResponse) channel.callBlockingMethod(
           getDescriptor().getMethods().get(9),
@@ -17892,20 +17403,15 @@ public final class NotificationServiceOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_notification_service_RegisterClientResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_notification_service_CloseClientRequest_descriptor;
+    internal_static_notification_service_ClientIdRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_notification_service_CloseClientRequest_fieldAccessorTable;
+      internal_static_notification_service_ClientIdRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_notification_service_CommonResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_notification_service_CommonResponse_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_notification_service_isClientExistsRequest_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_notification_service_isClientExistsRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_notification_service_isClientExistsResponse_descriptor;
   private static final 
@@ -17964,58 +17470,56 @@ public final class NotificationServiceOuterClass {
       "(\0132 .notification_service.ClientMeta\"x\n\026" +
       "RegisterClientResponse\0227\n\013return_code\030\001 " +
       "\001(\0162\".notification_service.ReturnStatus\022" +
-      "\022\n\nreturn_msg\030\002 \001(\t\022\021\n\tclient_id\030\003 \001(\003\"\'" +
-      "\n\022CloseClientRequest\022\021\n\tclient_id\030\001 \001(\003\"" +
-      "]\n\016CommonResponse\0227\n\013return_code\030\001 \001(\0162\"" +
-      ".notification_service.ReturnStatus\022\022\n\nre" +
-      "turn_msg\030\002 \001(\t\"*\n\025isClientExistsRequest\022" +
-      "\021\n\tclient_id\030\001 \001(\003\"x\n\026isClientExistsResp" +
-      "onse\0227\n\013return_code\030\001 \001(\0162\".notification" +
-      "_service.ReturnStatus\022\022\n\nreturn_msg\030\002 \001(" +
-      "\t\022\021\n\tis_exists\030\003 \001(\010*&\n\014ReturnStatus\022\013\n\007" +
-      "SUCCESS\020\000\022\t\n\005ERROR\020\0012\277\014\n\023NotificationSer" +
-      "vice\022\221\001\n\tsendEvent\022&.notification_servic" +
-      "e.SendEventRequest\032(.notification_servic" +
-      "e.SendEventsResponse\"2\202\323\344\223\002,\"\'/aiflow/no" +
-      "tification-service/send_event:\001*\022\221\001\n\nlis" +
-      "tEvents\022\'.notification_service.ListEvent" +
-      "sRequest\032(.notification_service.ListEven" +
-      "tsResponse\"0\202\323\344\223\002*\022(/aiflow/notification" +
-      "-service/list_events\022\233\001\n\rlistAllEvents\022*" +
-      ".notification_service.ListAllEventsReque" +
-      "st\032(.notification_service.ListEventsResp" +
-      "onse\"4\202\323\344\223\002.\022,/aiflow/notification-servi" +
-      "ce/list_all_events\022\203\001\n\006notify\022#.notifica" +
-      "tion_service.NotifyRequest\032$.notificatio" +
-      "n_service.CommonResponse\".\202\323\344\223\002(\"#/aiflo" +
-      "w/notification-service/notify:\001*\022\225\001\n\013lis" +
-      "tMembers\022(.notification_service.ListMemb" +
-      "ersRequest\032).notification_service.ListMe" +
-      "mbersResponse\"1\202\323\344\223\002+\022)/aiflow/notificat" +
-      "ion-service/list_members\022\240\001\n\017notifyNewMe" +
-      "mber\022,.notification_service.NotifyNewMem" +
-      "berRequest\032$.notification_service.Common" +
-      "Response\"9\202\323\344\223\0023\"./aiflow/notification-s" +
-      "ervice/notify_new_member:\001*\022\273\001\n\025getLates" +
-      "tVersionByKey\0222.notification_service.Get" +
-      "LatestVersionByKeyRequest\032..notification" +
-      "_service.GetLatestVersionResponse\">\202\323\344\223\002" +
-      "8\0226/aiflow/notification-service/get_late" +
-      "st_version_by_key\022\244\001\n\016registerClient\022+.n" +
-      "otification_service.RegisterClientReques" +
-      "t\032,.notification_service.RegisterClientR" +
-      "esponse\"7\202\323\344\223\0021\",/aiflow/notification-se" +
-      "rvice/register_client:\001*\022\223\001\n\013closeClient" +
-      "\022(.notification_service.CloseClientReque" +
-      "st\032$.notification_service.CommonResponse" +
-      "\"4\202\323\344\223\002.\")/aiflow/notification-service/c" +
-      "lose_client:\001*\022\245\001\n\016isClientExists\022+.noti" +
-      "fication_service.isClientExistsRequest\032," +
-      ".notification_service.isClientExistsResp" +
-      "onse\"8\202\323\344\223\0022\"-/aiflow/notification-servi" +
-      "ce/is_client_exists:\001*B<\n\035org.aiflow.not" +
-      "ification.protoZ\025/notification_service\210\001" +
-      "\001\220\001\001b\006proto3"
+      "\022\n\nreturn_msg\030\002 \001(\t\022\021\n\tclient_id\030\003 \001(\003\"$" +
+      "\n\017ClientIdRequest\022\021\n\tclient_id\030\001 \001(\003\"]\n\016" +
+      "CommonResponse\0227\n\013return_code\030\001 \001(\0162\".no" +
+      "tification_service.ReturnStatus\022\022\n\nretur" +
+      "n_msg\030\002 \001(\t\"x\n\026isClientExistsResponse\0227\n" +
+      "\013return_code\030\001 \001(\0162\".notification_servic" +
+      "e.ReturnStatus\022\022\n\nreturn_msg\030\002 \001(\t\022\021\n\tis" +
+      "_exists\030\003 \001(\010*&\n\014ReturnStatus\022\013\n\007SUCCESS" +
+      "\020\000\022\t\n\005ERROR\020\0012\270\014\n\023NotificationService\022\221\001" +
+      "\n\tsendEvent\022&.notification_service.SendE" +
+      "ventRequest\032(.notification_service.SendE" +
+      "ventsResponse\"2\202\323\344\223\002,\"\'/aiflow/notificat" +
+      "ion-service/send_event:\001*\022\221\001\n\nlistEvents" +
+      "\022\'.notification_service.ListEventsReques" +
+      "t\032(.notification_service.ListEventsRespo" +
+      "nse\"0\202\323\344\223\002*\022(/aiflow/notification-servic" +
+      "e/list_events\022\233\001\n\rlistAllEvents\022*.notifi" +
+      "cation_service.ListAllEventsRequest\032(.no" +
+      "tification_service.ListEventsResponse\"4\202" +
+      "\323\344\223\002.\022,/aiflow/notification-service/list" +
+      "_all_events\022\203\001\n\006notify\022#.notification_se" +
+      "rvice.NotifyRequest\032$.notification_servi" +
+      "ce.CommonResponse\".\202\323\344\223\002(\"#/aiflow/notif" +
+      "ication-service/notify:\001*\022\225\001\n\013listMember" +
+      "s\022(.notification_service.ListMembersRequ" +
+      "est\032).notification_service.ListMembersRe" +
+      "sponse\"1\202\323\344\223\002+\022)/aiflow/notification-ser" +
+      "vice/list_members\022\240\001\n\017notifyNewMember\022,." +
+      "notification_service.NotifyNewMemberRequ" +
+      "est\032$.notification_service.CommonRespons" +
+      "e\"9\202\323\344\223\0023\"./aiflow/notification-service/" +
+      "notify_new_member:\001*\022\273\001\n\025getLatestVersio" +
+      "nByKey\0222.notification_service.GetLatestV" +
+      "ersionByKeyRequest\032..notification_servic" +
+      "e.GetLatestVersionResponse\">\202\323\344\223\0028\0226/aif" +
+      "low/notification-service/get_latest_vers" +
+      "ion_by_key\022\244\001\n\016registerClient\022+.notifica" +
+      "tion_service.RegisterClientRequest\032,.not" +
+      "ification_service.RegisterClientResponse" +
+      "\"7\202\323\344\223\0021\",/aiflow/notification-service/r" +
+      "egister_client:\001*\022\222\001\n\014deleteClient\022%.not" +
+      "ification_service.ClientIdRequest\032$.noti" +
+      "fication_service.CommonResponse\"5\202\323\344\223\002/\"" +
+      "*/aiflow/notification-service/delete_cli" +
+      "ent:\001*\022\237\001\n\016isClientExists\022%.notification" +
+      "_service.ClientIdRequest\032,.notification_" +
+      "service.isClientExistsResponse\"8\202\323\344\223\0022\"-" +
+      "/aiflow/notification-service/is_client_e" +
+      "xists:\001*B<\n\035org.aiflow.notification.prot" +
+      "oZ\025/notification_service\210\001\001\220\001\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -18124,11 +17628,11 @@ public final class NotificationServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_notification_service_RegisterClientResponse_descriptor,
         new java.lang.String[] { "ReturnCode", "ReturnMsg", "ClientId", });
-    internal_static_notification_service_CloseClientRequest_descriptor =
+    internal_static_notification_service_ClientIdRequest_descriptor =
       getDescriptor().getMessageTypes().get(17);
-    internal_static_notification_service_CloseClientRequest_fieldAccessorTable = new
+    internal_static_notification_service_ClientIdRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_notification_service_CloseClientRequest_descriptor,
+        internal_static_notification_service_ClientIdRequest_descriptor,
         new java.lang.String[] { "ClientId", });
     internal_static_notification_service_CommonResponse_descriptor =
       getDescriptor().getMessageTypes().get(18);
@@ -18136,14 +17640,8 @@ public final class NotificationServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_notification_service_CommonResponse_descriptor,
         new java.lang.String[] { "ReturnCode", "ReturnMsg", });
-    internal_static_notification_service_isClientExistsRequest_descriptor =
-      getDescriptor().getMessageTypes().get(19);
-    internal_static_notification_service_isClientExistsRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_notification_service_isClientExistsRequest_descriptor,
-        new java.lang.String[] { "ClientId", });
     internal_static_notification_service_isClientExistsResponse_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_notification_service_isClientExistsResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_notification_service_isClientExistsResponse_descriptor,

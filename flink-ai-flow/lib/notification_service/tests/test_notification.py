@@ -288,7 +288,7 @@ class NotificationTest(object):
         self.assertIsNotNone(client_id)
         self.assertEqual(True, self.storage.is_client_exists(client_id))
 
-    def test_close_client(self):
+    def test_delete_client(self):
         client_id = self.client.client_id
         self.assertIsNotNone(client_id)
         self.client.close()

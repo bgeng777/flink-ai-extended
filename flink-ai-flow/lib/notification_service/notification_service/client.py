@@ -33,7 +33,7 @@ from notification_service.base_notification import BaseNotification, EventWatche
 from notification_service.proto import notification_service_pb2_grpc
 from notification_service.proto.notification_service_pb2 \
     import SendEventRequest, ListEventsRequest, EventProto, ReturnStatus, ListAllEventsRequest, \
-    GetLatestVersionByKeyRequest, ListMembersRequest, RegisterClientRequest, ClientMeta, CloseClientRequest
+    GetLatestVersionByKeyRequest, ListMembersRequest, RegisterClientRequest, ClientMeta, ClientIdRequest
 from notification_service.util.utils import event_proto_to_event, proto_to_member, sleep_and_detecting_running
 
 if not hasattr(time, 'time_ns'):
@@ -168,12 +168,11 @@ class NotificationClient(BaseNotification):
             self.list_member_thread.start()
 
     def close(self):
-        if self._enable_idempotence:
-            if self.client_id is None:
-                raise Exception("You are trying to close an idempotent notification client while its client_id is not "
-                                "set!")
-            request = CloseClientRequest(client_id=self.client_id)
-            self.notification_stub.closeClient(request)
+        if self.client_id:
+            request = ClientIdRequest(client_id=self.client_id)
+            response = self.notification_stub.deleteClient(request)
+            if response.return_code != ReturnStatus.SUCCESS:
+                raise Exception("Failed to close notification client: {}".format(self))
         logging.info("The notification client:{} has been closed.".format(self))
 
     def send_event(self, event: BaseEvent):

@@ -331,10 +331,10 @@ class ClientModel(Base):
 
     @staticmethod
     @provide_session
-    def close_client(client_id, session=None):
+    def delete_client(client_id, session=None):
         client_to_delete = session.query(ClientModel).filter(ClientModel.id == client_id).first()
         if client_to_delete is None:
-            raise Exception("You are trying to close an non-existing notification client!")
+            raise Exception("You are trying to delete an non-existing notification client!")
         session.delete(client_to_delete)
         session.commit()
 

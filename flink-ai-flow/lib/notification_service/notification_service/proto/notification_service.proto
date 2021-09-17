@@ -92,16 +92,16 @@ service NotificationService {
         };
     }
 
-    // Close notification client
-    rpc closeClient (CloseClientRequest) returns (CommonResponse) {
+    // Delete notification client
+    rpc deleteClient (ClientIdRequest) returns (CommonResponse) {
         option (google.api.http) = {
-            post: "/aiflow/notification-service/close_client"
+            post: "/aiflow/notification-service/delete_client"
             body: "*"
         };
     }
 
     // Check if a notification client has been registered in the db
-    rpc isClientExists (isClientExistsRequest) returns (isClientExistsResponse) {
+    rpc isClientExists (ClientIdRequest) returns (isClientExistsResponse) {
         option (google.api.http) = {
             post: "/aiflow/notification-service/is_client_exists"
             body: "*"
@@ -217,17 +217,13 @@ message RegisterClientResponse {
     int64 client_id = 3;
 }
 
-message CloseClientRequest {
+message ClientIdRequest {
     int64 client_id = 1;
 }
 
 message CommonResponse {
     ReturnStatus return_code = 1;
     string return_msg = 2;
-}
-
-message isClientExistsRequest {
-    int64 client_id = 1;
 }
 
 message isClientExistsResponse {

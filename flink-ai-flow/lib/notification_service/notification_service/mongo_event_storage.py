@@ -110,10 +110,10 @@ class MongoEventStorage(BaseEventStorage):
         client.save()
         return client.id
 
-    def close_client(self, client_id):
+    def delete_client(self, client_id):
         client_to_delete = MongoClientModel.objects(id=client_id).first()
         if client_to_delete is None:
-            raise Exception("You are trying to close an non-existing notification client!")
+            raise Exception("You are trying to delete an non-existing notification client!")
         client_to_delete.delete()
 
     def is_client_exists(self, client_id) -> bool:

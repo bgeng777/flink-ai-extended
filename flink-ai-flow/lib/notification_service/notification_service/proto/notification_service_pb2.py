@@ -42,7 +42,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\n\035org.aiflow.notification.protoZ\025/notification_service\210\001\001\220\001\001',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1anotification_service.proto\x12\x14notification_service\x1a\x1cgoogle/api/annotations.proto\"\x96\x01\n\nEventProto\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x12\x12\n\nevent_type\x18\x03 \x01(\t\x12\x0f\n\x07\x63ontext\x18\x04 \x01(\t\x12\x11\n\tnamespace\x18\x05 \x01(\t\x12\x0f\n\x07version\x18\x06 \x01(\x03\x12\x13\n\x0b\x63reate_time\x18\x07 \x01(\x03\x12\x0e\n\x06sender\x18\x08 \x01(\t\"m\n\x10SendEventRequest\x12/\n\x05\x65vent\x18\x01 \x01(\x0b\x32 .notification_service.EventProto\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x1a\n\x12\x65nable_idempotence\x18\x03 \x01(\x08\"/\n\nClientMeta\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12\x0e\n\x06sender\x18\x02 \x01(\t\"\x92\x01\n\x12SendEventsResponse\x12/\n\x05\x65vent\x18\x01 \x01(\x0b\x32 .notification_service.EventProto\x12\x37\n\x0breturn_code\x18\x02 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x03 \x01(\t\"\x9c\x01\n\x11ListEventsRequest\x12\x0c\n\x04keys\x18\x01 \x03(\t\x12\x12\n\nevent_type\x18\x02 \x01(\t\x12\x12\n\nstart_time\x18\x03 \x01(\x03\x12\x15\n\rstart_version\x18\x04 \x01(\x03\x12\x17\n\x0ftimeout_seconds\x18\x05 \x01(\x05\x12\x11\n\tnamespace\x18\x06 \x01(\t\x12\x0e\n\x06sender\x18\x07 \x01(\t\"o\n\x14ListAllEventsRequest\x12\x17\n\x0ftimeout_seconds\x18\x01 \x01(\x05\x12\x12\n\nstart_time\x18\x02 \x01(\x03\x12\x15\n\rstart_version\x18\x03 \x01(\x03\x12\x13\n\x0b\x65nd_version\x18\x04 \x01(\x03\"\x93\x01\n\x12ListEventsResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x30\n\x06\x65vents\x18\x03 \x03(\x0b\x32 .notification_service.EventProto\"W\n\x1cGetLatestVersionByKeyRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x11\n\tnamespace\x18\x02 \x01(\t\x12\x17\n\x0ftimeout_seconds\x18\x03 \x01(\x05\"T\n\x18GetLatestVersionResponse\x12\x13\n\x0breturn_code\x18\x01 \x01(\t\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x03\"G\n\x0bMemberProto\x12\x0f\n\x07version\x18\x01 \x01(\x03\x12\x12\n\nserver_uri\x18\x02 \x01(\t\x12\x13\n\x0bupdate_time\x18\x03 \x01(\x03\"(\n\x06Notify\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x11\n\tnamespace\x18\x02 \x01(\t\"?\n\rNotifyRequest\x12.\n\x08notifies\x18\x01 \x03(\x0b\x32\x1c.notification_service.Notify\"-\n\x12ListMembersRequest\x12\x17\n\x0ftimeout_seconds\x18\x01 \x01(\x05\"\x96\x01\n\x13ListMembersResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x32\n\x07members\x18\x03 \x03(\x0b\x32!.notification_service.MemberProto\"K\n\x16NotifyNewMemberRequest\x12\x31\n\x06member\x18\x01 \x01(\x0b\x32!.notification_service.MemberProto\"N\n\x15RegisterClientRequest\x12\x35\n\x0b\x63lient_meta\x18\x01 \x01(\x0b\x32 .notification_service.ClientMeta\"x\n\x16RegisterClientResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x11\n\tclient_id\x18\x03 \x01(\x03\"\'\n\x12\x43loseClientRequest\x12\x11\n\tclient_id\x18\x01 \x01(\x03\"]\n\x0e\x43ommonResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\"*\n\x15isClientExistsRequest\x12\x11\n\tclient_id\x18\x01 \x01(\x03\"x\n\x16isClientExistsResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x11\n\tis_exists\x18\x03 \x01(\x08*&\n\x0cReturnStatus\x12\x0b\n\x07SUCCESS\x10\x00\x12\t\n\x05\x45RROR\x10\x01\x32\xbf\x0c\n\x13NotificationService\x12\x91\x01\n\tsendEvent\x12&.notification_service.SendEventRequest\x1a(.notification_service.SendEventsResponse\"2\x82\xd3\xe4\x93\x02,\"\'/aiflow/notification-service/send_event:\x01*\x12\x91\x01\n\nlistEvents\x12\'.notification_service.ListEventsRequest\x1a(.notification_service.ListEventsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/aiflow/notification-service/list_events\x12\x9b\x01\n\rlistAllEvents\x12*.notification_service.ListAllEventsRequest\x1a(.notification_service.ListEventsResponse\"4\x82\xd3\xe4\x93\x02.\x12,/aiflow/notification-service/list_all_events\x12\x83\x01\n\x06notify\x12#.notification_service.NotifyRequest\x1a$.notification_service.CommonResponse\".\x82\xd3\xe4\x93\x02(\"#/aiflow/notification-service/notify:\x01*\x12\x95\x01\n\x0blistMembers\x12(.notification_service.ListMembersRequest\x1a).notification_service.ListMembersResponse\"1\x82\xd3\xe4\x93\x02+\x12)/aiflow/notification-service/list_members\x12\xa0\x01\n\x0fnotifyNewMember\x12,.notification_service.NotifyNewMemberRequest\x1a$.notification_service.CommonResponse\"9\x82\xd3\xe4\x93\x02\x33\"./aiflow/notification-service/notify_new_member:\x01*\x12\xbb\x01\n\x15getLatestVersionByKey\x12\x32.notification_service.GetLatestVersionByKeyRequest\x1a..notification_service.GetLatestVersionResponse\">\x82\xd3\xe4\x93\x02\x38\x12\x36/aiflow/notification-service/get_latest_version_by_key\x12\xa4\x01\n\x0eregisterClient\x12+.notification_service.RegisterClientRequest\x1a,.notification_service.RegisterClientResponse\"7\x82\xd3\xe4\x93\x02\x31\",/aiflow/notification-service/register_client:\x01*\x12\x93\x01\n\x0b\x63loseClient\x12(.notification_service.CloseClientRequest\x1a$.notification_service.CommonResponse\"4\x82\xd3\xe4\x93\x02.\")/aiflow/notification-service/close_client:\x01*\x12\xa5\x01\n\x0eisClientExists\x12+.notification_service.isClientExistsRequest\x1a,.notification_service.isClientExistsResponse\"8\x82\xd3\xe4\x93\x02\x32\"-/aiflow/notification-service/is_client_exists:\x01*B<\n\x1dorg.aiflow.notification.protoZ\x15/notification_service\x88\x01\x01\x90\x01\x01\x62\x06proto3'
+  serialized_pb=b'\n\x1anotification_service.proto\x12\x14notification_service\x1a\x1cgoogle/api/annotations.proto\"\x96\x01\n\nEventProto\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x12\x12\n\nevent_type\x18\x03 \x01(\t\x12\x0f\n\x07\x63ontext\x18\x04 \x01(\t\x12\x11\n\tnamespace\x18\x05 \x01(\t\x12\x0f\n\x07version\x18\x06 \x01(\x03\x12\x13\n\x0b\x63reate_time\x18\x07 \x01(\x03\x12\x0e\n\x06sender\x18\x08 \x01(\t\"m\n\x10SendEventRequest\x12/\n\x05\x65vent\x18\x01 \x01(\x0b\x32 .notification_service.EventProto\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x1a\n\x12\x65nable_idempotence\x18\x03 \x01(\x08\"/\n\nClientMeta\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12\x0e\n\x06sender\x18\x02 \x01(\t\"\x92\x01\n\x12SendEventsResponse\x12/\n\x05\x65vent\x18\x01 \x01(\x0b\x32 .notification_service.EventProto\x12\x37\n\x0breturn_code\x18\x02 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x03 \x01(\t\"\x9c\x01\n\x11ListEventsRequest\x12\x0c\n\x04keys\x18\x01 \x03(\t\x12\x12\n\nevent_type\x18\x02 \x01(\t\x12\x12\n\nstart_time\x18\x03 \x01(\x03\x12\x15\n\rstart_version\x18\x04 \x01(\x03\x12\x17\n\x0ftimeout_seconds\x18\x05 \x01(\x05\x12\x11\n\tnamespace\x18\x06 \x01(\t\x12\x0e\n\x06sender\x18\x07 \x01(\t\"o\n\x14ListAllEventsRequest\x12\x17\n\x0ftimeout_seconds\x18\x01 \x01(\x05\x12\x12\n\nstart_time\x18\x02 \x01(\x03\x12\x15\n\rstart_version\x18\x03 \x01(\x03\x12\x13\n\x0b\x65nd_version\x18\x04 \x01(\x03\"\x93\x01\n\x12ListEventsResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x30\n\x06\x65vents\x18\x03 \x03(\x0b\x32 .notification_service.EventProto\"W\n\x1cGetLatestVersionByKeyRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x11\n\tnamespace\x18\x02 \x01(\t\x12\x17\n\x0ftimeout_seconds\x18\x03 \x01(\x05\"T\n\x18GetLatestVersionResponse\x12\x13\n\x0breturn_code\x18\x01 \x01(\t\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x03\"G\n\x0bMemberProto\x12\x0f\n\x07version\x18\x01 \x01(\x03\x12\x12\n\nserver_uri\x18\x02 \x01(\t\x12\x13\n\x0bupdate_time\x18\x03 \x01(\x03\"(\n\x06Notify\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x11\n\tnamespace\x18\x02 \x01(\t\"?\n\rNotifyRequest\x12.\n\x08notifies\x18\x01 \x03(\x0b\x32\x1c.notification_service.Notify\"-\n\x12ListMembersRequest\x12\x17\n\x0ftimeout_seconds\x18\x01 \x01(\x05\"\x96\x01\n\x13ListMembersResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x32\n\x07members\x18\x03 \x03(\x0b\x32!.notification_service.MemberProto\"K\n\x16NotifyNewMemberRequest\x12\x31\n\x06member\x18\x01 \x01(\x0b\x32!.notification_service.MemberProto\"N\n\x15RegisterClientRequest\x12\x35\n\x0b\x63lient_meta\x18\x01 \x01(\x0b\x32 .notification_service.ClientMeta\"x\n\x16RegisterClientResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x11\n\tclient_id\x18\x03 \x01(\x03\"$\n\x0f\x43lientIdRequest\x12\x11\n\tclient_id\x18\x01 \x01(\x03\"]\n\x0e\x43ommonResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\"x\n\x16isClientExistsResponse\x12\x37\n\x0breturn_code\x18\x01 \x01(\x0e\x32\".notification_service.ReturnStatus\x12\x12\n\nreturn_msg\x18\x02 \x01(\t\x12\x11\n\tis_exists\x18\x03 \x01(\x08*&\n\x0cReturnStatus\x12\x0b\n\x07SUCCESS\x10\x00\x12\t\n\x05\x45RROR\x10\x01\x32\xb8\x0c\n\x13NotificationService\x12\x91\x01\n\tsendEvent\x12&.notification_service.SendEventRequest\x1a(.notification_service.SendEventsResponse\"2\x82\xd3\xe4\x93\x02,\"\'/aiflow/notification-service/send_event:\x01*\x12\x91\x01\n\nlistEvents\x12\'.notification_service.ListEventsRequest\x1a(.notification_service.ListEventsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/aiflow/notification-service/list_events\x12\x9b\x01\n\rlistAllEvents\x12*.notification_service.ListAllEventsRequest\x1a(.notification_service.ListEventsResponse\"4\x82\xd3\xe4\x93\x02.\x12,/aiflow/notification-service/list_all_events\x12\x83\x01\n\x06notify\x12#.notification_service.NotifyRequest\x1a$.notification_service.CommonResponse\".\x82\xd3\xe4\x93\x02(\"#/aiflow/notification-service/notify:\x01*\x12\x95\x01\n\x0blistMembers\x12(.notification_service.ListMembersRequest\x1a).notification_service.ListMembersResponse\"1\x82\xd3\xe4\x93\x02+\x12)/aiflow/notification-service/list_members\x12\xa0\x01\n\x0fnotifyNewMember\x12,.notification_service.NotifyNewMemberRequest\x1a$.notification_service.CommonResponse\"9\x82\xd3\xe4\x93\x02\x33\"./aiflow/notification-service/notify_new_member:\x01*\x12\xbb\x01\n\x15getLatestVersionByKey\x12\x32.notification_service.GetLatestVersionByKeyRequest\x1a..notification_service.GetLatestVersionResponse\">\x82\xd3\xe4\x93\x02\x38\x12\x36/aiflow/notification-service/get_latest_version_by_key\x12\xa4\x01\n\x0eregisterClient\x12+.notification_service.RegisterClientRequest\x1a,.notification_service.RegisterClientResponse\"7\x82\xd3\xe4\x93\x02\x31\",/aiflow/notification-service/register_client:\x01*\x12\x92\x01\n\x0c\x64\x65leteClient\x12%.notification_service.ClientIdRequest\x1a$.notification_service.CommonResponse\"5\x82\xd3\xe4\x93\x02/\"*/aiflow/notification-service/delete_client:\x01*\x12\x9f\x01\n\x0eisClientExists\x12%.notification_service.ClientIdRequest\x1a,.notification_service.isClientExistsResponse\"8\x82\xd3\xe4\x93\x02\x32\"-/aiflow/notification-service/is_client_exists:\x01*B<\n\x1dorg.aiflow.notification.protoZ\x15/notification_service\x88\x01\x01\x90\x01\x01\x62\x06proto3'
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -66,8 +66,8 @@ _RETURNSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2102,
-  serialized_end=2140,
+  serialized_start=2055,
+  serialized_end=2093,
 )
 _sym_db.RegisterEnumDescriptor(_RETURNSTATUS)
 
@@ -859,16 +859,16 @@ _REGISTERCLIENTRESPONSE = _descriptor.Descriptor(
 )
 
 
-_CLOSECLIENTREQUEST = _descriptor.Descriptor(
-  name='CloseClientRequest',
-  full_name='notification_service.CloseClientRequest',
+_CLIENTIDREQUEST = _descriptor.Descriptor(
+  name='ClientIdRequest',
+  full_name='notification_service.ClientIdRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='client_id', full_name='notification_service.CloseClientRequest.client_id', index=0,
+      name='client_id', full_name='notification_service.ClientIdRequest.client_id', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -887,7 +887,7 @@ _CLOSECLIENTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1800,
-  serialized_end=1839,
+  serialized_end=1836,
 )
 
 
@@ -925,40 +925,8 @@ _COMMONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1841,
-  serialized_end=1934,
-)
-
-
-_ISCLIENTEXISTSREQUEST = _descriptor.Descriptor(
-  name='isClientExistsRequest',
-  full_name='notification_service.isClientExistsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='client_id', full_name='notification_service.isClientExistsRequest.client_id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1936,
-  serialized_end=1978,
+  serialized_start=1838,
+  serialized_end=1931,
 )
 
 
@@ -1003,8 +971,8 @@ _ISCLIENTEXISTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1980,
-  serialized_end=2100,
+  serialized_start=1933,
+  serialized_end=2053,
 )
 
 _SENDEVENTREQUEST.fields_by_name['event'].message_type = _EVENTPROTO
@@ -1037,9 +1005,8 @@ DESCRIPTOR.message_types_by_name['ListMembersResponse'] = _LISTMEMBERSRESPONSE
 DESCRIPTOR.message_types_by_name['NotifyNewMemberRequest'] = _NOTIFYNEWMEMBERREQUEST
 DESCRIPTOR.message_types_by_name['RegisterClientRequest'] = _REGISTERCLIENTREQUEST
 DESCRIPTOR.message_types_by_name['RegisterClientResponse'] = _REGISTERCLIENTRESPONSE
-DESCRIPTOR.message_types_by_name['CloseClientRequest'] = _CLOSECLIENTREQUEST
+DESCRIPTOR.message_types_by_name['ClientIdRequest'] = _CLIENTIDREQUEST
 DESCRIPTOR.message_types_by_name['CommonResponse'] = _COMMONRESPONSE
-DESCRIPTOR.message_types_by_name['isClientExistsRequest'] = _ISCLIENTEXISTSREQUEST
 DESCRIPTOR.message_types_by_name['isClientExistsResponse'] = _ISCLIENTEXISTSRESPONSE
 DESCRIPTOR.enum_types_by_name['ReturnStatus'] = _RETURNSTATUS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -1163,12 +1130,12 @@ RegisterClientResponse = _reflection.GeneratedProtocolMessageType('RegisterClien
   })
 _sym_db.RegisterMessage(RegisterClientResponse)
 
-CloseClientRequest = _reflection.GeneratedProtocolMessageType('CloseClientRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CLOSECLIENTREQUEST,
+ClientIdRequest = _reflection.GeneratedProtocolMessageType('ClientIdRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CLIENTIDREQUEST,
   '__module__' : 'notification_service_pb2'
-  # @@protoc_insertion_point(class_scope:notification_service.CloseClientRequest)
+  # @@protoc_insertion_point(class_scope:notification_service.ClientIdRequest)
   })
-_sym_db.RegisterMessage(CloseClientRequest)
+_sym_db.RegisterMessage(ClientIdRequest)
 
 CommonResponse = _reflection.GeneratedProtocolMessageType('CommonResponse', (_message.Message,), {
   'DESCRIPTOR' : _COMMONRESPONSE,
@@ -1176,13 +1143,6 @@ CommonResponse = _reflection.GeneratedProtocolMessageType('CommonResponse', (_me
   # @@protoc_insertion_point(class_scope:notification_service.CommonResponse)
   })
 _sym_db.RegisterMessage(CommonResponse)
-
-isClientExistsRequest = _reflection.GeneratedProtocolMessageType('isClientExistsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _ISCLIENTEXISTSREQUEST,
-  '__module__' : 'notification_service_pb2'
-  # @@protoc_insertion_point(class_scope:notification_service.isClientExistsRequest)
-  })
-_sym_db.RegisterMessage(isClientExistsRequest)
 
 isClientExistsResponse = _reflection.GeneratedProtocolMessageType('isClientExistsResponse', (_message.Message,), {
   'DESCRIPTOR' : _ISCLIENTEXISTSRESPONSE,
@@ -1201,8 +1161,8 @@ _NOTIFICATIONSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=2143,
-  serialized_end=3742,
+  serialized_start=2096,
+  serialized_end=3688,
   methods=[
   _descriptor.MethodDescriptor(
     name='sendEvent',
@@ -1285,13 +1245,13 @@ _NOTIFICATIONSERVICE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='closeClient',
-    full_name='notification_service.NotificationService.closeClient',
+    name='deleteClient',
+    full_name='notification_service.NotificationService.deleteClient',
     index=8,
     containing_service=None,
-    input_type=_CLOSECLIENTREQUEST,
+    input_type=_CLIENTIDREQUEST,
     output_type=_COMMONRESPONSE,
-    serialized_options=b'\202\323\344\223\002.\")/aiflow/notification-service/close_client:\001*',
+    serialized_options=b'\202\323\344\223\002/\"*/aiflow/notification-service/delete_client:\001*',
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
@@ -1299,7 +1259,7 @@ _NOTIFICATIONSERVICE = _descriptor.ServiceDescriptor(
     full_name='notification_service.NotificationService.isClientExists',
     index=9,
     containing_service=None,
-    input_type=_ISCLIENTEXISTSREQUEST,
+    input_type=_CLIENTIDREQUEST,
     output_type=_ISCLIENTEXISTSRESPONSE,
     serialized_options=b'\202\323\344\223\0022\"-/aiflow/notification-service/is_client_exists:\001*',
     create_key=_descriptor._internal_create_key,
